@@ -59,7 +59,7 @@ local function SA_InitSpawn(ply)
 	if not isok then
 		LoadFailed(ply)
 	end
-end 
+end
 hook.Add("PlayerInitialSpawn", "SA_LoadPlayer", SA_InitSpawn)
 
 local function LeaderRes(data, isok, merror, ply)
@@ -91,8 +91,8 @@ hook.Add("Initialize","SA_MapCleanInitialize",function()
 			for k, v in pairs(ents.FindByClass("prop_physics_multiplayer")) do
 				v:Remove()
 			end
-			ents.FindInSphere(Vector(1046, -7648, -3798.2813), 5)[1]:Fire("kill","",0) //:Remove() // Remove Teleporter Button (Spawns Hula Dolls)
-			ents.FindInSphere(Vector(556, -7740, -3798.2813), 5)[1]:Fire("kill","",0) //:Remove() // Remove Jet Engine Button (Spams console with errors after a while)
+			ents.FindInSphere(Vector(1046, -7648, -3798.2813), 5)[1]:Fire("kill","",0) --:Remove() -- Remove Teleporter Button (Spawns Hula Dolls)
+			ents.FindInSphere(Vector(556, -7740, -3798.2813), 5)[1]:Fire("kill","",0) --:Remove() -- Remove Jet Engine Button (Spams console with errors after a while)
 		end)
 	end
 end)
@@ -142,18 +142,18 @@ LoadFailed = function(ply)
 	ply.tiberiumyield = 0
 	ply.tiberiummod_ii = 0
 	ply.tiberiumyield_ii = 0
-	
+
 	ply.tibdrillmod = 0
 	ply.tibstoragemod = 0
-	
+
 	ply.icerawmod = 0
 	ply.iceproductmod = 0
 	ply.icerefinerymod = 0
 	ply.icelasermod = 0
-	
+
 	ply.devlimit = 1
 	ply.allyuntil = 0
-	
+
 	SA.Terminal.SetupStorage(ply)
 	ply:ChatPrint("There has been an error, changes to your account will not be saved this session to prevent loss of data. Loading will be retried all 30 seconds")
 	ply:AssignFaction()
@@ -198,19 +198,19 @@ LoadRes = function(data, isok, merror, ply, sid)
 			ply.tiberiummod =  tonumber(data[1]["tiberiummod"])
 			ply.tiberiumyield_ii =  tonumber(data[1]["tiberiumyield_ii"])
 			ply.tiberiummod_ii =  tonumber(data[1]["tiberiummod_ii"])
-			
+
 			ply.tibdrillmod = tonumber(data[1]["tibdrillmod"])
 			ply.tibstoragemod = tonumber(data[1]["tibstoragemod"])
-			
+
 			ply.icerawmod = tonumber(data[1]["icerawmod"])
 			ply.iceproductmod = tonumber(data[1]["iceproductmod"])
 			ply.icerefinerymod = tonumber(data[1]["icerefinerymod"])
 			ply.icelasermod = tonumber(data[1]["icelasermod"])
-			
+
 			ply.devlimit = tonumber(data[1]["devlimit"])
-			
+
 			ply.allyuntil = tonumber(data[1]["allyuntil"])
-			
+
 			local tbl = {}
 			if data[1]["stationres"] then
 				if not pcall(function() tbl = util.JSONToTable(data[1]["stationres"]) end) then
@@ -256,44 +256,44 @@ LoadRes = function(data, isok, merror, ply, sid)
 				ply.tiberiumyield = 0
 				ply.tiberiummod_ii = 0
 				ply.tiberiumyield_ii = 0
-				
+
 				ply.tibdrillmod = 0
 				ply.tibstoragemod = 0
-				
+
 				ply.icerawmod = 0
 				ply.iceproductmod = 0
 				ply.icerefinerymod = 0
 				ply.icelasermod = 0
-				
+
 				ply.allyuntil = 0
-				
+
 				ply.devlimit = 1
-				
+
 				SA.Terminal.SetupStorage(ply)
-				
+
 				ply:AssignFaction()
-				
+
 				SA.SaveUser(ply)
 			end
 		end
 	else
 		LoadFailed(ply)
 	end
-	
+
 	if sa_faction_only:GetBool() and
 	 ( ply.TeamIndex < SA.Factions.Min or
 	   ply.TeamIndex > SA.Factions.Max or
 	   tonumber(ply.TotalCredits) < 100000000 ) then
 			ply:Kick("You don't meet the requirements for this server!")
 	end
-	
-	
+
+
 	ply.InvitedTo = false
 	ply.IsAFK = false
 	ply.MayBePoked = false
-	
+
 	ply:SetNWBool("isleader",ply.IsLeader)
-	
+
 	ply:SetNWInt("Score",ply.TotalCredits)
 
 	--[[local mt = ply.miningtheory
@@ -328,21 +328,21 @@ LoadRes = function(data, isok, merror, ply, sid)
 		tmp = ply.oremod_v
 	end
 	ply:SetNWInt("OreLV",tmp)
-	
+
 	ply:SetNWInt("TibSLV",ply.tiberiummod)
 	ply:SetNWInt("TibDLV",ply.tiberiumyield)
 	ply:SetNWInt("IceLLV",ply.icelasermod)
 	ply:SetNWInt("IceRLV",ply.icerefinerymod)
 	ply:SetNWInt("IceRSLV",ply.icerawmod)
 	ply:SetNWInt("IcePSLV",ply.iceproductmod)
-	
+
 	mt = nil
 	tmp = nil]]
 
 	if ply.devlimit <= 0 then ply.devlimit = 1 end
-	
+
 	--if not ply.Level then ply.Level = 0 end
-	
+
 	timer.Simple(1,function()
 		if not (ply and ply.IsValid and ply:IsValid()) then return end
 		ply.MayBePoked = true
@@ -376,19 +376,19 @@ function SA.SaveUser(ply, isautosave)
 
 		local isleader = 0
 		local credits = ply.Credits
-		local totalcred = ply.TotalCredits	
+		local totalcred = ply.TotalCredits
 		local group = ply.UserGroup
 		local cap = ply.MaxCap
 		local miningyield = ply.miningyield
 		local miningenergy = ply.miningenergy
 		--local miningrange = ply.miningbeam
 		local oremod = ply.oremod
-		local fighterenergy = ply.fighterenergy 
+		local fighterenergy = ply.fighterenergy
 		local perm = SA.MySQL:Escape(util.TableToJSON(SA.Terminal.GetPermStorage(ply)))
 		local name = SA.MySQL:Escape(ply:Name())
-		
+
 		if ply.devlimit <= 0 then ply.devlimit = 1 end
-		
+
 		if ply.IsLeader then
 			isleader = 1
 		end
@@ -441,7 +441,7 @@ local function SA_Autospawner(ply)
 				spawn.RealAutospawned = true
 			end
 		end
-		
+
 		local filename = "spaceage/autospawn2/"..mapname..".txt"
 		if file.Exists(filename, "DATA") then
 			for k,v in pairs(util.KeyValuesToTable(file.Read(filename))) do
@@ -473,7 +473,7 @@ local function SA_Autospawner(ply)
 					end
 				end
 			end
-		end			
+		end
 	end
 	if(ply and ply:IsPlayer()) then
 		SystemSendMSG(ply, "respawned all SpaceAge stuff")

@@ -52,7 +52,7 @@ function SA_CAF.CanChangeStatus()
 	return false
 end
 
-function SA_CAF.GetMenu(menutype, menuname)//Name is nil for main menu, String for others
+function SA_CAF.GetMenu(menutype, menuname) --Name is nil for main menu, String for others
 	local data = {}
 	return data
 end

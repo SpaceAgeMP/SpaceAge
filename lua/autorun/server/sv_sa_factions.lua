@@ -20,7 +20,7 @@ local function InitSAFactions()
 
 	local mapname = string.lower(game.GetMap())
 	if mapname == "sb_gooniverse" then
-		SA.Factions.Table[1][6] = SetFactionSpawn(			
+		SA.Factions.Table[1][6] = SetFactionSpawn(
 			Vector(-10582.343750,-7122.343750,-8011.968750),
 			Vector(-10599.000000,-7483.375000,-8011.968750),
 			Vector(-10610.656250,-7735.750000,-8011.968750)
@@ -46,7 +46,7 @@ local function InitSAFactions()
 			Vector(-129.562500,-847.718750,4660.031250)
 		)
 	elseif mapname == "sb_forlorn_sb3_r2l" then
-		SA.Factions.Table[1][6] = SetFactionSpawn(			
+		SA.Factions.Table[1][6] = SetFactionSpawn(
 			Vector(7769.562500,-11401.250000,-8954.968750),
 			Vector(7504.875000,-11396.343750,-8954.968750),
 			Vector(7245.843750,-11400.531250,-8954.968750)
@@ -72,7 +72,7 @@ local function InitSAFactions()
 			Vector(9260.718750,10778.031250,874.031250)
 		)
 	elseif mapname == "sb_forlorn_sb3_r3" then
-		SA.Factions.Table[1][6] = SetFactionSpawn(			
+		SA.Factions.Table[1][6] = SetFactionSpawn(
 			Vector(7769.562500,-11401.250000,-8954.968750),
 			Vector(7504.875000,-11396.343750,-8954.968750),
 			Vector(7245.843750,-11400.531250,-8954.968750)
@@ -108,10 +108,10 @@ local function InitSAFactions()
 			)
 		end
 	end
-	SA.Factions.Table[6][6] = SA.Factions.Table[5][6] //ALLIANCE
-	--SA.Factions.Table[8][6] = SA.Factions.Table[5][6] //FAILED TO LOAD -- Already does this below...
-	SA.Factions.Table[7][6] = SA.Factions.Table[5][6] //PMS FACTION
-	
+	SA.Factions.Table[6][6] = SA.Factions.Table[5][6] --ALLIANCE
+	--SA.Factions.Table[8][6] = SA.Factions.Table[5][6] --FAILED TO LOAD -- Already does this below...
+	SA.Factions.Table[7][6] = SA.Factions.Table[5][6] --PMS FACTION
+
 	SA.Factions.Table[SA.Factions.Max+1][6] = SA.Factions.Table[1][6]
 end
 timer.Simple(0,InitSAFactions)
@@ -201,7 +201,7 @@ local function DoApplyFactionResRes(data, isok, merror, ply, ffid, pltimexx)
 		net.WriteString(ply:SteamID())
 	net.Send()
 	local toPlayers = {}
-	for k, v in pairs(player.GetAll()) do 
+	for k, v in pairs(player.GetAll()) do
  		if v.IsLeader then
 			if v.TeamIndex == ffid then
 				table.insert(toPlayers,v)
@@ -226,7 +226,7 @@ local function DoApplyFactionRes(data, isok, merror, ply, steamid, plname, ffid,
 	end
 end
 
-local function SA_DoApplyFaction(len, ply) 
+local function SA_DoApplyFaction(len, ply)
 	local sat = net.ReadString()
 	local forfaction = net.ReadString()
 	satx = SA.MySQL:Escape(sat)
@@ -267,7 +267,7 @@ end
 
 local function DoAcceptPlayerRes(data, isok, merror, ply, app, appf, args)
 	if (!isok) then return end
-	for k, v in pairs(player.GetAll()) do 
+	for k, v in pairs(player.GetAll()) do
  		if v.IsLeader then
 			net.Start("SA_DoDeleteApplication")
 				net.WriteString(app['steamid'])
@@ -302,7 +302,7 @@ concommand.Add("sa_application_accept",SA_DoAcceptPlayer)
 
 local function DoDenyPlayerResRes(data, isok, merror, ply, app)
 	if (!isok) then return end
-	for k, v in pairs(player.GetAll()) do 
+	for k, v in pairs(player.GetAll()) do
  		if v.IsLeader then
 			net.Start("SA_DoDeleteApplication")
 				net.WriteString(app['steamid'])

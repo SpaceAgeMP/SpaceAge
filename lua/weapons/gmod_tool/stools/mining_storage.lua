@@ -31,7 +31,7 @@ local miningdevice_models = {
 	{ 'ICE Storage Level 5: Massive', 'models/mandrac/resource_cache/colossal_cache.mdl', 'storage_ice' },
 	{ 'ICE Storage Level 4: Huge', 'models/mandrac/nitrogen_tank/nitro_large.mdl', 'storage_ice' },
 	{ 'ICE Storage Level 3: Large Tank', 'models/mandrac/resource_cache/huge_cache.mdl', 'storage_ice' },
-	{ 'ICE Storage Level 2: Medium Tank', 'models/mandrac/energy_cell/large_cell.mdl', 'storage_ice' },	
+	{ 'ICE Storage Level 2: Medium Tank', 'models/mandrac/energy_cell/large_cell.mdl', 'storage_ice' },
 	{ 'ICE Storage Level 1: Small Tank', 'models/mandrac/energy_cell/medium_cell.mdl', 'storage_ice' },
 	{ 'ICE Product Storage Level 7: 2x Carrier Bay', 'models/slyfo/doublecarrier.mdl', 'storage_ice_product' },
 	{ 'ICE Product Storage Level 6: Carrier Bay', 'models/slyfo/carrierbay.mdl', 'storage_ice_product' },
@@ -39,22 +39,22 @@ local miningdevice_models = {
 	{ 'ICE Product Storage Level 4: Massive', 'models/mandrac/resource_cache/colossal_cache.mdl', 'storage_ice_product' },
 	{ 'ICE Product Storage Level 3: Huge', 'models/mandrac/water_storage/water_storage_large.mdl', 'storage_ice_product' },
 	{ 'ICE Product Storage Level 2: Large Tank', 'models/mandrac/resource_cache/hangar_container.mdl', 'storage_ice_product' },
-	{ 'ICE Product Storage Level 1: Medium Tank', 'models/mandrac/hw_tank/hw_tank_large.mdl', 'storage_ice_product' },	
-	
-	// PM :D
-	
+	{ 'ICE Product Storage Level 1: Medium Tank', 'models/mandrac/hw_tank/hw_tank_large.mdl', 'storage_ice_product' },
+
+	-- PM :D
+
 	{ 'PM Raw Storage Level 5: Colossal', 'models/mandrac/resource_cache/colossal_cache.mdl', 'sa_planetmining_storage' },
 	{ 'PM Raw Storage Level 4: Massive', 'models/mandrac/nitrogen_tank/nitro_large.mdl', 'sa_planetmining_storage' },
 	{ 'PM Raw Storage Level 3: Huge', 'models/mandrac/resource_cache/huge_cache.mdl', 'sa_planetmining_storage' },
 	{ 'PM Raw Storage Level 2: Large Tank', 'models/mandrac/energy_cell/large_cell.mdl', 'sa_planetmining_storage' },
 	{ 'PM Raw Storage Level 1: Medium Tank', 'models/mandrac/energy_cell/medium_cell.mdl', 'sa_planetmining_storage' },
-	
+
 	{ 'PM Product Storage Level 5: Colossal', 'models/mandrac/resource_cache/colossal_cache.mdl', 'sa_planetmining_storage_product' },
 	{ 'PM Product Storage Level 4: Massive', 'models/mandrac/nitrogen_tank/nitro_large.mdl', 'sa_planetmining_storage_product' },
 	{ 'PM Product Storage Level 3: Huge', 'models/mandrac/resource_cache/huge_cache.mdl', 'sa_planetmining_storage_product' },
 	{ 'PM Product Storage Level 2: Large Tank', 'models/mandrac/energy_cell/large_cell.mdl', 'sa_planetmining_storage_product' },
 	{ 'PM Product Storage Level 1: Medium Tank', 'models/mandrac/energy_cell/medium_cell.mdl', 'sa_planetmining_storage_product' },
-	
+
 }
 
 CAF_ToolRegister( TOOL, miningdevice_models, nil, "mining_storage", 4 )

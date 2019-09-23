@@ -5,13 +5,13 @@ include("shared.lua")
 
 ENT.WorldInternal = true
 
-function ENT:Initialize()	
+function ENT:Initialize()
 	self.CrystalResistant = true
 	self.MayNotBeFound = true
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
-end  
+end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
@@ -19,7 +19,7 @@ function ENT:Think()
 		local myDmg = math.ceil(math.random(1000,2000) * ((801 - v:GetPos():Distance(self:GetPos())) / 100))
 		if (v:IsPlayer() or v:IsNPC()) and (not (v.InVehicle and v:InVehicle())) then
 			v:TakeDamage(myDmg,self)
-		/*else
+		--[[else
 			local res = cbt_dealdevhit(v,(myDmg/10),999999)
 			if res == 2 then
 				local wreck = ents.Create( "wreckedstuff" )
@@ -29,7 +29,7 @@ function ENT:Think()
 				wreck:Spawn()
 				wreck:Activate()
 				v:Remove()
-			end*/
+			end]]
 		end
 	end
 	SA.Tiberium.RemoveIntersecting(self,{"sa_crystalroid","sa_crystaltower","sa_mining_drill"})

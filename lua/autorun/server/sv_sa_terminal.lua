@@ -192,7 +192,7 @@ local function SA_SelectedNode(ply)
 			end
 		end
 	end
-	
+
 	--No Specific node, select first in range.
 	for k,v in pairs(ents.FindByClass("resource_node")) do
 		if (SA.PP.GetOwner(v) == ply) then
@@ -206,7 +206,7 @@ end
 local function SA_UpdateNodeSelection(ply)
 	local SelectedNode = SA_SelectedNode(ply)
 	local SelectedID = 0
-	
+
 	local Nodes = {}
 	for k,v in pairs(ents.FindByClass("resource_node")) do
 		if (SA.PP.GetOwner(v) == ply) then
@@ -219,9 +219,9 @@ local function SA_UpdateNodeSelection(ply)
 			end
 		end
 	end
-	
+
 	table.sort(Nodes)
-	
+
 	local Selected = 0
 	local Count = table.Count(Nodes)
 	net.Start("SA_NodeSelectionUpdate")
@@ -321,33 +321,33 @@ SA_UpdateInfo = function(ply,CanPass)
 		timer.Create("SA_UpdateTerminalInfo_Delay",0.03,1, function() SA_UpdateInfo(ply, true) end)
 		return
 	end
-	
+
 	--Break out if they should not be recieving a terminal update.
 	if (ply.SendingTermUp or !ply.MayBePoked or !ply.AtTerminal or ply.IsAFK) then return end
 
 	--Send the player a list of nodes within range.
 	SA_UpdateNodeSelection(ply)
-	
+
 	if not TempStorage[uid] then SA.Terminal.SetupStorage(ply) end
-	
+
 	local uid = ply:UniqueID()
 	local orecount = SA_GetResource(ply,"ore")
 	local tempore = TempStorage[uid]["ore"]
-	
+
 	local TempStorage = SA_GetTempStorage(ply)
 	local PermStorage = SA_GetPermStorage(ply)
 	local ShipStorage = SA_GetShipResources(ply)
-	
+
 	local idx_t = table.Count(TempStorage)
 	local idx_p = table.Count(PermStorage)
 	local idx_s = table.Count(ShipStorage)
 	local idx_m = table.Count(BuyPriceTable)
-	
+
 	net.Start("SA_TerminalUpdateSmall")
 		net.WriteInt(orecount or 0, 32)
 		net.WriteInt(tempore or 0, 32)
 	net.Send(ply)
-	
+
 	local ResTabl = {}
 	for k,v in pairs(TempStorage) do
 		local price = 0
@@ -364,23 +364,23 @@ SA_UpdateInfo = function(ply,CanPass)
 		end
 		ResTabl[k] = {v,tostring(price)}
 	end
-	
+
 	local Researches = SA.Research.Get()
 	local ResearchGroups = SA.Research.GetGroups()
-	
+
 	local ResTabl2 = {}
-	
+
 	for _,RGroup in pairs(ResearchGroups) do
 		for k,v in pairs(Researches[RGroup]) do
 			ResTabl2[k] = {k,ply[v["variable"]],ply.UserGroup}
 		end
 	end
-	
+
 	local DevVars = {0,0,0}
 	if ply:GetLevel() >= 3 then
 		DevVars = {SA.Tiberium.MaxCrystalCount,SA.Tiberium.CrystalRadius,SA.Asteroids.MaxCount}
 	end
-	
+
 	ply.SendingTermUp = true
 	supernet.Send(ply, "SA_TerminalUpdate", {
 		ResTabl,
@@ -421,14 +421,14 @@ local function SA_UseGoodie(ply,cmd,args)
 	local id = tonumber(args[1])
 	local goodie = ply.Goodies[id]
 	if not goodie then return end
-	
+
 	ply.Goodies[id] = nil
-	
+
 	goodie.func(ply)
-	
+
 	--FA.SA.MySQL.SavePlayer(ply)
 	SA.SaveUser(ply)
-	
+
 	SA.MySQL:Query("DELETE FROM goodies WHERE id='"..SA.MySQL:Escape(id).."'",function() SA_RequestUpdateGoodies(ply) end)
 end
 concommand.Add("sa_goodies_use",SA_UseGoodie)
@@ -671,11 +671,11 @@ local function SA_Research(ply, cmd, args)
 				if v[1] == "faction" then
 					if not table.HasValue(v[2],ply.UserGroup) then
 						return
-					end						
+					end
 				elseif ply[v[1]] < v[2] then
 					return
 				end
-			end				
+			end
 		elseif reqtype == "perrank" then
 			local idx = ply[Research["variable"]] + 1
 			local tbl = Research["prereq"][idx]
@@ -684,7 +684,7 @@ local function SA_Research(ply, cmd, args)
 					if v[1] == "faction" then
 						if not table.HasValue(v[2],ply.UserGroup) then
 							return
-						end						
+						end
 					elseif ply[v[1]] < v[2] then
 						return
 					end
@@ -698,16 +698,16 @@ local function SA_Research(ply, cmd, args)
 	local cred = tonumber(ply.Credits)
 	local total = cost + (cost * inc) * cur
 	total = total * (devl * devl)
-	
+
 	if ply.UserGroup == "legion" or ply.UserGroup == "alliance" then
 		total = math.ceil(total * 0.66)
 	elseif ply.UserGroup == "starfleet" then
 		total = math.ceil(total * 0.88)
 	end
-	
+
 	if cred >= total then
 		ply[var] = ply[var] + 1
-		/*if ply[var] then
+		--[[if ply[var] then
 			if var == "tiberiummod" then
 				ply:SetNWInt("TibSLV",ply.tiberiummod)
 			elseif var == "tiberiumyield" then
@@ -731,7 +731,7 @@ local function SA_Research(ply, cmd, args)
 			elseif string.Left(var,6) == "oremod" then
 				ply:SetNWInt("OreLV",ply[var])
 			end
-		end*/
+		end]]
 		ply.Credits = ply.Credits - total
 		SA_UpdateInfo(ply)
 		local retro = Research["classes"]
@@ -752,25 +752,25 @@ local function SA_ResetMe(ply, cmd, args)
 	if ply.IsAFK then return end
 	local CHECK = args[1]
 	if CHECK ~= HASH then return end
-	
+
 	if ply.devlimit >= 5 then return end
-	
+
 	local devlim = ply.devlimit
 	local cost = 5000000000 * (devlim * devlim)
 	if ply.Credits < cost then return end
-	
+
 	local Researches = SA.Research.Get()
-	
+
 	for _,vv in pairs(Researches) do
 		for _,v in pairs(vv) do
 			if ply[v.variable] < v.resetreq then return end
 			ply[v.variable] = 0
 		end
 	end
-	
+
 	ply.Credits = ply.Credits - cost
 	ply.devlimit = ply.devlimit + 1
-	
+
 	SA_UpdateInfo(ply)
 	SA.SendCreditsScore(ply)
 end
@@ -827,41 +827,41 @@ local function CheckCanDevice(ply,tr,mode)
 		elseif sel == "sa_mining_laser_vi" then
 			if ply.UserGroup ~= "miners" and ply.UserGroup ~= "alliance" then
 				ply:AddHint("You must be in Major Miners or The Alliance to use this!", NOTIFY_CLEANUP, 5)
-				return false			
+				return false
 			elseif lvl < 5 then
 				ply:AddHint("You must have Rank 5 Mining Theory to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		end
-		local lvl = ply.icelasermod		
+		local lvl = ply.icelasermod
 		if sel == "ice_mining_laser_2" then
 			if lvl < 1 then
 				ply:AddHint("You must have Rank 1 ICE Lasers to use this!", NOTIFY_CLEANUP, 5)
 				return false
-			end				
+			end
 		elseif sel == "ice_mining_laser_3" then
 			if lvl < 2 then
 				ply:AddHint("You must have Rank 2 ICE Lasers to use this!", NOTIFY_CLEANUP, 5)
 				return false
-			end				
+			end
 		end
 		local lvl = ply.icerefinerymod
 		if sel == "ice_refinery_imrpoved" then
 			if lvl < 1 then
 				ply:AddHint("You must have Rank 1 ICE Refineries to use this!", NOTIFY_CLEANUP, 5)
 				return false
-			end				
+			end
 		elseif sel == "ice_refinery_advanced" then
 			if lvl < 2 then
 				ply:AddHint("You must have Rank 2 ICE Refineries to use this!", NOTIFY_CLEANUP, 5)
 				return false
-			end				
+			end
 		end
 		local lvl = ply.tibdrillmod
 		if sel == "sa_mining_drill_ii" then
 			if ply.UserGroup ~= "legion" and ply.UserGroup ~= "alliance" then
 				ply:AddHint("You must be in The Legion or The Alliance to use this!", NOTIFY_CLEANUP, 5)
-				return false			
+				return false
 			elseif lvl < 1 then
 				ply:AddHint("You must have Rank 1 Tiberium Drills to use this!", NOTIFY_CLEANUP, 5)
 				return false
@@ -909,14 +909,14 @@ local function CheckCanDevice(ply,tr,mode)
 			if lvl < reqLvl then
 				ply:AddHint("You must have Rank "..reqLvl.." ICE Product Storages to use this!", NOTIFY_CLEANUP, 5)
 				return false
-			end		
+			end
 		end
 		local lvl = ply.tibstoragemod
 		if (sel == "tiberium_storage_ii" or sel == "tiberium_storage") and (SA.ValidEntity(tr.Entity) and tr.Entity:GetClass() == "tiberium_storage_holder") then return false end
 		if sel == "tiberium_storage_ii" then
 			if ply.UserGroup ~= "legion" and ply.UserGroup ~= "alliance" then
 				ply:AddHint("You must be in The Legion or The Alliance to use this!", NOTIFY_CLEANUP, 5)
-				return false			
+				return false
 			elseif lvl < 1 then
 				ply:AddHint("You must have Rank 1 Tiberium Storages to use this!", NOTIFY_CLEANUP, 5)
 				return false
