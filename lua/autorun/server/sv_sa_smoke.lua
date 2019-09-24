@@ -1,21 +1,21 @@
 local SA_SmokeSpeed = 200
 local SA_SmokeWindSpeed = SA_SmokeSpeed / 10
-local SA_SmokeTable
-local SA_SmokeSpawners
+local SA_SmokeTable = {}
+local SA_SmokeSpawners = {}
 
 local function SA_StopSmoke(id,doremove)
 	if not SA_SmokeTable[id] then return end
-	timer.Destroy("SA_SmokeWind_"..id)
-	timer.Destroy("SA_RemoveSmoke_"..id)
+	timer.Remove("SA_SmokeWind_" .. id)
+	timer.Remove("SA_RemoveSmoke_" .. id)
 	local smokeEnt = SA_SmokeTable[id]
-	if(smokeEnt:IsValid() and doremove) then smokeEnt:Remove() end
+	if (smokeEnt:IsValid() and doremove) then smokeEnt:Remove() end
 	SA_SmokeTable[id] = nil
 end
 
 local function SA_StopSmokeSpawner(id)
 	if not SA_SmokeSpawners[id] then return end
 	SA_SmokeSpawners[id] = nil
-	timer.Destroy("SA_SpawnSmoke_"..id)
+	timer.Remove("SA_SpawnSmoke_" .. id)
 end
 
 local function SA_DeleteAllSmoke()
@@ -38,9 +38,6 @@ local function SA_DeleteAllSmoke()
 end
 SA_DeleteAllSmoke()
 
-local SA_SmokeTable = {}
-local SA_SmokeSpawners = {}
-
 local function SA_NewSmoke(id,startPos,endPosT,noWind,windAfter) --endPos is either VECTOR or NUMBER (height)
 	if not id then return end
 	if not startPos then return end
@@ -57,14 +54,14 @@ local function SA_NewSmoke(id,startPos,endPosT,noWind,windAfter) --endPos is eit
 	SA_StopSmoke(id,true)
 	SA_SmokeTable[id] = smoke
 	local smokeTime = endPosT / SA_SmokeSpeed
-	timer.Create("SA_RemoveSmoke_"..id,smokeTime,0,function() SA_StopSmoke(id,true) end)
+	timer.Create("SA_RemoveSmoke_" .. id,smokeTime,0,function() SA_StopSmoke(id,true) end)
 	if not noWind then
 		local windAfterTime = 0
 		if windAfter then
 			windAfterTime = windAfter / SA_SmokeSpeed
 		end
 		timer.Simple(windAfterTime, function()
-			timer.Create("SA_SmokeWind_"..id,0.1,0,function() smoke:SetVelocity(Vector(SA_SmokeWindSpeed,0,0)) end)
+			timer.Create("SA_SmokeWind_" .. id,0.1,0,function() smoke:SetVelocity(Vector(SA_SmokeWindSpeed,0,0)) end)
 		end)
 	end
 end
@@ -73,7 +70,7 @@ local function SA_NewSmokeSpawner(id,startPos,endPosT,noWind,windAfter)
 	if not (id and startPos and endPosT) then return end
 	SA_StopSmokeSpawner(id)
 	SA_SmokeSpawners[id] = true
-	timer.Create("SA_SpawnSmoke_"..id,1,0,function() SA_NewSmoke(id,startPos,endPosT,noWind,windAfter) end)
+	timer.Create("SA_SpawnSmoke_" .. id,1,0,function() SA_NewSmoke(id,startPos,endPosT,noWind,windAfter) end)
 end
 
 local function SA_MapSmokers()

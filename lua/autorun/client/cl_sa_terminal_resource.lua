@@ -17,7 +17,7 @@ function PANEL:Init()
 	self.Image = vgui.Create("DImage",self)
 	self.Image:SetPos(5,5)
 	self.Image:SetSize(32,32)
-	
+
 	self.ResourceName = vgui.Create("DLabel",self)
 	self.ResourceName:SetPos(43,1)
 	self.ResourceName:SetSize(160,22)
@@ -25,7 +25,7 @@ function PANEL:Init()
 	self.ResourceName:SetText("Unnamed")
 	self.ResourceName:SetFont("Trebuchet20")
 	self.ResourceName:SetColor(ResourceNameColor)
-				
+
 	self.ResourceAmount = vgui.Create("DLabel",self)
 	self.ResourceAmount:SetPos(25,23)
 	self.ResourceAmount:SetSize(170,20)
@@ -33,12 +33,12 @@ function PANEL:Init()
 	self.ResourceAmount:SetContentAlignment(6)
 	self.ResourceAmount:SetFont("Trebuchet18")
 	self.ResourceAmount:SetColor(ResourceAmountColor)
-	
+
 	self.ResourceAmount:SetMouseInputEnabled(false)
 	self.ResourceName:SetMouseInputEnabled(false)
 	self.Image:SetMouseInputEnabled(false)
 	self:SetMouseInputEnabled(true)
-	
+
 	self.Location = nil
 end
 
@@ -55,7 +55,7 @@ function PANEL:SetAmount(amount,capacity)
 		self.ResourceAmount:SetText(SA.AddCommasToInt(amount))
 	else
 		capacity = math.floor(capacity)
-		self.ResourceAmount:SetText(SA.AddCommasToInt(amount).." / "..SA.AddCommasToInt(capacity))
+		self.ResourceAmount:SetText(SA.AddCommasToInt(amount) .. " / " .. SA.AddCommasToInt(capacity))
 	end
 	self.RAmount = math.floor(amount)
 	if capacity then capacity = math.floor(capacity) end
@@ -69,7 +69,7 @@ end
 function PANEL:OnMousePressed(mcode)
 	if SA_TermDraggedElement then return end
 	if mcode ~= MOUSE_LEFT and mcode ~= MOUSE_RIGHT then return end
-	
+
 	local t = self:GetParent()
 	local x,y = self:GetPos()
 	local xt,yt
@@ -96,7 +96,7 @@ function PANEL:OnMousePressed(mcode)
 	function item:OnMouseReleased(mcode)
 		if mcode ~= self.MCode then self:QuitThis() return end
 		local cx, cy = self:CursorPos()
-		local x,y = self:GetPos()
+		local x, y = self:GetPos()
 		cx = cx + x
 		cy = cy + y
 		if cy >= 160 and cy <= 588 then
@@ -108,7 +108,7 @@ function PANEL:OnMousePressed(mcode)
 			elseif cx >= 535 and cx <= 765 then
 				tl = "ship"
 			end
-			if !tl or tl == self.Location then
+			if not tl or tl == self.Location then
 				self:QuitThis()
 				return
 			end

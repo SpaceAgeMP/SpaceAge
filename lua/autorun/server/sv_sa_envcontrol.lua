@@ -5,7 +5,7 @@ local SB_Terraforming_Target = {o2 = 29,co2 = 0.6,h = 0.4,n = 70,empty = 0}
 local SA_MyPlanets = {}
 local SA_DefEnvsA = {}
 local SA_DefEnvs = {}
-local SA_IgnoreValsA = {o2per = true,nper = true,hper = true,hper = true,co2per =true,emptyper = true}
+local SA_IgnoreValsA = {o2per = true,nper = true,hper = true, co2per = true,emptyper = true}
 
 function SA.Planets.MakeHabitable(planet)
 	local mainenv = planet.sbenvironment
@@ -16,9 +16,9 @@ function SA.Planets.MakeHabitable(planet)
 	mainenv.temperature = 288
 	mainenv.temperature2 = 288
 	local tmpCurrent = 0
-	for k, v in pairs(SB_Terraforming_Target) do 
-		mainair[k..'per'] = v
-		local cvalR = math.floor((v/100) * mainair.max)
+	for k, v in pairs(SB_Terraforming_Target) do
+		mainair[k .. "per"] = v
+		local cvalR = math.floor((v / 100) * mainair.max)
 		mainair[k] = cvalR
 		tmpCurrent = tmpCurrent + cvalR
 	end
@@ -42,14 +42,13 @@ local function MakePlanetProtected(planet)
 end
 
 function SA.Planets.MakeSpace(planet)
-	local myname = planet.sbenvironment.name
 	local mainenv = planet.sbenvironment
 	local mainair = planet.sbenvironment.air
 	mainenv.temperature = 14
 	mainenv.temperature2 = 14
-	for k, v in pairs(mainair) do 
+	for k, v in pairs(mainair) do
 		mainair[k] = 0
-	end	
+	end
 end
 
 local function InitHabitablePlanets()
@@ -59,7 +58,7 @@ local function InitHabitablePlanets()
 	local toRemove = {}
 	local toProtect = {}
 	local mapname = string.lower(game:GetMap())
-	local dirname = "Spaceage/planetsave/"..mapname.."/"
+	local dirname = "Spaceage/planetsave/" .. mapname .. "/"
 	if mapname == "sb_new_worlds_2" then
 		toTerraform = {"naar'ak asteroid base"}
 		toAdd = {{"Naar'ak Asteroid Base",Vector(-9275,-9818,-11428),900},
@@ -70,11 +69,11 @@ local function InitHabitablePlanets()
 		toAdd = {
 					{"Hantar",Vector(3865,-10656,-1991),700},
 					{"Hantar",Vector(4023,-9866,-2047),640},
-					
+
 					{"Hantar",Vector(4649,-8871,-2048),200},
 					{"Hantar",Vector(4641,-8459,-2048),200},
 					{"Hantar",Vector(4629,-7994,-2048),200},
-					
+
 					{"Hantar",Vector(4880,-9155,-1911),100},
 					{"Hantar",Vector(5379,-9155,-1911),100}
 				}
@@ -107,13 +106,13 @@ local function InitHabitablePlanets()
 	elseif (mapname == "gm_galactic") then
 		toProtect = {"Planet 1", "Planet 2", "Planet 4", "Planet 5", "Planet 8", "Planet 9"}
 	end
-	
+
 	for k, v in pairs(ents.FindByClass("base_sb_planet*")) do
 		if (v.SA_Created) then
-			print("Found SpaceAge environment: "..v.sbenvironment.name.."! Removing!")
+			print("Found SpaceAge environment: " .. v.sbenvironment.name .. "! Removing!")
 			v:Remove()
 		elseif table.HasValue(toRemove,string.lower(v.sbenvironment.name)) then
-			print("Found ToRemove environment: "..v.sbenvironment.name.."! Removing!")
+			print("Found ToRemove environment: " .. v.sbenvironment.name .. "! Removing!")
 			v:Remove()
 		end
 	end
@@ -152,30 +151,30 @@ local function InitHabitablePlanets()
 			envname = string.lower(v.sbenvironment.name)
 		end
 		if (table.HasValue(toTerraform,envname)) then
-			print('Making planet "'..v.sbenvironment.name..'" habitable!')
+			print("Making planet \"" .. v.sbenvironment.name .. "\" habitable!")
 			SA.Planets.MakeHabitable(v)
 		end
 		if (table.HasValue(toProtect,envname)) then
 			MakePlanetProtected(v)
 			v.sbenvironment.pressure = 1
 			v.sbenvironment.atmosphere = 1
-			print('Protecting planet "'..v.sbenvironment.name..'"!')
+			print("Protecting planet \"" .. v.sbenvironment.name .. "\"!")
 		elseif envname ~= "no name" then
-			local filename = dirname..envname
+			local filename = dirname .. envname
 			SA_DefEnvsA[envname] = v.sbenvironment.air
 			SA_DefEnvs[envname] = v.sbenvironment
-			if file.Exists(filename.."_default.txt", "DATA") == false then
+			if file.Exists(filename .. "_default.txt", "DATA") == false then
 				local output = util.TableToJSON(v.sbenvironment)
-				file.Write(filename.."_default.txt",output)
+				file.Write(filename .. "_default.txt",output)
 			end
-			if file.Exists(filename..".txt", "DATA") then
-				local envfile = file.Read(filename..".txt")
+			if file.Exists(filename .. ".txt", "DATA") then
+				local envfile = file.Read(filename .. ".txt")
 				local envdata = util.JSONToTable(envfile)
 				envdata.bloom = v.sbenvironment.bloom
 				envdata.color = v.sbenvironment.color
 				v.sbenvironment = envdata
 			end
-			print("DEBUG: "..filename.." : "..tostring(v))
+			print("DEBUG: " .. filename .. " : " .. tostring(v))
 			table.insert(SA_MyPlanets,v)
 		end
 	end
@@ -183,7 +182,6 @@ end
 timer.Simple(1,InitHabitablePlanets)
 
 local function SA_PlanetRestore()
-	local maxchange = 5000
 	for k,v in pairs(SA_MyPlanets) do
 		local envname = string.lower(v.sbenvironment.name)
 		if SA_DefEnvsA[envname] then
@@ -210,14 +208,14 @@ end
 timer.Create("SA_PlanetBackfall", 50, 0, SA_PlanetRestore)
 
 function SA.Planets.Save()
-	local dirname = "spaceage/planetsave/"..string.lower(game.GetMap()).."/"
+	local dirname = "spaceage/planetsave/" .. string.lower(game.GetMap()) .. "/"
 	if not file.Exists(dirname, "DATA") then
 		file.CreateDir(dirname)
 	end
 	for k,v in pairs(SA_MyPlanets) do
 		local envname = string.lower(v.sbenvironment.name)
 		if envname ~= "no name" then
-			file.Write(dirname..envname..".txt",util.TableToJSON(v.sbenvironment))
+			file.Write(dirname .. envname .. ".txt", util.TableToJSON(v.sbenvironment))
 		end
 	end
 end
@@ -226,7 +224,7 @@ concommand.Add("sa_restart_environment",function(ply)
 	if ply:GetLevel() < 3 then return end
 	for k,v in pairs(SA_MyPlanets) do
 		local envname = string.lower(v.sbenvironment.name)
-		local filename = "spaceage/planetsave/"..string.lower(game:GetMap()).."/"..envname.."_default.txt"
+		local filename = "spaceage/planetsave/" .. string.lower(game:GetMap()) .. "/" .. envname .. "_default.txt"
 		if file.Exists(filename, "DATA") then
 			local envfile = file.Read(filename)
 			local envdata = util.JSONToTable(envfile)
@@ -236,7 +234,7 @@ concommand.Add("sa_restart_environment",function(ply)
 			SA_DefEnvs[envname] = envdata
 			SA_DefEnvsA[envname] = envdata.air
 		end
-	end	
+	end
 	SA.Planets.Save()
 end)
 
@@ -249,6 +247,6 @@ concommand.Add("sa_print_environment",function(ply)
 	ply:ChatPrint(name)
 	ply:ChatPrint(tostring(pos))
 	ply:ChatPrint(tostring(size))
-	ply:ChatPrint(tostring((ply:GetPos().z - pos.z)))
+	ply:ChatPrint(tostring(ply:GetPos().z - pos.z))
 end)
 

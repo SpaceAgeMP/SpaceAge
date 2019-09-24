@@ -26,7 +26,7 @@ local function SA_DoAddApp(len, ply)
 end
 net.Receive("SA_DoAddApplication",SA_DoAddApp)
 
-local function SA_DoDelApp(len, ply) 
+local function SA_DoDelApp(len, ply)
 	AppTable[net.ReadString()] = nil
 	SA.Application.Refresh()
 end
@@ -50,13 +50,13 @@ local function CreateAppGUI(BasePanel)
 		BasePanel:SetTitle("Application Form")
 		BasePanel:SetDraggable(true)
 		BasePanel:ShowCloseButton(false)
-		
+
 		local CloseButton = vgui.Create( "DButton", BasePanel )
 		CloseButton:SetText("X")
 		CloseButton:SetPos(BasePanel:GetWide() - 25, 1)
 		CloseButton:SetSize(20,20)
 		CloseButton.DoClick = SA.Application.Close
-		
+
 		local BPanel = vgui.Create ("DPanel", BasePanel)
 		BPanel:SetPos(0, 25)
 		BPanel:SetSize(BasePanel:GetWide(), BasePanel:GetTall() - 25)
@@ -64,8 +64,8 @@ local function CreateAppGUI(BasePanel)
 	local plisleader = LocalPlayer():GetNWBool("isleader")
 
 	local ApplyText = vgui.Create( "DTextEntry", BasePanel )
-	
-	if (!plisleader) then
+
+	if (not plisleader) then
 		ApplyText:SetValue(SA.Application.Text)
 	end
 
@@ -73,7 +73,7 @@ local function CreateAppGUI(BasePanel)
 	ApplyText:SetNumeric(false)
 	ApplyText:SetEnterAllowed(true)
 
-	if (!plisleader) then
+	if (not plisleader) then
 		ApplyText:SetPos(20, 55)
 		ApplyText:SetSize(BasePanel:GetWide() - 40, 380)
 		ApplyText:SetUpdateOnType(true)
@@ -83,14 +83,14 @@ local function CreateAppGUI(BasePanel)
 	else
 		ApplyText:SetPos(20, 80)
 		ApplyText:SetSize(BasePanel:GetWide() - 40, 355)
-		ApplyText:SetEditable(false)	
+		ApplyText:SetEditable(false)
 	end
 
 	local SelFCombo = vgui.Create("DMultiChoice", BasePanel)
 	SelFCombo:SetEditable(false)
 	SelFCombo:SetPos(20,30)
 	SelFCombo:SetSize(BasePanel:GetWide() - 40, 20)
-	if (!plisleader) then
+	if (not plisleader) then
 		SelFCombo:AddChoice("Major Miners")
 		SelFCombo:AddChoice("The Guild")
 		SelFCombo:AddChoice("The Corporation")
@@ -105,22 +105,22 @@ local function CreateAppGUI(BasePanel)
 		PTimeLBL:SetSize((BasePanel:GetWide() / 2) - 30, 20)
 		PTimeLBL:SetText("Playtime: NOTHING SELECTED")
 		local ScoreLBL = vgui.Create("DLabel", BasePanel)
-		ScoreLBL:SetPos((BasePanel:GetWide() / 2), 55)
+		ScoreLBL:SetPos(BasePanel:GetWide() / 2, 55)
 		ScoreLBL:SetSize((BasePanel:GetWide() / 2) - 30, 20)
 		ScoreLBL:SetText("Score: NOTHING SELECTED")
-		
+
 		local fValue = false
 		for k, v in pairs(AppTable) do
-			SelFCombo:AddChoice(v[1].." | "..k)
+			SelFCombo:AddChoice(v[1] .. " | " .. k)
 			fValue = true
-		end 
+		end
 		if (fValue) then
 			SelFCombo:ChooseOptionID(1)
 			CSelID = SApp_ExtractSteamID(SelFCombo:GetOptionText(1))
 			if (CSelID and AppTable[CSelID]) then
 				ApplyText:SetValue(AppTable[CSelID][2])
-				PTimeLBL:SetText("Playtime: "..AppTable[CSelID][3])
-				ScoreLBL:SetText("Score: "..AppTable[CSelID][4])
+				PTimeLBL:SetText("Playtime: " .. AppTable[CSelID][3])
+				ScoreLBL:SetText("Score: " .. AppTable[CSelID][4])
 			end
 		else
 			CSelID = ""
@@ -129,13 +129,13 @@ local function CreateAppGUI(BasePanel)
 			CSelID = SApp_ExtractSteamID(data)
 			if (CSelID and AppTable[CSelID]) then
 				ApplyText:SetValue(AppTable[CSelID][2])
-				PTimeLBL:SetText("Playtime: "..AppTable[CSelID][3])
-				ScoreLBL:SetText("Score: "..AppTable[CSelID][4])
+				PTimeLBL:SetText("Playtime: " .. AppTable[CSelID][3])
+				ScoreLBL:SetText("Score: " .. AppTable[CSelID][4])
 			end
 		end
 	end
 
-	if (!plisleader) then
+	if (not plisleader) then
 		local ApplyButton = vgui.Create( "DButton", BasePanel )
 		ApplyButton:SetText("Submit")
 		ApplyButton:SetPos((BasePanel:GetWide() / 2) - 50, BasePanel:GetTall() - 45)
@@ -165,7 +165,7 @@ local function CreateAppGUI(BasePanel)
 	if not bPanelGiven then
 		BasePanel:MakePopup()
 		BasePanel:SetVisible(false)
-		AppPanel = BasePanel	
+		AppPanel = BasePanel
 	end
 end
 

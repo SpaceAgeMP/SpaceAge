@@ -14,7 +14,7 @@ SA.Asteroids.MaxCount = 0
 local SA_Roid_Count = 0
 
 function SA.Asteroids.OnRemove(ent)
-	if(ent.RespOnRemove == true) then
+	if (ent.RespOnRemove == true) then
 		ent.RespOnRemove = false
 		SA_Roid_Count = SA_Roid_Count - 1
 	end
@@ -29,10 +29,10 @@ local function SpawnAsteroid(model, pos, size)
 	local asteroid = ents.Create("sa_roid")
 	asteroid:SetModel( model )
 	asteroid:SetPos( pos )
-	asteroid:SetAngles(Angle(math.random(0, 360), math.random(0, 360), math.random(0, 360))) 
+	asteroid:SetAngles(Angle(math.random(0, 360), math.random(0, 360), math.random(0, 360)))
 	asteroid:Spawn()
 	local phys = asteroid:GetPhysicsObject()
-	if(!phys:IsValid()) then return end
+	if (not phys:IsValid()) then return end
 	phys:SetMass(50000)
 	phys:EnableMotion(false)
 
@@ -47,7 +47,7 @@ end
 
 local function CreateAsteroids(cnt,noamount)
 	local Afield = {}
-	local filename = "spaceage/asteroids/"..game.GetMap()..".txt"
+	local filename = "spaceage/asteroids/" .. game.GetMap() .. ".txt"
 	local roids
 	if file.Exists(filename, "DATA") then
 		roids = util.JSONToTable(file.Read(filename))
@@ -61,9 +61,9 @@ local function CreateAsteroids(cnt,noamount)
 	if (cnt ~= 0) then
 		Afield.num = cnt
 	end
-	for k=1,Afield.num,1 do
+	for k = 1, Afield.num do
 		local picked = math.random(1,table.Count(AllAsteroids))
-		SpawnAsteroid(AllAsteroids[picked][1],Vector(Afield.x+math.random(-Afield.radius,Afield.radius),Afield.y+math.random(-Afield.radius,Afield.radius),Afield.z+(math.random(-Afield.radius,Afield.radius)/2)),AllAsteroids[picked][2])
+		SpawnAsteroid(AllAsteroids[picked][1],Vector(Afield.x + math.random(-Afield.radius,Afield.radius),Afield.y + math.random(-Afield.radius,Afield.radius),Afield.z + (math.random(-Afield.radius,Afield.radius) / 2)),AllAsteroids[picked][2])
 	end
 end
 timer.Simple(5,function() CreateAsteroids(0) end)
@@ -77,7 +77,7 @@ concommand.Add("sa_respawn_asteroids",function(ply)
 	end
 	SA_Roid_Count = 0
 	CreateAsteroids(0,true)
-	if(ply and ply:IsPlayer()) then
+	if (ply and ply:IsPlayer()) then
 		SystemSendMSG(ply,"respawned all asteroids")
 	end
 end)

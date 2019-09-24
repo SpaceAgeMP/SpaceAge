@@ -155,7 +155,7 @@ timer.Create("SA_RefreshFactions",30,0,function(fact)
 	if not fact then
 		SA.MySQL:Query("SELECT * FROM factions",LoadFactionResults)
 	else
-		SA.MySQL:Query("SELECT * FROM factions WHERE name = '"..SA.MySQL:Escape(fact).."'",LoadFactionResults)
+		SA.MySQL:Query("SELECT * FROM factions WHERE name = '" .. SA.MySQL:Escape(fact) .. "'",LoadFactionResults)
 	end
 end)
 
@@ -219,9 +219,9 @@ end
 
 local function DoApplyFactionRes(data, isok, merror, ply, steamid, plname, ffid, satx, cscore, pltimex, pltimexx)
 	if isok and data and data[1] then
-		SA.MySQL:Query("UPDATE applications SET name = '"..plname.."', faction = '"..ffid.."', text = '"..satx.."', score = '"..cscore.."', playtime = '"..pltimex.."' WHERE steamid = '"..steamid.."'", DoApplyFactionResRes, ply, ffid, pltimexx)
+		SA.MySQL:Query("UPDATE applications SET name = '" .. plname .. "', faction = '" .. ffid .. "', text = '" .. satx .. "', score = '" .. cscore .. "', playtime = '" .. pltimex .. "' WHERE steamid = '" .. steamid .. "'", DoApplyFactionResRes, ply, ffid, pltimexx)
 	else
-		SA.MySQL:Query("INSERT INTO applications (steamid, name, faction, text, score, playtime) VALUES ('"..steamid.."','"..plname.."','"..ffid.."','"..satx.."','"..cscore.."','"..pltimex.."')", DoApplyFactionResRes, ply, ffid, pltimexx)
+		SA.MySQL:Query("INSERT INTO applications (steamid, name, faction, text, score, playtime) VALUES ('" .. steamid .. "','" .. plname .. "','" .. ffid .. "','" .. satx .. "','" .. cscore .. "','" .. pltimex .. "')", DoApplyFactionResRes, ply, ffid, pltimexx)
 	end
 end
 
@@ -246,16 +246,16 @@ local function SA_DoApplyFaction(len, ply)
 	local mins = math.floor((pltime % 3600) / 60)
 	local secs = math.floor(pltime % 60)
 	if mins < 10 then
-		mins = "0"..mins
+		mins = "0" .. mins
 	end
 	if secs < 10 then
-		secs = "0"..secs
+		secs = "0" .. secs
 	end
-	local pltimexx = hrs..":"..mins..":"..secs
+	local pltimexx = hrs .. ":" .. mins .. ":" .. secs
 	local pltimex = SA.MySQL:Escape(pltimexx)
 
 	local cscore = SA.MySQL:Escape(ply.TotalCredits)
-	SA.MySQL:Query("SELECT steamid FROM applications WHERE steamid = '"..steamid.."'", DoApplyFactionRes, ply, steamid, plname, ffid, satx, cscore, pltimex)
+	SA.MySQL:Query("SELECT steamid FROM applications WHERE steamid = '" .. steamid .. "'", DoApplyFactionRes, ply, steamid, plname, ffid, satx, cscore, pltimex)
 end
 net.Receive("SA_DoApplyFaction",SA_DoApplyFaction)
 --FA.RegisterDataStream("SA_DoApplyFaction",0)
@@ -280,7 +280,7 @@ local function DoAcceptPlayerRes(data, isok, merror, ply, app, appf, args)
 			SA_Send_FactionRes(v)
 		end
 	end
-	SA.MySQL:Query('UPDATE players SET groupname = "'..SA.MySQL:Escape(SA.Factions.Table[appf][2])..'", isleader = 0 WHERE steamid = "'..SA.MySQL:Escape(args[1])..'"', DoAcceptPlayerResRes, ply)
+	SA.MySQL:Query('UPDATE players SET groupname = "' .. SA.MySQL:Escape(SA.Factions.Table[appf][2]) .. '", isleader = 0 WHERE steamid = "' .. SA.MySQL:Escape(args[1]) .. '"', DoAcceptPlayerResRes, ply)
 end
 
 local function DoAcceptPlayer(data, isok, merror, ply, args)
@@ -289,13 +289,13 @@ local function DoAcceptPlayer(data, isok, merror, ply, args)
 	local app = data[1]
 	local appf = tonumber(app['faction'])
 	if (appf ~= ply.TeamIndex) then return end
-	SA.MySQL:Query("DELETE FROM applications WHERE steamid = '"..SA.MySQL:Escape(args[1]).."'", DoAcceptPlayerRes, ply, app, appf, args)
+	SA.MySQL:Query("DELETE FROM applications WHERE steamid = '" .. SA.MySQL:Escape(args[1]) .. "'", DoAcceptPlayerRes, ply, app, appf, args)
 end
 
 local function SA_DoAcceptPlayer(ply,cmd,args)
 	if (#args ~= 1) then return end
 	if(!ply.IsLeader) then return end
-	SA.MySQL:Query("SELECT steamid, faction FROM applications WHERE steamid = '"..SA.MySQL:Escape(args[1]).."'", DoAcceptPlayer, ply, args)
+	SA.MySQL:Query("SELECT steamid, faction FROM applications WHERE steamid = '" .. SA.MySQL:Escape(args[1]) .. "'", DoAcceptPlayer, ply, args)
 end
 concommand.Add("sa_application_accept",SA_DoAcceptPlayer)
 
@@ -316,12 +316,12 @@ local function DoDenyPlayerRes(data, isok, merror, ply, args)
 	if (!data[1]) then return end
 	app = data[1]
 	if (tonumber(app['faction']) ~= ply.TeamIndex) then return end
-	SA.MySQL:Query("DELETE FROM applications WHERE steamid = '"..SA.MySQL:Escape(args[1]).."'", DoDenyPlayerResRes, ply, app)
+	SA.MySQL:Query("DELETE FROM applications WHERE steamid = '" .. SA.MySQL:Escape(args[1]) .. "'", DoDenyPlayerResRes, ply, app)
 end
 
 local function SA_DoDenyPlayer(ply,cmd,args)
 	if (#args ~= 1) then return end
 	if(!ply.IsLeader) then return end
-	SA.MySQL:Query("SELECT steamid, faction FROM applications WHERE steamid = '"..SA.MySQL:Escape(args[1]).."'", DoDenyPlayerRes, ply, args)
+	SA.MySQL:Query("SELECT steamid, faction FROM applications WHERE steamid = '" .. SA.MySQL:Escape(args[1]) .. "'", DoDenyPlayerRes, ply, args)
 end
 concommand.Add("sa_application_deny",SA_DoDenyPlayer)

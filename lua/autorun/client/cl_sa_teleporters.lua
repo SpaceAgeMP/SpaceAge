@@ -1,3 +1,4 @@
+local SA_TeleportPanel = nil
 local function DestroyTeleportPanel()
 	if SA_TeleportPanel then
 		SA_TeleportPanel:SetDeleteOnClose(true)
@@ -6,7 +7,6 @@ local function DestroyTeleportPanel()
 end
 DestroyTeleportPanel()
 local SA_TeleList = {}
-local SA_TeleportPanel = nil
 local SA_TeleportLocaLBox = nil
 local SA_TeleKey = "NONE"
 
@@ -27,9 +27,8 @@ end
 
 net.Receive("SA_TeleporterUpdate",function(len, ply)
 	local iMax = net.ReadInt(16)
-	local i = nil
 	SA_TeleList = {}
-	for i=1,iMax,1 do
+	for i = 1 ,iMax do
 		table.insert(SA_TeleList,net.ReadString())
 	end
 	RefreshTeleportPanel()
@@ -42,7 +41,7 @@ local function CreateTeleportPanel()
 	local BasePanel = vgui.Create("DFrame")
 	BasePanel:SetPos((ScrX / 2) - 320, (ScrY / 2) - 243)
 	BasePanel:SetSize(640,486)
-	BasePanel:SetTitle("Teleporter Form: "..SA_TeleKey)
+	BasePanel:SetTitle("Teleporter Form: " .. SA_TeleKey)
 	BasePanel:SetDraggable(true)
 	BasePanel:ShowCloseButton(false)
 	BasePanel:SetDeleteOnClose(false)
@@ -52,9 +51,9 @@ local function CreateTeleportPanel()
 	TeleLBox:SetPos(20,30)
 	TeleLBox:AddColumn("Name")
 	TeleLBox:SetSize(BasePanel:GetWide() - 40,405)
-	
+
 	SA_TeleportLocaLBox = TeleLBox
-	
+
 	local AcceptButton = vgui.Create( "DButton", BasePanel )
 	AcceptButton:SetText("Teleport")
 	AcceptButton:SetPos((BasePanel:GetWide() / 2) - 105, BasePanel:GetTall() - 45)
@@ -89,7 +88,7 @@ timer.Simple(0,CreateTeleportPanel)
 net.Receive("SA_OpenTeleporter", function(len, ply)
 	SA_TeleKey = net.ReadString()
 	RunConsoleCommand("sa_teleporter_update")
-	SA_TeleportPanel:SetTitle("Teleporter Form: "..SA_TeleKey)
+	SA_TeleportPanel:SetTitle("Teleporter Form: " .. SA_TeleKey)
 	gui.EnableScreenClicker(true)
 	SA_TeleportPanel:SetVisible(true)
 end)

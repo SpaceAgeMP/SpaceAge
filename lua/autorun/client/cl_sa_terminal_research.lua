@@ -17,7 +17,7 @@ function PANEL:Init()
 	self.Image = vgui.Create("DImage",self)
 	self.Image:SetPos(5,5)
 	self.Image:SetSize(64,64)
-	
+
 	self.ResearchName = vgui.Create("DLabel",self)
 	self.ResearchName:SetPos(79,5)
 	self.ResearchName:SetSize(310,22)
@@ -25,14 +25,14 @@ function PANEL:Init()
 	self.ResearchName:SetText("")
 	self.ResearchName:SetFont("Trebuchet22")
 	self.ResearchName:SetColor(ResearchNameColor)
-				
+
 	self.ResearchDesc = vgui.Create("DLabel",self)
 	self.ResearchDesc:SetPos(79,30)
 	self.ResearchDesc:SetSize(500,38)
 	self.ResearchDesc:SetText("")
 	self.ResearchDesc:SetFont("Trebuchet18")
 	self.ResearchDesc:SetColor(ResearchDescColor)
-	
+
 	self.ResearchRank = vgui.Create("DLabel",self)
 	self.ResearchRank:SetPos(585,5)
 	self.ResearchRank:SetSize(100,18)
@@ -40,7 +40,7 @@ function PANEL:Init()
 	self.ResearchRank:SetText("Rank: 0/0")
 	self.ResearchRank:SetFont("Trebuchet18")
 	self.ResearchRank:SetColor(ResearchRankColor)
-	
+
 	self.ResearchCost = vgui.Create("DLabel",self)
 	self.ResearchCost:SetPos(421,5)
 	self.ResearchCost:SetSize(140,18)
@@ -48,7 +48,7 @@ function PANEL:Init()
 	self.ResearchCost:SetText("Cost: 0")
 	self.ResearchCost:SetFont("Trebuchet18")
 	self.ResearchCost:SetColor(ResearchCostColor)
-	
+
 	self.UpgradeButton = vgui.Create("DButton",self)
 	self.UpgradeButton:SetPos(590,38)
 	self.UpgradeButton:SetSize(100,28)
@@ -67,18 +67,18 @@ function PANEL:SetDesc()
 		if reqtype == "unlock" then
 			for k,v in pairs(prereq) do
 				if v[1] == "faction" then
-					DescAdd = DescAdd.." (Faction: "
+					DescAdd = DescAdd .. " (Faction: "
 					for ke,ve in pairs(v[2]) do
-						DescAdd = DescAdd..SA.Factions.ToLong[ve]..","
+						DescAdd = DescAdd .. SA.Factions.ToLong[ve] .. ","
 					end
-					DescAdd = string.Left(DescAdd,string.len(DescAdd)-1)..")"
-				else			
+					DescAdd = string.Left(DescAdd,string.len(DescAdd) - 1) .. ")"
+				else
 					local name = ""
 					if self.ResearchTbl["variable"] == v[1] then
 						name = n["display"]
 					end
 					if name ~= "" then
-						DescAdd = DescAdd.." ("..name..": "..v[2]..")"
+						DescAdd = DescAdd .. " (" .. name .. ": " .. v[2] .. ")"
 					end
 				end
 			end
@@ -93,29 +93,29 @@ function PANEL:SetDesc()
 				if tbl and #tbl > 0 then
 					for k,v in pairs(tbl) do
 						if v[1] == "faction" then
-							DescAdd = DescAdd.." (Faction: "
+							DescAdd = DescAdd .. " (Faction: "
 							for ke,ve in pairs(v[2]) do
-								DescAdd = DescAdd..SA.Factions.ToLong[ve]..","
+								DescAdd = DescAdd .. SA.Factions.ToLong[ve] .. ","
 							end
-							DescAdd = string.Left(DescAdd,string.len(DescAdd)-1)..")"
-						else			
+							DescAdd = string.Left(DescAdd,string.len(DescAdd) - 1) .. ")"
+						else
 							local name = ""
 							if self.ResearchTbl["variable"] == v[1] then
 								name = n["display"]
 							end
 							if name ~= "" then
-								DescAdd = DescAdd.." ("..name..": "..v[2]..")"
+								DescAdd = DescAdd .. " (" .. name .. ": " .. v[2] .. ")"
 							end
 						end
 					end
 				end
 				if name ~= "" then
-					DescAdd = DescAdd.." ("..name..": "..level..")"
-				end	
+					DescAdd = DescAdd .. " (" .. name .. ": " .. level .. ")"
+				end
 			end
 		end
 		if (DescAdd ~= "\nRequires: ") then
-			Desc = Desc..DescAdd
+			Desc = Desc .. DescAdd
 		end
 	end
 	self.ResearchDesc:SetText(Desc)
@@ -124,14 +124,14 @@ end
 function PANEL:SetResearch(Research)
 	self.ResearchName:SetText(Research["display"])
 	self.ResearchTbl = Research
-	self.Image:SetImage("spaceage/"..Research["image"])
+	self.Image:SetImage("spaceage/" .. Research["image"])
 	self:Update(0)
 end
 
 function PANEL:Update(Rank,Cost)
 	self.CurrentRank = Rank
 	self.MaxRank = self.ResearchTbl["ranks"]
-	self.ResearchRank:SetText("Rank: "..Rank.."/"..self.MaxRank)
+	self.ResearchRank:SetText("Rank: " .. Rank .. "/" .. self.MaxRank)
 	self:SetDesc()
 	if (Cost) then
 		self.ResearchCost:SetText(Cost)

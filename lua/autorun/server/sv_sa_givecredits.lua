@@ -18,21 +18,21 @@ function SA.GiveCredits.Do(ply,v,amt)
 	local cred = tonumber(ply.Credits)
 	if (amt <= 0) or (math.ceil(amt) ~= math.floor(amt)) then ply:AddHint("That is not a valid number.", NOTIFY_CLEANUP, 5) return false end
 	if (amt > cred) then ply:AddHint("You do not have enough credits.", NOTIFY_CLEANUP, 5) return false end
-	
+
 	v.Credits = v.Credits + amt
 	ply.Credits = ply.Credits - amt
 	local num = SA.AddCommasToInt(amt)
-	ply:AddHint("You have given "..v:Name().." "..num.." credits.", NOTIFY_GENERIC, 5)
-	v:AddHint(ply:Name().." has given you "..num.." credits.", NOTIFY_GENERIC, 5)
+	ply:AddHint("You have given " .. v:Name() .. " " .. num .. " credits.", NOTIFY_GENERIC, 5)
+	v:AddHint(ply:Name() .. " has given you " .. num .. " credits.", NOTIFY_GENERIC, 5)
 	SA.SendCreditsScore(ply)
 	SA.SendCreditsScore(v)
-	
+
 	return true
 end
 
 function SA.GiveCredits.Confirm(ply,v,amt,func)
 	local theID = ply:SteamID()
-	if SA_GiveRequests[theID] then return false end --No multiple requests to same user...
+	if SA_GiveRequests[theID] then return false end --No multiple requests to same user .. .
 	SA_GiveRequests[theID] = {ply,v,amt,func}
 	net.Start("SA_OpenGiveQuery")
 		net.WriteString(v:Name())

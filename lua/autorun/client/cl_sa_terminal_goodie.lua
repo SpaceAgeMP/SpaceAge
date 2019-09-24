@@ -5,8 +5,6 @@ local PANEL = {}
 local GoodieNameColor = Color(255,255,255,255)
 local GoodieDescColor = Color(200,200,200,255)
 local DescBackColor = Color(50,50,50,255)
-local ResearchRankColor = Color(0,150,0,255)
-local RankBackColor = Color(75,75,75,255)
 
 local PanelColor = Color(100,100,100,255)
 local ImageBackColor = Color(25,25,25,255)
@@ -15,7 +13,7 @@ function PANEL:Init()
 	self.Image = vgui.Create("DImage",self)
 	self.Image:SetPos(5,5)
 	self.Image:SetSize(64,64)
-	
+
 	self.GoodieName = vgui.Create("DLabel",self)
 	self.GoodieName:SetPos(79,5)
 	self.GoodieName:SetSize(310,22)
@@ -23,14 +21,14 @@ function PANEL:Init()
 	self.GoodieName:SetText("")
 	self.GoodieName:SetFont("Trebuchet22")
 	self.GoodieName:SetColor(GoodieNameColor)
-				
+
 	self.GoodieDesc = vgui.Create("DLabel",self)
 	self.GoodieDesc:SetPos(79,30)
 	self.GoodieDesc:SetSize(500,38)
 	self.GoodieDesc:SetText("")
 	self.GoodieDesc:SetFont("Trebuchet18")
 	self.GoodieDesc:SetColor(GoodieDescColor)
-	
+
 	self.UseButton = vgui.Create("DButton",self)
 	self.UseButton:SetPos(590,38)
 	self.UseButton:SetSize(100,28)
@@ -45,7 +43,7 @@ function PANEL:SetNameDescID(intid,goodieid)
 	self.GoodieName:SetText(intid.name)
 	self.GoodieDesc:SetText(intid.desc)
 	self.GoodieID = goodieid
-	self.Image:SetImage("spaceage/"..intid.image)
+	self.Image:SetImage("spaceage/" .. intid.image)
 end
 
 function PANEL:Paint()

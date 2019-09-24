@@ -1,5 +1,3 @@
-local data, isok, merror
-
 local FactionCache = {}
 
 local function SA_GK_PlayerCheck(sid64, ip, svPassword, pass, name)
@@ -35,10 +33,10 @@ local function RefreshCache()
 	if not sa_faction_only:GetBool() then return end
 	local isok, err = SA.MySQL:Query("SELECT steamid FROM players WHERE groupname ~= 'freelancer' AND score >= 100000000", RefreshCacheDone)
 	if not isok then
-		Msg("Error loading gatekeeper cache: "..tostring(err).."\n")
+		Msg("Error loading gatekeeper cache: " .. tostring(err) .. "\n")
 		return
 	end
-	Msg("Loading gatekeeper cache...\n")
+	Msg("Loading gatekeeper cache .. .\n")
 end
 timer.Create("SA_FactionCacheRefresh", 60, 0, RefreshCache)
 timer.Create("SA_FirstFactionCacheRefresh", 0.01, 1, RefreshCache)
