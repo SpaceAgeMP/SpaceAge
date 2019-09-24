@@ -175,9 +175,9 @@ local function SA_SetSpawnPos( ply )
 			return table.Random(SA.Factions.Table[idx][6])
 		end
 	else
-		ply:SetTeam(SA.Factions.Max+1)
+		ply:SetTeam(SA.Factions.Max + 1)
 		if SA.Factions.Table[1][6] then
-			return table.Random(SA.Factions.Table[SA.Factions.Max+1][6])
+			return table.Random(SA.Factions.Table[SA.Factions.Max + 1][6])
 		end
 	end
 end
@@ -201,10 +201,8 @@ local function DoApplyFactionResRes(data, isok, merror, ply, ffid, pltimexx)
 	net.Send()
 	local toPlayers = {}
 	for k, v in pairs(player.GetAll()) do
- 		if v.IsLeader then
-			if v.TeamIndex == ffid then
-				table.insert(toPlayers,v)
-			end
+		if v.IsLeader and v.TeamIndex == ffid then
+			table.insert(toPlayers,v)
 		end
 	end
 	net.Start("SA_AddApplication")
@@ -228,7 +226,7 @@ end
 local function SA_DoApplyFaction(len, ply)
 	local sat = net.ReadString()
 	local forfaction = net.ReadString()
-	satx = SA.MySQL:Escape(sat)
+	local satx = SA.MySQL:Escape(sat)
 	local ffid = 0
 	for k, v in pairs(SA.Factions.Table) do
 		if (v[1] == forfaction) then
@@ -265,13 +263,13 @@ local function DoAcceptPlayerResRes(data, isok, merror, ply)
 end
 
 local function DoAcceptPlayerRes(data, isok, merror, ply, app, appf, args)
-	if (!isok) then return end
+	if (not isok) then return end
 	for k, v in pairs(player.GetAll()) do
- 		if v.IsLeader then
+		if v.IsLeader then
 			net.Start("SA_DoDeleteApplication")
-				net.WriteString(app['steamid'])
+				net.WriteString(app.steamid)
 			net.Send(v)
-		elseif (v:SteamID() == app['steamid']) then
+		elseif (v:SteamID() == app.steamid) then
 			v.TeamIndex = appf
 			v.UserGroup = SA.Factions.Table[appf][2]
 			v.IsLeader = false
@@ -284,8 +282,8 @@ local function DoAcceptPlayerRes(data, isok, merror, ply, app, appf, args)
 end
 
 local function DoAcceptPlayer(data, isok, merror, ply, args)
-	if (!isok) then return end
-	if (!data[1]) then return end
+	if (not isok) then return end
+	if (not data[1]) then return end
 	local app = data[1]
 	local appf = tonumber(app['faction'])
 	if (appf ~= ply.TeamIndex) then return end
@@ -294,17 +292,17 @@ end
 
 local function SA_DoAcceptPlayer(ply,cmd,args)
 	if (#args ~= 1) then return end
-	if(!ply.IsLeader) then return end
+	if (not ply.IsLeader) then return end
 	SA.MySQL:Query("SELECT steamid, faction FROM applications WHERE steamid = '" .. SA.MySQL:Escape(args[1]) .. "'", DoAcceptPlayer, ply, args)
 end
 concommand.Add("sa_application_accept",SA_DoAcceptPlayer)
 
 local function DoDenyPlayerResRes(data, isok, merror, ply, app)
-	if (!isok) then return end
+	if (not isok) then return end
 	for k, v in pairs(player.GetAll()) do
- 		if v.IsLeader then
+		if v.IsLeader then
 			net.Start("SA_DoDeleteApplication")
-				net.WriteString(app['steamid'])
+				net.WriteString(app.steamid)
 			net.Send(v)
 		end
 	end
@@ -312,16 +310,16 @@ local function DoDenyPlayerResRes(data, isok, merror, ply, app)
 end
 
 local function DoDenyPlayerRes(data, isok, merror, ply, args)
-	if (!isok) then return end
-	if (!data[1]) then return end
+	if (not isok) then return end
+	if (not data[1]) then return end
 	app = data[1]
-	if (tonumber(app['faction']) ~= ply.TeamIndex) then return end
+	if (tonumber(app.faction) ~= ply.TeamIndex) then return end
 	SA.MySQL:Query("DELETE FROM applications WHERE steamid = '" .. SA.MySQL:Escape(args[1]) .. "'", DoDenyPlayerResRes, ply, app)
 end
 
 local function SA_DoDenyPlayer(ply,cmd,args)
 	if (#args ~= 1) then return end
-	if(!ply.IsLeader) then return end
+	if (not ply.IsLeader) then return end
 	SA.MySQL:Query("SELECT steamid, faction FROM applications WHERE steamid = '" .. SA.MySQL:Escape(args[1]) .. "'", DoDenyPlayerRes, ply, args)
 end
 concommand.Add("sa_application_deny",SA_DoDenyPlayer)

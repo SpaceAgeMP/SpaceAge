@@ -78,7 +78,7 @@ local function AbortTeleport(ply,cmd,args)
 	net.Start("SA_HideTeleportPanel")
 		net.WriteBool(false)
 	net.Send(ply)
-	hook.Remove("KeyPress","SA_TeleAbortMove_"..ply:EntIndex())
+	hook.Remove("KeyPress", "SA_TeleAbortMove_" .. ply:EntIndex())
 end
 concommand.Add("sa_teleporter_cancel",AbortTeleport)
 
@@ -101,10 +101,10 @@ function SA.Teleporter.Open(ply,TeleKey)
 	net.Start("SA_OpenTeleporter")
 		net.WriteString(TeleKey)
 	net.Send(ply)
-	hook.Add("KeyPress","SA_TeleAbortMove_"..ply:EntIndex(),function(ply,key)
+	hook.Add("KeyPress", "SA_TeleAbortMove_" .. ply:EntIndex(),function(ply, key)
 		if key ~= IN_USE and ply and ply.IsValid and ply:IsValid() then
 			AbortTeleport(ply)
-			hook.Remove("KeyPress","SA_TeleAbortMove_"..ply:EntIndex())
+			hook.Remove("KeyPress","SA_TeleAbortMove_" .. ply:EntIndex())
 		end
 	end)
 end

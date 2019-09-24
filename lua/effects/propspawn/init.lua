@@ -15,8 +15,8 @@ function EFFECT:Init(data)
 	self.ent = ent;
 	local dim = self:OBBMaxs() - self:OBBMins();
 	self.dimx = dim.x;
-	self.dimy = dim.y*1.05;
-	self.dimz = dim.z*1.05;
+	self.dimy = dim.y * 1.05;
+	self.dimz = dim.z * 1.05;
 	self.buildtime = 2;
 	self.inittime = RealTime();
 	self.building = true;
@@ -27,24 +27,23 @@ end
 
 function EFFECT:RenderBuild()
 	local col = self.buildcolor;
-    local front = self:GetForward();
+	local front = self:GetForward();
 	local center = self:LocalToWorld(self:OBBCenter());
-	local offset = front * self.dimx * (math.min((RealTime() - self.inittime)/self.buildtime,1)-0.5)
+	local offset = front * self.dimx * (math.min((RealTime() - self.inittime) / self.buildtime, 1) - 0.5)
 	SetMaterialOverride(buildmat);
-    local ang = self:GetAngles();
 	render.EnableClipping(true);
-    render.PushCustomClipPlane(-front,-front:Dot(center - offset));
+	render.PushCustomClipPlane(-front,-front:Dot(center - offset));
 		self:DrawModel();
 	render.PopCustomClipPlane();
 	SetMaterialOverride(nil);
-    render.PushCustomClipPlane(front,front:Dot(center - offset));
+	render.PushCustomClipPlane(front,front:Dot(center - offset));
 		self:DrawModel()
-    render.PopCustomClipPlane();
-    render.EnableClipping(false);
+	render.PopCustomClipPlane();
+	render.EnableClipping(false);
 	local front = front * (self.dimx / 2);
 	local right = self:GetRight() * (self.dimy / 2);
 	local top = self:GetUp() * (self.dimz / 2);
-	
+
 	local FRT = (center + front + right + top);
 	local BLB = (center - offset - right - top);
 	local FLT = (center + front - right + top);
@@ -53,10 +52,10 @@ function EFFECT:RenderBuild()
 	local FRB = (center + front + right - top);
 	local FLB = (center + front - right - top);
 	local BRB = (center - offset + right - top);
-	
+
 	render.SetMaterial(buildmat);
 	render.DrawQuad(BLT,BRT,BRB,BLB);
-	
+
 	render.SetMaterial(beammat);
 	rDrawBeam(FLT, FRT, 5, 0, 0, col);
 	rDrawBeam(FRT, BRT, 5, 0, 0, col);
@@ -72,9 +71,9 @@ function EFFECT:RenderBuild()
 	rDrawBeam(FRB, BRB, 5, 0, 0, col);
 	rDrawBeam(BRB, BLB, 5, 0, 0, col);
 	rDrawBeam(BLB, FLB, 5, 0, 0, col);
-	
+
 	render.SetMaterial(spritemat);
-	local sin = ((math.sin(RealTime()*4)+1)+0.2)*16;
+	local sin = ((math.sin(RealTime() * 4) + 1) + 0.2) * 16;
 	rDrawSprite(FRT,sin,sin,col);
 	rDrawSprite(BLB,sin,sin,col);
 	rDrawSprite(FLT,sin,sin,col);
@@ -86,15 +85,15 @@ function EFFECT:RenderBuild()
 end
 
 function EFFECT:Think()
-	if(!SA.ValidEntity(self.ent)) then
+	if (not SA.ValidEntity(self.ent)) then
 		return false;
 	end
 	return not self.shouldremove;
 end
 
 function EFFECT:Render()
-	if(self.building) then
-		if((self.inittime + self.buildtime) <= RealTime()) then
+	if (self.building) then
+		if ((self.inittime + self.buildtime) <= RealTime()) then
 			self.building = false;
 			self:RenderBuildEnd();
 		else
@@ -138,7 +137,7 @@ function EFFECT:RenderBuildEnd()
 	rDrawBeam(FRB, BRB, 5, 0, 0, col);
 	rDrawBeam(BRB, BLB, 5, 0, 0, col);
 	rDrawBeam(BLB, FLB, 5, 0, 0, col);
-	
+
 	render.SetMaterial(spritemat);
 	rDrawSprite(FRT,18,18,col);
 	rDrawSprite(BLB,18,18,col);
@@ -148,9 +147,9 @@ function EFFECT:RenderBuildEnd()
 	rDrawSprite(FRB,18,18,col);
 	rDrawSprite(FLB,18,18,col);
 	rDrawSprite(BRB,18,18,col);
-	
+
 	self.FadeColor = self.FadeColor - 0.01;
-	if(self.FadeColor <= 0) then
+	if (self.FadeColor <= 0) then
 		self.ent:SetColor(255,255,255,255)
 		self.shouldremove = true;
 	end

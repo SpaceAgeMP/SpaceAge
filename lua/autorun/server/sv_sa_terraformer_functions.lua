@@ -30,17 +30,13 @@ local function SA_Terraformer_PushAtmosphere(terent,resName,atmoname,amount)
 				terair.h = 0
 			end
 		end
-		if atmoname ~= "co2" and neededAm > 0 and (terair.co2 / terair.max) > 0.80 then
-			if terair.co2 > neededAm then
-				terair.co2 = terair.co2 - neededAm
-				neededAm = 0
-			end
+		if atmoname ~= "co2" and neededAm > 0 and (terair.co2 / terair.max) > 0.80 and terair.co2 > neededAm  then
+			terair.co2 = terair.co2 - neededAm
+			neededAm = 0
 		end
-		if atmoname ~= "o2" and neededAm > 0 and (terair.o2 / terair.max) > 0.10 then
-			if terair.o2 > neededAm then
-				terair.o2 = terair.o2 - neededAm
-				neededAm = 0
-			end
+		if atmoname ~= "o2" and neededAm > 0 and (terair.o2 / terair.max) > 0.10 and terair.o2 > neededAm  then
+			terair.o2 = terair.o2 - neededAm
+			neededAm = 0
 		end
 		amount = amount - neededAm
 	else
@@ -74,13 +70,13 @@ local function SA_Terraformer_Sparks(terent)
 end
 
 local function SA_Terraformer_Explosion(terent)
-		local OBBMins = terent:OBBMins() 
+		local OBBMins = terent:OBBMins()
 		local OBBMaxs = terent:OBBMaxs()
 		local vPoint = terent:LocalToWorld(Vector(math.random(OBBMins.x,OBBMaxs.x),math.random(OBBMins.y,OBBMaxs.y),math.random(OBBMins.z,OBBMaxs.z)))
-		local effectdata = EffectData() 
+		local effectdata = EffectData()
 		effectdata:SetStart( vPoint )
-		effectdata:SetOrigin( vPoint ) 
-		effectdata:SetScale( 1 ) 
+		effectdata:SetOrigin( vPoint )
+		effectdata:SetScale( 1 )
 		effectdata:SetMagnitude( 1 )
 		util.Effect( "Explosion", effectdata )
 end
@@ -88,20 +84,19 @@ end
 function SA.Terraformer.Run(terent)
 	local ply = SA.PP.GetOwner(terent)
 	if not (ply and ply:IsValid() and ply:IsPlayer()) then return end
-	
+
 	local SB = CAF.GetAddon("Spacebuild")
 	if terent.environment.IsProtected or (not terent.environment:IsPlanet()) or terent.environment == SB.GetSpace() then return end
 	local RD = CAF.GetAddon("Resource Distribution")
 	local energy = RD.GetResourceAmount(terent, "energy")
 	local o2 = RD.GetResourceAmount(terent, "oxygen")
-	local co2 = RD.GetResourceAmount(terent, "carbon dioxide")
 	local dm = RD.GetResourceAmount(terent, "dark matter")
 	local tc = RD.GetResourceAmount(terent, "terracrystal")
 	local pf = RD.GetResourceAmount(terent, "permafrost")
 	local terenv = terent.environment
 	local tersbenv = terenv.sbenvironment
 	local terair = tersbenv.air
-	if(terent.State < 1) then
+	if (terent.State < 1) then
 		terent:SetState(1)
 		terent.StateTicks = 1
 	end
@@ -155,10 +150,10 @@ function SA.Terraformer.Run(terent)
 		end
 		tersbenv.atmosphere = tersbenv.pressure
 	elseif terent.State == 4 then --We need to make sure the planet is terraformable (temperature 1 adaption)
-		local tempe = tersbenv.temperature + (( tersbenv.temperature * ((terenv:GetCO2Percentage() - terair.co2per)/100))/2)
+		local tempe = tersbenv.temperature + (( tersbenv.temperature * ((terenv:GetCO2Percentage() - terair.co2per) / 100)) / 2)
 		local tvalid = true
 		if tempe > 295 then
-			tempe = tersbenv.temperature + (( tersbenv.temperature * ((0 - terair.co2per)/100))/2) --Try what would happen without CO2
+			tempe = tersbenv.temperature + (( tersbenv.temperature * ((0 - terair.co2per) / 100)) / 2) --Try what would happen without CO2
 			if tempe > 295 then --Nah, not enough :/
 				if pf < 1000 then
 					terent:ChangeStability(math.random(-30,-10))
@@ -169,7 +164,7 @@ function SA.Terraformer.Run(terent)
 				tvalid = false
 			end
 		elseif tempe < 288 then
-			tempe = tersbenv.temperature + (( tersbenv.temperature * ((80 - terair.co2per)/100))/2) --Try what would happen with nearly full CO2
+			tempe = tersbenv.temperature + (( tersbenv.temperature * ((80 - terair.co2per) / 100)) / 2) --Try what would happen with nearly full CO2
 			if tempe < 288 then --Nah, not enough :/
 				if dm < 1000 then
 					terent:ChangeStability(math.random(-30,-10))
@@ -178,7 +173,7 @@ function SA.Terraformer.Run(terent)
 				RD.ConsumeResource(terent, "dark matter", 1000)
 				tersbenv.temperature = tersbenv.temperature + 1
 				tvalid = false
-			end		
+			end
 		end
 		if tvalid then
 			terent:SetState(5)
@@ -213,7 +208,7 @@ function SA.Terraformer.Run(terent)
 		if (terair.o2 / terair.max) < 0.10 then
 			if o2 < 10000 then
 				terent:ChangeStability(math.random(-30,-10))
-				return				
+				return
 			end
 			SA_Terraformer_PushAtmosphere(terent,"oxygen","o2",10000)
 			avalid = false
@@ -261,7 +256,7 @@ function SA.Terraformer.SpazzOut(terent,forcekill)
 	if energy < 10000 then
 		terent:TurnOff()
 		return
-	else	
+	else
 		RD.ConsumeResource(terent, "energy", 10000)
 	end
 	local haschanged = false
@@ -291,7 +286,7 @@ function SA.Terraformer.SpazzOut(terent,forcekill)
 		haschanged = true
 	else
 		myenv.temperature2 = 0
-	end	
+	end
 	if (not haschanged) or forcekill then
 		terent.FinalSpazzed = true
 		if math.random(0,1) > 0.5 then
@@ -301,7 +296,7 @@ function SA.Terraformer.SpazzOut(terent,forcekill)
 			myenv.temperature = math.random(10,200)
 			myenv.temperature2 = math.random(10,200)
 		end
-		if(myenv.temperature2 < myenv.temperature) then
+		if (myenv.temperature2 < myenv.temperature) then
 			myenv.temperature2 = myenv.temperature + 10
 		end
 		local leftair = envair.max
@@ -320,18 +315,18 @@ function SA.Terraformer.SpazzOut(terent,forcekill)
 		envair.empty = leftair
 		leftair = 0
 		if not forcekill then
-			local vPoint = terent:GetPos() 
-			local effectdata = EffectData() 
+			local vPoint = terent:GetPos()
+			local effectdata = EffectData()
 			effectdata:SetStart( vPoint )
-			effectdata:SetOrigin( vPoint ) 
-			effectdata:SetScale( 2300 ) 
+			effectdata:SetOrigin( vPoint )
+			effectdata:SetScale( 2300 )
 			effectdata:SetMagnitude( 1 )
 			util.Effect( "warpcore_breach", effectdata )
 			local shake = ents.Create("env_shake")
 			shake:SetKeyValue("amplitude", "16")
 			shake:SetKeyValue("duration", "6")
-			shake:SetKeyValue("radius", 1) 
-			shake:SetKeyValue("spawnflags", 5) 
+			shake:SetKeyValue("radius", 1)
+			shake:SetKeyValue("spawnflags", 5)
 			shake:SetKeyValue("frequency", "240")
 			shake:SetPos(vPoint)
 			shake:Spawn()
@@ -344,11 +339,11 @@ function SA.Terraformer.SpazzOut(terent,forcekill)
 						v:Kill()
 					elseif v:IsVehicle() then
 						local vD = v:GetPassenger()
-						if(vD and vD:IsValid() and (vD:IsPlayer() or vD:IsNPC())) then
+						if (vD and vD:IsValid() and (vD:IsPlayer() or vD:IsNPC())) then
 							vD:Kill()
 						end
 						local vD = v:GetDriver()
-						if(vD and vD:IsValid() and (vD:IsPlayer() or vD:IsNPC())) then
+						if (vD and vD:IsValid() and (vD:IsPlayer() or vD:IsNPC())) then
 							vD:Kill()
 						end
 						v:Remove()

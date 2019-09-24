@@ -41,7 +41,7 @@ local function CheckHookIn()
 	RunConsoleCommand("LS_Display_HUD", "0")
 	usermessage.Hook("LS_umsg1", LS_umsg_hook1)
 	usermessage.Hook("LS_umsg2", LS_umsg_hook2)
-	timer.Destroy("SA_CheckHUDHookIn")
+	timer.Remove("SA_CheckHUDHookIn")
 	print("SA HUD loaded...")
 end
 timer.Create("SA_CheckHUDHookIn", 1, 0, CheckHookIn)
@@ -64,13 +64,12 @@ surface.CreateFont( "DefaultLarge", {
 	additive = false,
 	outline = false,
 } )
-local HUDFontLarge = "DefaultLarge"
 local HUDFont = "Default"
 
 SA_HUDBlink = true
 timer.Create("SA_HUDBlink",0.5,0,function() SA_HUDBlink = not SA_HUDBlink end)
 
-timer.Destroy("SA_HealthBarRed")
+timer.Remove("SA_HealthBarRed")
 SA_HealthBarRed = 0
 timer.Create("SA_HealthBarRed",0.01,0,function()
 	if SA_HealthBarRed > 0 then
@@ -130,7 +129,7 @@ function SA_CustomHUDPaint()
 	local PlHeightX = math.Max(PlRelX * HeightMul, 4)
 	draw.RoundedBox(4, ScW - 70, (ScH - Inset) - PlHeightX, 40, PlHeightX, HUDHealth)
 	draw.SimpleText(LocalPlayer():Health(), HUDFont, ScW - 50, ScH - 38, HUDHealth, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-	if(LocalPlayer():Armor() > 0) then
+	if (LocalPlayer():Armor() > 0) then
 		local PlRelX = LocalPlayer():Armor() / 100
 		if PlRelX > 1 then PlRelX = 1 end
 		local PlHeightX = math.Max(PlRelX * HeightMul, 4)
@@ -149,7 +148,6 @@ function SA_CustomHUDPaint()
 	local primAmmoX = SWEP:Clip1()
 	if primMaxAmmo > 0 and primAmmoX > 0 then
 		local OneAmmoH = (HeightMul / primMaxAmmo) - 3
-		local i = 0
 		surface.SetDrawColor(HUDAmmo1)
 		for i = 1,primAmmoX,1 do
 			local PlRelX = i / primMaxAmmo
@@ -187,7 +185,6 @@ function SA_CustomHUDPaint()
 	if ls_current_unhabitable or alwaysshowtemp:GetBool() then
 		local tempUnit = " K"
 
-		local GlobalTemp_Max = 600
 		local FairTemp_Mid = (FairTemp_Min + FairTemp_Max) / 2
 
 		local coolTemp = Color(0,0,255,255)
@@ -213,7 +210,7 @@ function SA_CustomHUDPaint()
 		--temp bar outline
 		surface.SetDrawColor(Color(0,0,0,255))
 		draw.NoTexture()
-		surface.DrawTexturedRectRounded( (ScW - tempGaugeWid) / 2 - outlineW, ScH - 90 + 5 - outlineW, tempGaugeWid + outlineW*2+1, 20 + outlineW*2, 4, 4, true, true, true, true)
+		surface.DrawTexturedRectRounded( (ScW - tempGaugeWid) / 2 - outlineW, ScH - 90 + 5 - outlineW, tempGaugeWid + outlineW * 2 + 1, 20 + outlineW * 2, 4, 4, true, true, true, true)
 
 		-- cool temp
 		surface.SetDrawColor(coolTemp)
@@ -252,14 +249,14 @@ function SA_CustomHUDPaint()
 		surface.SetDrawColor(Color(0,0,0,235))
 		surface.SetTexture(surface.GetTextureID("vgui/gradient-d"))
 		surface.DrawTexturedRectRounded( (ScW - tempGaugeWid) / 2, ScH - 90 + 5, Wid, 20, 4, 4, true, false, true, false)
-		surface.DrawTexturedRectRounded( Wid + XMinX+Wid2-1, ScH - 90 + 5, tempGaugeWid - Wid - Wid2+1, 20, 4, 4, false, true, false ,true )
+		surface.DrawTexturedRectRounded( Wid + XMinX + Wid2-1, ScH - 90 + 5, tempGaugeWid - Wid - Wid2 + 1, 20, 4, 4, false, true, false ,true )
 
 		surface.DrawTexturedRectRounded( Wid + XMinX-1, ScH - 90 + 5, Wid2, 20, 2, 2, false, false, false, false)
 
 
 		surface.SetTexture(surface.GetTextureID("vgui/gradient-u"))
 		surface.DrawTexturedRectRounded( (ScW - tempGaugeWid) / 2, ScH - 90 + 5, Wid, 20, 4, 4, true, false, true, false)
-		surface.DrawTexturedRectRounded( Wid + XMinX+Wid2-1, ScH - 90 + 5, tempGaugeWid - Wid - Wid2+1, 20, 4, 4, false, true, false ,true )
+		surface.DrawTexturedRectRounded( Wid + XMinX + Wid2-1, ScH - 90 + 5, tempGaugeWid - Wid - Wid2 + 1, 20, 4, 4, false, true, false ,true )
 
 		surface.DrawTexturedRectRounded( Wid + XMinX-1, ScH - 90 + 5, Wid2, 20, 2, 2, false, false, false, false)
 
@@ -283,10 +280,10 @@ function SA_CustomHUDPaint()
 
 		-- temperature texts
 
-		draw.SimpleTextOutlined(tostring(ls_tmp)..tempUnit, "ScoreboardDefault", XWidX-3, ScH - 122, xMyTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, Color(20,20,20,255))
+		draw.SimpleTextOutlined(tostring(ls_tmp) .. tempUnit, "ScoreboardDefault", XWidX-3, ScH - 122, xMyTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, Color(20,20,20,255))
 
-		draw.SimpleTextOutlined(tostring(GlobalTemp_Min)..tempUnit, "Default", XMinX, ScH - 55, coolTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, Color(20,20,20,255))
-		draw.SimpleTextOutlined(tostring(GlobalTemp_Max)..tempUnit, "Default", (XMinX + 380), ScH - 55, hotTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, Color(20,20,20,255))
+		draw.SimpleTextOutlined(tostring(GlobalTemp_Min) .. tempUnit, "Default", XMinX, ScH - 55, coolTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, Color(20,20,20,255))
+		draw.SimpleTextOutlined(tostring(GlobalTemp_Max) .. tempUnit, "Default", XMinX + 380, ScH - 55, hotTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, Color(20,20,20,255))
 
 
 
@@ -313,7 +310,7 @@ hook.Add("HUDPaint", "SA_CustomHUDPaint", SA_CustomHUDPaint)
 -- gets a set of edge vertex positions for rounding an edge 90 degrees from startDegrees
 local function GetProceduralEdge(vertices, cornerRadius, divisions, startDegrees, circleCenterX, circleCenterY, x, y, width, height)
 
-	for i=1, divisions do
+	for i = 1, divisions do
 
 		local offset = (90 / divisions) * i
 		local degrees = startDegrees - offset
@@ -321,7 +318,7 @@ local function GetProceduralEdge(vertices, cornerRadius, divisions, startDegrees
 		local finalX = circleCenterX + (math.cos(math.rad( degrees )) * cornerRadius);
   		local finalY = circleCenterY - (math.sin(math.rad( degrees )) * cornerRadius);
 
-		table.insert(vertices, {x = finalX, y = finalY, u = (finalX-x)/width, v = (finalY-y)/height})
+		table.insert(vertices, {x = finalX, y = finalY, u = (finalX-x) / width, v = (finalY-y) / height})
 
 	end
 end
@@ -330,14 +327,9 @@ end
 function surface.DrawTexturedRectRounded( x, y, width, height, cornerRadius, divisions, roundTopLeft, roundTopRight, roundBottomLeft, roundBottomRight )
 	local vertices = {};
 
-	local spacing = cornerRadius / divisions
-
---top left and variable init
+	--top left and variable init
 	local cornerX = x
 	local cornerY = y
-
-	local offset = 0
-	local lerpValue = 0
 
 	local circleCenterX = 0
 	local circleCenterY = 0
@@ -373,7 +365,7 @@ function surface.DrawTexturedRectRounded( x, y, width, height, cornerRadius, div
 	if (roundTL) then
 		GetProceduralEdge(vertices, cornerRadius, divisions, startDegrees, circleCenterX, circleCenterY, x, y, width, height)
 	else
-		table.insert(vertices, {x = cornerX, y = cornerY, u = (cornerX-x)/width, v = (cornerY-y)/height })
+		table.insert(vertices, {x = cornerX, y = cornerY, u = (cornerX-x) / width, v = (cornerY-y) / height })
 	end
 
 
@@ -385,7 +377,7 @@ function surface.DrawTexturedRectRounded( x, y, width, height, cornerRadius, div
 	if (roundTR) then
 		GetProceduralEdge(vertices, cornerRadius, divisions, startDegrees, circleCenterX, circleCenterY, x, y, width, height)
 	else
-		table.insert(vertices, {x = cornerX, y = cornerY, u = (cornerX-x) / width, v = (cornerY-y)/height })
+		table.insert(vertices, {x = cornerX, y = cornerY, u = (cornerX-x) / width, v = (cornerY-y) / height })
 	end
 
 -- bottom right
@@ -396,7 +388,7 @@ function surface.DrawTexturedRectRounded( x, y, width, height, cornerRadius, div
 	if (roundBR) then
 		GetProceduralEdge(vertices, cornerRadius, divisions, startDegrees, circleCenterX, circleCenterY, x, y, width, height)
 	else
-		table.insert(vertices, {x = cornerX, y = cornerY, u = (cornerX-x) / width, v = (cornerY-y)/height})
+		table.insert(vertices, {x = cornerX, y = cornerY, u = (cornerX-x) / width, v = (cornerY-y) / height})
 	end
 
 -- bottom left
@@ -407,7 +399,7 @@ function surface.DrawTexturedRectRounded( x, y, width, height, cornerRadius, div
 	if (roundBL) then
 		GetProceduralEdge(vertices, cornerRadius, divisions, startDegrees, circleCenterX, circleCenterY, x, y, width, height)
 	else
-		table.insert(vertices, {x = cornerX, y = cornerY, u = (cornerX-x) / width, v = (cornerY-y)/height})
+		table.insert(vertices, {x = cornerX, y = cornerY, u = (cornerX-x) / width, v = (cornerY-y) / height})
 	end
 
 
@@ -433,7 +425,7 @@ function DrawMeterSlantSection(_slantAmount, _width, _height, _xMax, _yMax, _yMa
 	local slantSection = {}
 
 
-    -- if the top right point is less than  our current value (as a bar y position)
+	-- if the top right point is less than  our current value (as a bar y position)
 	local cutAmount = 0
 	if ((yMin - _slantAmount) < _yMinCut) then
 		cutAmount = math.abs(_yMinCut-yMin)
@@ -470,15 +462,15 @@ function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 	local batLineWid = 6
 
 	local yPos = (ScH - MeterHei) - 40
-	local xPos = (ScW / 2) + (tempGaugeWid/2) + MeterWid + 20
+	local xPos = (ScW / 2) + (tempGaugeWid / 2) + MeterWid + 20
 
 
-	local ValCol = Color(255*(1-(Value/4000)),255*(Value/4000),0,255)
+	local ValCol = Color(255 * (1-(Value / 4000)),255 * (Value / 4000),0,255)
 
 	local grey = 60
 	local batteryColor = Color(grey,grey,grey,230)
 
-	draw.RoundedBox(4, xPos-8, yPos-40, MeterWid+22, MeterHei+16 + 40, ColBack)
+	draw.RoundedBox(4, xPos-8, yPos-40, MeterWid + 22, MeterHei + 16 + 40, ColBack)
 
 	local batteryMeterColor = ValCol
 	-- vert - draw the sides of the battery, move them down and size them to compensate for the tip of the battery graphic
@@ -488,7 +480,7 @@ function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 
 	-- horiz - draw the lines leading to the tip
 
-	local edgeLength = (MeterWid/2 - batteryTipWid/2)
+	local edgeLength = (MeterWid / 2 - batteryTipWid / 2)
 
 	draw.RoundedBoxEx(4, xPos + batLineWid, yPos + batteryTipHei, edgeLength, batLineWid, batteryColor, false, false, false, true)
 	draw.RoundedBoxEx(4, xPos + edgeLength + batteryTipWid, yPos + batteryTipHei, edgeLength, batLineWid, batteryColor, false, false, true, false)
@@ -502,36 +494,34 @@ function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 	draw.RoundedBoxEx(4, xPos + edgeLength + batLineWid, yPos, batteryTipWid-batLineWid, batLineWid, batteryColor)
 
 	-- horiz - draw the bottom of the battery
-	draw.RoundedBoxEx(4, xPos, yPos + MeterHei, MeterWid+ batLineWid, batLineWid, batteryColor)
+	draw.RoundedBoxEx(4, xPos, yPos + MeterHei, MeterWid + batLineWid, batLineWid, batteryColor)
 
 
 	--function DrawVerticalBrokenMeter( _gapSize, _xMin, _yMax, _vbWid, _vbHei, _meterMax, _curValue)
 
 	local slantAmount = 4
 	local slantHei = 14
-	local slantWid = MeterWid - batLineWid*2
-	local brokenMeterHei = MeterHei - batteryTipHei
+	local slantWid = MeterWid - batLineWid * 2
 	local gapSize = 4
 
 	local heightWithGap = slantHei + gapSize
 
-	local batMeterHei = MeterHei - batteryTipHei - batLineWid*2
+	local batMeterHei = MeterHei - batteryTipHei - batLineWid * 2
 
 	-- take the modulus of the heightWithGap, that lets us know how much leftover height there is, take that height away.
 	-- now when we divide by the heightWithGap we'll have the number of slants we need to draw
 	local slantCount = (batMeterHei - (batMeterHei % heightWithGap)) / heightWithGap
 
-	local topY = yPos + batteryTipHei + batLineWid
-	local bottomY = yPos + MeterHei - batLineWid/2
+	local bottomY = yPos + MeterHei - batLineWid / 2
 
 	-- easiest start position is giving an xMin and yMax, that's the only spot that's on the bottom of the battery, so that's what the section drawing function uses
 	--print(slantCount)
 	surface.SetDrawColor(batteryMeterColor)
-	for slantNum=0, slantCount-1 do
-		local ratio = (batMeterHei/4000)
+	for slantNum = 0, slantCount-1 do
+		local ratio = (batMeterHei / 4000)
 		local heightCap = bottomY - math.Round(Value * ratio)
 
-		DrawMeterSlantSection(slantAmount, slantWid, slantHei, xPos + MeterWid - batLineWid/2, bottomY - slantNum*heightWithGap, bottomY, heightCap)
+		DrawMeterSlantSection(slantAmount, slantWid, slantHei, xPos + MeterWid - batLineWid / 2, bottomY - slantNum * heightWithGap, bottomY, heightCap)
 	end
 
 
@@ -546,13 +536,13 @@ function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 
 	local Perc = Value / 4000
 
-	local ValCol = Color(255*(1-Perc),255*Perc,0,255)
+	local ValCol = Color(255 * (1-Perc), 255 * Perc,0,255)
 
 	if Value > 0 then
 		local XWid = (MeterWid - 154)  * Perc
 		XWid = math.Max(XWid,4)
 		--draw.RoundedBox(4, xPos + 150, yPos + 4, XWid, MeterHei - 8, ValCol)
-		draw.SimpleText(tostring(Perc*100).." %", HUDFont, xPos + (MeterWid + batLineWid) / 2, yPos -12, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(tostring(Perc * 100) .. " %", HUDFont, xPos + (MeterWid + batLineWid) / 2, yPos -12, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	else
 		if not SA_HUDBlink then ValCol = Color(0,0,0,0) end
 		draw.SimpleText("EMPTY", HUDFont, xPos + (MeterWid + batLineWid) / 2, yPos - 12, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -564,28 +554,27 @@ function DrawLSBar(BarNum,CaptionX,Value,ScH,ScW,ColBack,ColText)
 	local BarHei = 114
 	local BarSpace = 24
 	local BarWid = 30
-	local RealBarWid = BarWid - 70
-	local Hei = (ScH - 30) - (BarHei) - 4
-	local XMinX = ScW / 2 - tempGaugeWid/2 - (BarWid + BarSpace)*BarNum - 12
+	local Hei = (ScH - 30) - BarHei - 4
+	local XMinX = ScW / 2 - tempGaugeWid / 2 - (BarWid + BarSpace) * BarNum - 12
 
 	--draw.RoundedBox(4, xPos-8, yPos-40, MeterWid+22, MeterHei+12 + 40, ColBack)
-	draw.RoundedBox(4, XMinX-8, Hei-32, BarWid+16, BarHei+12+30, ColBack)
+	draw.RoundedBox(4, XMinX-8, Hei-32, BarWid + 16, BarHei + 12 + 30, ColBack)
 
-	draw.RoundedBox(4, XMinX+3, Hei+6, BarWid-6, BarHei-6, Color(70,70,70,230))
-	draw.SimpleText(Caption, HUDFont, XMinX + BarWid/2-1, Hei -20, ColText, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.RoundedBox(4, XMinX + 3, Hei + 6, BarWid-6, BarHei-6, Color(70,70,70,230))
+	draw.SimpleText(Caption, HUDFont, XMinX + BarWid / 2-1, Hei -20, ColText, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	local Perc = Value / 4000
 
-	local ValCol = Color(255*(1-Perc),255*Perc,0,255)
+	local ValCol = Color(255 * (1-Perc),255 * Perc,0,255)
 
 	if Value > 0 then
 		local YHei = (BarHei-4)  * Perc
 		YHei = math.Max(YHei,4)
-		draw.RoundedBox(4, XMinX+5, math.Round((Hei + 6 + BarHei - 4)) - math.Round(YHei), BarWid-10, math.Round(YHei-4), ValCol)
-		draw.SimpleText(tostring(math.Round(Perc*100,2)).." %", HUDFont, XMinX + BarWid/2-1, Hei - 4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.RoundedBox(4, XMinX + 5, math.Round(Hei + 6 + BarHei - 4) - math.Round(YHei), BarWid-10, math.Round(YHei-4), ValCol)
+		draw.SimpleText(tostring(math.Round(Perc * 100,2)) .. " %", HUDFont, XMinX + BarWid / 2-1, Hei - 4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	else
 		if not SA_HUDBlink then ValCol = Color(0,0,0,0) end
-		draw.SimpleText("EMPTY", HUDFont, XMinX + BarWid/2-1, Hei -4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("EMPTY", HUDFont, XMinX + BarWid / 2-1, Hei -4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 end
 
@@ -610,7 +599,7 @@ function GetMaxAmmo(SWEP)
 	local MAmmo = WeaponMaxAmmo[SWEP:GetClass()]
 	if MAmmo then return MAmmo end
 
-	LocalPlayer():ChatPrint("UNKOWN WEAPON: "..SWEP:GetClass() .. "|" .. tostring(SWEP:Clip1()))
+	LocalPlayer():ChatPrint("UNKOWN WEAPON: " .. SWEP:GetClass() .. "|" .. tostring(SWEP:Clip1()))
 
 	return SWEP:Clip1()
 end

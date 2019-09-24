@@ -8,7 +8,6 @@ TERMLOADER = nil
 
 require("supernet")
 
-local SA_TermDraggedElement = nil
 local SA_FactionData = {}
 local SA_StatsList = {}
 local ResearchPanels = {}
@@ -31,7 +30,6 @@ local SA_SelFCombo
 local SA_AppBasePanel
 local SA_MaxCrystalCount
 local SA_CrystalRadius
-local SA_DevBasePanel
 local SA_Max_Roid_Count
 
 surface.CreateFont("ServerHUDFontS", { font = "Arial", size = 36, weight = 700, antialias = true, shadow = false})
@@ -115,8 +113,6 @@ local function CreateTerminalGUI()
 		SA_Term_GUI:SetDeleteOnClose(true)
 		SA_Term_GUI:Close()
 	end
-
-	SA_TermDraggedElement = nil
 
 	local Researches = SA.Research.Get()
 	local font = "DermaLarge"
@@ -261,7 +257,7 @@ local function CreateTerminalGUI()
 		end
 
 		local Selected = SA_Term_MarketSell:GetSelected()
-		if not (table.Count(Selected) > 0) then
+		if table.Count(Selected) <= 0 then
 			SA_TermError("Please pick the resource(s) you wish to sell.")
 			return
 		end
@@ -662,10 +658,6 @@ local function CreateTerminalGUI()
 		CancelButton.DoClick = function()
 			RunConsoleCommand("sa_terminal_update")
 		end
-
-		SA_DevBasePanel = DeveloperTab
-	else
-		SA_DevBasePanel = nil
 	end
 
 	SA.Application.Refresh()
@@ -715,10 +707,6 @@ local function SA_RefreshGoodiesRecv(ply, decoded)
 	end
 end
 supernet.Hook("SA_GoodieUpdate", SA_RefreshGoodiesRecv)
-
-local function SA_RefreshGoodies()
-	RunConsoleCommand("sa_goodies_update")
-end
 
 local function sa_terminal_msg(len, ply)
 	local active = net.ReadBool()

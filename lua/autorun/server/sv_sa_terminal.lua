@@ -68,10 +68,8 @@ AddResourceBuyPrice("Water",3.0)
 local StationPos = Vector(0,0,0)
 local StationSize = 0
 local RD = nil
-local SA_TheWorld = nil
 
 local function InitSATerminal()
-	SA_TheWorld = ents.FindByClass("worldspawn")[1]
 	RD = CAF.GetAddon("Resource Distribution")
 	local mapname = string.lower(game:GetMap())
 	if mapname == "gm_galactic_rc1" then

@@ -2,8 +2,7 @@ SA.Tiberium = {}
 
 function SA.Tiberium.FindFreeAttachPlace(ent,holder)
 	if table.HasValue(holder.TouchTable,ent) then return end
-	local i = 0
-	for i=1,2,1 do
+	for i = 1, 2 do
 		local tmpX = holder.TouchTable[i]
 		if not (tmpX and tmpX.IsValid and tmpX:IsValid()) then return i end
 	end
@@ -11,9 +10,9 @@ end
 
 function SA.Tiberium.AttachStorage(ent,holder,pos)
 	if ent.TouchPos then return false end
-	if not (holder:GetModel() == "models/slyfo/sat_rtankstand.mdl") then return false end
-	if not (ent:GetModel() == "models/slyfo/sat_resourcetank.mdl") then return false end
-	
+	if holder:GetModel() ~= "models/slyfo/sat_rtankstand.mdl" then return false end
+	if ent:GetModel() ~= "models/slyfo/sat_resourcetank.mdl" then return false end
+
 	local relPos = Vector(0,0,0)
 	if pos == 1 then
 		relPos = Vector(1.0884,18.9070,21.4414)
@@ -60,7 +59,7 @@ function SA.Tiberium.FindWorldFloor(fromPos,traceIgno,mayNotHit) --traceIgno AND
 		traceData = util.QuickTrace(fromPos,Vector(0,0,-2000),traceIgno)
 		if traceData.HitWorld then
 			return traceData.HitPos
-		elseif i > 10 then 
+		elseif i > 10 then
 			return
 		elseif traceData.HitNonWorld then
 			if table.HasValue(mayNotHit,traceData.Entity) then
@@ -87,56 +86,56 @@ concommand.Add("sa_respawn_crystals",function(ply)
 	for k,v in pairs(ents.FindByClass("sa_crystaltower")) do
 		v:AutoSpawn()
 	end
-	if(ply and ply:IsPlayer()) then
+	if (ply and ply:IsPlayer()) then
 		SystemSendMSG(ply," respawned all tiberium crystals")
 	end
 end)
 
 function SA.Tiberium.DestroyConstraints( Ent1, Ent2, Bone1, Bone2, cType )
-	if ( !constraint.CanConstrain( Ent1, Bone1 ) ) then return false end
-	if ( !constraint.CanConstrain( Ent2, Bone2 ) ) then return false end
+	if (not constraint.CanConstrain( Ent1, Bone1 ) ) then return false end
+	if (not constraint.CanConstrain( Ent2, Bone2 ) ) then return false end
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2)
-	
+
 	if ( Phys1 == Phys2 ) then return false end
-	
-	if ( !Ent1:GetTable().Constraints and !Ent2:GetTable().Constraints ) then return end
-	if ( !Ent1:GetTable().Constraints ) then -- If our Ent1 is the world, we can't get a constraint table, so switch the entities and look through them that way
+
+	if (not Ent1:GetTable().Constraints and not Ent2:GetTable().Constraints ) then return end
+	if (not Ent1:GetTable().Constraints ) then -- If our Ent1 is the world, we can't get a constraint table, so switch the entities and look through them that way
 		local thirdEnt
 		thirdEnt = Ent1
 		Ent1 = Ent2
 		Ent2 = thirdEnt
-	end 
-	  
+	end
+
 	--Next, run through all of the constraints on the entity
 	--There's already a function for this, but it doesn't
 	--really take into account choosing the world first
 	for k, v in pairs( Ent1:GetTable().Constraints ) do
- 
+
 		if ( v:IsValid() ) then -- Continues if it finds a valid constraint
-	
+
 			local CTab = v:GetTable() -- Variableizes all of the attributes of the individual constraint
- 
+
 			if ( CTab.Type == cType and CTab.Ent1 == Ent1 and CTab.Ent2 == Ent2 and CTab.Bone1 == Bone1 and CTab.Bone2 == Bone2 ) or  ( CTab.Type == cType and CTab.Ent1 == Ent2 and CTab.Ent2 == Ent1 and CTab.Bone1 == Bone2 and CTab.Bone2 == Bone1 ) then
 
 				foundConstraint = v -- We've found the constraint we want to destroy
-				
+
 			end
 		end
-	end 
+	end
 
-	if !foundConstraint then return false end
+	if not foundConstraint then return false end
 	foundConstraint:Remove()
 	foundConstraint = nil
-	
+
 	return true
 end
 
 local tiberiumTimeUntilDelete = {}
 
 function SA.Tiberium.SetTimeUntilDelete(ent, time)
-	tiberiumTimeUntilDelete[ent:EntIndex()] = time 
+	tiberiumTimeUntilDelete[ent:EntIndex()] = time
 end
 
 function SA.Tiberium.GetTimeUntilDelete(ent)
