@@ -5,14 +5,16 @@ surface.CreateFont("SA_ScoreboardPlayerName", { font = "coolvetica", size = 20, 
 
 local texGradient = surface.GetTextureID("gui/center_gradient")
 
-local texRatings = {}
-texRatings[ 'none' ] 		= surface.GetTextureID("gui/silkicons/user")
-texRatings[ 'smile' ] 		= surface.GetTextureID("gui/silkicons/emoticon_smile")
-texRatings[ 'bad' ] 		= surface.GetTextureID("gui/silkicons/exclamation")
-texRatings[ 'love' ] 		= surface.GetTextureID("gui/silkicons/heart")
-texRatings[ 'artistic' ] 	= surface.GetTextureID("gui/silkicons/palette")
-texRatings[ 'star' ] 		= surface.GetTextureID("gui/silkicons/star")
-texRatings[ 'builder' ] 	= surface.GetTextureID("gui/silkicons/wrench")
+local texRatings = {
+	none 		= surface.GetTextureID("gui/silkicons/user"),
+	smile 		= surface.GetTextureID("gui/silkicons/emoticon_smile"),
+	bad 		= surface.GetTextureID("gui/silkicons/exclamation"),
+	love 		= surface.GetTextureID("gui/silkicons/heart"),
+	artistic 	= surface.GetTextureID("gui/silkicons/palette"),
+	star 		= surface.GetTextureID("gui/silkicons/star"),
+	builder 	= surface.GetTextureID("gui/silkicons/wrench")
+}
+
 
 surface.GetTextureID("gui/silkicons/emoticon_smile")
 local PANEL = {}
@@ -23,16 +25,18 @@ function PANEL:Paint()
 
 	if (self.Player:Team() == TEAM_CONNECTING) then
 		color = Color(200, 120, 50, 255)
-		end
+	end
 
-		if (self.Open or self.Size ~= self.TargetSize) then
+	if (self.Open or self.Size ~= self.TargetSize) then
 
-		draw.RoundedBox(4, 0, 16, self:GetWide(), self:GetTall() - 16, color)
-		draw.RoundedBox(4, 2, 16, self:GetWide()-4, self:GetTall() - 16 - 2, Color(color.r, color.g, color.b, 255))
+		local w, h = this:GetSize()
+
+		draw.RoundedBox(4, 0, 16, w, h - 16, color)
+		draw.RoundedBox(4, 2, 16, w - 4, h - 16 - 2, Color(color.r, color.g, color.b, 255))
 
 		surface.SetTexture(texGradient)
 		surface.SetDrawColor(0, 0, 0, 200)
-		surface.DrawTexturedRect(2, 16, self:GetWide()-4, self:GetTall() - 16 - 2)
+		surface.DrawTexturedRect(2, 16, w - 4, h - 16 - 2)
 
 	end
 
@@ -62,8 +66,8 @@ end
 
 function PANEL:CheckRating(name, count)
 
-	if (self.Player:GetNetworkedInt("Rating."..name, 0) > count) then
-		count = self.Player:GetNetworkedInt("Rating."..name, 0)
+	if (self.Player:GetNWInt("Rating." .. name, 0) > count) then
+		count = self.Player:GetNWInt("Rating." .. name, 0)
 		self.texRating = texRatings[ name ]
 	end
 
@@ -78,12 +82,12 @@ function PANEL:UpdatePlayerData()
 
 	local LeaderCap = ""
 	if self.Player:GetNWBool("isfurry") == true then
-		LeaderCap = LeaderCap.." [Furry]"
+		LeaderCap = LeaderCap .. " [Furry]"
 	end
 	if self.Player:GetNWBool("isleader") == true then
-		LeaderCap = LeaderCap.." [Leader]"
+		LeaderCap = LeaderCap .. " [Leader]"
 	end
-	self.lblName:SetText(team.GetName(self.Player:Team()).. LeaderCap .." - "..self.Player:Nick())
+	self.lblName:SetText(team.GetName(self.Player:Team()) .. LeaderCap .. " - " .. self.Player:Nick())
 	self.lblScore:SetText(SA.AddCommasToInt(self.Player:GetNWInt("Score")))
 	--self.lblTC:SetText(self.Player:GetNWInt("TerraCredits"))
 	self.lblPing:SetText(self.Player:Ping())
@@ -91,16 +95,15 @@ function PANEL:UpdatePlayerData()
 	-- Work out what icon to draw
 	self.texRating = surface.GetTextureID("gui/silkicons/emoticon_smile")
 
-	self.texRating = texRatings[ 'none' ]
+	self.texRating = texRatings.none
 	local count = 0
 
-	count = self:CheckRating('smile', count)
-	count = self:CheckRating('love', count)
-	count = self:CheckRating('artistic', count)
-	count = self:CheckRating('star', count)
-	count = self:CheckRating('builder', count)
-
-	count = self:CheckRating('bad', count)
+	count = self:CheckRating("smile", count)
+	count = self:CheckRating("love", count)
+	count = self:CheckRating("artistic", count)
+	count = self:CheckRating("star", count)
+	count = self:CheckRating("builder", count)
+	count = self:CheckRating("bad", count)
 
 end
 

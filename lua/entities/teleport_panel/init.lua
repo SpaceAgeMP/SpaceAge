@@ -5,18 +5,18 @@ include("shared.lua")
 
 ENT.WorldInternal = true
 
-function ENT:Initialize()   
-	self:SetModel( "models/props_combine/combine_intwallunit.mdl" ) 	
-	self:PhysicsInit( SOLID_VPHYSICS )	
+function ENT:Initialize()
+	self:SetModel( "models/props_combine/combine_intwallunit.mdl" )
+	self:PhysicsInit( SOLID_VPHYSICS )
 	self:SetMoveType( MOVETYPE_VPHYSICS )
 	self:SetSolid( SOLID_VPHYSICS )
-	
-	local phys = self:GetPhysicsObject()  	
-	if (phys:IsValid()) then  		
+
+	local phys = self:GetPhysicsObject()
+	if (phys:IsValid()) then
 		phys:EnableMotion(false)
 		phys:SetMass(50000)
-	end 
-	
+	end
+
 	if not self.TeleKey then self.TeleKey = "default" end
 	self.LastUse = 0
 	local ply = self:GetTable().Founder

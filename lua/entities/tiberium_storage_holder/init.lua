@@ -19,38 +19,40 @@ function ENT:Initialize()
 	self.BaseClass.Initialize(self)
 	self.Active = 0
 	self.TouchTable = {}
-	if not (WireAddon == nil) then
+	if WireAddon ~= nil then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self, { "On" })
 		self.Outputs = Wire_CreateOutputs(self, {"On", "Tiberium", "Max Tiberium" })
 	else
-		self.Inputs = {{Name="On"}}
+		self.Inputs = {{ Name = "On" }}
 	end
 	RD.RegisterNonStorageDevice(self)
 end
 
 function ENT:TurnOn()
-	if (self.Active == 0) then
-		self.Active = 1
-		if not (WireAddon == nil) then
-			Wire_TriggerOutput(self, "On", self.Active)
-		end
-		self:SetOOO(1)
+	if (self.Active == 1) then
+		return
 	end
+	self.Active = 1
+	if WireAddon ~= nil then
+		Wire_TriggerOutput(self, "On", self.Active)
+	end
+	self:SetOOO(1)
 end
 
 function ENT:TurnOff()
-	if (self.Active == 1) then
-		self.Active = 0
-		if not (WireAddon == nil) then
-			Wire_TriggerOutput(self, "On", self.Active)
-		end
-		self:SetOOO(0)
-		for k,v in pairs(self.TouchTable) do
-			self:ReleaseStorage(v)
-		end
-		self.TouchTable = {}
+	if (self.Active == 0) then
+		return
 	end
+	self.Active = 0
+	if WireAddon ~= nil then
+		Wire_TriggerOutput(self, "On", self.Active)
+	end
+	self:SetOOO(0)
+	for k,v in pairs(self.TouchTable) do
+		self:ReleaseStorage(v)
+	end
+	self.TouchTable = {}
 end
 
 function ENT:TriggerInput(iname, value)
@@ -104,7 +106,7 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	if not (WireAddon == nil) then
+	if WireAddon ~= nil then
 		self:UpdateWireOutput()
 	end
 	self:NextThink(CurTime() + 1)
@@ -112,6 +114,6 @@ function ENT:Think()
 end
 
 function ENT:UpdateWireOutput()
-        Wire_TriggerOutput(self, "Tiberium", RD.GetResourceAmount( self, "tiberium" ))
-        Wire_TriggerOutput(self, "Max Tiberium", RD.GetNetworkCapacity( self, "tiberium" ))
+	Wire_TriggerOutput(self, "Tiberium", RD.GetResourceAmount( self, "tiberium" ))
+	Wire_TriggerOutput(self, "Max Tiberium", RD.GetNetworkCapacity( self, "tiberium" ))
 end

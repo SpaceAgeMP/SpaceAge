@@ -18,10 +18,10 @@ function ENT:Think()
 		if (currentskin + 1) >= skins then
 			newskin = currentskin + 1 - skins
 		else
-			newskin = currentskin+1
+			newskin = currentskin + 1
 		end
 		self:SetSkin(newskin)
 	end
-	self:NextThink(CurTime()+self.SwitchPeriod)
+	self:NextThink(CurTime() + self.SwitchPeriod)
 	return true
 end

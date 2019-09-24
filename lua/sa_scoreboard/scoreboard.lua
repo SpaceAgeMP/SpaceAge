@@ -105,8 +105,8 @@ function PANEL:PerformLayout()
 	self.lblPing:SizeToContents()
 	self.lblScore:SizeToContents()
 
-	self.lblPing:SetPos(self:GetWide() - 50 - self.lblPing:GetWide()/2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 )
-	self.lblScore:SetPos(self:GetWide() - 50*4 - self.lblScore:GetWide()/2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 )
+	self.lblPing:SetPos(self:GetWide() - 50 - self.lblPing:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 )
+	self.lblScore:SetPos(self:GetWide() - 50 * 4 - self.lblScore:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 )
 
 end
 

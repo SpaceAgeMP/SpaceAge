@@ -69,4 +69,4 @@ function TOOL.BuildCPanel(panel)
 	BindLabel.Description = "Disclaimer."
 	panel:AddControl("Label", BindLabel)
 
- end
+end

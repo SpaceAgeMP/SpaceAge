@@ -13,7 +13,7 @@ function SA.PP.MakeOwner(ent, owner)
 end
 
 function SA.PP.IsWorldEnt(ent)
-	local owner, ownerId = ent:CPPISetOwner()
+	local _, ownerId = ent:CPPISetOwner()
 	return not ownerId
 end
 

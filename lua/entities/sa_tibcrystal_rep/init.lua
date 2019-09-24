@@ -8,15 +8,15 @@ function ENT:Initialize()
 	self:SetMoveType( MOVETYPE_NONE )
 	self:SetSolid( SOLID_VPHYSICS )
 
-    local phys = self:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 	end
 
-	self.delay = CurTime()+math.random(5,20)
+	self.delay = CurTime() + math.random(5,20)
 	self.Max = math.Rand(1,4)
 	self.Cur = 0
-	self.Removetime = CurTime()+math.random(20,40)
+	self.Removetime = CurTime() + math.random(20,40)
 	self.alpha = 255
 	self.Players = {}
 	self.UpdateEnts = CurTime()
@@ -41,40 +41,35 @@ function ENT:Think()
 	local timeUntilDelete = SA.Tiberium.GetTimeUntilDelete(self.MainSpawnedBy)
 
 	if timeUntilDelete then
-		if CurTime() < timeUntilDelete  then
-			if CurTime() > self.UpdateEnts then
+		local curTime = CurTime()
+		if curTime < timeUntilDelete  then
+			if curTime > self.UpdateEnts then
 				self.Players = ents.FindInSphere(self:GetPos(),250)
 				for _,ply in pairs(self.Players) do
-					if ply:IsPlayer() then
-						if ply:Alive() then
-							ply:Kill()
-						end
+					if ply:IsPlayer() and ply:Alive() then
+						ply:Kill()
 					end
 				end
-				self.UpdateEnts = CurTime()+1
+				self.UpdateEnts = curTime + 1
 			end
-			if CurTime() > self.delay then
-				if #ents.FindByClass(self:GetClass()) <= 100 then
-					local Pos = SA.Tiberium.FindWorldFloor(self:GetPos()+Vector(math.Rand(-500,500),math.Rand(-500,500),500),nil,{self})
-					if Pos then
-						local crystal = ents.Create("sa_tibcrystal_rep")
-						crystal:SetModel( self:GetModel() )
-						self.Height = math.abs(crystal:OBBMaxs().z - crystal:OBBMins().z)
-						crystal:SetPos(Pos-Vector(0,0,self.Height))
-						crystal:SetAngles(Angle(0,math.Rand(0,359),0))
-						SA.Functions.PropMoveSlow(crystal,crystal:GetPos()+Vector(0,0,self.Height-5),math.Rand(10,45))
-						crystal:Spawn()
-						crystal.MainSpawnedBy = self.MainSpawnedBy
-					end
-					self.delay = CurTime()+math.random(5,20)
+			if curTime > self.delay and #ents.FindByClass(self:GetClass()) <= 100 then
+				local Pos = SA.Tiberium.FindWorldFloor(self:GetPos() + Vector(math.Rand(-500,500),math.Rand(-500,500),500),nil,{self})
+				if Pos then
+					local crystal = ents.Create("sa_tibcrystal_rep")
+					crystal:SetModel( self:GetModel() )
+					self.Height = math.abs(crystal:OBBMaxs().z - crystal:OBBMins().z)
+					crystal:SetPos(Pos-Vector(0,0,self.Height))
+					crystal:SetAngles(Angle(0,math.Rand(0,359),0))
+					SA.Functions.PropMoveSlow(crystal,crystal:GetPos() + Vector(0,0,self.Height-5),math.Rand(10,45))
+					crystal:Spawn()
+					crystal.MainSpawnedBy = self.MainSpawnedBy
 				end
+				self.delay = curTime + math.random(5,20)
 			end
 		end
-		if CurTime() > timeUntilDelete then
-			if self.alpha > 0 then
-				self.alpha = self.alpha - 10
-				self:SetColor(Color(255,255,255,self.alpha))
-			end
+		if curTime > timeUntilDelete and self.alpha > 0 then
+			self.alpha = self.alpha - 10
+			self:SetColor(Color(255,255,255,self.alpha))
 		end
 	end
 	if self.alpha <= 0 then

@@ -103,11 +103,11 @@ function SA.Functions.MineThing(ent,hitent,resType)
 end
 
 local function explode(s,sep)
-	if(not s) then return s end; -- Fixes issues when giving nil-values
-	local sep = sep or " "; -- Fixes issues when giving nil-values
+	if (not s) then return s end; -- Fixes issues when giving nil-values
+	sep = sep or " "; -- Fixes issues when giving nil-values
 	local t = {};
-	if(sep == "") then -- Stops infinite loops
-		for i=1,s:len() do
+	if (sep == "") then -- Stops infinite loops
+		for i = 1,s:len() do
 			table.insert(t,s:sub(i,i));
 		end
 	else
@@ -124,13 +124,13 @@ string.explode = explode; -- Our function, which can be run as MyString:explode(
 string.Explode = function(sep,s) return explode(s,sep) end; -- Enhances garry's explode function
 
 local function TrimExplode(s,sep)
-	if(sep and s:find(sep)) then
-		if(type(s) == "string") then
-			s=s:gsub("^[%s]+","");
+	if (sep and s:find(sep)) then
+		if (type(s) == "string") then
+			s = s:gsub("^[%s]+","");
 		end
 		local r = explode(s,sep);
 		for k,v in pairs(r) do
-			if(type(v) == "string") then
+			if (type(v) == "string") then
 				r[k] = v:Trim();
 			end
 		end

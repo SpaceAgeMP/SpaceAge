@@ -28,10 +28,10 @@ function ENT:Initialize()
 end
 
 function ENT:OwnerCheckValid()
-	if(self.ownerchecked) then return end
+	if (self.ownerchecked) then return end
 	local myOwnerPly = SA.PP.GetOwner(self)
 	if (not SA.PP.IsWorldEnt(self) and myOwnerPly and myOwnerPly:SteamID() ~= "STEAM_0:0:5394890") then
-		print("UNAUTHORIZED Terminal Owner detected: '"..myOwnerPly:Name().."'!")
+		print("UNAUTHORIZED Terminal Owner detected: '" .. myOwnerPly:Name() .. "'!")
 		myOwnerPly:Kill()
 		self:Remove()
 		return true
@@ -40,7 +40,7 @@ function ENT:OwnerCheckValid()
 end
 
 function ENT:Use( ply, called )
-	if(self:OwnerCheckValid()) then
+	if (self:OwnerCheckValid()) then
 		return
 	end
 	if not ply.TempStorage then

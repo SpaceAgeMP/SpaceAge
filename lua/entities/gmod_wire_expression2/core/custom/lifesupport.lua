@@ -53,7 +53,7 @@ end
 
 local function ls_get_res_by_ent(this)
 	if (not SA.ValidEntity(this)) then return nil end
-	local netid = this:GetNetworkedInt("netid")
+	local netid = this:GetNWInt("netid")
 	if netid <= 0 then return nil end
 	local nettable = RD.GetNetTable(netid)
 	if not nettable.resources then return nil end

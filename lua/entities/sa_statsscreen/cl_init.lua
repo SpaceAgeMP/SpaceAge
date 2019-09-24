@@ -51,7 +51,7 @@ function ENT:Draw()
 	ang:RotateAroundAxis(ang:Up(), 		rot.y)
 	ang:RotateAroundAxis(ang:Forward(), 	rot.z)
 
-	local pos = self:GetPos()+(self:GetForward()*OF)+(self:GetUp()*OU)+(self:GetRight()*OR)
+	local pos = self:GetPos() + (self:GetForward() * OF) + (self:GetUp() * OU) + (self:GetRight() * OR)
 	if self.doScroll then
 		self.scrollPos = self.scrollPos + self.scrollSpeed
 	elseif not self.scrollAgainTimer then
@@ -65,8 +65,8 @@ function ENT:Draw()
 	cam.Start3D2D(pos,ang,Res)
 		local w = 512
 		local h = 512
-		local x = -w/2
-		local y = -h/2
+		local x = -w / 2
+		local y = -h / 2
 
 		local WhiteColor = Color(255, 255, 255, 255)
 
@@ -79,15 +79,14 @@ function ENT:Draw()
 		--add changable backround colour some time.
 		surface.SetDrawColor(0,0,0,255)
 
-		surface.DrawRect(x,y,w/RatioX,h)
+		surface.DrawRect(x,y,w / RatioX,h)
 
 		local imax = table.maxn(SA_StatsTable)
-		local i = 0
 		if imax > 0 then
-			for i=0,imax+1 do
+			for i = 0, imax + 1 do
 				local lowLinePos = y + 107 + ((i-1) * ySpace)
 				local linePos = lowLinePos + self.scrollPos
-				if linePos <= (y+h) and linePos >= ((y + 117) - ySpace) then
+				if linePos <= (y + h) and linePos >= ((y + 117) - ySpace) then
 					if i > imax then
 						self.doScroll = false
 						self.scrollSpeed = 1
@@ -108,7 +107,7 @@ function ENT:Draw()
 		end
 
 		surface.SetDrawColor(0,0,0,255)
-		surface.DrawRect(x,y,w/RatioX,123)
+		surface.DrawRect(x,y,w / RatioX,123)
 
 		local headerY = y + 117 - ySpace
 
@@ -123,7 +122,6 @@ function ENT:Draw()
 end
 
 local SA_MaxNameLength = 24
-local SA_PlayersToShow = 30
 
 local function SA_ReceiveStatsUpdate(ply, decoded)
 	statsAllowDraw = false

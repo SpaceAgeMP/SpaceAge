@@ -3,20 +3,20 @@ include("shared.lua")
 ENT.RenderGroup = RENDERGROUP_OPAQUE
 
 function ENT:Think()
-	local mining = self:GetNWBool("m") 
+	local mining = self:GetNWBool("m")
 	local entindex = self:GetNWEntity("r")
 	local ent = nil
-	if entindex then 
+	if entindex then
 		ent =  ents.GetByIndex( entindex )
-	end	
+	end
 	if mining == true and ent:IsValid() then
-		local startpos = self:GetPos() + self:GetUp()*24
+		local startpos = self:GetPos() + self:GetUp() * 24
 		local endpos = ent:NearestPoint(self:GetPos())
 		local effectdata = EffectData()
 		effectdata:SetOrigin(endpos)
 		effectdata:SetStart(startpos)
 		effectdata:SetMagnitude((endpos - startpos):Length())
-		util.Effect( "mining_beam", effectdata )  
+		util.Effect( "mining_beam", effectdata )
 	end
 end
 

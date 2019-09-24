@@ -40,7 +40,7 @@ function EFFECT:RenderBuild()
 		self:DrawModel()
 	render.PopCustomClipPlane();
 	render.EnableClipping(false);
-	local front = front * (self.dimx / 2);
+	front = front * (self.dimx / 2);
 	local right = self:GetRight() * (self.dimy / 2);
 	local top = self:GetUp() * (self.dimz / 2);
 

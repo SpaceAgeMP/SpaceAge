@@ -14,7 +14,7 @@ local function SA_JoinFaction(ply,txt)
 		SA.SendCreditsScore(ply)
 		for k,v in pairs(player.GetAll()) do
 			if v.TeamIndex == ply.TeamIndex then
-				v:AddHint(ply:Name().." has joined the faction!",NOTIFY_GENERIC,5)
+				v:AddHint(ply:Name() .. " has joined the faction!",NOTIFY_GENERIC,5)
 			end
 		end
 	else
@@ -29,8 +29,8 @@ local function SA_InviteToFaction(ply,txt)
 		local v = SA.GetPlayerByName(name)
 		if v then
 			v.InvitedTo = ply.TeamIndex
-			ply:AddHint("Invited "..v:Name().." to your faction.",NOTIFY_GENERIC,5)
-			v:AddHint("You have been invited to join "..SA.Factions.Table[v.InvitedTo][1].." type [join to accept the invitation.",NOTIFY_GENERIC,5)
+			ply:AddHint("Invited " .. v:Name() .. " to your faction.",NOTIFY_GENERIC,5)
+			v:AddHint("You have been invited to join " .. SA.Factions.Table[v.InvitedTo][1] .. " type [join to accept the invitation.",NOTIFY_GENERIC,5)
 			SA.SendCreditsScore(v)
 		else
 			ply:AddHint("No players match the name given.",NOTIFY_ERROR,5)
@@ -48,8 +48,8 @@ local function SA_KickFaction(ply,txt)
 		if v then
 			if ply == v then ply:AddHint("You cannot kick yourself.", NOTIFY_CLEANUP, 5) return "" end
 			if v.TeamIndex == ply.TeamIndex then
-				ply:ChatPrint("Kicked "..v:Name().." out of your faction.")
-				v:AddHint("You have been kicked out of "..SA.Factions.Table[v.TeamIndex][1], NOTIFY_CLEANUP, 5)
+				ply:ChatPrint("Kicked " .. v:Name() .. " out of your faction.")
+				v:AddHint("You have been kicked out of " .. SA.Factions.Table[v.TeamIndex][1], NOTIFY_CLEANUP, 5)
 				v.TeamIndex = 1
 				v.UserGroup = "freelancer"
 				v.IsLeader = false
@@ -75,7 +75,7 @@ local function SA_LeaveFaction(ply,txt)
 	ply:AddHint("You have left the faction and are now freelancer again!", NOTIFY_CLEANUP, 5)
 	ply.TeamIndex = 1
 	ply.UserGroup = "freelancer"
-	ply.IsLeader = false	
+	ply.IsLeader = false
 	ply:Spawn()
 	SA.SendCreditsScore(ply)
 end
@@ -104,7 +104,7 @@ local function SA_ChatTypeSACommand(ply,txt)
 	end
 	local cFunc = SA_ChatCommands[cmd]
 	if type(cFunc) ~= "function" then return end
-	cFunc(ply,"["..txt)
+	cFunc(ply,"[" .. txt)
 	return ""
 end
 --FA.RegisterChatType("[","SpaceAge Command",SA_ChatTypeSACommand,0)

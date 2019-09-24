@@ -16,7 +16,7 @@ function PANEL:DoClick()
 	local ply = self:GetParent().Player
 	if (not ply or not ply:IsValid() or ply == LocalPlayer()) then return end
 
-	LocalPlayer():ConCommand("rateuser ".. ply:EntIndex().. " "..self.VoteName.."\n")
+	LocalPlayer():ConCommand("rateuser " .. ply:EntIndex() .. " " .. self.VoteName .. "\n")
 
 end
 
@@ -31,7 +31,7 @@ end
 function PANEL:PerformLayout()
 
 	if (self:GetParent().Player and self:GetParent().Player:IsValid()) then
-		self.Label:SetText(self:GetParent().Player:GetNetworkedInt("Rating."..self.VoteName, 0))
+		self.Label:SetText(self:GetParent().Player:GetNWInt("Rating." .. self.VoteName, 0))
 	end
 
 	self.Label:SizeToContents()
@@ -68,7 +68,7 @@ function PANEL:Paint()
 
 	surface.SetTexture(self.Material)
 	surface.SetDrawColor(255, 255, 255, alpha)
-	surface.DrawTexturedRect(self:GetWide()/2 - 8, self:GetWide()/2 - 8, 16, 16)
+	surface.DrawTexturedRect(self:GetWide() / 2 - 8, self:GetWide() / 2 - 8, 16, 16)
 
 
 	--draw.SimpleText(, "DefaultSmall", self:GetWide() / 2, 19, Color(0,0,0,100), TEXT_ALIGN_CENTER)

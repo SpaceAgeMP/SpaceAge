@@ -19,11 +19,12 @@ AddWorldClass("func_movelinear")
 
 local function SetupConvars(name)
 	if (not ConVarExists(name)) then
-		CreateConVar(name,0)
+		return CreateConVar(name,0)
 	end
+	return GetConVar(name)
 end
 SetupConvars("sa_autosave")
-SetupConvars("sa_autosave_time")
+local autoSaveCVar = SetupConvars("sa_autosave_time")
 CreateConVar("sa_autospawner", "1")
 SetupConvars("sa_friendlyfire")
 CreateConVar("sa_pirating", "1", { FCVAR_NOTIFY, FCVAR_REPLICATED })
@@ -356,7 +357,7 @@ end
 
 function SA.SaveUser(ply, isautosave)
 	if (isautosave == "sa_autosaver") then
-		ply:SetNWInt("sa_save_int", GetConVarNumber("sa_autosave_time") * 60)
+		ply:SetNWInt("sa_save_int", autoSaveCVar:GetInt() * 60)
 		ply:SetNWInt("sa_last_saved",CurTime())
 	end
 	local sid = ply:SteamID()
@@ -389,8 +390,9 @@ end
 hook.Add("PlayerDisconnected", "SA_Save_Disconnect", SA.SaveUser)
 
 local function SA_SaveAllUsers()
-	if (GetConVarNumber("sa_autosave_time") == 1) then
-		timer.Adjust("SA_Autosave", GetConVarNumber("sa_autosave_time") * 60, 0, SA_SaveAllUsers)
+	local autoSaveTime = autoSaveCVar:GetInt()
+	if (autoSaveTime == 1) then
+		timer.Adjust("SA_Autosave", autoSaveTime * 60, 0, SA_SaveAllUsers)
 		SA.MySQL:Query('UPDATE factions AS f SET f.score = (SELECT Round(Avg(p.score)) FROM players AS p WHERE p.groupname = f.name) WHERE f.name ~= "noload"')
 		for k,v in ipairs(player.GetHumans()) do
 			local p = v

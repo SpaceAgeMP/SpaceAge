@@ -59,7 +59,7 @@ function ENT:Think()
 	end
 
 	if self.MineralAmount < self.MineralMax then
-		local newamount = self.MineralAmount + ((self.MineralRegen)/60)
+		local newamount = self.MineralAmount + (self.MineralRegen / 60)
 		if newamount > self.MineralMax then
 			self.MineralAmount = self.MineralMax
 		else
@@ -67,6 +67,6 @@ function ENT:Think()
 		end
 	end
 
-	self:NextThink(CurTime()+1)
+	self:NextThink(CurTime() + 1)
 	return true
 end

@@ -162,14 +162,12 @@ end
 
 local function SA_SelectNode(ply,cmd,args)
 	local NetID = tonumber(args[1])
-	if not (NetID) then return end
+	if not NetID then return end
 	for k,v in pairs(ents.FindByClass("resource_node")) do
-		if (SA.PP.GetOwner(v) == ply) then
-			if (NetID == v:GetNetworkedInt("netid")) then
-				ply.SelectedNode = v
-				SA_UpdateInfo(ply)
-				break
-			end
+		if (SA.PP.GetOwner(v) == ply and NetID == v:GetNWInt("netid")) then
+			ply.SelectedNode = v
+			SA_UpdateInfo(ply)
+			break
 		end
 	end
 end
@@ -177,23 +175,17 @@ concommand.Add("sa_terminal_select_node",SA_SelectNode)
 
 local function SA_SelectedNode(ply)
 	--Use the node the player selected.
-	if (SA.ValidEntity(ply.SelectedNode)) then
-		if (SA.PP.GetOwner(ply.SelectedNode) == ply) then
-			local dist = StationPos:Distance(ply.SelectedNode:GetPos())
-			if (dist < StationSize) then
-				if (ply.SelectedNode:GetClass() == "resource_node") then
-					return ply.SelectedNode
-				end
-			end
+	if SA.ValidEntity(ply.SelectedNode) and SA.PP.GetOwner(ply.SelectedNode) == ply then
+		local dist = StationPos:Distance(ply.SelectedNode:GetPos())
+		if dist < StationSize and ply.SelectedNode:GetClass() == "resource_node" then
+			return ply.SelectedNode
 		end
 	end
 
 	--No Specific node, select first in range.
 	for k,v in pairs(ents.FindByClass("resource_node")) do
-		if (SA.PP.GetOwner(v) == ply) then
-			if (StationPos:Distance(v:GetPos()) < StationSize) then
-				return v
-			end
+		if (SA.PP.GetOwner(v) == ply) and (StationPos:Distance(v:GetPos()) < StationSize) then
+			return v
 		end
 	end
 end
@@ -204,13 +196,11 @@ local function SA_UpdateNodeSelection(ply)
 
 	local Nodes = {}
 	for k,v in pairs(ents.FindByClass("resource_node")) do
-		if (SA.PP.GetOwner(v) == ply) then
-			if (StationPos:Distance(v:GetPos()) < StationSize) then
-				local NetID = v:GetNetworkedInt("netid")
-				table.insert(Nodes,NetID)
-				if (SelectedNode == v) then
-					SelectedID = NetID
-				end
+		if (SA.PP.GetOwner(v) == ply) and (StationPos:Distance(v:GetPos()) < StationSize) then
+			local NetID = v:GetNWInt("netid")
+			table.insert(Nodes,NetID)
+			if (SelectedNode == v) then
+				SelectedID = NetID
 			end
 		end
 	end
@@ -273,7 +263,7 @@ end
 local function SA_GetTempStorage(ply)
 	local uid = ply:UniqueID()
 	for k,v in pairs(TempStorage[uid]) do
-		if not (v > 0) then
+		if v <= 0 then
 			TempStorage[uid][k] = nil
 		end
 	end
@@ -283,7 +273,7 @@ end
 local function SA_GetPermStorage(ply)
 	local uid = ply:UniqueID()
 	for k,v in pairs(PermStorage[uid]) do
-		if not (v > 0) then
+		if v <= 0 then
 			PermStorage[uid][k] = nil
 		end
 	end
@@ -312,7 +302,7 @@ end
 
 SA_UpdateInfo = function(ply,CanPass)
 	--This will prevent it from updating if multiple terminal commands are executed in the same tick.
-	if type(CanPass) == "string" or type(CanPass) == "table" or not (CanPass) then
+	if type(CanPass) == "string" or type(CanPass) == "table" or not CanPass then
 		timer.Create("SA_UpdateTerminalInfo_Delay",0.03,1, function() SA_UpdateInfo(ply, true) end)
 		return
 	end
@@ -323,20 +313,16 @@ SA_UpdateInfo = function(ply,CanPass)
 	--Send the player a list of nodes within range.
 	SA_UpdateNodeSelection(ply)
 
+	local uid = ply:UniqueID()
+	local TempStorage = SA_GetTempStorage(ply)
+
 	if not TempStorage[uid] then SA.Terminal.SetupStorage(ply) end
 
-	local uid = ply:UniqueID()
 	local orecount = SA_GetResource(ply,"ore")
 	local tempore = TempStorage[uid]["ore"]
 
-	local TempStorage = SA_GetTempStorage(ply)
 	local PermStorage = SA_GetPermStorage(ply)
 	local ShipStorage = SA_GetShipResources(ply)
-
-	local idx_t = table.Count(TempStorage)
-	local idx_p = table.Count(PermStorage)
-	local idx_s = table.Count(ShipStorage)
-	local idx_m = table.Count(BuyPriceTable)
 
 	net.Start("SA_TerminalUpdateSmall")
 		net.WriteInt(orecount or 0, 32)
@@ -406,7 +392,7 @@ local function SA_RequestUpdateGoodies(ply)
 	if ply.SendingGoodieUp then return end
 	ply.SendingGoodieUp = true
 	local sid = ply:SteamID()
-	if not SA.MySQL:Query("SELECT id,intid FROM goodies WHERE steamid='"..SA.MySQL:Escape(sid).."'", SA_UpdateGoodies, ply) then
+	if not SA.MySQL:Query("SELECT id,intid FROM goodies WHERE steamid='" .. SA.MySQL:Escape(sid) .. "'", SA_UpdateGoodies, ply) then
 		ply.SendingGoodieUp = false
 	end
 end
@@ -424,7 +410,7 @@ local function SA_UseGoodie(ply,cmd,args)
 	--FA.SA.MySQL.SavePlayer(ply)
 	SA.SaveUser(ply)
 
-	SA.MySQL:Query("DELETE FROM goodies WHERE id='"..SA.MySQL:Escape(id).."'",function() SA_RequestUpdateGoodies(ply) end)
+	SA.MySQL:Query("DELETE FROM goodies WHERE id='" .. SA.MySQL:Escape(id) .. "'",function() SA_RequestUpdateGoodies(ply) end)
 end
 concommand.Add("sa_goodies_use",SA_UseGoodie)
 
@@ -463,7 +449,7 @@ local function SA_MarketSell(ply,cmd,args)
 	if CHECK ~= HASH then return end
 	local uid = ply:UniqueID()
 	local num = tonumber(args[2])
-	if not (num > 0) then return end
+	if num <= 0 then return end
 	local amount = 0
 	local index = 0
 	local selling = 0
@@ -506,7 +492,7 @@ local function SA_MarketBuy(ply,cmd,args)
 	if CHECK ~= HASH then return end
 	local uid = ply:UniqueID()
 	local num = tonumber(args[2])
-	if not (num > 0) then return end
+	if num <= 0 then return end
 	local index = 0
 	local buying = 0
 	local price = 0
@@ -555,7 +541,7 @@ local function SA_MoveResource(ply,cmd,args,notagain)
 	local num = tonumber(args[4])
 	local CHECK = args[5]
 	if CHECK ~= HASH then return end
-	if not (num > 0) then return end
+	if num <= 0 then return end
 	local maxamt = 0
 	if (from == "temp") then
 		maxamt = TempStorage[uid][res]
@@ -645,13 +631,13 @@ local function SA_Research(ply, cmd, args)
 			break
 		end
 	end
-	if not (Research) then return end
+	if not Research then return end
 
 	local var = Research["variable"]
 	local cur = ply[var]
 	local cap = Research["ranks"]
-	if (cap ~= 0) then
-		if (cap == cur) then return end
+	if (cap ~= 0) and cap == cur then
+		return
 	end
 	if (Research["faction"] and #Research["faction"] > 0) then
 		if not table.HasValue(Research["faction"],ply.UserGroup) then
@@ -791,7 +777,7 @@ local function SA_DevSetVar(ply, cmd, args)
 		SA.Asteroids.MaxCount = cval
 		varname = "max. concurrent asteroid count"
 	end
-	SystemSendMSG(ply, "changed "..varname.." to "..tostring(cval))
+	SystemSendMSG(ply, "changed " .. varname .. " to " .. tostring(cval))
 end
 concommand.Add("sa_dev_set_var",SA_DevSetVar)
 
@@ -894,7 +880,7 @@ local function CheckCanDevice(ply,tr,mode)
 			local reqLvl = SA.Ice.GetLevelForStorageModel(sel2)
 			if not reqLvl then return false end
 			if lvl < reqLvl then
-				ply:AddHint("You must have Rank "..reqLvl.." ICE Storages to use this!", NOTIFY_CLEANUP, 5)
+				ply:AddHint("You must have Rank " .. reqLvl .. " ICE Storages to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "storage_ice_product" then
@@ -902,7 +888,7 @@ local function CheckCanDevice(ply,tr,mode)
 			local reqLvl = SA.Ice.GetLevelForProductStorageModel(sel2)
 			if not reqLvl then return false end
 			if lvl < reqLvl then
-				ply:AddHint("You must have Rank "..reqLvl.." ICE Product Storages to use this!", NOTIFY_CLEANUP, 5)
+				ply:AddHint("You must have Rank " .. reqLvl .. " ICE Product Storages to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		end

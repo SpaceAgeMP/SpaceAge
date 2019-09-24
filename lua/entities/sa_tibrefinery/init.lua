@@ -54,40 +54,40 @@ end
 function ENT:Think()
 	self.BaseClass.Think(self)
 	for k,v in pairs(self.TouchTable) do
-		if v.IsTiberiumStorage then
-			RD.Unlink(v)
-			local ply = SA.PP.GetOwner(v)
-			if ply and ply:IsValid() and ply:IsPlayer() then
-				local am = RD.GetResourceAmount( v, "tiberium" )
-				local taken = 10000
-				if am < taken then taken = am end
-				if taken <= 0 then
-					v:Remove()
-					self.TouchTable[k] = nil
-				else
-					RD.ConsumeResource(v, "tiberium", taken)
-					local creds = math.Round(taken * (math.random(20,30)))
-					if ply.UserGroup == "corporation" or ply.UserGroup == "alliance" then
-						creds = math.ceil((creds * 1.33) * 1000) / 1000
-					elseif ply.UserGroup == "starfleet" then
-						creds = math.ceil((creds * 1.11) * 1000) / 1000
-					end
-					ply.Credits = ply.Credits + creds
-					if ply.TotalCredits > 100000000 then
-						if ply.UserGroup  == "legion" then
-							creds = creds * 0.5
-						else
-							creds = creds * 0.4
-						end
-					end
-					ply.TotalCredits = ply.TotalCredits + creds
-					SA.SendCreditsScore(ply)
-				end
-			else
+		if not v.IsTiberiumStorage then
+			self.TouchTable[k] = nil
+			continue
+		end
+		RD.Unlink(v)
+		local ply = SA.PP.GetOwner(v)
+		if ply and ply:IsValid() and ply:IsPlayer() then
+			local am = RD.GetResourceAmount( v, "tiberium" )
+			local taken = 10000
+			if am < taken then taken = am end
+			if taken <= 0 then
 				v:Remove()
 				self.TouchTable[k] = nil
+			else
+				RD.ConsumeResource(v, "tiberium", taken)
+				local creds = math.Round(taken * (math.random(20,30)))
+				if ply.UserGroup == "corporation" or ply.UserGroup == "alliance" then
+					creds = math.ceil((creds * 1.33) * 1000) / 1000
+				elseif ply.UserGroup == "starfleet" then
+					creds = math.ceil((creds * 1.11) * 1000) / 1000
+				end
+				ply.Credits = ply.Credits + creds
+				if ply.TotalCredits > 100000000 then
+					if ply.UserGroup  == "legion" then
+						creds = creds * 0.5
+					else
+						creds = creds * 0.4
+					end
+				end
+				ply.TotalCredits = ply.TotalCredits + creds
+				SA.SendCreditsScore(ply)
 			end
 		else
+			v:Remove()
 			self.TouchTable[k] = nil
 		end
 	end

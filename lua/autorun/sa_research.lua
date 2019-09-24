@@ -49,7 +49,7 @@ local function SA_AddResearch(name,group,displayname,ranks,variable,cost,costinc
 	tbl["resetreq"] = resetreq
 
 	ResearchIcons[image] = true
-	if not (Researches[group]) then
+	if not Researches[group] then
 		Researches[group] = {}
 	end
 	Researches[group][name] = tbl

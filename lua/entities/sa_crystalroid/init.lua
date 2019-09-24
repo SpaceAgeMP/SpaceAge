@@ -71,7 +71,7 @@ function ENT:FindCrystalPos()
 	local res = nil
 
 	local selfCenter = self:LocalToWorld(self:OBBCenter())
-	local tracedata = {start = selfCenter+Vector(math.random(-1,1),math.random(-1,1),math.random(-1,1)):Normalize() * 2000, endpos = selfCenter, filter = {}}
+	local tracedata = {start = selfCenter + Vector(math.random(-1,1),math.random(-1,1),math.random(-1,1)):Normalize() * 2000, endpos = selfCenter, filter = {}}
 	local tries = 0
 	while not res or res.Entity ~= self do
 		res = util.TraceLine(tracedata)

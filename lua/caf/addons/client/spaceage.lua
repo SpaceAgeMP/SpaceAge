@@ -6,7 +6,7 @@ local status = false
 	The Constructor for this Custom Addon Class
 ]]
 function SA_CAF.__Construct()
-    if status then return false , "This Addon is already Active!" end
+	if status then return false , "This Addon is already Active!" end
 	status = true --You decide how you want to be able to set the status internaly for the GetStatus functions, but this is a good way to do it.
 	return true -- If Succesfull
 end
@@ -34,7 +34,7 @@ end
 
 --[[
 	Get any custom options this Custom Addon Class might have
-        Not implemented by CAF yet.
+	Not implemented by CAF yet.
 ]]
 function SA_CAF.GetExtraOptions()
 	return {}
@@ -42,7 +42,7 @@ end
 
 --[[
 	Get the Custom String Status from this Addon Class
-        String version of the status, can be anything you want.
+	String version of the status, can be anything you want.
 ]]
 function SA_CAF.GetCustomStatus()
 	return "Always enabled!"
@@ -59,11 +59,11 @@ end
 
 function SA_CAF.GetDescription()
 	return {
-				"SpaceAge Addon",
-				"",
-				"SB3 Mining extension",
-				""
-			}
+		"SpaceAge Addon",
+		"",
+		"SB3 Mining extension",
+		""
+	}
 end
 
 --Register the addon with a name, the table and the "level", 1 = Loaded first, 2 = loaded after all addons in 1, 3 = ..., 4, 5

@@ -3,7 +3,7 @@ SA.GiveCredits = {}
 local SA_GiveRequests = {}
 
 function SA.GiveCredits.ByName(ply,name,amt)
-	v = SA.GetPlayerByName(name,nil)
+	local v = SA.GetPlayerByName(name,nil)
 	if v then
 		return SA.GiveCredits.Do(ply,v,amt)
 	end
@@ -13,7 +13,7 @@ end
 function SA.GiveCredits.Do(ply,v,amt)
 	if not (ply and v and ply:IsValid() and v:IsValid() and ply:IsPlayer() and v:IsPlayer()) then ply:AddHint("Invalid command parameters.", NOTIFY_CLEANUP, 5) return false end
 
-	local amt = tonumber(amt)
+	amt = tonumber(amt)
 	if not amt then ply:AddHint("Invalid command parameters.", NOTIFY_CLEANUP, 5) return false end
 	local cred = tonumber(ply.Credits)
 	if (amt <= 0) or (math.ceil(amt) ~= math.floor(amt)) then ply:AddHint("That is not a valid number.", NOTIFY_CLEANUP, 5) return false end

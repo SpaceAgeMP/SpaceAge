@@ -20,7 +20,7 @@ function ENT:Initialize()
 		self.Inputs = Wire_CreateInputs(self, { "On" })
 		self.Outputs = Wire_CreateOutputs(self, {"On", "Stability", "State" })
 	else
-		self.Inputs = {{Name="On"}}
+		self.Inputs = {{ Name = "On" }}
 	end
 	RD.RegisterNonStorageDevice(self)
 	local pl = self:GetTable().Founder
@@ -50,7 +50,7 @@ function ENT:TurnOn()
 		if (not self.environment) or self.environment.IsProtected or self.environment == SB.GetSpace() then return end
 		self:EmitSound( "apc_engine_start" )
 		self.Active = 1
-		if not (WireAddon == nil) then
+		if WireAddon ~= nil then
 			Wire_TriggerOutput(self, "On", self.Active)
 			self:SetState(0)
 		end
@@ -63,7 +63,7 @@ function ENT:TurnOff()
 		self:StopSound( "apc_engine_start" )
 		self:EmitSound( "apc_engine_stop" )
 		self.Active = 0
-		if not (WireAddon == nil) then
+		if WireAddon ~= nil then
 			Wire_TriggerOutput(self, "On", self.Active)
 			self:SetState(0)
 		end
@@ -112,7 +112,7 @@ function ENT:Think()
 			self.TurnOff()
 			return
 		end
-		if( self.Stability > 0) then
+		if self.Stability > 0 then
 			SA.Terraformer.Run(self)
 		else
 			SA.Terraformer.SpazzOut(self,false)
