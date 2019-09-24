@@ -1,13 +1,13 @@
-TOOL.Category = 'Administration'
-TOOL.Name = 'Prop Autospawn Special'
+TOOL.Category = "Administration"
+TOOL.Name = "Prop Autospawn Special"
 TOOL.Command = nil
-TOOL.ConfigName = ''
+TOOL.ConfigName = ""
 TOOL.Tab = "Administration"
 
 if ( CLIENT ) then
-	language.Add('tool.autospawn2.name', 'Autospawn Special')
-	language.Add('tool.autospawn2.desc', 'ASK DORIDIAN TO USE')
-	language.Add('tool.autospawn2.0', 'Wut')
+	language.Add("tool.autospawn2.name", "Autospawn Special")
+	language.Add("tool.autospawn2.desc", "ASK DORIDIAN TO USE")
+	language.Add("tool.autospawn2.0", "Wut")
 end
 function TOOL:LeftClick(tr)
 	if CLIENT then return end
@@ -18,31 +18,29 @@ function TOOL:LeftClick(tr)
 	end
 		if tr.Entity then
 			local ent = tr.Entity
-			if ent:IsValid() then
-				if not ent.Autospawned then
-					if not ent.Autospawn2Selected then
-						local data = {}
-						data["x"] = ent:GetPos().x
-						data["y"] = ent:GetPos().y
-						data["z"] = ent:GetPos().z
-						data["pit"] = ent:GetAngles().p
-						data["yaw"] = ent:GetAngles().y
-						data["rol"] = ent:GetAngles().r
-						data["class"] = ent:GetClass()
-						data["model"] = ent:GetModel()
-						owner.Autospawner2List[ent:EntIndex()] = data
-						ent:SetColor(0,255,0,150)
-						ent.Autospawn2Selected = true
-						owner:ChatPrint("Selected")
-						return true
-					else
-						owner.Autospawner2List[ent:EntIndex()] = nil
-						ent:SetColor(255,255,255,255)
-						ent.Autospawn2Selected = false
-						owner:ChatPrint("Deselected")
-						return true
-					end
-				end
+			if ent:IsValid() and not ent.Autospawned and not ent.Autospawn2Selected then
+				local data = {
+					x = ent:GetPos().x,
+					y = ent:GetPos().y,
+					z = ent:GetPos().z,
+					pit = ent:GetAngles().p,
+					yaw = ent:GetAngles().y,
+					rol = ent:GetAngles().r,
+					class = ent:GetClass(),
+					model = ent:GetModel()
+				}
+
+				owner.Autospawner2List[ent:EntIndex()] = data
+				ent:SetColor(0,255,0,150)
+				ent.Autospawn2Selected = true
+				owner:ChatPrint("Selected")
+				return true
+			else
+				owner.Autospawner2List[ent:EntIndex()] = nil
+				ent:SetColor(255,255,255,255)
+				ent.Autospawn2Selected = false
+				owner:ChatPrint("Deselected")
+				return true
 			end
 		end
 end
@@ -57,7 +55,7 @@ function TOOL:RightClick(tr)
 		file.CreateDir("spaceage/autospawn2")
 	end
 	local mapname = game.GetMap():lower()
-	local filename = "spaceage/autospawn2/"..mapname..".txt"
+	local filename = "spaceage/autospawn2/" .. mapname .. ".txt"
 	if file.Exists(filename, "DATA") then
 		local oldfile = file.Read(filename)
 		local olddata = util.JSONToTable(oldfile)

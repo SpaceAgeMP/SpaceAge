@@ -4,7 +4,7 @@ include( "shared.lua" )
 
 function ENT:SpawnFunction( ply, tr )
 	if ( !tr.HitWorld ) then return end
-	
+
 	local ent = ents.Create( "sa_ruledisplay" )
 	ent:SetPos( tr.HitPos + Vector( 0, 0, 100 ) )
 	ent:SetAngles( Angle( 0, -180, 0 ) )
@@ -15,7 +15,7 @@ end
 function ENT:Initialize( )
 	self:SetModel( "models/props_canal/canal_bridge02.mdl" )
 	self:DrawShadow( false )
-	
+
 	self:SetMoveType( MOVETYPE_NONE )
-	self:SetSolid( SOLID_NONE )	
+	self:SetSolid( SOLID_NONE )
 end

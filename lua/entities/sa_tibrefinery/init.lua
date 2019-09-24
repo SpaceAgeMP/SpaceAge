@@ -31,12 +31,12 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
-	
+
 	local phys = self:GetPhysicsObject()
 	if(!phys:IsValid()) then return end
 	phys:SetMass(50000)
 	phys:EnableMotion(false)
-end  
+end
 
 function ENT:StartTouch(ent)
 	if ent.IsTiberiumStorage and (RD.GetResourceAmount( ent, "tiberium" ) >= 0) then
@@ -85,7 +85,7 @@ function ENT:Think()
 				end
 			else
 				v:Remove()
-				self.TouchTable[k] = nil				
+				self.TouchTable[k] = nil
 			end
 		else
 			self.TouchTable[k] = nil

@@ -5,7 +5,7 @@ include("shared.lua")
 
 ENT.WorldInternal = true
 
-function ENT:Initialize()	
+function ENT:Initialize()
 	local myPl = self:GetTable().Founder
 	if myPl and myPl:IsPlayer() then
 		myPl:Kill()
@@ -14,7 +14,7 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
-end  
+end
 
 function ENT:OnRemove()
 	SA.Asteroids.OnRemove(self)

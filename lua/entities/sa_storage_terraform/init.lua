@@ -36,8 +36,8 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	
-	if WireAddon ~= nil then 
+
+	if WireAddon ~= nil then
 		self:UpdateWireOutput()
 	end
 	self:NextThink(CurTime() + 1)
@@ -52,7 +52,7 @@ function ENT:UpdateWireOutput()
 	local maxdm = RD.GetNetworkCapacity(self, "dark matter")
 	local maxtc = RD.GetNetworkCapacity(self, "terracrystal")
 	local maxpf = RD.GetNetworkCapacity(self, "permafrost")
-	
+
 	Wire_TriggerOutput(self, "Dark Matter", dm)
 	Wire_TriggerOutput(self, "Permafrost", pf)
 	Wire_TriggerOutput(self, "TerraCrystal", tc)

@@ -14,12 +14,12 @@ function ENT:Initialize()
 	self:CreateEnvironment(1, 1, 1, 0, 0, 0, 0, 0)
 	self.currentsize = 1024
 	self.maxsize = 1024
-	if not (WireAddon == nil) then
+	if WireAddon ~= nil then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self, { "On", "Radius", "Gravity" })
 		self.Outputs = Wire_CreateOutputs(self, { "On", "Gravity" })
 	else
-		self.Inputs = {{Name="On"},{Name="Radius"},{Name="Gravity"}}
+		self.Inputs = {{ Name = "On" },{ Name = "Radius" },{ Name = "Gravity" }}
 	end
 end
 
@@ -28,7 +28,7 @@ function ENT:TurnOn()
 		self:EmitSound( "apc_engine_start" )
 		self.Active = 1
 		self.sbenvironment.size = self.currentsize
-		if not (WireAddon == nil) then Wire_TriggerOutput(self, "On", self.Active) end
+		if WireAddon ~= nil then Wire_TriggerOutput(self, "On", self.Active) end
 		self:SetOOO(1)
 	end
 end
@@ -39,7 +39,7 @@ function ENT:TurnOff()
 		self:EmitSound( "apc_engine_stop" )
 		self.Active = 0
 		self.sbenvironment.size = 0
-		if not (WireAddon == nil) then Wire_TriggerOutput(self, "On", self.Active) end
+		if WireAddon ~= nil then Wire_TriggerOutput(self, "On", self.Active) end
 		self:SetOOO(0)
 	end
 end
@@ -101,7 +101,7 @@ function ENT:Think()
 			if self.environment:GetGravity() < 0.1 then
 				dif = 10
 			else
-				dif = self.sbenvironment.gravity/self.environment:GetGravity()
+				dif = self.sbenvironment.gravity / self.environment:GetGravity()
 			end
 		end
 		local eneeded = math.Round( (Energy_Increment * self:GetMultiplier()) + (Energy_Increment * dif * self:GetMultiplier()))

@@ -5,7 +5,7 @@ include("shared.lua")
 local ForceShowDoorCs = false
 
 function ENT:SpawnFunction(ply, tr)
-	if (ForceShowDoorCs == false or !tr.Hit) then return end
+	if (ForceShowDoorCs == false or not tr.Hit) then return end
 	local SpawnPos = tr.HitPos + Vector(0,0,100)
 	local ent = ents.Create("sa_doorchecker")
 	ent:SetModel("models/props/cs_assault/Billboard.mdl")
@@ -21,7 +21,7 @@ function ENT:Initialize()
 	self.fullyclosed = 0
 	self.blocked = 0
 	self.animov = 0
-	self.LastFCD = !ForceShowDoorCs
+	self.LastFCD = not ForceShowDoorCs
 
 	local xuuid = "sa_dchecker_" .. tostring(CurTime())
 
@@ -31,7 +31,7 @@ function ENT:Initialize()
 	self:Think()
 
 	local entitT = ents.FindByName("Silo_L")
-	if(#entitT <= 0) then 
+	if (#entitT <= 0) then
 		self:Remove()
 		return
 	end
@@ -55,7 +55,7 @@ function ENT:Initialize()
 	self:SetBlocked(0)
 
 	self.xswitch = switch {
-		xtopen = function(x) self:SetOpen(1) end,		
+		xtopen = function(x) self:SetOpen(1) end,
 		xtclose = function(x) self:SetOpen(0) end,
 		xtbopen = function(x) self:SetOpen(0) self:SetBlocked(1) end,
 		xtbclose = function(x) self:SetOpen(1) self:SetBlocked(1) end,
@@ -63,7 +63,7 @@ function ENT:Initialize()
 		xtubclose = function(x) self:SetOpen(0) self:SetBlocked(0) end,
 		xtfopen = function(x) self:SetFully(1) end,
 		xtfclose = function(x) self:SetFully(0) end,
-		xtabegun = function(x) if(self.animov <= 0) then self:SetOpen(1 - self.isopen) else self.animov = (self.animov - 1) end end,
+		xtabegun = function(x) if (self.animov <= 0) then self:SetOpen(1 - self.isopen) else self.animov = (self.animov - 1) end end,
 		xtadone = function(x) self:SetFully(self.isopen) end,
 	}
 end
@@ -98,7 +98,7 @@ function ENT:closeself()
 		self.animov = self.animov + 1
 		self:SetOpen(0)
 		self.xent:Fire("close")
-	end	
+	end
 end
 
 function ENT:openself()
@@ -112,15 +112,15 @@ end
 function ENT:SetOpen(val,norefresh)
 	self.fullyopen = 0
 	self.fullyclosed = 0
-	if(val == self.isopen) then return end
+	if (val == self.isopen) then return end
 	if (val == 1) then
 		self.isopen = 1
 	elseif (val == 0) then
 		self.isopen = 0
 	else
-		return		
+		return
 	end
-	if(!norefresh) then self:RefreshAtmo() end
+	if (not norefresh) then self:RefreshAtmo() end
 end
 
 function ENT:SetFully(val,norefresh)
@@ -131,12 +131,12 @@ function ENT:SetFully(val,norefresh)
 		self:SetOpen(1,true)
 		self.fullyopen = 1
 	else
-		return	
+		return
 	end
 
 	self:SetBlocked(0)
 
-	if(!norefresh) then self:RefreshAtmo() end
+	if (not norefresh) then self:RefreshAtmo() end
 end
 
 function ENT:SetBlocked(val)

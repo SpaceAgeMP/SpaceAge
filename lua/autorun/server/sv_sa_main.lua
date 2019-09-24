@@ -1,7 +1,5 @@
 AddCSLuaFile("autorun/client/cl_sa_hud.lua")
 
-local RD = nil
-
 timer.Simple(1,function() RD = CAF.GetAddon("Resource Distribution") end)
 
 local WorldClasses = {}
@@ -20,7 +18,7 @@ AddWorldClass("func_movelinear")
 
 
 local function SetupConvars(name)
-	if (!ConVarExists(name)) then
+	if (not ConVarExists(name)) then
 		CreateConVar(name,0)
 	end
 end
@@ -55,7 +53,7 @@ local function SA_InitSpawn(ply)
 	local sid = ply:SteamID()
 	SA.GiveCredits.Remove(ply)
 	print("Loading:", ply:Name())
-	local isok = SA.MySQL:Query("SELECT * FROM players WHERE steamid='"..SA.MySQL:Escape(sid).."'", LoadRes, ply, sid)
+	local isok = SA.MySQL:Query("SELECT * FROM players WHERE steamid='" .. SA.MySQL:Escape(sid) .. "'", LoadRes, ply, sid)
 	if not isok then
 		LoadFailed(ply)
 	end
@@ -66,11 +64,11 @@ local function LeaderRes(data, isok, merror, ply)
 	if (isok) then
 		for k, v in pairs(data) do
 			net.Start("SA_DoAddApplication")
-				net.WriteString(v['steamid'])
-				net.WriteString(v['name'])
-				net.WriteString(v['text'])
-				net.WriteString(v['playtime'])
-				net.WriteInt(v['score'])
+				net.WriteString(v.steamid)
+				net.WriteString(v.name)
+				net.WriteString(v.text)
+				net.WriteString(v.playtime)
+				net.WriteInt(v.score)
 			net.Send(ply)
 		end
 	else
@@ -102,9 +100,9 @@ local function NonLeaderRes(data, isok, merror, ply)
 		local appfact = "Major Miners"
 		local apptext = "Hi"
 		if (data[1]) then
-			local ffid = tonumber(data[1]['faction'])
+			local ffid = tonumber(data[1]["faction"])
 			appfact = SA.Factions.Table[ffid][1]
-			apptext = data[1]['text']
+			apptext = data[1].text
 		end
 		net.Start("SA_DoSetApplicationData")
 			net.WriteString(appfact)
@@ -160,7 +158,7 @@ LoadFailed = function(ply)
 	timer.Simple(30,function()
 		if not ply then return end
 		SA_InitSpawn(ply)
-		if(ply.Loaded == true) then
+		if ply.Loaded == true then
 			ply:Spawn()
 		end
 	end)
@@ -170,7 +168,6 @@ LoadRes = function(data, isok, merror, ply, sid)
 	print("Loaded:", ply:Name(), data, isok, merror)
 	if (isok and sid ~= "STEAM_ID_PENDING") then
 		if (data[1]) then
-			local uid = ply:UniqueID()
 			ply.Credits = data[1]["credits"]
 			ply.TotalCredits = data[1]["score"]
 			ply.UserGroup = data[1]["groupname"]
@@ -217,8 +214,8 @@ LoadRes = function(data, isok, merror, ply, sid)
 			ply:AssignFaction()
 		else
 			local username = SA.MySQL:Escape(ply:Name())
-			if not (username == false) then
-				SA.MySQL:Query("INSERT INTO players (steamid,name,groupname) VALUES ('"..sid.."','"..username.."','freelancer')", function() end)
+			if username ~= false then
+				SA.MySQL:Query("INSERT INTO players (steamid,name,groupname) VALUES ('" .. sid .. "','" .. username .. "','freelancer')", function() end)
 				ply:ChatPrint("You have not been found in the database, an account has been created for you.")
 				ply.Credits = 0
 				ply.TotalCredits = 0
@@ -339,13 +336,13 @@ LoadRes = function(data, isok, merror, ply, sid)
 		ply.MayBePoked = true
 		SA.SendCreditsScore(ply)
 		if ply.IsLeader then
-			SA.MySQL:Query("SELECT * FROM applications WHERE faction='"..ply.TeamIndex.."'", LeaderRes, ply)
+			SA.MySQL:Query("SELECT * FROM applications WHERE faction='" .. ply.TeamIndex .. "'", LeaderRes, ply)
 		else
 			local psid = SA.MySQL:Escape(ply:SteamID())
 			if ( psid ) then
 				local psids = tostring(psid)
 				if ( psids ) then
-					data, isok, merror = SA.MySQL:Query("SELECT * FROM applications WHERE steamid='"..psids.."'", NonLeaderRes, ply)
+					data, isok, merror = SA.MySQL:Query("SELECT * FROM applications WHERE steamid='" .. psids .. "'", NonLeaderRes, ply)
 				end
 			end
 		end
@@ -359,7 +356,7 @@ end
 
 function SA.SaveUser(ply, isautosave)
 	if (isautosave == "sa_autosaver") then
-		ply:SetNWInt("sa_save_int",GetConVarNumber("sa_autosave_time") * 60)
+		ply:SetNWInt("sa_save_int", GetConVarNumber("sa_autosave_time") * 60)
 		ply:SetNWInt("sa_last_saved",CurTime())
 	end
 	local sid = ply:SteamID()
@@ -384,7 +381,7 @@ function SA.SaveUser(ply, isautosave)
 			isleader = 1
 		end
 		if username == false then return end
-		SA.MySQL:Query("UPDATE players SET credits='"..credits.."', name='"..name.."',score='"..totalcred.."', groupname='"..group.."', isleader='"..isleader.."', capacity='"..cap.."', miningyield='"..miningyield.."', miningenergy='"..miningenergy.."', oremod='"..oremod.."', stationres='"..perm.."', fighterenergy='"..fighterenergy.."', miningyield_ii='"..ply.miningyield_ii.."', miningyield_iii='"..ply.miningyield_iii.."', miningyield_iv='"..ply.miningyield_iv.."', miningyield_v='"..ply.miningyield_v.."', miningyield_vi='"..ply.miningyield_vi.."', miningtheory='"..ply.miningtheory.."', rtadevice='"..ply.rta.."', oremod_ii='"..ply.oremod_ii.."', oremanage='"..ply.oremanage.."', gcombat = '"..ply.gcombat.."', oremod_iii='"..ply.oremod_iii.."', oremod_iv='"..ply.oremod_iv.."', oremod_v='"..ply.oremod_v.."', hdpower = '"..ply.hdpower.."', tiberiummod = '"..ply.tiberiummod.."', tiberiumyield = '"..ply.tiberiumyield.."', icelasermod = '"..ply.icelasermod.."', icerawmod = '"..ply.icerawmod.."', icerefinerymod = '"..ply.icerefinerymod.."', iceproductmod = '"..ply.iceproductmod.."', tibdrillmod = '"..ply.tibdrillmod.."', tibstoragemod = '"..ply.tibstoragemod.."', tiberiumyield_ii = '"..ply.tiberiumyield_ii.."', tiberiummod_ii = '"..ply.tiberiummod_ii.."', devlimit = '"..ply.devlimit.."', allyuntil = '"..ply.allyuntil.."' WHERE steamid='"..sid.."'", SaveDone)
+		SA.MySQL:Query("UPDATE players SET credits='" .. credits .. "', name='" .. name .. "',score='" .. totalcred .. "', groupname='" .. group .. "', isleader='" .. isleader .. "', capacity='" .. cap .. "', miningyield='" .. miningyield .. "', miningenergy='" .. miningenergy .. "', oremod='" .. oremod .. "', stationres='" .. perm .. "', fighterenergy='" .. fighterenergy .. "', miningyield_ii='" .. ply.miningyield_ii .. "', miningyield_iii='" .. ply.miningyield_iii .. "', miningyield_iv='" .. ply.miningyield_iv .. "', miningyield_v='" .. ply.miningyield_v .. "', miningyield_vi='" .. ply.miningyield_vi .. "', miningtheory='" .. ply.miningtheory .. "', rtadevice='" .. ply.rta .. "', oremod_ii='" .. ply.oremod_ii .. "', oremanage='" .. ply.oremanage .. "', gcombat = '" .. ply.gcombat .. "', oremod_iii='" .. ply.oremod_iii .. "', oremod_iv='" .. ply.oremod_iv .. "', oremod_v='" .. ply.oremod_v .. "', hdpower = '" .. ply.hdpower .. "', tiberiummod = '" .. ply.tiberiummod .. "', tiberiumyield = '" .. ply.tiberiumyield .. "', icelasermod = '" .. ply.icelasermod .. "', icerawmod = '" .. ply.icerawmod .. "', icerefinerymod = '" .. ply.icerefinerymod .. "', iceproductmod = '" .. ply.iceproductmod .. "', tibdrillmod = '" .. ply.tibdrillmod .. "', tibstoragemod = '" .. ply.tibstoragemod .. "', tiberiumyield_ii = '" .. ply.tiberiumyield_ii .. "', tiberiummod_ii = '" .. ply.tiberiummod_ii .. "', devlimit = '" .. ply.devlimit .. "', allyuntil = '" .. ply.allyuntil .. "' WHERE steamid='" .. sid .. "'", SaveDone)
 	else
 		return false
 	end
@@ -415,7 +412,7 @@ local function SA_Autospawner(ply)
 		end
 		local mapname = game.GetMap():lower()
 
-		local filename = "spaceage/autospawn2/"..mapname..".txt"
+		local filename = "spaceage/autospawn2/" .. mapname .. ".txt"
 		if file.Exists(filename, "DATA") then
 			for k,v in pairs(util.JSONToTable(file.Read(filename))) do
 				local spawn = ents.Create(v["class"])
@@ -448,32 +445,20 @@ local function SA_Autospawner(ply)
 			end
 		end
 	end
-	if(ply and ply:IsPlayer()) then
+	if (ply and ply:IsPlayer()) then
 		SystemSendMSG(ply, "respawned all SpaceAge stuff")
 	end
 end
 timer.Simple(1, SA_Autospawner)
 concommand.Add("sa_autospawn_run",function(ply) if ply:GetLevel() >= 3 then SA_Autospawner(ply) end end)
 
-local function SA_IsProtectedProp(ent)
-	for k,v in pairs(WorldClasses) do
-		if (ent:GetClass() == v) then
-			return true
-		end
-	end
-	if ent.Autospawned then return true end
-	return false
-end
-
 local SA_Don_Toollist = util.JSONToTable(file.Read("spaceage/donator/toollist.txt"))
 
 local function SA_DonatorCanTool(ply,tr,mode)
 	for k,v in pairs(SA_Don_Toollist) do
-		if mode == v then
-			if !ply.donator then
-				ply:AddHint("This is a donator-only tool, a reward for contributing to the community.", NOTIFY_CLEANUP, 10)
-				return false
-			end
+		if mode == v and not ply.donator then
+			ply:AddHint("This is a donator-only tool, a reward for contributing to the community.", NOTIFY_CLEANUP, 10)
+			return false
 		end
 	end
 end

@@ -11,7 +11,7 @@ SA.Tiberium.MaxCrystalCount = 6
 SA.Tiberium.CrystalRadius = 1024
 
 function ENT:SpawnFunction(ply, tr)
-	if (!tr.Hit) then return end
+	if (not tr.Hit) then return end
 	local ent = ents.Create("sa_crystaltower")
 	ent:SetPos(tr.HitPos)
 	ent:Spawn()
@@ -26,7 +26,7 @@ function ENT:Think()
 	return true
 end
 
-function ENT:Initialize()	
+function ENT:Initialize()
 	local myPl = self:GetTable().Founder
 	if myPl and myPl:IsPlayer() and myPl:SteamID() ~= "STEAM_0:0:5394890" then
 		myPl:Kill()
@@ -39,17 +39,17 @@ function ENT:Initialize()
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
-	
+
 	local phys = self:GetPhysicsObject()
-	if(!phys:IsValid()) then return end
+	if (not phys:IsValid()) then return end
 	phys:SetMass(50000)
 	phys:EnableMotion(false)
 	self.crystalCount = 0
-	
+
 	self:AutoSpawn()
-	
+
 	self:SpawnCrystal(true)
-end  
+end
 
 function ENT:AutoSpawn()
 	while self.crystalCount < SA.Tiberium.MaxCrystalCount do
@@ -96,20 +96,20 @@ function ENT:SpawnCrystal(auto)
 	local SA_CrystalRadius = SA.Tiberium.CrystalRadius
 
 	if self.crystalCount >= SA_MaxCrystalCount then return end
-	
+
 	local p = self:GetPos()
 	local tmpPos = SA.Tiberium.FindWorldFloor(Vector(math.random(-SA_CrystalRadius,SA_CrystalRadius)+p.x,math.random(-SA_CrystalRadius,SA_CrystalRadius)+p.y,p.z+200),nil,{self})
-	if not tmpPos then 
+	if not tmpPos then
 		if auto then
 			self:SpawnCrystal(false)
 		end
 		return
 	end
-	
+
 	local crystal = ents.Create("sa_crystal")
-	
+
 	local cHealth = math.random(1200,3000) --1200 UNTIL 3000
-	
+
 	if cHealth <= 1800 then
 		crystal:SetModel("models/ce_mining/tiberium/ce_tib_160_60.mdl")
 	elseif cHealth <= 2400 then
@@ -117,15 +117,15 @@ function ENT:SpawnCrystal(auto)
 	else
 		crystal:SetModel("models/ce_mining/tiberium/ce_tib_360_125.mdl")
 	end
-	
-	crystal:SetAngles(Angle(0, math.random(0, 360), 0)) 
-	
+
+	crystal:SetAngles(Angle(0, math.random(0, 360), 0))
+
 	crystal:SetPos(tmpPos)
-	
+
 	crystal:SetSkin(self:GetSkin())
-	
+
 	crystal:Spawn()
-	
+
 	crystal.MasterTower = self
 	crystal.IsCrystal = true
 	crystal.Autospawned = true
@@ -138,15 +138,15 @@ function ENT:SpawnCrystal(auto)
 	if auto then
 		crystal:SetPos(tmpPos - Vector(0,0,(crystal:LocalToWorld(crystal:OBBMaxs()) - crystal:LocalToWorld(crystal:OBBMins())).z))
 	end
-	
+
 	local phys = crystal:GetPhysicsObject()
-	if(!phys:IsValid()) then return end
+	if (not phys:IsValid()) then return end
 	phys:SetMass(50000)
 	phys:EnableMotion(false)
-	
+
 	SA.Functions.PropMoveSlow(crystal,tmpPos,2)
-	
+
 	self:DeleteOnRemove(crystal)
-	
+
 	self.crystalCount = self.crystalCount + 1
 end

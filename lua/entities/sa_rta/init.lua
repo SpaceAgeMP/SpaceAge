@@ -21,24 +21,22 @@ local function OpenTerminal(ent,ply,founder)
 end
 
 function ENT:Initialize()
-	self:SetModel( "models/slyfo/rover_na_large.mdl" ) 	
-	self:PhysicsInit( SOLID_VPHYSICS )	
+	self:SetModel( "models/slyfo/rover_na_large.mdl" )
+	self:PhysicsInit( SOLID_VPHYSICS )
 	self:SetMoveType( MOVETYPE_VPHYSICS )
 	self:SetSolid( SOLID_VPHYSICS )
 	self.Inputs = Wire_CreateInputs(self, { "OpenTerminal" })
 	self.NextUse = 0
 	timer.Simple(0.1,function() self:CheckCanSpawn(self:GetTable().Founder) end)
-end  
+end
 
 function ENT:CheckCanSpawn(ply)
 	if (ply.rta < 1) then self:Remove() return end
-end 
+end
 
 function ENT:TriggerInput(iname, value)
-	if (iname == "OpenTerminal") then
-		if value ~= 0 then
-			OpenTerminal(self,self.pl,self:GetTable().Founder)
-		end
+	if (iname == "OpenTerminal") and value ~= 0 then
+		OpenTerminal(self,self.pl,self:GetTable().Founder)
 	end
 end
 

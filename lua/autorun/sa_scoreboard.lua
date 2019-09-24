@@ -16,12 +16,12 @@ else
 				SA.ScoreBoard:Remove()
 				SA.ScoreBoard = nil
 			end
-			
+
 			SA.ScoreBoard = vgui.Create("SA_ScoreBoard")
-			
+
 			return true
 		end
-		
+
 		function GAMEMODE:ScoreboardShow()
 			if not SA.ScoreBoard then
 				self:CreateScoreboard()
@@ -32,16 +32,16 @@ else
 
 			SA.ScoreBoard:SetVisible( true )
 			SA.ScoreBoard:UpdateScoreboard( true )
-			
+
 			return true
 		end
-		
+
 		function GAMEMODE:ScoreboardHide()
 			GAMEMODE.ShowScoreboard = false
 			gui.EnableScreenClicker( false )
 
 			SA.ScoreBoard:SetVisible( false )
-			
+
 			return true
 		end
 	end)

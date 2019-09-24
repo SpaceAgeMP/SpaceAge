@@ -9,16 +9,16 @@ function ENT:Initialize()
 	self:CalcVars(self:GetTable().Founder)
 	self.damaged = 0
 	self.WireDebugName = self.PrintName
-	self.Outputs = Wire_CreateOutputs(self, { 
-	"Blue Ice", 
-	"Clear Ice", 
-	"Glacial Mass", 
-	"White Glaze", 
-	"Dark Glitter", 
-	"Glare Crust", 
-	"Gelidus", 
+	self.Outputs = Wire_CreateOutputs(self, {
+	"Blue Ice",
+	"Clear Ice",
+	"Glacial Mass",
+	"White Glaze",
+	"Dark Glitter",
+	"Glare Crust",
+	"Gelidus",
 	"Krystallos",
-	"Max Blue Ice",	
+	"Max Blue Ice",
 	"Max Clear Ice",
 	"Max Glacial Mass",
 	"Max White Glaze",
@@ -31,9 +31,9 @@ end
 function ENT:CalcVars(ply)
 	local reqLvl = SA.Ice.GetLevelForStorageModel(self:GetModel())
 	if ((reqLvl == nil) or (ply.icerawmod < reqLvl)) then self:Remove() return end
-	
+
 	local Capacity = math.floor(8*(4.5^reqLvl))*ply.devlimit
-	
+
 	RD.AddResource(self, "Blue Ice", Capacity)
 	RD.AddResource(self, "Clear Ice", Capacity)
 	RD.AddResource(self, "Glacial Mass", Capacity)
@@ -49,16 +49,16 @@ function ENT:SpawnFunction( ply, tr )
 	local ent = ents.Create( "mining_laser_base" )
 	ent:SetPos( tr.HitPos + tr.HitNormal * 100 )
 	ent:Spawn()
-	ent:Activate() 
+	ent:Activate()
 	return ent
 end
 
 function ENT:Think()
-	self.BaseClass.Think(self)	
-	self:UpdateWireOutput()		
+	self.BaseClass.Think(self)
+	self:UpdateWireOutput()
 end
 
-function ENT:UpdateWireOutput() 
+function ENT:UpdateWireOutput()
 	Wire_TriggerOutput(self, "Blue Ice", RD.GetResourceAmount(self, "Blue Ice") )
 	Wire_TriggerOutput(self, "Clear Ice", RD.GetResourceAmount(self, "Clear Ice") )
 	Wire_TriggerOutput(self, "Glacial Mass", RD.GetResourceAmount(self, "Glacial Mass") )
@@ -67,7 +67,7 @@ function ENT:UpdateWireOutput()
 	Wire_TriggerOutput(self, "Glare Crust", RD.GetResourceAmount(self, "Glare Crust") )
 	Wire_TriggerOutput(self, "Gelidus", RD.GetResourceAmount(self, "Gelidus") )
 	Wire_TriggerOutput(self, "Krystallos", RD.GetResourceAmount(self, "Krystallos") )
-	
+
 	Wire_TriggerOutput(self, "Max Blue Ice", RD.GetNetworkCapacity(self, "Blue Ice") )
 	Wire_TriggerOutput(self, "Max Clear Ice", RD.GetNetworkCapacity(self, "Clear Ice") )
 	Wire_TriggerOutput(self, "Max Glacial Mass", RD.GetNetworkCapacity(self, "Glacial Mass") )

@@ -3,12 +3,12 @@ AddCSLuaFile( "shared.lua" )
 
 include("shared.lua")
 
-function ENT:Initialize()	
+function ENT:Initialize()
 	if not self.SwitchPeriod then self.SwitchPeriod = 5 end
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
-end 
+end
 
 function ENT:Think()
 	local skins = self:SkinCount()
@@ -19,7 +19,7 @@ function ENT:Think()
 			newskin = currentskin + 1 - skins
 		else
 			newskin = currentskin+1
-		end  
+		end
 		self:SetSkin(newskin)
 	end
 	self:NextThink(CurTime()+self.SwitchPeriod)

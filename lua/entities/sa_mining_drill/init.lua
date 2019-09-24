@@ -111,24 +111,24 @@ end
 function ENT:Think()
 	self.BaseClass.Think(self)
 	if ( self.Active == 1 ) then
-			if ( RD.GetResourceAmount(self, "energy") >= self.consume ) then
-				RD.ConsumeResource(self, "energy", self.consume)
-				local myOwner = SA.PP.GetOwner(self)
-				if self.TouchEnt and self.TouchEnt.IsCrystal and myOwner and myOwner:IsValid() and myOwner:GetPos():Distance(self:GetPos()) <= 350 and myOwner:InVehicle() then
-					local skin = self.TouchEnt:GetSkin()
-					if skin == 2 then
-						self.yield = math.floor(self.oldyield * 1.5)
-					elseif skin == 0 then
-						self.yield = math.floor(self.oldyield * 1.2)
-					else
-						self.yield = self.oldyield
-					end
-					SA.Functions.MineThing(self,self.TouchEnt,"tiberium")
+		if ( RD.GetResourceAmount(self, "energy") >= self.consume ) then
+			RD.ConsumeResource(self, "energy", self.consume)
+			local myOwner = SA.PP.GetOwner(self)
+			if self.TouchEnt and self.TouchEnt.IsCrystal and myOwner and myOwner:IsValid() and myOwner:GetPos():Distance(self:GetPos()) <= 350 and myOwner:InVehicle() then
+				local skin = self.TouchEnt:GetSkin()
+				if skin == 2 then
+					self.yield = math.floor(self.oldyield * 1.5)
+				elseif skin == 0 then
+					self.yield = math.floor(self.oldyield * 1.2)
+				else
 					self.yield = self.oldyield
 				end
-			else
-				self:TurnOff()
+				SA.Functions.MineThing(self,self.TouchEnt,"tiberium")
+				self.yield = self.oldyield
 			end
+		else
+			self:TurnOff()
+		end
 	else
 		self:TurnOff()
 	end

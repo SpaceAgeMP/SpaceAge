@@ -49,7 +49,7 @@ function ENT:TurnOn()
 		if (not self.environment) or self.environment.IsProtected or self.environment == SB.GetSpace() then return end
 		self:EmitSound( "apc_engine_start" )
 		self.Active = 1
-		if not (WireAddon == nil) then 
+		if not (WireAddon == nil) then
 			Wire_TriggerOutput(self, "On", self.Active)
 			self:SetState(0)
 		end
@@ -62,7 +62,7 @@ function ENT:TurnOff()
 		self:StopSound( "apc_engine_start" )
 		self:EmitSound( "apc_engine_stop" )
 		self.Active = 0
-		if not (WireAddon == nil) then 
+		if not (WireAddon == nil) then
 			Wire_TriggerOutput(self, "On", self.Active)
 			self:SetState(0)
 		end

@@ -3,7 +3,7 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self.pnlCanvas 	= vgui.Create( "Panel", self )
+	self.pnlCanvas 	= vgui.Create("Panel", self)
 	self.YOffset = 0
 
 end
@@ -14,12 +14,12 @@ function PANEL:GetCanvas()
 
 end
 
-function PANEL:OnMouseWheeled( dlta )
+function PANEL:OnMouseWheeled(dlta)
 
 	local MaxOffset = self.pnlCanvas:GetTall() - self:GetTall()
-	if ( MaxOffset > 0 ) then
+	if (MaxOffset > 0) then
 
-		self.YOffset = math.Clamp( self.YOffset + dlta * -100, 0, MaxOffset )
+		self.YOffset = math.Clamp(self.YOffset + dlta * -100, 0, MaxOffset)
 
 	else
 
@@ -33,10 +33,10 @@ end
 
 function PANEL:PerformLayout()
 
-	self.pnlCanvas:SetPos( 0, self.YOffset * -1 )
-	self.pnlCanvas:SetSize( self:GetWide(), self.pnlCanvas:GetTall() )
+	self.pnlCanvas:SetPos(0, self.YOffset * -1)
+	self.pnlCanvas:SetSize(self:GetWide(), self.pnlCanvas:GetTall())
 
 end
 
 
-vgui.Register( "SA_PlayerFrame", PANEL, "Panel" )
+vgui.Register("SA_PlayerFrame", PANEL, "Panel")

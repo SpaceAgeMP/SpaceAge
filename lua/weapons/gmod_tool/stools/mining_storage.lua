@@ -9,15 +9,15 @@ TOOL.ClientConVar["model"] = "models/slyfo/sat_resourcetank.mdl"
 
 cleanup.Register("asteroid mining")
 
-if ( CLIENT ) then
-	language.Add( "tool.mining_storage.name", "Mining Storage" )
-	language.Add( "tool.mining_storage.desc", "Spawn storages for ore." )
-	language.Add( "tool.mining_storage.0", "Left click to spawn a storage." )
+if (CLIENT) then
+	language.Add("tool.mining_storage.name", "Mining Storage")
+	language.Add("tool.mining_storage.desc", "Spawn storages for ore.")
+	language.Add("tool.mining_storage.0", "Left click to spawn a storage.")
 
-	language.Add( "Undone_mining_storage", "Mining Storage Undone" )
-	language.Add( "Cleanup_mining_storage", "Mining Storage" )
-	language.Add( "Cleaned_mining_storage", "Cleaned up all Mining Storages" )
-	language.Add( "SBoxLimit_mining_storage", "Maximum Mining Storages Reached" )
+	language.Add("Undone_mining_storage", "Mining Storage Undone")
+	language.Add("Cleanup_mining_storage", "Mining Storage")
+	language.Add("Cleaned_mining_storage", "Cleaned up all Mining Storages")
+	language.Add("SBoxLimit_mining_storage", "Maximum Mining Storages Reached")
 end
 
 local miningdevice_models = {
@@ -42,4 +42,4 @@ local miningdevice_models = {
 	{ "ICE Product Storage Level 1: Medium Tank", "models/mandrac/hw_tank/hw_tank_large.mdl", "storage_ice_product" },
 }
 
-CAF_ToolRegister( TOOL, miningdevice_models, nil, "mining_storage", 4 )
+CAF_ToolRegister(TOOL, miningdevice_models, nil, "mining_storage", 4)
