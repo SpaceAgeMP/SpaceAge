@@ -38,9 +38,9 @@ end
 
 function PANEL:SetInfo(column, k, v)
 
-	if (!v or v == "") then v = "N/A" end
+	if (not v or v == "") then v = "N/A" end
 
-	if (!self.InfoLabels[ column ][ k ]) then
+	if (not self.InfoLabels[ column ][ k ]) then
 
 		self.InfoLabels[ column ][ k ] = {}
 		self.InfoLabels[ column ][ k ].Key 	= vgui.Create("Label", self)
@@ -65,8 +65,8 @@ end
 
 function PANEL:UpdatePlayerData()
 
-	if (!self.Player) then return end
-	if (!self.Player:IsValid()) then return end
+	if (not self.Player) then return end
+	if (not self.Player:IsValid()) then return end
 
 	--[[ self:SetInfo(2, "Website:", self.Player:GetWebsite())
 	self:SetInfo(2, "Location:", self.Player:GetLocation())
@@ -192,9 +192,9 @@ function PANEL:PerformLayout()
 
 	end
 
-	if (!self.Player or
+	if (not self.Player or
 		 self.Player == LocalPlayer() or
-		 !LocalPlayer():IsAdmin()) then
+		 not LocalPlayer():IsAdmin()) then
 
 		self.btnKick:SetVisible(false)
 		self.btnBan:SetVisible(false)

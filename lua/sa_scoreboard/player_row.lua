@@ -73,8 +73,8 @@ end
 
 function PANEL:UpdatePlayerData()
 
-	if (!self.Player) then return end
-	if (!self.Player:IsValid()) then return end
+	if (not self.Player) then return end
+	if (not self.Player:IsValid()) then return end
 
 	local LeaderCap = ""
 	if self.Player:GetNWBool("isfurry") == true then
@@ -146,7 +146,7 @@ function PANEL:DoClick()
 		surface.PlaySound("ui/buttonclick.wav")
 	end
 
-	self:OpenInfo(!self.Open)
+	self:OpenInfo(not self.Open)
 
 end
 
@@ -173,7 +173,7 @@ function PANEL:Think()
 
 	end
 
-	if (!self.PlayerUpdate or self.PlayerUpdate < CurTime()) then
+	if (not self.PlayerUpdate or self.PlayerUpdate < CurTime()) then
 
 		self.PlayerUpdate = CurTime() + 0.5
 		self:UpdatePlayerData()

@@ -45,7 +45,7 @@ function ENT:CalcVars(ply)
 end
 
 function ENT:SpawnFunction( ply, tr )
-	if ( !tr.Hit ) then return end
+	if (not tr.Hit ) then return end
 	local ent = ents.Create( "mining_laser_base" )
 	ent:SetPos( tr.HitPos + tr.HitNormal * 100 )
 	ent:Spawn()

@@ -33,7 +33,7 @@ function ENT:Initialize()
 end
 
 function ENT:SpawnFunction( ply, tr )
-	if ( !tr.Hit ) then return end
+	if (not tr.Hit ) then return end
 	local ent = ents.Create( "asteroid_base" )
 	ent:SetPos(tr.HitPos + tr.HitNormal * 100 )
 	ent:Spawn()

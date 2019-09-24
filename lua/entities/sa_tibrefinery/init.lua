@@ -7,7 +7,7 @@ local RD = CAF.GetAddon("Resource Distribution")
 local SA_TheWorld
 
 function ENT:SpawnFunction(ply, tr)
-	if (!tr.Hit) then return end
+	if (not tr.Hit) then return end
 	local ent = ents.Create("sa_tibrefinery")
 	ent:SetPos(tr.HitPos)
 	ent:Spawn()
@@ -33,7 +33,7 @@ function ENT:Initialize()
 	self:SetSolid(SOLID_VPHYSICS)
 
 	local phys = self:GetPhysicsObject()
-	if(!phys:IsValid()) then return end
+	if (not phys:IsValid()) then return end
 	phys:SetMass(50000)
 	phys:EnableMotion(false)
 end

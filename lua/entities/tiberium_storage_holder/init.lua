@@ -5,7 +5,7 @@ include("shared.lua")
 local RD = CAF.GetAddon("Resource Distribution")
 
 function ENT:SpawnFunction(ply, tr)
-	if (!tr.Hit) then return end
+	if (not tr.Hit) then return end
 	local ent = ents.Create("tiberium_storage_holder")
 	ent:SetPos(tr.HitPos + Vector(0,0,0))
 	ent:Spawn()
@@ -60,7 +60,7 @@ function ENT:TriggerInput(iname, value)
 end
 
 function ENT:StartTouch(ent)
-	if (!ent.IsTiberiumStorage) then return end
+	if (not ent.IsTiberiumStorage) then return end
 	local eOwner = SA.PP.GetOwner(ent)
 	if not (eOwner and eOwner:IsValid() and eOwner:IsPlayer()) then return end
 	if self.Active == 1 and SA.PP.PlyCanPerform(eOwner,self) then

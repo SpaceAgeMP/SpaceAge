@@ -134,11 +134,11 @@ end
 
 function PANEL:UpdateScoreboard(force)
 
-	if (!force and !self:IsVisible()) then return end
+	if (not force and not self:IsVisible()) then return end
 
 	for k, v in pairs(self.PlayerRows) do
 
-		if (!k:IsValid()) then
+		if (not k:IsValid()) then
 
 			v:Remove()
 			self.PlayerRows[ k ] = nil
@@ -150,7 +150,7 @@ function PANEL:UpdateScoreboard(force)
 	local PlayerList = player.GetAll()
 	for id, pl in pairs(PlayerList) do
 
-		if (!self:GetPlayerRow(pl)) then
+		if (not self:GetPlayerRow(pl)) then
 
 			self:AddPlayerRow(pl)
 

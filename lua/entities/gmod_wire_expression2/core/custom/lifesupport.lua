@@ -52,7 +52,7 @@ local function e2_ls_info(ent)
 end
 
 local function ls_get_res_by_ent(this)
-	if(!SA.ValidEntity(this)) then return nil end 
+	if (not SA.ValidEntity(this)) then return nil end
 	local netid = this:GetNetworkedInt("netid")
 	if netid <= 0 then return nil end
 	local nettable = RD.GetNetTable(netid)
@@ -61,7 +61,7 @@ local function ls_get_res_by_ent(this)
 end
 
 e2function table entity:lsInfo()
-	if(!SA.ValidEntity(this)) then return {} end
+	if (not SA.ValidEntity(this)) then return {} end
 	return e2_ls_info(this)
 end
 

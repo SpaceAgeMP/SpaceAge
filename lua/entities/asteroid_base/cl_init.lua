@@ -6,5 +6,5 @@ function ENT:DrawEntityOutline( size )
 end
 
 function ENT:Draw( bDontDrawModel )
-	if ( !bDontDrawModel ) then self:DrawModel() end
+	if (not bDontDrawModel ) then self:DrawModel() end
 end

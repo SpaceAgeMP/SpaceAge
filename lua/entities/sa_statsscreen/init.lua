@@ -7,7 +7,7 @@ require("supernet")
 ENT.WireDebugName = "SpaceAge Stats Display"
 
 function ENT:SpawnFunction(ply, tr)
-	if (!tr.Hit) then return end
+	if (not tr.Hit) then return end
 	local ent = ents.Create("sa_statsscreen")
 	ent:SetModel("models/props/cs_assault/Billboard.mdl")
 	ent:SetPos(tr.HitPos + Vector(0,0,100))
@@ -31,7 +31,7 @@ end
 local SA_PlayersToShow = 30
 
 local function SendStatsUpdateRes(data, isok, merror, ply)
-	if (!isok) then print(merror) return end
+	if (not isok) then print(merror) return end
 	local imax = table.maxn(data)
 	if imax <= 0 then return end
 

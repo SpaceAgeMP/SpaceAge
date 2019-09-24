@@ -45,13 +45,13 @@ if SERVER then
 end
 
 function TOOL:LeftClick(trace)
-	if (!trace.HitPos) then return false end
+	if (not trace.HitPos) then return false end
 	if (trace.Entity:IsPlayer()) then return false end
 	if (CLIENT) then return true end
 
 	local ply = self:GetOwner()
 
-	if (!self:GetSWEP():CheckLimit("rta_devices")) then return false end
+	if (not self:GetSWEP():CheckLimit("rta_devices")) then return false end
 
 	local Ang = trace.HitNormal:Angle()
 
@@ -74,7 +74,7 @@ function TOOL:LeftClick(trace)
 end
 
 function TOOL:UpdateGhostRTA(ent, player)
-	if (!ent or !ent:IsValid()) then return end
+	if (not ent or not ent:IsValid()) then return end
 
 	local tr 	= util.GetPlayerTrace(player, player:GetAimVector())
 	local trace 	= util.TraceLine(tr)
@@ -90,7 +90,7 @@ function TOOL:UpdateGhostRTA(ent, player)
 end
 
 function TOOL:Think()
-	if (!self.GhostEntity or !self.GhostEntity:IsValid() ) then
+	if (not self.GhostEntity or not self.GhostEntity:IsValid() ) then
 		self:MakeGhostEntity("models/slyfo/rover_na_large.mdl" , Vector(0,0,0), Angle(0,0,0))
 	end
 

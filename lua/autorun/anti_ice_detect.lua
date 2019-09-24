@@ -4,7 +4,7 @@ elseif (CLIENT) then
 	local FBM = ents.FindByModel
 	function ents.FindByModel(str)
 		local Table = FBM(str)
-		if !Table then return {} end
+		if not Table then return {} end
 		for k,v in pairs(Table) do
 			if SA.ValidEntity(v) and v:GetClass() == "iceroid" then
 				Table[k] = nil
@@ -16,7 +16,7 @@ elseif (CLIENT) then
 	local FBC = ents.FindByClass
 	function ents.FindByClass(str)
 		local Table = FBC(str)
-		if !Table then return {} end
+		if not Table then return {} end
 		for k,v in pairs(Table) do
 			if SA.ValidEntity(v) and v:GetClass() == "iceroid" then
 				Table[k] = nil
@@ -28,7 +28,7 @@ elseif (CLIENT) then
 	local FIB = ents.FindInBox
 	function ents.FindInBox(min, max)
 		local Table = FIB(min, max)
-		if !Table then return {} end
+		if not Table then return {} end
 		for k,v in pairs(Table) do
 			if SA.ValidEntity(v) and v:GetClass() == "iceroid" then
 				Table[k] = nil
@@ -40,7 +40,7 @@ elseif (CLIENT) then
 	local FIC = ents.FindInCone
 	function ents.FindInCone(pos, dir, dist, radius)
 		local Table = FIC(pos, dir, dist, radius)
-		if !Table then return {} end
+		if not Table then return {} end
 		for k,v in pairs(Table) do
 			if SA.ValidEntity(v) and v:GetClass() == "iceroid" then
 				Table[k] = nil
@@ -52,7 +52,7 @@ elseif (CLIENT) then
 	local FIS = ents.FindInSphere
 	function ents.FindInSphere(center, radius)
 		local Table = FIS(center, radius)
-		if !Table then return {} end
+		if not Table then return {} end
 		for k,v in pairs(Table) do
 			if SA.ValidEntity(v) and v:GetClass() == "iceroid" then
 				Table[k] = nil
@@ -64,7 +64,7 @@ elseif (CLIENT) then
 	local GA = ents.GetAll
 	function ents.GetAll()
 		local Table = GA()
-		if !Table then return {} end
+		if not Table then return {} end
 		for k,v in pairs(Table) do
 			if SA.ValidEntity(v) and v:GetClass() == "iceroid" then
 				Table[k] = nil

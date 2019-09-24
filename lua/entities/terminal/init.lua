@@ -4,7 +4,7 @@ AddCSLuaFile( "shared.lua" )
 include("shared.lua")
 
 function ENT:SpawnFunction(ply, tr)
-	if (!tr.Hit) then return end
+	if (not tr.Hit) then return end
 	local ent = ents.Create("terminal")
 	ent:SetPos(tr.HitPos)
 	ent:Spawn()
@@ -12,25 +12,25 @@ function ENT:SpawnFunction(ply, tr)
 	return ent
 end
 
-function ENT:Initialize()   
-	self:SetModel( "models/props/terminal.mdl" ) 	
-	self:PhysicsInit( SOLID_VPHYSICS )	
+function ENT:Initialize()
+	self:SetModel( "models/props/terminal.mdl" )
+	self:PhysicsInit( SOLID_VPHYSICS )
 	self:SetMoveType( MOVETYPE_VPHYSICS )
 	self:SetSolid( SOLID_VPHYSICS )
 	self.ownerchecked = false
-	local phys = self:GetPhysicsObject()  	
-	if (phys:IsValid()) then  		
+	local phys = self:GetPhysicsObject()
+	if (phys:IsValid()) then
 		phys:EnableMotion(false)
-	end 
+	end
 	local physobj = self:GetPhysicsObject()
 	if physobj:IsValid() then physobj:SetMass("50000") end
 	self:OwnerCheckValid()
-end   
+end
 
 function ENT:OwnerCheckValid()
 	if(self.ownerchecked) then return end
 	local myOwnerPly = SA.PP.GetOwner(self)
-	if ( !SA.PP.IsWorldEnt(self) and myOwnerPly and myOwnerPly:SteamID() ~= "STEAM_0:0:5394890") then
+	if (not SA.PP.IsWorldEnt(self) and myOwnerPly and myOwnerPly:SteamID() ~= "STEAM_0:0:5394890") then
 		print("UNAUTHORIZED Terminal Owner detected: '"..myOwnerPly:Name().."'!")
 		myOwnerPly:Kill()
 		self:Remove()
@@ -51,4 +51,4 @@ function ENT:Use( ply, called )
 	ply:Freeze(true)
 	ply:ConCommand("sa_terminal_update")
 	ply:ConCommand("sa_goodies_update")
-end 
+end

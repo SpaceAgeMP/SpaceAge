@@ -22,15 +22,15 @@ end
 
 function ENT:Draw()
 	self:DrawModel()
-	if (!self.allowDraw) then return true end
-	--if (!statsAllowDraw) then return true end --Nah, well, we still draw while refreshing, flashes get annoying
+	if (not self.allowDraw) then return true end
+	--if (not statsAllowDraw) then return true end --Nah, well, we still draw while refreshing, flashes get annoying
 	--nighteagle screen vector rotation and positioning legacy code
 	local OF = 0
 	local OU = 0
 	local OR = 0
 	local Res = 0
 	local RatioX = 0
-	
+
 	if (WireGPU_Monitors[self:GetModel()]) and (WireGPU_Monitors[self:GetModel()].OF) then
 		OF = WireGPU_Monitors[self:GetModel()].OF
 		OU = WireGPU_Monitors[self:GetModel()].OU
@@ -44,18 +44,18 @@ function ENT:Draw()
 		Res = 1
 		RatioX = 1
 	end
-	
+
 	local ang = self:GetAngles()
 	local rot = Vector(-90,90,0)
 	ang:RotateAroundAxis(ang:Right(), 	rot.x)
 	ang:RotateAroundAxis(ang:Up(), 		rot.y)
 	ang:RotateAroundAxis(ang:Forward(), 	rot.z)
-	
+
 	local pos = self:GetPos()+(self:GetForward()*OF)+(self:GetUp()*OU)+(self:GetRight()*OR)
 	if self.doScroll then
 		self.scrollPos = self.scrollPos + self.scrollSpeed
 	elseif not self.scrollAgainTimer then
-		timer.Simple(3,function() 
+		timer.Simple(3,function()
 			self.doScroll = 1
 			self.scrollAgainTimer = false
 		end)
@@ -69,13 +69,13 @@ function ENT:Draw()
 		local y = -h/2
 
 		local WhiteColor = Color(255, 255, 255, 255)
-			
+
 		local ySpace = 35
 
 		local justOffset = (w / 3)
 
 		local xColumns = { (x + justOffset - 45) / RatioX, (x + justOffset - 5) / RatioX, (x + justOffset + 200) / RatioX, (x + justOffset + 330) / RatioX }
-		
+
 		--add changable backround colour some time.
 		surface.SetDrawColor(0,0,0,255)
 
@@ -108,7 +108,7 @@ function ENT:Draw()
 		end
 
 		surface.SetDrawColor(0,0,0,255)
-		surface.DrawRect(x,y,w/RatioX,123)	
+		surface.DrawRect(x,y,w/RatioX,123)
 
 		local headerY = y + 117 - ySpace
 
@@ -133,7 +133,7 @@ local function SA_ReceiveStatsUpdate(ply, decoded)
 		SA_StatsTable[i]["name"] = string.Left(v["name"],SA_MaxNameLength)
 		SA_StatsTable[i]["score"] = SA.AddCommasToInt(v["score"])
 		local tempColor = SA.Factions.Colors[v["groupname"]]
-		if (!tempColor) then tempColor = Color(255,100,0,255) end
+		if (not tempColor) then tempColor = Color(255,100,0,255) end
 		SA_StatsTable[i]["factioncolor"] = tempColor
 		tempColor = Color(255,255,255,255)
 		if tcredits < 0 then tempColor = Color(255,0,0,255) end
@@ -143,7 +143,7 @@ local function SA_ReceiveStatsUpdate(ply, decoded)
 
 	statsAllowDraw = true
 end
-supernet.Hook("SA_StatsUpdate",SA_ReceiveStatsUpdate) 
+supernet.Hook("SA_StatsUpdate",SA_ReceiveStatsUpdate)
 
 function ENT:IsTranslucent()
 	return true

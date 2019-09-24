@@ -1,4 +1,3 @@
-- Remove GLua syntax (! for not, // and /**/ comments)
 - Find out wtf is up with:
 		[ERROR] Warning! A net message (CAF_Start_false) is already started! Discarding in favor of the new message! (URPC)
 		  1. clientRPC - lua/ulib/server/util.lua:29

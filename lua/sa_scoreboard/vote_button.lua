@@ -14,7 +14,7 @@ end
 function PANEL:DoClick()
 
 	local ply = self:GetParent().Player
-	if (!ply or !ply:IsValid() or ply == LocalPlayer()) then return end
+	if (not ply or not ply:IsValid() or ply == LocalPlayer()) then return end
 
 	LocalPlayer():ConCommand("rateuser ".. ply:EntIndex().. " "..self.VoteName.."\n")
 
@@ -49,7 +49,7 @@ end
 
 function PANEL:Paint()
 
-	if (!self.Material) then
+	if (not self.Material) then
 		self.Material = surface.GetTextureID("gui/silkicons/" .. self.MaterialName)
 	end
 

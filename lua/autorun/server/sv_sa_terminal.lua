@@ -318,7 +318,7 @@ SA_UpdateInfo = function(ply,CanPass)
 	end
 
 	--Break out if they should not be recieving a terminal update.
-	if (ply.SendingTermUp or !ply.MayBePoked or !ply.AtTerminal or ply.IsAFK) then return end
+	if (ply.SendingTermUp or not ply.MayBePoked or not ply.AtTerminal or ply.IsAFK) then return end
 
 	--Send the player a list of nodes within range.
 	SA_UpdateNodeSelection(ply)
@@ -534,7 +534,7 @@ local function SA_MarketBuy(ply,cmd,args)
 				bought = true
 			end
 		end
-		if (!bought) then
+		if (not bought) then
 			ply.Credits = ply.Credits - price
 			TempStorage[uid][index] = buying
 		end

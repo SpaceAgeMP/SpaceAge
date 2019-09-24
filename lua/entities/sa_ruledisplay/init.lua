@@ -3,7 +3,7 @@ AddCSLuaFile( "cl_init.lua" )
 include( "shared.lua" )
 
 function ENT:SpawnFunction( ply, tr )
-	if ( !tr.HitWorld ) then return end
+	if (not tr.HitWorld ) then return end
 
 	local ent = ents.Create( "sa_ruledisplay" )
 	ent:SetPos( tr.HitPos + Vector( 0, 0, 100 ) )
