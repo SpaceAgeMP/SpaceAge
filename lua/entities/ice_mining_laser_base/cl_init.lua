@@ -26,24 +26,27 @@ local hitspotMat = CreateMaterial("sc_blue_ball01","UnLitGeneric",{
 
 local col = Color(255,0,0,255)
 function ENT:Draw()
-	if (self:GetNWBool("o")) then
-		local Trace = util.QuickTrace(self:GetPos(),self:GetUp() * self.LaserRange,self)
-		if (Trace.Hit) then
-			local Start = self:GetPos() + self:GetUp() * 24
-			local HitPos = Trace.HitPos
-			local rt = RealTime() * 2
-
-			self:SetRenderBoundsWS(self:GetPos(),HitPos)
-
-			render.SetMaterial(laserMat)
-			render.DrawBeam(Start,HitPos,32,rt,rt + 0.002,col)
-
-			render.SetMaterial(beginspotMat)
-			render.DrawSprite(Start,64,64,col)
-
-			render.SetMaterial(hitspotMat)
-			render.DrawSprite(HitPos,64,64, col)
-		end
-	end
 	self:DrawModel()
+	if (not self:GetNWBool("o")) then
+		return
+	end
+	local pos = self:GetPos()
+	local up = self:GetUp()
+	local Trace = util.QuickTrace(pos, up * self.LaserRange,self)
+	if (Trace.Hit) then
+		local Start = pos + up * 24
+		local HitPos = Trace.HitPos
+		local rt = RealTime() * 2
+
+		self:SetRenderBoundsWS(pos, HitPos)
+
+		render.SetMaterial(laserMat)
+		render.DrawBeam(Start,HitPos,32,rt,rt + 0.002,col)
+
+		render.SetMaterial(beginspotMat)
+		render.DrawSprite(Start,64,64,col)
+
+		render.SetMaterial(hitspotMat)
+		render.DrawSprite(HitPos,64,64, col)
+	end
 end

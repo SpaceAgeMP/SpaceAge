@@ -57,7 +57,7 @@ function ENT:DrawLaserDef(color, width)
 			render.StartBeam(20)
 			for seg = 1,20 do
 				local segm = seg-1
-				render.AddBeam(start + (up * len * segm) + ((math.sin(b_ang) * right + math.cos(b_ang) * fow):Normalize() * math.sin(math.rad(segm * 9.4736842)) * len / 2),width2,T,BeamColor[Beam])
+				render.AddBeam(start + (up * (len * segm)) + ((math.sin(b_ang) * right + math.cos(b_ang) * fow):Normalize() * (math.sin(math.rad(segm * 9.4736842)) * len / 2)),width2,T,BeamColor[Beam])
 			end
 			render.EndBeam()
 		end

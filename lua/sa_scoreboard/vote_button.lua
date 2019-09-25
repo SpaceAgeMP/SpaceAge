@@ -47,18 +47,22 @@ function PANEL:SetUp(mat, votename, nicename)
 
 end
 
+local bgColorDefault = Color(0, 0, 0, 10)
+local bgColorSelected = Color(200, 200, 200, 255)
+local bgColorArmed = Color(100, 100, 100, 255)
+
 function PANEL:Paint()
 
 	if (not self.Material) then
 		self.Material = surface.GetTextureID("gui/silkicons/" .. self.MaterialName)
 	end
 
-	local bgColor = Color(0,0,0,10)
+	local bgColor = bgColorDefault
 
 	if (self.Selected) then
-		bgColor = Color(200, 200, 200, 255)
+		bgColor = bgColorSelected
 	elseif (self.Armed) then
-		bgColor = Color(100, 100, 100, 255)
+		bgColor = bgColorArmed
 	end
 
 	draw.RoundedBox(4, 0, 0, self:GetWide(), self:GetTall(), bgColor)

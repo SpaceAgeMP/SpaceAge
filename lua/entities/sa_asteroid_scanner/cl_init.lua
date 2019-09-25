@@ -11,11 +11,13 @@ function ENT:Draw()
 	end
 end
 
+local white = Color(255,255,255,255)
+
 function ENT:DrawLaser()
 	local up = self:GetAngles():Up()
 	local start = self:GetPos() + (up * self:OBBMaxs().z)
 	render.SetMaterial( mat )
-	render.DrawBeam( start, util.TraceLine({start = start, endpos = start + (up * 3000), filter = { self }}).HitPos, 5, 0, 20, Color(255,255,255,255) )
+	render.DrawBeam( start, util.TraceLine({start = start, endpos = start + (up * 3000), filter = { self }}).HitPos, 5, 0, 20, white)
 end
 
 function ENT:Think()

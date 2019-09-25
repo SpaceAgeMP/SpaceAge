@@ -19,12 +19,14 @@ local texRatings = {
 surface.GetTextureID("gui/silkicons/emoticon_smile")
 local PANEL = {}
 
+local connectingColor = Color(200, 120, 50, 255)
+
 function PANEL:Paint()
 	local _team = self.Player:Team()
 	local color = team.GetColor(_team)
 
 	if (self.Player:Team() == TEAM_CONNECTING) then
-		color = Color(200, 120, 50, 255)
+		color = connectingColor
 	end
 
 	if (self.Open or self.Size ~= self.TargetSize) then

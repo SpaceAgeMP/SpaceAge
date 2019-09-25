@@ -76,9 +76,11 @@ function ENT:Damage()
 	end
 end
 
+local colWhite = Color(255, 255, 255, 255)
+
 function ENT:Repair()
 	self.BaseClass.Repair(self)
-	self:SetColor(Color(255, 255, 255, 255))
+	self:SetColor(colWhite)
 	self.damaged = 0
 end
 

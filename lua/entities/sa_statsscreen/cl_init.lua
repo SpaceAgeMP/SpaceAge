@@ -20,6 +20,8 @@ function ENT:Initialize()
 	self.allowDraw = true
 end
 
+local white = Color(255, 255, 255, 255)
+
 function ENT:Draw()
 	self:DrawModel()
 	if (not self.allowDraw) then return true end
@@ -68,8 +70,6 @@ function ENT:Draw()
 		local x = -w / 2
 		local y = -h / 2
 
-		local WhiteColor = Color(255, 255, 255, 255)
-
 		local ySpace = 35
 
 		local justOffset = (w / 3)
@@ -96,7 +96,7 @@ function ENT:Draw()
 					end
 					if SA_StatsTable[i] then
 						local FactionColor = SA_StatsTable[i]["factioncolor"]
-						local PosColor = WhiteColor
+						local PosColor = white
 						if ( SA_PosColors[i] ) then PosColor = SA_PosColors[i] end
 						draw.DrawText(tostring(i), "textScreenfont10", xColumns[1], linePos, PosColor, 0)
 						draw.DrawText(SA_StatsTable[i]["name"], "textScreenfont10", xColumns[2], linePos, FactionColor, 0)

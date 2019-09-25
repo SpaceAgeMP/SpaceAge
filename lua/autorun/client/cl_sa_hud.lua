@@ -103,6 +103,16 @@ local function GetMaxAmmo(SWEP)
 	return SWEP:Clip1()
 end
 
+local black = Color(0, 0, 0, 255)
+local red = Color(255, 0, 0, 255)
+local green = Color(0, 255, 0, 255)
+local blue = Color(0, 0, 255, 255)
+local yellow = Color(255, 255, 0, 255)
+local orange = Color(255, 128, 0, 255)
+local veryDarkGrey = Color(20, 20, 20, 255)
+local transparentGrey = Color(70,70,70,230)
+local transparentDarkerGrey = Color(60, 60, 60, 230)
+
 local function DrawLSBar(BarNum,CaptionX,Value,ScH,ScW,ColBack,ColText)
 	local Caption = CAF.GetLangVar(CaptionX)
 	local BarHei = 114
@@ -114,7 +124,7 @@ local function DrawLSBar(BarNum,CaptionX,Value,ScH,ScW,ColBack,ColText)
 	--draw.RoundedBox(4, xPos-8, yPos-40, MeterWid+22, MeterHei+12 + 40, ColBack)
 	draw.RoundedBox(4, XMinX-8, Hei-32, BarWid + 16, BarHei + 12 + 30, ColBack)
 
-	draw.RoundedBox(4, XMinX + 3, Hei + 6, BarWid-6, BarHei-6, Color(70,70,70,230))
+	draw.RoundedBox(4, XMinX + 3, Hei + 6, BarWid-6, BarHei-6, transparentGrey)
 	draw.SimpleText(Caption, HUDFont, XMinX + BarWid / 2-1, Hei -20, ColText, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	local Perc = Value / 4000
@@ -123,12 +133,13 @@ local function DrawLSBar(BarNum,CaptionX,Value,ScH,ScW,ColBack,ColText)
 
 	if Value > 0 then
 		local YHei = (BarHei-4)  * Perc
-		YHei = math.Max(YHei,4)
+		YHei = math.max(YHei,4)
 		draw.RoundedBox(4, XMinX + 5, math.Round(Hei + 6 + BarHei - 4) - math.Round(YHei), BarWid-10, math.Round(YHei-4), ValCol)
 		draw.SimpleText(tostring(math.Round(Perc * 100,2)) .. " %", HUDFont, XMinX + BarWid / 2-1, Hei - 4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	else
-		if not SA_HUDBlink then ValCol = Color(0,0,0,0) end
-		draw.SimpleText("EMPTY", HUDFont, XMinX + BarWid / 2-1, Hei -4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		if (SA_HUDBlink) then
+			draw.SimpleText("EMPTY", HUDFont, XMinX + BarWid / 2-1, Hei -4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
 	end
 end
 
@@ -189,8 +200,7 @@ local function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 
 	local ValCol = Color(255 * (1-(Value / 4000)),255 * (Value / 4000),0,255)
 
-	local grey = 60
-	local batteryColor = Color(grey,grey,grey,230)
+	local batteryColor = transparentDarkerGrey
 
 	draw.RoundedBox(4, xPos-8, yPos-40, MeterWid + 22, MeterHei + 16 + 40, ColBack)
 
@@ -258,40 +268,44 @@ local function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 
 	if Value > 0 then
 		local XWid = (MeterWid - 154)  * Perc
-		XWid = math.Max(XWid,4)
+		XWid = math.max(XWid,4)
 		--draw.RoundedBox(4, xPos + 150, yPos + 4, XWid, MeterHei - 8, ValCol)
 		draw.SimpleText(tostring(Perc * 100) .. " %", HUDFont, xPos + (MeterWid + batLineWid) / 2, yPos -12, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	else
-		if not SA_HUDBlink then ValCol = Color(0,0,0,0) end
-		draw.SimpleText("EMPTY", HUDFont, xPos + (MeterWid + batLineWid) / 2, yPos - 12, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		if (SA_HUDBlink) then
+			draw.SimpleText("EMPTY", HUDFont, xPos + (MeterWid + batLineWid) / 2, yPos - 12, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
 	end
 end
 
 local function SA_CustomHUDPaint()
 	if GetConVarNumber("cl_drawhud") == 0 then return end
-	if not LocalPlayer():Alive() then return end
+	local lp = LocalPlayer()
+	local health = lp:Health()
+	local armor = lp:Armor()
+	if not lp:Alive() then return end
 
-	local SWEP = LocalPlayer():GetActiveWeapon()
+	local SWEP = lp:GetActiveWeapon()
 	if not (SWEP and SWEP.IsValid and SWEP:IsValid()) then return end
 	if SWEP:GetClass() == "gmod_camera" then return end
 
 	local ScH = ScrH()
 	local ScW = ScrW()
 
-	local primAmmo = LocalPlayer():GetAmmoCount(SWEP:GetPrimaryAmmoType())
-	local secAmmo = LocalPlayer():GetAmmoCount(SWEP:GetSecondaryAmmoType())
+	local primAmmo = lp:GetAmmoCount(SWEP:GetPrimaryAmmoType())
+	local secAmmo = lp:GetAmmoCount(SWEP:GetSecondaryAmmoType())
 	local primMaxAmmo = GetMaxAmmo(SWEP)
 
-	if LocalPlayer():Health() < SA_LastHealth then
+	if health < SA_LastHealth then
 		SA_HealthBarRed = 255
 	end
-	SA_LastHealth = LocalPlayer():Health()
+	SA_LastHealth = health
 
 	local HUDGrey = Color(0,0,0,225)
 	local HUDHealth = Color(SA_HealthBarRed,255-SA_HealthBarRed,0,255)
-	local HUDArmor = Color(255,0,0,255)
-	local HUDAmmo1 = Color(255,255,0,255)
-	local HUDAmmo2 = Color(255,128,0,255)
+	local HUDArmor = red
+	local HUDAmmo1 = yellow
+	local HUDAmmo2 = orange
 
 	draw.RoundedBox(4, ScW - 80, ScH - 340, 60, 320, HUDGrey)
 	if primMaxAmmo > 0 then
@@ -306,22 +320,22 @@ local function SA_CustomHUDPaint()
 
 	local HeightMul = 290
 	local Inset = 40
-	if LocalPlayer():Armor() > 0 then
+	if armor > 0 then
 		HeightMul = 274
 		Inset = 56
 	end
 
-	local PlRelX = LocalPlayer():Health() / 100
+	local PlRelX = health / 100
 	if PlRelX > 1 then PlRelX = 1 end
-	local PlHeightX = math.Max(PlRelX * HeightMul, 4)
+	local PlHeightX = math.max(PlRelX * HeightMul, 4)
 	draw.RoundedBox(4, ScW - 70, (ScH - Inset) - PlHeightX, 40, PlHeightX, HUDHealth)
-	draw.SimpleText(LocalPlayer():Health(), HUDFont, ScW - 50, ScH - 38, HUDHealth, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-	if (LocalPlayer():Armor() > 0) then
-		local PlRelX = LocalPlayer():Armor() / 100
+	draw.SimpleText(health, HUDFont, ScW - 50, ScH - 38, HUDHealth, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+	if (armor > 0) then
+		local PlRelX = armor / 100
 		if PlRelX > 1 then PlRelX = 1 end
-		local PlHeightX = math.Max(PlRelX * HeightMul, 4)
+		local PlHeightX = math.max(PlRelX * HeightMul, 4)
 		draw.RoundedBox(2, ScW - 70, (ScH - Inset) - PlHeightX, 10, PlHeightX, HUDArmor)
-		draw.SimpleText(LocalPlayer():Armor(), HUDFont, ScW - 50, ScH - 54, HUDArmor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+		draw.SimpleText(armor, HUDFont, ScW - 50, ScH - 54, HUDArmor, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 	end
 	--END OF HEALTH AND ARMOR
 
@@ -374,9 +388,9 @@ local function SA_CustomHUDPaint()
 
 		local FairTemp_Mid = (FairTemp_Min + FairTemp_Max) / 2
 
-		local coolTemp = Color(0,0,255,255)
-		local hotTemp = Color(255,0,0,255)
-		local goodTemp = Color(0,255,0,255)
+		local coolTemp = blue
+		local hotTemp = red
+		local goodTemp = green
 
 		-- draw background box
 
@@ -395,7 +409,7 @@ local function SA_CustomHUDPaint()
 		local outlineW = 2
 
 		--temp bar outline
-		surface.SetDrawColor(Color(0,0,0,255))
+		surface.SetDrawColor(black)
 		draw.NoTexture()
 		surface.DrawTexturedRectRounded( (ScW - tempGaugeWid) / 2 - outlineW, ScH - 90 + 5 - outlineW, tempGaugeWid + outlineW * 2 + 1, 20 + outlineW * 2, 4, 4, true, true, true, true)
 
@@ -422,12 +436,11 @@ local function SA_CustomHUDPaint()
 
 		-- fade blue-red-green
 
+		surface.SetDrawColor(green)
 		surface.SetTexture(surface.GetTextureID("vgui/gradient-r"))
-		surface.SetDrawColor(Color(0,255,0,255))
 		surface.DrawTexturedRect(XMinX + Wid - 3, ScH - 90 + 5, 5, 20)
 
 		surface.SetTexture(surface.GetTextureID("vgui/gradient-l"))
-		surface.SetDrawColor(Color(0,255,0,255))
 		surface.DrawTexturedRect(XMinX + Wid + Wid2-2, ScH - 90 + 5, 5, 20)
 
 
@@ -467,10 +480,10 @@ local function SA_CustomHUDPaint()
 
 		-- temperature texts
 
-		draw.SimpleTextOutlined(tostring(ls_tmp) .. tempUnit, "ScoreboardDefault", XWidX-3, ScH - 122, xMyTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, Color(20,20,20,255))
+		draw.SimpleTextOutlined(tostring(ls_tmp) .. tempUnit, "ScoreboardDefault", XWidX-3, ScH - 122, xMyTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, veryDarkGrey)
 
-		draw.SimpleTextOutlined(tostring(GlobalTemp_Min) .. tempUnit, "Default", XMinX, ScH - 55, coolTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, Color(20,20,20,255))
-		draw.SimpleTextOutlined(tostring(GlobalTemp_Max) .. tempUnit, "Default", XMinX + 380, ScH - 55, hotTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, Color(20,20,20,255))
+		draw.SimpleTextOutlined(tostring(GlobalTemp_Min) .. tempUnit, "Default", XMinX, ScH - 55, coolTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, veryDarkGrey)
+		draw.SimpleTextOutlined(tostring(GlobalTemp_Max) .. tempUnit, "Default", XMinX + 380, ScH - 55, hotTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, veryDarkGrey)
 
 
 
@@ -478,8 +491,8 @@ local function SA_CustomHUDPaint()
 	--END OF TEMPERATURE
 
 	local BarNum = 0
-	local ColText = Color(255,255,0,255)
-	if ls_current_unhabitable or LocalPlayer():WaterLevel() > 2 then
+	local ColText = yellow
+	if ls_current_unhabitable or lp:WaterLevel() > 2 then
 		BarNum = BarNum + 1
 		DrawLSBar(BarNum,"Air",ls_air,ScH,ScW,HUDGrey,ColText)
 		if ls_tmp < FairTemp_Min then
