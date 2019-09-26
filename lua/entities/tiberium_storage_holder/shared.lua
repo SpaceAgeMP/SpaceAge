@@ -5,4 +5,4 @@ ENT.PrintName = "Tiberium Storage Holder"
 ENT.Spawnable = true
 ENT.AdminSpawnable = true
 
-list.Set( "LSEntOverlayText" , "tiberium_storage_holder", {HasOOO = true, num = 1, resnames = {"tiberium"}} )
+list.Set("LSEntOverlayText" , "tiberium_storage_holder", {HasOOO = true, num = 1, resnames = {"tiberium"}})

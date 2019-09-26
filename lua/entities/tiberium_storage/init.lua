@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 local RD = CAF.GetAddon("Resource Distribution")
@@ -44,23 +44,23 @@ function ENT:Think()
 end
 
 function ENT:UpdateWireOutput()
-	Wire_TriggerOutput(self, "Tiberium", RD.GetResourceAmount( self, "tiberium" ))
-	Wire_TriggerOutput(self, "Max Tiberium", RD.GetNetworkCapacity( self, "tiberium" ))
+	Wire_TriggerOutput(self, "Tiberium", RD.GetResourceAmount(self, "tiberium"))
+	Wire_TriggerOutput(self, "Max Tiberium", RD.GetNetworkCapacity(self, "tiberium"))
 end
 
 function ENT:OnTakeDamage(dmginfo)
 	local dmg = dmginfo:GetDamage()
-	if math.Rand(0, (dmg * 0.3 ) + 18) >= 20 then self:Remove() end
+	if math.Rand(0, (dmg * 0.3) + 18) >= 20 then self:Remove() end
 end
 
 function ENT:OnRemove()
-	if RD.GetResourceAmount( self, "tiberium" ) < 1000 then return self.BaseClass.OnRemove(self) end
+	if RD.GetResourceAmount(self, "tiberium") < 1000 then return self.BaseClass.OnRemove(self) end
 
-	local wreck = ents.Create( "wreckedstuff" )
+	local wreck = ents.Create("wreckedstuff")
 	wreck:SetSolid(SOLID_NONE)
-	wreck:SetModel( self:GetModel() )
-	wreck:SetAngles( self:GetAngles() )
-	wreck:SetPos( self:GetPos() )
+	wreck:SetModel(self:GetModel())
+	wreck:SetAngles(self:GetAngles())
+	wreck:SetPos(self:GetPos())
 	wreck:Spawn()
 	wreck:Activate()
 	wreck.deathtype = 1
@@ -71,17 +71,17 @@ function ENT:OnRemove()
 end
 
 function ENT:Leak()
-	for i = 1,math.Rand(1,4) do
+	for i = 1, math.Rand(1, 4) do
 		if #ents.FindByClass("sa_tibcrystal_rep") >= 100 then return end
-		local Pos = SA.Tiberium.FindWorldFloor(self:GetPos() + Vector(math.Rand(-500,500),math.Rand(-500,500),500),nil,{self})
+		local Pos = SA.Tiberium.FindWorldFloor(self:GetPos() + Vector(math.Rand(-500, 500), math.Rand(-500, 500), 500), nil, {self})
 		if Pos then
 			local crystal = ents.Create("sa_tibcrystal_rep")
-			SA.Tiberium.SetTimeUntilDelete(crystal, CurTime() + math.Rand(10,30))
-			crystal:SetModel( "models/ce_ls3additional/tiberium/tiberium_normal.mdl" )
+			SA.Tiberium.SetTimeUntilDelete(crystal, CurTime() + math.Rand(10, 30))
+			crystal:SetModel("models/ce_ls3additional/tiberium/tiberium_normal.mdl")
 			local Height = math.abs(crystal:OBBMaxs().z - crystal:OBBCenter().z)
-			crystal:SetPos(Pos-Vector(0,0,Height-5))
-			crystal:SetAngles(Angle(0,math.Rand(0,359),0))
-			SA.Functions.PropMoveSlow(crystal,crystal:GetPos() + Vector(0,0,Height-5),math.Rand(10,45))
+			crystal:SetPos(Pos-Vector(0, 0, Height-5))
+			crystal:SetAngles(Angle(0, math.Rand(0, 359), 0))
+			SA.Functions.PropMoveSlow(crystal, crystal:GetPos() + Vector(0, 0, Height-5), math.Rand(10, 45))
 			crystal:Spawn()
 			crystal.MainSpawnedBy = crystal
 		end

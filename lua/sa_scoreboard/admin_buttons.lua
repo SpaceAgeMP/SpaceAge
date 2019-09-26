@@ -10,10 +10,10 @@ function PANEL:DoClick()
 
 end
 
-local bgDefault = Color(0,0,0,10)
+local bgDefault = Color(0, 0, 0, 10)
 local bgSelected = Color(0, 200, 255, 255)
 local bgArmed = Color(255, 255, 0, 255)
-local txt = Color(0,0,0,150)
+local txt = Color(0, 0, 0, 150)
 
 function PANEL:Paint()
 

@@ -5,7 +5,7 @@ AddCSLuaFile("sa/terminal/client/goodies.lua")
 
 require("supernet")
 
-local HASH = tostring(math.random(1000000,9999999))
+local HASH = tostring(math.random(1000000, 9999999))
 if SecureRandomString then
 	HASH = SecureRandomString(32)
 end
@@ -15,94 +15,94 @@ SA.Terminal = {}
 
 local SA_UpdateInfo
 
-local RefinedResources = {{},{},{},{}}
+local RefinedResources = {{}, {}, {}, {}}
 local PriceTable = {}
 local BuyPriceTable = {}
 local TempStorage = {}
 local PermStorage = {}
 
-local function AddRefineRes(res,rarity)
-	table.insert(RefinedResources[rarity],res)
+local function AddRefineRes(res, rarity)
+	table.insert(RefinedResources[rarity], res)
 end
-AddRefineRes("metals",1)
-AddRefineRes("carbon dioxide",1)
-AddRefineRes("water",1)
-AddRefineRes("hydrogen",2)
-AddRefineRes("nitrogen",2)
-AddRefineRes("terracrystal",2)
-AddRefineRes("oxygen",2)
-AddRefineRes("valuable minerals",3)
-AddRefineRes("dark matter",4)
-AddRefineRes("permafrost",4)
+AddRefineRes("metals", 1)
+AddRefineRes("carbon dioxide", 1)
+AddRefineRes("water", 1)
+AddRefineRes("hydrogen", 2)
+AddRefineRes("nitrogen", 2)
+AddRefineRes("terracrystal", 2)
+AddRefineRes("oxygen", 2)
+AddRefineRes("valuable minerals", 3)
+AddRefineRes("dark matter", 4)
+AddRefineRes("permafrost", 4)
 
-local function AddResourcePrice(res,price)
-	table.insert(PriceTable,{res,price})
+local function AddResourcePrice(res, price)
+	table.insert(PriceTable, {res, price})
 end
-AddResourcePrice("Valuable Minerals",3.127)
-AddResourcePrice("Metals",0.738)
-AddResourcePrice("Terracrystal",1.492)
-AddResourcePrice("Dark Matter",2.762)
-AddResourcePrice("Permafrost",2.113)
+AddResourcePrice("Valuable Minerals", 3.127)
+AddResourcePrice("Metals", 0.738)
+AddResourcePrice("Terracrystal", 1.492)
+AddResourcePrice("Dark Matter", 2.762)
+AddResourcePrice("Permafrost", 2.113)
 
-AddResourcePrice("Hydrogen Isotopes",6750)
-AddResourcePrice("Helium Isotopes",4500)
-AddResourcePrice("Strontium Clathrates",9000)
-AddResourcePrice("Nitrogen Isotopes",2700)
-AddResourcePrice("Oxygen Isotopes",2610)
-AddResourcePrice("Liquid Ozone",5400)
+AddResourcePrice("Hydrogen Isotopes", 6750)
+AddResourcePrice("Helium Isotopes", 4500)
+AddResourcePrice("Strontium Clathrates", 9000)
+AddResourcePrice("Nitrogen Isotopes", 2700)
+AddResourcePrice("Oxygen Isotopes", 2610)
+AddResourcePrice("Liquid Ozone", 5400)
 
 
-local function AddResourceBuyPrice(res,price)
-	table.insert(BuyPriceTable,{res,price})
+local function AddResourceBuyPrice(res, price)
+	table.insert(BuyPriceTable, {res, price})
 end
-AddResourceBuyPrice("Oxygen",2.5)
-AddResourceBuyPrice("Nitrogen",0.5)
-AddResourceBuyPrice("Carbon Dioxide",0.9)
-AddResourceBuyPrice("Hydrogen",0.8)
-AddResourceBuyPrice("Energy",1.0)
-AddResourceBuyPrice("Water",3.0)
+AddResourceBuyPrice("Oxygen", 2.5)
+AddResourceBuyPrice("Nitrogen", 0.5)
+AddResourceBuyPrice("Carbon Dioxide", 0.9)
+AddResourceBuyPrice("Hydrogen", 0.8)
+AddResourceBuyPrice("Energy", 1.0)
+AddResourceBuyPrice("Water", 3.0)
 
 
-local StationPos = Vector(0,0,0)
+local StationPos = Vector(0, 0, 0)
 local StationSize = 0
 local RD = CAF.GetAddon("Resource Distribution")
 
 local function InitSATerminal()
 	local mapname = string.lower(game:GetMap())
 	if mapname == "gm_galactic_rc1" then
-		StationPos = Vector(-8896,10192,768)
+		StationPos = Vector(-8896, 10192, 768)
 		StationSize = 1024
 	elseif mapname == "sb_forlorn_sb3_r2l" then
-		StationPos = Vector(9447,9824,461)
+		StationPos = Vector(9447, 9824, 461)
 		StationSize = 2650
 	elseif mapname == "sb_forlorn_sb3_r3" then
-		StationPos = Vector(9447,9824,461)
+		StationPos = Vector(9447, 9824, 461)
 		StationSize = 2650
 	elseif mapname == "sb_new_worlds_2" then
-		StationPos = Vector(-8253,-9771,-11041)
+		StationPos = Vector(-8253, -9771, -11041)
 		StationSize = 3000
 	elseif mapname == "sb_gooniverse" then
 		StationSize = 1130
-		StationPos = Vector(2,-1,4620)
+		StationPos = Vector(2, -1, 4620)
 	elseif mapname == "sb_lostinspace_rc4" then
 		StationSize = 4200
-		StationPos = Vector(-8996,8636,-6500)
+		StationPos = Vector(-8996, 8636, -6500)
 	elseif mapname == "sb_wuwgalaxy_fix" then
 		StationSize = 2750
-		StationPos = Vector(8348,4520,7271)
+		StationPos = Vector(8348, 4520, 7271)
 	elseif mapname == "gm_flatgrass" then
 		StationSize = 256
 		StationPos = Vector(740, 0, 0)
 	end
-	RD.AddProperResourceName("valuable minerals","Valuable Minerals")
-	RD.AddProperResourceName("dark matter","Dark Matter")
-	RD.AddProperResourceName("terracrystal","Terracrystal")
-	RD.AddProperResourceName("permafrost","Permafrost")
-	RD.AddProperResourceName("ore","Ore")
-	RD.AddProperResourceName("tiberium","Tiberium")
-	RD.AddProperResourceName("metals","Metals")
+	RD.AddProperResourceName("valuable minerals", "Valuable Minerals")
+	RD.AddProperResourceName("dark matter", "Dark Matter")
+	RD.AddProperResourceName("terracrystal", "Terracrystal")
+	RD.AddProperResourceName("permafrost", "Permafrost")
+	RD.AddProperResourceName("ore", "Ore")
+	RD.AddProperResourceName("tiberium", "Tiberium")
+	RD.AddProperResourceName("metals", "Metals")
 end
-timer.Simple(0,InitSATerminal)
+timer.Simple(0, InitSATerminal)
 
 function SA.Terminal.GetStationPos()
 	return StationPos
@@ -113,19 +113,19 @@ function SA.Terminal.GetStationSize()
 end
 
 local function SendHash(ply)
-	timer.Simple(5,function()
+	timer.Simple(5, function()
 		net.Start("SA_LoadHash")
 			net.WriteString(HASH)
 		net.Send(ply)
 	end)
 end
-hook.Add("PlayerInitialSpawn","SA_SendHash",SendHash)
+hook.Add("PlayerInitialSpawn", "SA_SendHash", SendHash)
 
 local function UpdateCapacity(ply)
 	local maxcap = ply.SAData.StationStorage.Capacity
 	local uid = ply:UniqueID()
 	local count = 0
-	for k,v in pairs(PermStorage[uid]) do
+	for k, v in pairs(PermStorage[uid]) do
 		count = count + v
 	end
 	ply.SAData.StationStorage.Remaining = maxcap - count
@@ -152,16 +152,16 @@ end
 
 local function SA_CanReset(ply)
 	local Researches = SA.Research.Get()
-	for _,v in pairs(Researches) do
+	for _, v in pairs(Researches) do
 		if SA.Research.GetFromPlayer(ply, v.name) < v.resetreq then return false end
 	end
 	return true
 end
 
-local function SA_SelectNode(ply,cmd,args)
+local function SA_SelectNode(ply, cmd, args)
 	local NetID = tonumber(args[1])
 	if not NetID then return end
-	for k,v in pairs(ents.FindByClass("resource_node")) do
+	for k, v in pairs(ents.FindByClass("resource_node")) do
 		if (SA.PP.GetOwner(v) == ply and NetID == v:GetNWInt("netid")) then
 			ply.SelectedNode = v
 			SA_UpdateInfo(ply)
@@ -169,7 +169,7 @@ local function SA_SelectNode(ply,cmd,args)
 		end
 	end
 end
-concommand.Add("sa_terminal_select_node",SA_SelectNode)
+concommand.Add("sa_terminal_select_node", SA_SelectNode)
 
 local function SA_SelectedNode(ply)
 	--Use the node the player selected.
@@ -181,7 +181,7 @@ local function SA_SelectedNode(ply)
 	end
 
 	--No Specific node, select first in range.
-	for k,v in pairs(ents.FindByClass("resource_node")) do
+	for k, v in pairs(ents.FindByClass("resource_node")) do
 		if (SA.PP.GetOwner(v) == ply) and (StationPos:Distance(v:GetPos()) < StationSize) then
 			return v
 		end
@@ -193,10 +193,10 @@ local function SA_UpdateNodeSelection(ply)
 	local SelectedID = 0
 
 	local Nodes = {}
-	for k,v in pairs(ents.FindByClass("resource_node")) do
+	for k, v in pairs(ents.FindByClass("resource_node")) do
 		if (SA.PP.GetOwner(v) == ply) and (StationPos:Distance(v:GetPos()) < StationSize) then
 			local NetID = v:GetNWInt("netid")
-			table.insert(Nodes,NetID)
+			table.insert(Nodes, NetID)
 			if (SelectedNode == v) then
 				SelectedID = NetID
 			end
@@ -209,7 +209,7 @@ local function SA_UpdateNodeSelection(ply)
 	local Count = table.Count(Nodes)
 	net.Start("SA_NodeSelectionUpdate")
 		net.WriteInt(Count, 16)
-		for k,v in pairs(Nodes) do
+		for k, v in pairs(Nodes) do
 			net.WriteInt(v, 16)
 			if (SelectedID == v) then
 				Selected = k
@@ -219,7 +219,7 @@ local function SA_UpdateNodeSelection(ply)
 	net.Send(ply)
 end
 
-local function SA_GetResource(ply,res)
+local function SA_GetResource(ply, res)
 	local SelNode = SA_SelectedNode(ply)
 	if (SA.ValidEntity(SelNode)) then
 		local count = RD.GetNetResourceAmount(SelNode.netid, res)
@@ -230,7 +230,7 @@ local function SA_GetResource(ply,res)
 	return 0
 end
 
-local function SA_FindCapacity(ply,res)
+local function SA_FindCapacity(ply, res)
 	local SelNode = SA_SelectedNode(ply)
 	if (SA.ValidEntity(SelNode)) then
 		local capacity = RD.GetNetNetworkCapacity(SelNode.netid, res)
@@ -260,7 +260,7 @@ end
 
 local function SA_GetTempStorage(ply)
 	local uid = ply:UniqueID()
-	for k,v in pairs(TempStorage[uid]) do
+	for k, v in pairs(TempStorage[uid]) do
 		if v <= 0 then
 			TempStorage[uid][k] = nil
 		end
@@ -270,7 +270,7 @@ end
 
 local function SA_GetPermStorage(ply)
 	local uid = ply:UniqueID()
-	for k,v in pairs(PermStorage[uid]) do
+	for k, v in pairs(PermStorage[uid]) do
 		if v <= 0 then
 			PermStorage[uid][k] = nil
 		end
@@ -278,7 +278,7 @@ local function SA_GetPermStorage(ply)
 	return PermStorage[uid]
 end
 
-function SA.Terminal.SetVisible(ply,status)
+function SA.Terminal.SetVisible(ply, status)
 	net.Start("SA_Terminal_SetVisible")
 		net.WriteBool(status)
 	net.Send(ply)
@@ -288,20 +288,20 @@ local function SA_CloseTerminal(ply)
 	if ply.AtTerminal then
 		SA.SaveUser(ply)
 	end
-	SA.Terminal.SetVisible(ply,false)
+	SA.Terminal.SetVisible(ply, false)
 	ply:Freeze(false)
 	ply.AtTerminal = false
 end
-concommand.Add("sa_terminal_close",SA_CloseTerminal)
+concommand.Add("sa_terminal_close", SA_CloseTerminal)
 
 local function SA_InfoSent(ply)
 	ply.SendingTermUp = false
 end
 
-SA_UpdateInfo = function(ply,CanPass)
+SA_UpdateInfo = function(ply, CanPass)
 	--This will prevent it from updating if multiple terminal commands are executed in the same tick.
 	if type(CanPass) == "string" or type(CanPass) == "table" or not CanPass then
-		timer.Create("SA_UpdateTerminalInfo_Delay",0.03,1, function() SA_UpdateInfo(ply, true) end)
+		timer.Create("SA_UpdateTerminalInfo_Delay", 0.03, 1, function() SA_UpdateInfo(ply, true) end)
 		return
 	end
 
@@ -314,7 +314,7 @@ SA_UpdateInfo = function(ply,CanPass)
 	local uid = ply:UniqueID()
 	local TempStorageU = SA_GetTempStorage(ply)
 
-	local orecount = SA_GetResource(ply,"ore")
+	local orecount = SA_GetResource(ply, "ore")
 	local tempore = TempStorageU.ore
 
 	local PermStorageU = SA_GetPermStorage(ply)
@@ -326,9 +326,9 @@ SA_UpdateInfo = function(ply,CanPass)
 	net.Send(ply)
 
 	local ResTabl = {}
-	for k,v in pairs(TempStorageU) do
+	for k, v in pairs(TempStorageU) do
 		local price = 0
-		for l,n in pairs(PriceTable) do
+		for l, n in pairs(PriceTable) do
 			if string.lower(k) == string.lower(n[1]) then
 				price = n[2]
 				break
@@ -339,20 +339,20 @@ SA_UpdateInfo = function(ply,CanPass)
 		elseif ply.SAData.FactionName == "starfleet" then
 			price = math.ceil((price * 1.11) * 1000) / 1000
 		end
-		ResTabl[k] = {v,tostring(price)}
+		ResTabl[k] = {v, tostring(price)}
 	end
 
 	local Researches = SA.Research.Get()
 
 	local ResTabl2 = {}
 
-	for k,v in pairs(Researches) do
-		ResTabl2[k] = {k,SA.Research.GetFromPlayer(ply, v.name),ply.SAData.FactionName}
+	for k, v in pairs(Researches) do
+		ResTabl2[k] = {k, SA.Research.GetFromPlayer(ply, v.name), ply.SAData.FactionName}
 	end
 
-	local DevVars = {0,0,0}
+	local DevVars = {0, 0, 0}
 	if ply:GetLevel() >= 3 then
-		DevVars = {SA.Tiberium.MaxCrystalCount,SA.Tiberium.CrystalRadius,SA.Asteroids.MaxCount}
+		DevVars = {SA.Tiberium.MaxCrystalCount, SA.Tiberium.CrystalRadius, SA.Asteroids.MaxCount}
 	end
 
 	ply.SendingTermUp = true
@@ -369,7 +369,7 @@ SA_UpdateInfo = function(ply,CanPass)
 		DevVars,
 	}, function() SA_InfoSent(ply) end)
 end
-concommand.Add("sa_terminal_update",SA_UpdateInfo)
+concommand.Add("sa_terminal_update", SA_UpdateInfo)
 
 local function SA_UpdateGoodies(ply, body, code)
 	if not SA.ValidEntity(ply) then return end
@@ -378,7 +378,7 @@ local function SA_UpdateGoodies(ply, body, code)
 		return
 	end
 	ply.SAGoodies = {}
-	for _,v in pairs(body) do
+	for _, v in pairs(body) do
 		ply.SAGoodies[v.Id] = SA.Goodies[v.Type]
 	end
 	supernet.Send(ply, "SA_GoodieUpdate", data, function() ply.SendingGoodieUp = false end)
@@ -389,9 +389,9 @@ local function SA_RequestUpdateGoodies(ply)
 	ply.SendingGoodieUp = true
 	SA.API.Get("/players/" .. ply:SteamID() .. "/goodies", function(body, code) SA_UpdateGoodies(ply, body, code) end, function() ply.SendingGoodieUp = false end)
 end
-concommand.Add("sa_goodies_update",SA_RequestUpdateGoodies)
+concommand.Add("sa_goodies_update", SA_RequestUpdateGoodies)
 
-local function SA_UseGoodie(ply,cmd,args)
+local function SA_UseGoodie(ply, cmd, args)
 	local id = tonumber(args[1])
 	local goodie = ply.Goodies[id]
 	if not goodie then return end
@@ -405,36 +405,36 @@ local function SA_UseGoodie(ply,cmd,args)
 	local f = function() SA_RequestUpdateGoodies(ply) end
 	SA.API.Delete("/players/" .. ply:SteamID() .. "/goodies/" .. id, f, f)
 end
-concommand.Add("sa_goodies_use",SA_UseGoodie)
+concommand.Add("sa_goodies_use", SA_UseGoodie)
 
-local function SA_RefineOre(ply,cmd,args)
+local function SA_RefineOre(ply, cmd, args)
 	if not ply.AtTerminal then return end
 	if ply.IsAFK then return end
 	local CHECK = args[1]
 	if CHECK ~= HASH then return end
 	local uid = ply:UniqueID()
-	local ShipOre, netid = SA_GetResource(ply,"ore")
-	local TempOre = TempStorage[uid]["ore"] or 0
+	local ShipOre, netid = SA_GetResource(ply, "ore")
+	local TempOre = TempStorage[uid].ore or 0
 	local orecount = ShipOre + TempOre
 	if orecount > 0 then
-		for k,v in pairs(RefinedResources) do
+		for k, v in pairs(RefinedResources) do
 			local num = table.Count(v)
-			for l,n in pairs(v) do
+			for l, n in pairs(v) do
 				local rarity = (5 - k) / 10
-				local modifier = math.random(80,120) / 100
+				local modifier = math.random(80, 120) / 100
 				local yield = (orecount / num) * modifier * rarity
 				local count = TempStorage[uid][n] or 0
 				TempStorage[uid][n] = count + yield
 			end
 		end
-		RD.ConsumeNetResource(netid,"ore",orecount)
-		TempStorage[uid]["ore"] = 0
+		RD.ConsumeNetResource(netid, "ore", orecount)
+		TempStorage[uid].ore = 0
 	end
 	SA_UpdateInfo(ply)
 end
-concommand.Add("sa_refine_ore",SA_RefineOre)
+concommand.Add("sa_refine_ore", SA_RefineOre)
 
-local function SA_MarketSell(ply,cmd,args)
+local function SA_MarketSell(ply, cmd, args)
 	if not ply.AtTerminal then return end
 	if ply.IsAFK then return end
 	if #args < 2 then return end
@@ -446,7 +446,7 @@ local function SA_MarketSell(ply,cmd,args)
 	local amount = 0
 	local index = 0
 	local selling = 0
-	for k,v in pairs(TempStorage[uid]) do
+	for k, v in pairs(TempStorage[uid]) do
 		if (string.lower(k) == string.lower(args[1])) then
 			amount = v
 			index = k
@@ -458,7 +458,7 @@ local function SA_MarketSell(ply,cmd,args)
 		selling = num
 	end
 	if (selling > 0) then
-		for k,v in pairs(PriceTable) do
+		for k, v in pairs(PriceTable) do
 			if string.lower(v[1]) == string.lower(args[1]) then
 				local count = math.ceil(selling * v[2])
 				if ply.SAData.FactionName == "corporation" or ply.SAData.FactionName == "alliance" then
@@ -475,9 +475,9 @@ local function SA_MarketSell(ply,cmd,args)
 	SA.SendCreditsScore(ply)
 	SA_UpdateInfo(ply)
 end
-concommand.Add("sa_market_sell",SA_MarketSell)
+concommand.Add("sa_market_sell", SA_MarketSell)
 
-local function SA_MarketBuy(ply,cmd,args)
+local function SA_MarketBuy(ply, cmd, args)
 	if not ply.AtTerminal then return end
 	if ply.IsAFK then return end
 	if #args < 2 then return end
@@ -490,7 +490,7 @@ local function SA_MarketBuy(ply,cmd,args)
 	local buying = 0
 	local price = 0
 	local pricepu = 0
-	for k,v in pairs(BuyPriceTable) do
+	for k, v in pairs(BuyPriceTable) do
 		if (string.lower(v[1]) == string.lower(args[1])) then
 			pricepu = v[2]
 			index = string.lower(v[1])
@@ -506,7 +506,7 @@ local function SA_MarketBuy(ply,cmd,args)
 	end
 	if (buying > 0) then
 		local bought = false
-		for k,v in pairs(TempStorage[uid]) do
+		for k, v in pairs(TempStorage[uid]) do
 			if string.lower(k) == index then
 				ply.SAData.Credits = ply.SAData.Credits - price
 				TempStorage[uid][k] = v + buying
@@ -521,9 +521,9 @@ local function SA_MarketBuy(ply,cmd,args)
 	SA.SendCreditsScore(ply)
 	SA_UpdateInfo(ply)
 end
-concommand.Add("sa_market_buy",SA_MarketBuy)
+concommand.Add("sa_market_buy", SA_MarketBuy)
 
-local function SA_MoveResource(ply,cmd,args,notagain)
+local function SA_MoveResource(ply, cmd, args, notagain)
 	if not ply.AtTerminal then return end
 	if ply.IsAFK then return end
 	if #args < 4 then return end
@@ -541,12 +541,12 @@ local function SA_MoveResource(ply,cmd,args,notagain)
 	elseif (from == "perm") then
 		maxamt = PermStorage[uid][res]
 	elseif (from == "ship") then
-		maxamt, netid = SA_GetResource(ply,res)
+		maxamt, netid = SA_GetResource(ply, res)
 	end
 	if (not maxamt) or maxamt == 0 then
 		if notagain and tostring(notagain) == "reallynotagain" then return end
 		args[3] = string.lower(args[3])
-		SA_MoveResource(ply,cmd,args,"reallynotagain")
+		SA_MoveResource(ply, cmd, args, "reallynotagain")
 		return
 	end
 	local tomove = 0
@@ -565,8 +565,8 @@ local function SA_MoveResource(ply,cmd,args,notagain)
 		end
 		PermStorage[uid][res] = math.floor(count + tomove)
 	elseif (to == "ship") then
-		local shipcap = SA_FindCapacity(ply,res) or 0
-		local maxshi = shipcap - SA_GetResource(ply,res)
+		local shipcap = SA_FindCapacity(ply, res) or 0
+		local maxshi = shipcap - SA_GetResource(ply, res)
 		if tomove > maxshi then
 			tomove = maxshi
 		end
@@ -582,9 +582,9 @@ local function SA_MoveResource(ply,cmd,args,notagain)
 	UpdateCapacity(ply)
 	SA_UpdateInfo(ply)
 end
-concommand.Add("sa_move_resource",SA_MoveResource)
+concommand.Add("sa_move_resource", SA_MoveResource)
 
-local function SA_BuyPermStorage(ply,cmd,args)
+local function SA_BuyPermStorage(ply, cmd, args)
 	if not ply.AtTerminal then return end
 	if ply.IsAFK then return end
 	local CHECK = args[2]
@@ -602,7 +602,7 @@ local function SA_BuyPermStorage(ply,cmd,args)
 		SA_UpdateInfo(ply)
 	end
 end
-concommand.Add("sa_buy_perm_storage",SA_BuyPermStorage)
+concommand.Add("sa_buy_perm_storage", SA_BuyPermStorage)
 
 local function SA_Research(ply, cmd, args)
 	if not ply.AtTerminal then return end
@@ -612,7 +612,7 @@ local function SA_Research(ply, cmd, args)
 	local CHECK = args[2]
 	if CHECK ~= HASH then return end
 	local Research = nil
-	for k,v in pairs(Researches) do
+	for k, v in pairs(Researches) do
 		if (k == res) then
 			Research = v
 			break
@@ -621,22 +621,22 @@ local function SA_Research(ply, cmd, args)
 	if not Research then return end
 
 	local cur = SA.Research.GetFromPlayer(ply, Research.name)
-	local cap = Research["ranks"]
+	local cap = Research.ranks
 	if (cap ~= 0) and cap == cur then
 		return
 	end
-	if (Research["faction"] and #Research["faction"] > 0) then
-		if not table.HasValue(Research["faction"],ply.SAData.FactionName) then
+	if (Research.faction and #Research.faction > 0) then
+		if not table.HasValue(Research.faction, ply.SAData.FactionName) then
 			return
 		end
 	end
-	if (Research["type"] ~= "none") then
-		local prereq = Research["prereq"]
-		local reqtype = Research["type"]
+	if (Research.type ~= "none") then
+		local prereq = Research.prereq
+		local reqtype = Research.type
 		if reqtype == "unlock" then
-			for k,v in pairs(prereq) do
+			for k, v in pairs(prereq) do
 				if v[1] == "faction" then
-					if not table.HasValue(v[2],ply.SAData.FactionName) then
+					if not table.HasValue(v[2], ply.SAData.FactionName) then
 						return
 					end
 				elseif ply[v[1]] < v[2] then
@@ -645,11 +645,11 @@ local function SA_Research(ply, cmd, args)
 			end
 		elseif reqtype == "perrank" then
 			local idx = cur + 1
-			local tbl = Research["prereq"][idx]
+			local tbl = Research.prereq[idx]
 			if tbl and #tbl > 0 then
-				for k,v in pairs(tbl) do
+				for k, v in pairs(tbl) do
 					if v[1] == "faction" then
-						if not table.HasValue(v[2],ply.SAData.FactionName) then
+						if not table.HasValue(v[2], ply.SAData.FactionName) then
 							return
 						end
 					elseif SA.Research.GetFromPlayer(ply, v[1]) < v[2] then
@@ -659,8 +659,8 @@ local function SA_Research(ply, cmd, args)
 			end
 		end
 	end
-	local cost = Research["cost"]
-	local inc = Research["costinc"] / 100
+	local cost = Research.cost
+	local inc = Research.costinc / 100
 	local devl = ply.SAData.Research.GlobalMultiplier
 	local cred = tonumber(ply.SAData.Credits)
 	local total = cost + (cost * inc) * cur
@@ -676,9 +676,9 @@ local function SA_Research(ply, cmd, args)
 		SA.Research.SetToPlayer(ply, Research.name, cur + 1)
 		ply.SAData.Credits = ply.SAData.Credits - total
 		SA_UpdateInfo(ply)
-		local retro = Research["classes"]
-		for l,b in pairs(retro) do
-			for k,v in pairs(ents.FindByClass(b)) do
+		local retro = Research.classes
+		for l, b in pairs(retro) do
+			for k, v in pairs(ents.FindByClass(b)) do
 				if (SA.PP.GetOwner(v) == ply) then
 					v:CalcVars(ply)
 				end
@@ -687,7 +687,7 @@ local function SA_Research(ply, cmd, args)
 	end
 	SA.SendCreditsScore(ply)
 end
-concommand.Add("sa_buy_research",SA_Research)
+concommand.Add("sa_buy_research", SA_Research)
 
 local function SA_ResetMe(ply, cmd, args)
 	if not ply.AtTerminal then return end
@@ -709,7 +709,7 @@ local function SA_ResetMe(ply, cmd, args)
 	SA_UpdateInfo(ply)
 	SA.SendCreditsScore(ply)
 end
-concommand.Add("sa_advance_level",SA_ResetMe)
+concommand.Add("sa_advance_level", SA_ResetMe)
 
 local function SA_DevSetVar(ply, cmd, args)
 	if not (ply and ply:IsValid() and ply:IsAdmin()) then return end
@@ -733,12 +733,12 @@ local function SA_DevSetVar(ply, cmd, args)
 	end
 	SystemSendMSG(ply, "changed " .. varname .. " to " .. tostring(cval))
 end
-concommand.Add("sa_dev_set_var",SA_DevSetVar)
+concommand.Add("sa_dev_set_var", SA_DevSetVar)
 
-local function CheckCanDevice(ply,tr,mode)
+local function CheckCanDevice(ply, tr, mode)
 	if (mode == "mining_laser_sa") then
 		local lvl = ply.SAData.Research.OreLaserLevel
-		local sel = ply:GetActiveWeapon()["Tool"]["mining_laser_sa"]:GetClientInfo("type")
+		local sel = ply:GetActiveWeapon().Tool.mining_laser_sa:GetClientInfo("type")
 		if sel == "sa_mining_laser_ii" then
 			if lvl < 1 then
 				ply:AddHint("You must have Rank 1 Mining Theory to use this!", NOTIFY_CLEANUP, 5)
@@ -804,8 +804,8 @@ local function CheckCanDevice(ply,tr,mode)
 		end
 	elseif (mode == "mining_storage") then
 		local lvl = ply.SAData.Research.OreStorageLevel
-		local sel = ply:GetActiveWeapon()["Tool"]["mining_storage"]:GetClientInfo("type")
-		local sel2 = ply:GetActiveWeapon()["Tool"]["mining_storage"]:GetClientInfo("model")
+		local sel = ply:GetActiveWeapon().Tool.mining_storage:GetClientInfo("type")
+		local sel2 = ply:GetActiveWeapon().Tool.mining_storage:GetClientInfo("model")
 		if sel == "ore_storage_ii" then
 			if lvl < 1 then
 				ply:AddHint("You must have Rank 1 Ore Management to use this!", NOTIFY_CLEANUP, 5)
@@ -872,4 +872,4 @@ local function CheckCanDevice(ply,tr,mode)
 		end
 	end
 end
-hook.Add("CanTool","SA_MiningToolCanTool", CheckCanDevice)
+hook.Add("CanTool", "SA_MiningToolCanTool", CheckCanDevice)

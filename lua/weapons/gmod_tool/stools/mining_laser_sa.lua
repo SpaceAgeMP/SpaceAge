@@ -4,8 +4,8 @@ TOOL.Command = nil
 TOOL.ConfigName = ""
 TOOL.Tab = "Custom Addon Framework"
 
-TOOL.ClientConVar["type"] = "sa_mining_laser"
-TOOL.ClientConVar["model"] = "models/props_phx/life_support/crylaser_small.mdl"
+TOOL.ClientConVar.type = "sa_mining_laser"
+TOOL.ClientConVar.model = "models/props_phx/life_support/crylaser_small.mdl"
 
 cleanup.Register("mininglasers")
 

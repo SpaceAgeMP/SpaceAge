@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
@@ -13,10 +13,10 @@ function ENT:SpawnFunction(ply, tr)
 end
 
 function ENT:Initialize()
-	self:SetModel( "models/props/terminal.mdl" )
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-	self:SetSolid( SOLID_VPHYSICS )
+	self:SetModel("models/props/terminal.mdl")
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 	self.ownerchecked = false
 	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
@@ -39,7 +39,7 @@ function ENT:OwnerCheckValid()
 	self.ownerchecked = true
 end
 
-function ENT:Use( ply, called )
+function ENT:Use(ply, called)
 	if (self:OwnerCheckValid()) then
 		return
 	end
@@ -47,7 +47,7 @@ function ENT:Use( ply, called )
 		ply.TempStorage = {}
 	end
 	ply.AtTerminal = true
-	SA.Terminal.SetVisible(ply,true)
+	SA.Terminal.SetVisible(ply, true)
 	ply:Freeze(true)
 	ply:ConCommand("sa_terminal_update")
 	ply:ConCommand("sa_goodies_update")

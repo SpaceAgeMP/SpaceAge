@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
@@ -63,7 +63,7 @@ end
 function ENT:TurnOn()
 	if (self.Active == 0) then
 		self.Active = 1
-		if ( RD.GetResourceAmount(self, "energy") < self.consume ) then
+		if (RD.GetResourceAmount(self, "energy") < self.consume) then
 			self:TurnOff()
 			return
 		end
@@ -71,7 +71,7 @@ function ENT:TurnOn()
 			Wire_TriggerOutput(self, "On", 1)
 		end
 		self:SetOOO(1)
-		self:SetNWBool("o",false)
+		self:SetNWBool("o", false)
 	end
 end
 
@@ -82,7 +82,7 @@ function ENT:TurnOff()
 			Wire_TriggerOutput(self, "On", 0)
 		end
 		self:SetOOO(0)
-		self:SetNWBool("o",false)
+		self:SetNWBool("o", false)
 	end
 end
 
@@ -110,8 +110,8 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	if ( self.Active == 1 ) then
-		if ( RD.GetResourceAmount(self, "energy") >= self.consume ) then
+	if (self.Active == 1) then
+		if (RD.GetResourceAmount(self, "energy") >= self.consume) then
 			RD.ConsumeResource(self, "energy", self.consume)
 			local myOwner = SA.PP.GetOwner(self)
 			if self.TouchEnt and self.TouchEnt.IsCrystal and myOwner and myOwner:IsValid() and myOwner:GetPos():Distance(self:GetPos()) <= 350 and myOwner:InVehicle() then
@@ -123,7 +123,7 @@ function ENT:Think()
 				else
 					self.yield = self.oldyield
 				end
-				SA.Functions.MineThing(self,self.TouchEnt,"tiberium")
+				SA.Functions.MineThing(self, self.TouchEnt, "tiberium")
 				self.yield = self.oldyield
 			end
 		else

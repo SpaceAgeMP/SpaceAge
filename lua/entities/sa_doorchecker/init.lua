@@ -1,12 +1,12 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 local ForceShowDoorCs = false
 
 function ENT:SpawnFunction(ply, tr)
 	if (ForceShowDoorCs == false or not tr.Hit) then return end
-	local SpawnPos = tr.HitPos + Vector(0,0,100)
+	local SpawnPos = tr.HitPos + Vector(0, 0, 100)
 	local ent = ents.Create("sa_doorchecker")
 	ent:SetModel("models/props/cs_assault/Billboard.mdl")
 	ent:SetPos(SpawnPos)
@@ -25,7 +25,7 @@ function ENT:Initialize()
 
 	local xuuid = "sa_dchecker_" .. tostring(CurTime())
 
-	self:Fire("addoutput","targetname " .. xuuid,0)
+	self:Fire("addoutput", "targetname " .. xuuid, 0)
 
 
 	self:Think()
@@ -38,20 +38,20 @@ function ENT:Initialize()
 	local entit = entitT[1]
 
 
-	entit:Fire("addoutput","OnAnimationBegun " .. xuuid .. ",xtabegun",0)
-	entit:Fire("addoutput","OnAnimationDone " .. xuuid .. ",xtadone",0)
-	entit:Fire("addoutput","OnOpen " .. xuuid .. ",xtopen",0)
-	entit:Fire("addoutput","OnClose " .. xuuid .. ",xtclose",0)
-	entit:Fire("addoutput","OnBlockedOpening " .. xuuid .. ",xtbopen",0)
-	entit:Fire("addoutput","OnBlockedClosing " .. xuuid .. ",xtbclose",0)
-	entit:Fire("addoutput","OnUnblockedOpening " .. xuuid .. ",xtubopen",0)
-	entit:Fire("addoutput","OnUnblockedClosing " .. xuuid .. ",xtubclose",0)
-	entit:Fire("addoutput","OnFullyOpen " .. xuuid .. ",xtfopen",0)
-	entit:Fire("addoutput","OnFullyClosed " .. xuuid .. ",xtfclose",0)
+	entit:Fire("addoutput", "OnAnimationBegun " .. xuuid .. ", xtabegun", 0)
+	entit:Fire("addoutput", "OnAnimationDone " .. xuuid .. ", xtadone", 0)
+	entit:Fire("addoutput", "OnOpen " .. xuuid .. ", xtopen", 0)
+	entit:Fire("addoutput", "OnClose " .. xuuid .. ", xtclose", 0)
+	entit:Fire("addoutput", "OnBlockedOpening " .. xuuid .. ", xtbopen", 0)
+	entit:Fire("addoutput", "OnBlockedClosing " .. xuuid .. ", xtbclose", 0)
+	entit:Fire("addoutput", "OnUnblockedOpening " .. xuuid .. ", xtubopen", 0)
+	entit:Fire("addoutput", "OnUnblockedClosing " .. xuuid .. ", xtubclose", 0)
+	entit:Fire("addoutput", "OnFullyOpen " .. xuuid .. ", xtfopen", 0)
+	entit:Fire("addoutput", "OnFullyClosed " .. xuuid .. ", xtfclose", 0)
 
 	self.xent = entit
 
-	self:SetFully(0,true)
+	self:SetFully(0, true)
 	self:SetBlocked(0)
 
 	self.xswitch = switch {
@@ -109,7 +109,7 @@ function ENT:openself()
 	end
 end
 
-function ENT:SetOpen(val,norefresh)
+function ENT:SetOpen(val, norefresh)
 	self.fullyopen = 0
 	self.fullyclosed = 0
 	if (val == self.isopen) then return end
@@ -123,12 +123,12 @@ function ENT:SetOpen(val,norefresh)
 	if (not norefresh) then self:RefreshAtmo() end
 end
 
-function ENT:SetFully(val,norefresh)
+function ENT:SetFully(val, norefresh)
 	if val == 0 then
-		self:SetOpen(0,true)
+		self:SetOpen(0, true)
 		self.fullyclosed = 1
 	elseif val == 1 then
-		self:SetOpen(1,true)
+		self:SetOpen(1, true)
 		self.fullyopen = 1
 	else
 		return

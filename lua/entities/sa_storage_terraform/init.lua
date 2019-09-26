@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
@@ -29,7 +29,7 @@ end
 
 function ENT:Destruct()
 	if CAF and CAF.GetAddon("Life Support") then
-		CAF.GetAddon("Life Support").Destruct( self, true )
+		CAF.GetAddon("Life Support").Destruct(self, true)
 	end
 end
 

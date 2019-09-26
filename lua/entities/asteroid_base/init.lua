@@ -32,23 +32,23 @@ function ENT:Initialize()
 	self:SetOverlayText(self.MineralName)
 end
 
-function ENT:SpawnFunction( ply, tr )
-	if (not tr.Hit ) then return end
-	local ent = ents.Create( "asteroid_base" )
-	ent:SetPos(tr.HitPos + tr.HitNormal * 100 )
+function ENT:SpawnFunction(ply, tr)
+	if (not tr.Hit) then return end
+	local ent = ents.Create("asteroid_base")
+	ent:SetPos(tr.HitPos + tr.HitNormal * 100)
 	ent:Spawn()
 	ent:Activate()
 	return ent
 end
 
 function ENT:OnRemove()
-	local smokepuff = ents.Create( "env_ar2explosion" )
+	local smokepuff = ents.Create("env_ar2explosion")
 	smokepuff:SetPos(self:GetPos())
-	smokepuff:SetKeyValue( "material", "particle/particle_noisesphere" )
+	smokepuff:SetKeyValue("material", "particle/particle_noisesphere")
 	smokepuff:Spawn()
 	smokepuff:Activate()
 	smokepuff:Fire("explode", "", 0)
-	smokepuff:Fire("kill","",10)
+	smokepuff:Fire("kill", "", 10)
 end
 
 function ENT:Think()

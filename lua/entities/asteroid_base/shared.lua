@@ -9,7 +9,7 @@ ENT.AdminSpawnable = false
 
 ENT.AsteroidModel = "models/props_lab/BigRock.mdl"
 
-ENT.AsteroidColor = Color(255,255,255,255)
+ENT.AsteroidColor = Color(255, 255, 255, 255)
 
 ENT.MineralName = "Base"
 ENT.MineralVol = 1 --Volume of the mineral in m3

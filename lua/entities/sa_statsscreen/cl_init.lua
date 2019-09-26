@@ -6,7 +6,7 @@ ENT.RenderGroup = RENDERGROUP_BOTH
 
 ENT.allowDraw = false
 
-local SA_PosColors = { Color(255,255,0,255), Color(128,128,128,255), Color(128,50,0,255) }
+local SA_PosColors = { Color(255, 255, 0, 255), Color(128, 128, 128, 255), Color(128, 50, 0, 255) }
 
 local statsAllowDraw = false
 local SA_StatsTable = {}
@@ -48,7 +48,7 @@ function ENT:Draw()
 	end
 
 	local ang = self:GetAngles()
-	local rot = Vector(-90,90,0)
+	local rot = Vector(-90, 90, 0)
 	ang:RotateAroundAxis(ang:Right(), 	rot.x)
 	ang:RotateAroundAxis(ang:Up(), 		rot.y)
 	ang:RotateAroundAxis(ang:Forward(), 	rot.z)
@@ -57,14 +57,14 @@ function ENT:Draw()
 	if self.doScroll then
 		self.scrollPos = self.scrollPos + self.scrollSpeed
 	elseif not self.scrollAgainTimer then
-		timer.Simple(3,function()
+		timer.Simple(3, function()
 			self.doScroll = 1
 			self.scrollAgainTimer = false
 		end)
 		self.scrollAgainTimer = true
 	end
 
-	cam.Start3D2D(pos,ang,Res)
+	cam.Start3D2D(pos, ang, Res)
 		local w = 512
 		local h = 512
 		local x = -w / 2
@@ -77,9 +77,9 @@ function ENT:Draw()
 		local xColumns = { (x + justOffset - 45) / RatioX, (x + justOffset - 5) / RatioX, (x + justOffset + 200) / RatioX, (x + justOffset + 330) / RatioX }
 
 		--add changable backround colour some time.
-		surface.SetDrawColor(0,0,0,255)
+		surface.SetDrawColor(0, 0, 0, 255)
 
-		surface.DrawRect(x,y,w / RatioX,h)
+		surface.DrawRect(x, y, w / RatioX, h)
 
 		local imax = table.maxn(SA_StatsTable)
 		if imax > 0 then
@@ -95,19 +95,19 @@ function ENT:Draw()
 						self.scrollSpeed = -1
 					end
 					if SA_StatsTable[i] then
-						local FactionColor = SA_StatsTable[i]["factioncolor"]
+						local FactionColor = SA_StatsTable[i].factioncolor
 						local PosColor = white
-						if ( SA_PosColors[i] ) then PosColor = SA_PosColors[i] end
+						if (SA_PosColors[i]) then PosColor = SA_PosColors[i] end
 						draw.DrawText(tostring(i), "textScreenfont10", xColumns[1], linePos, PosColor, 0)
-						draw.DrawText(SA_StatsTable[i]["name"], "textScreenfont10", xColumns[2], linePos, FactionColor, 0)
-						draw.DrawText(SA_StatsTable[i]["score"], "textScreenfont10", xColumns[3], linePos, PosColor, 0)
+						draw.DrawText(SA_StatsTable[i].name, "textScreenfont10", xColumns[2], linePos, FactionColor, 0)
+						draw.DrawText(SA_StatsTable[i].score, "textScreenfont10", xColumns[3], linePos, PosColor, 0)
 					end
 				end
 			end
 		end
 
-		surface.SetDrawColor(0,0,0,255)
-		surface.DrawRect(x,y,w / RatioX,123)
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawRect(x, y, w / RatioX, 123)
 
 		local headerY = y + 117 - ySpace
 
@@ -132,16 +132,16 @@ local function SA_ReceiveStatsUpdate(body, code)
 
 	for i, v in pairs(decoded) do
 		SA_StatsTable[i] = {}
-		SA_StatsTable[i]["name"] = string.Left(v["name"],SA_MaxNameLength)
-		SA_StatsTable[i]["score"] = SA.AddCommasToInt(v["score"])
-		local tempColor = SA.Factions.Colors[v["groupname"]]
-		if (not tempColor) then tempColor = Color(255,100,0,255) end
-		SA_StatsTable[i]["factioncolor"] = tempColor
-		tempColor = Color(255,255,255,255)
+		SA_StatsTable[i].name = string.Left(v.name, SA_MaxNameLength)
+		SA_StatsTable[i].score = SA.AddCommasToInt(v.score)
+		local tempColor = SA.Factions.Colors[v.groupname]
+		if (not tempColor) then tempColor = Color(255, 100, 0, 255) end
+		SA_StatsTable[i].factioncolor = tempColor
+		tempColor = Color(255, 255, 255, 255)
 		if (tcredits) then
-			if tcredits < 0 then tempColor = Color(255,0,0,255) end
-			if tcredits > 0 then tempColor = Color(0,255,0,255) end
-			SA_StatsTable[i]["statscolor"] = tempColor
+			if tcredits < 0 then tempColor = Color(255, 0, 0, 255) end
+			if tcredits > 0 then tempColor = Color(0, 255, 0, 255) end
+			SA_StatsTable[i].statscolor = tempColor
 		else
 			print("error, variable tcredits does not exist cl_init.lua around line 137 breh")
 		end

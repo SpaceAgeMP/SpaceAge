@@ -8,7 +8,7 @@ SA.Goodies = {
 		desc = "1 month membership in the faction \"The Alliance\"",
 		image = "SA_Research_Icon",
 		func = function(ply)
-			ply.SAData.AllianceMembershipExpiry = math.max(ply.SAData.AllianceMembershipExpiry,os.time()) + (2592000 * 1)
+			ply.SAData.AllianceMembershipExpiry = math.max(ply.SAData.AllianceMembershipExpiry, os.time()) + (2592000 * 1)
 			ply:AssignFaction("alliance")
 		end
 	},
@@ -17,7 +17,7 @@ SA.Goodies = {
 		desc = "3 months membership in the faction \"The Alliance\"",
 		image = "SA_Research_Icon",
 		func = function(ply)
-			ply.SAData.AllianceMembershipExpiry = math.max(ply.SAData.AllianceMembershipExpiry,os.time()) + (2592000 * 3)
+			ply.SAData.AllianceMembershipExpiry = math.max(ply.SAData.AllianceMembershipExpiry, os.time()) + (2592000 * 3)
 			ply:AssignFaction("alliance")
 		end
 	},
@@ -26,7 +26,7 @@ SA.Goodies = {
 		desc = "6 months membership in the faction \"The Alliance\"",
 		image = "SA_Research_Icon",
 		func = function(ply)
-			ply.SAData.AllianceMembershipExpiry = math.max(ply.SAData.AllianceMembershipExpiry,os.time()) + (2592000 * 6)
+			ply.SAData.AllianceMembershipExpiry = math.max(ply.SAData.AllianceMembershipExpiry, os.time()) + (2592000 * 6)
 			ply:AssignFaction("alliance")
 		end
 	},
@@ -35,7 +35,7 @@ SA.Goodies = {
 		desc = "12 months membership in the faction \"The Alliance\"",
 		image = "SA_Research_Icon",
 		func = function(ply)
-			ply.SAData.AllianceMembershipExpiry = math.max(ply.SAData.AllianceMembershipExpiry,os.time()) + (2592000 * 12)
+			ply.SAData.AllianceMembershipExpiry = math.max(ply.SAData.AllianceMembershipExpiry, os.time()) + (2592000 * 12)
 			ply:AssignFaction("alliance")
 		end
 	},

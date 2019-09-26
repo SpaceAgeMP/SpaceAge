@@ -4,7 +4,7 @@ language.Add("sa_mining_laser", "Mining Laser")
 
 local mat = Material("trails/laser")
 local sprite = Material("sprites/animglow02")
-local BeamColor = {Color(255,0,0,255),Color(0,255,0,255),Color(0,0,255,255)}
+local BeamColor = {Color(255, 0, 0, 255), Color(0, 255, 0, 255), Color(0, 0, 255, 255)}
 
 function ENT:Draw()
 	self:DrawModel()
@@ -45,19 +45,19 @@ function ENT:DrawLaserDef(color, width)
 	render.DrawSprite(start, width2, width2, color)
 
 	if (SA.ValidEntity(trace.Entity) and trace.Entity:GetClass() == "sa_roid") then
-		render.DrawSprite(End,width2,width2,color)
+		render.DrawSprite(End, width2, width2, color)
 
 		local len = start:Distance(End) / 19
 
 		local T = RealTime()
 
 		render.SetMaterial(mat)
-		for Beam = 1,3 do
+		for Beam = 1, 3 do
 			local b_ang = math.rad(((Beam * 120) + T * 90) % 360)
 			render.StartBeam(20)
-			for seg = 1,20 do
+			for seg = 1, 20 do
 				local segm = seg-1
-				render.AddBeam(start + (up * (len * segm)) + ((math.sin(b_ang) * right + math.cos(b_ang) * fow):GetNormalized() * (math.sin(math.rad(segm * 9.4736842)) * len / 2)),width2,T,BeamColor[Beam])
+				render.AddBeam(start + (up * (len * segm)) + ((math.sin(b_ang) * right + math.cos(b_ang) * fow):GetNormalized() * (math.sin(math.rad(segm * 9.4736842)) * len / 2)), width2, T, BeamColor[Beam])
 			end
 			render.EndBeam()
 		end

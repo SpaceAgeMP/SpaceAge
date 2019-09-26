@@ -4,8 +4,8 @@ TOOL.Command = nil
 TOOL.ConfigName = ""
 if (CLIENT and GetConVarNumber("CAF_UseTab") == 1) then TOOL.Tab = "Custom Addon Framework" end
 
-TOOL.ClientConVar["type"] = "sa_terraformer"
-TOOL.ClientConVar["model"] = "models/chipstiks_ls3_models/Terraformer/terraformer.mdl"
+TOOL.ClientConVar.type = "sa_terraformer"
+TOOL.ClientConVar.model = "models/chipstiks_ls3_models/Terraformer/terraformer.mdl"
 
 cleanup.Register("terraforming")
 

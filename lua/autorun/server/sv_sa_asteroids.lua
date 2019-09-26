@@ -21,14 +21,14 @@ function SA.Asteroids.OnRemove(ent)
 end
 
 local function SpawnAsteroid(model, pos, size)
-	if ( SA_Roid_Count >= SA.Asteroids.MaxCount ) then
+	if (SA_Roid_Count >= SA.Asteroids.MaxCount) then
 		return
 	end
 	SA_Roid_Count = SA_Roid_Count + 1
 
 	local asteroid = ents.Create("sa_roid")
-	asteroid:SetModel( model )
-	asteroid:SetPos( pos )
+	asteroid:SetModel(model)
+	asteroid:SetPos(pos)
 	asteroid:SetAngles(Angle(math.random(0, 360), math.random(0, 360), math.random(0, 360)))
 	asteroid:Spawn()
 	local phys = asteroid:GetPhysicsObject()
@@ -45,45 +45,45 @@ local function SpawnAsteroid(model, pos, size)
 	SA.PP.MakeOwner(asteroid)
 end
 
-local function CreateAsteroids(cnt,noamount)
+local function CreateAsteroids(cnt, noamount)
 	local Afield = {}
 	local filename = "spaceage/asteroids/" .. game.GetMap() .. ".txt"
 	local roids
 	if file.Exists(filename, "DATA") then
 		roids = util.JSONToTable(file.Read(filename))
-		Afield.x, Afield.y, Afield.z, Afield.radius, Afield.num = roids["x"], roids["y"], roids["z"], roids["radius"], roids["amount"]
+		Afield.x, Afield.y, Afield.z, Afield.radius, Afield.num = roids.x, roids.y, roids.z, roids.radius, roids.amount
 	else
 		return
 	end
 	if not noamount then
-		SA.Asteroids.MaxCount = roids["amount"]
+		SA.Asteroids.MaxCount = roids.amount
 	end
 	if (cnt ~= 0) then
 		Afield.num = cnt
 	end
 	for k = 1, Afield.num do
-		local picked = math.random(1,table.Count(AllAsteroids))
-		SpawnAsteroid(AllAsteroids[picked][1],Vector(Afield.x + math.random(-Afield.radius,Afield.radius),Afield.y + math.random(-Afield.radius,Afield.radius),Afield.z + (math.random(-Afield.radius,Afield.radius) / 2)),AllAsteroids[picked][2])
+		local picked = math.random(1, table.Count(AllAsteroids))
+		SpawnAsteroid(AllAsteroids[picked][1], Vector(Afield.x + math.random(-Afield.radius, Afield.radius), Afield.y + math.random(-Afield.radius, Afield.radius), Afield.z + (math.random(-Afield.radius, Afield.radius) / 2)), AllAsteroids[picked][2])
 	end
 end
-timer.Simple(5,function() CreateAsteroids(0) end)
+timer.Simple(5, function() CreateAsteroids(0) end)
 
 
-concommand.Add("sa_respawn_asteroids",function(ply)
+concommand.Add("sa_respawn_asteroids", function(ply)
 	if ply:GetLevel() < 3 then return end
-	for k,v in pairs(ents.FindByClass("sa_roid")) do
+	for k, v in pairs(ents.FindByClass("sa_roid")) do
 		v.RespOnRemove = false
 		v:Remove()
 	end
 	SA_Roid_Count = 0
-	CreateAsteroids(0,true)
+	CreateAsteroids(0, true)
 	if (ply and ply:IsPlayer()) then
-		SystemSendMSG(ply,"respawned all asteroids")
+		SystemSendMSG(ply, "respawned all asteroids")
 	end
 end)
 
 local LastSpawn = 0
-timer.Create("SA_AsteroidReplenishment",1,0,function()
+timer.Create("SA_AsteroidReplenishment", 1, 0, function()
 	if SA_Roid_Count >= SA.Asteroids.MaxCount then return end
 	local DelayFactor = (SA_Roid_Count ^ 2) / 10
 	if ((LastSpawn + DelayFactor) < CurTime()) then

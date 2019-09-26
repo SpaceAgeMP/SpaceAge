@@ -1,14 +1,14 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 local RD = CAF.GetAddon("Resource Distribution")
 
 function ENT:Initialize()
-	self:SetModel( self.LaserModel )
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-	self:SetSolid( SOLID_VPHYSICS )
+	self:SetModel(self.LaserModel)
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 	self:SetUseType(SIMPLE_USE)
 
 	self:SetColor(Color(0, 100, 255, 255))
@@ -23,8 +23,8 @@ function ENT:Initialize()
 	RD.AddResource(self, "Gelidus", 0)
 	RD.AddResource(self, "Krystallos", 0)
 
-	self.Inputs = Wire_CreateInputs( self, { "Activate" } )
-	self.Outputs = Wire_CreateOutputs( self, { "Active", "Mineral Amount", "Progress" } )
+	self.Inputs = Wire_CreateInputs(self, { "Activate" })
+	self.Outputs = Wire_CreateOutputs(self, { "Active", "Mineral Amount", "Progress" })
 
 	self:SetNWBool("o", false)
 
@@ -50,7 +50,7 @@ function ENT:Mine()
 
 	if (CurEnergy < EnergyUse) then return end
 
-	local ent = util.QuickTrace(self:GetPos(),self:GetUp() * self.LaserRange,self).Entity
+	local ent = util.QuickTrace(self:GetPos(), self:GetUp() * self.LaserRange, self).Entity
 	if ent and ent.IsIceroid then
 		local Type = ent.MineralName
 		if not self.IceCollected[Type] then
@@ -73,8 +73,8 @@ function ENT:Mine()
 		RD.ConsumeResource(self, "energy", EnergyUse)
 
 		--Updating shit--
-		Wire_TriggerOutput(self,"Mineral Amount",math.floor(ent.MineralAmount * 10) / 10)
-		Wire_TriggerOutput(self,"Progress",math.floor(self.IceCollected[Type] / 1000 * 1000) / 10)
+		Wire_TriggerOutput(self, "Mineral Amount", math.floor(ent.MineralAmount * 10) / 10)
+		Wire_TriggerOutput(self, "Progress", math.floor(self.IceCollected[Type] / 1000 * 1000) / 10)
 		self:SetStatus(true)
 	else
 		self:SetStatus(false)
@@ -85,11 +85,11 @@ function ENT:SetStatus(bool)
 	self.IsMining = bool
 	self:SetNWBool("o", bool)
 	if (bool) then
-		Wire_TriggerOutput(self,"Active",1)
+		Wire_TriggerOutput(self, "Active", 1)
 	else
-		Wire_TriggerOutput(self,"Active",0)
-		Wire_TriggerOutput(self,"Mineral Amount",0)
-		Wire_TriggerOutput(self,"Progress",0)
+		Wire_TriggerOutput(self, "Active", 0)
+		Wire_TriggerOutput(self, "Mineral Amount", 0)
+		Wire_TriggerOutput(self, "Progress", 0)
 	end
 end
 
@@ -120,11 +120,11 @@ function ENT:PreEntityCopy()
 	RD.BuildDupeInfo(self)
 	local DupeInfo = self:BuildDupeInfo()
 	if DupeInfo then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",DupeInfo)
+		duplicator.StoreEntityModifier(self, "WireDupeInfo", DupeInfo)
 	end
 end
 
-function ENT:PostEntityPaste(ply,Ent,CreatedEntities)
+function ENT:PostEntityPaste(ply, Ent, CreatedEntities)
 	RD.ApplyDupeInfo(Ent, CreatedEntities)
 	if Ent.EntityMods and Ent.EntityMods.WireDupeInfo then
 		self.Owner = ply

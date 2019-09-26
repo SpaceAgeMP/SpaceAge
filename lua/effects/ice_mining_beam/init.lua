@@ -1,4 +1,4 @@
-local bGlow1 = CreateMaterial("sc_blue_ball01","UnLitGeneric",{
+local bGlow1 = CreateMaterial("sc_blue_ball01", "UnLitGeneric", {
 	["$basetexture"] = "sprites/physcannon_bluecore2b",
 	["$nocull"] = 1,
 	["$additive"] = 1,
@@ -6,7 +6,7 @@ local bGlow1 = CreateMaterial("sc_blue_ball01","UnLitGeneric",{
 	["$vertexcolor"] = 1
 })
 
-local bGlow2 = CreateMaterial("sc_blue_ball02","UnLitGeneric",{
+local bGlow2 = CreateMaterial("sc_blue_ball02", "UnLitGeneric", {
 	["$basetexture"] = "effects/bluemuzzle",
 	["$nocull"] = 1,
 	["$additive"] = 1,
@@ -15,7 +15,7 @@ local bGlow2 = CreateMaterial("sc_blue_ball02","UnLitGeneric",{
 })
 
 
-local lGlow1 = CreateMaterial("sc_blue_beam01","UnLitGeneric",{
+local lGlow1 = CreateMaterial("sc_blue_beam01", "UnLitGeneric", {
 	["$basetexture"] = "sprites/bluelight1",
 	["$nocull"] = 1,
 	["$additive"] = 1,
@@ -23,7 +23,7 @@ local lGlow1 = CreateMaterial("sc_blue_beam01","UnLitGeneric",{
 	["$vertexcolor"] = 1
 })
 
-local col = Color(255,255,255,255)
+local col = Color(255, 255, 255, 255)
 
 function EFFECT:Init(data)
 	self.StartPos = data:GetStart()

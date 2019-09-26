@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
@@ -21,7 +21,7 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	SA.Tiberium.RemoveIntersecting(self,{"sa_crystaltower","sa_mining_drill"})
+	SA.Tiberium.RemoveIntersecting(self, {"sa_crystaltower", "sa_mining_drill"})
 	self:NextThink(CurTime() + 2)
 	return true
 end
@@ -35,7 +35,7 @@ function ENT:Initialize()
 	self:SetModel("models/ce_mining/tiberium/ce_tib_500_200.mdl")
 	self.MayNotBeFound = true
 	self.CrystalResistant = true
-	self:SetSkin(math.random(0,1))
+	self:SetSkin(math.random(0, 1))
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
@@ -74,7 +74,7 @@ function ENT:StartTouch(ent)
 		ent:SetMaterial(material)
 		constraint.RemoveAll(ent)
 		ent:GetPhysicsObject():EnableMotion()
-		timer.Simple(3,function() ent:Remove() end)
+		timer.Simple(3, function() ent:Remove() end)
 	elseif eClass == "sa_crystal" or eClass == "sa_crystaltower" then
 		ent:Remove()
 	end
@@ -89,7 +89,7 @@ function ENT:SpawnCrystal(auto)
 	if not self then return end
 	if auto then
 		local ctal = self
-		timer.Simple(math.random(1,10),function() ctal:SpawnCrystal(true) end)
+		timer.Simple(math.random(1, 10), function() ctal:SpawnCrystal(true) end)
 	end
 
 	local SA_CrystalRadius = SA.Tiberium.CrystalRadius
@@ -97,7 +97,7 @@ function ENT:SpawnCrystal(auto)
 	if self.crystalCount >= SA.Tiberium.MaxCrystalCount then return end
 
 	local p = self:GetPos()
-	local tmpPos = SA.Tiberium.FindWorldFloor(Vector(math.random(-SA_CrystalRadius,SA_CrystalRadius) + p.x,math.random(-SA_CrystalRadius,SA_CrystalRadius) + p.y,p.z + 200),nil,{self})
+	local tmpPos = SA.Tiberium.FindWorldFloor(Vector(math.random(-SA_CrystalRadius, SA_CrystalRadius) + p.x, math.random(-SA_CrystalRadius, SA_CrystalRadius) + p.y, p.z + 200), nil, {self})
 	if not tmpPos then
 		if auto then
 			self:SpawnCrystal(false)
@@ -107,7 +107,7 @@ function ENT:SpawnCrystal(auto)
 
 	local crystal = ents.Create("sa_crystal")
 
-	local cHealth = math.random(1200,3000) --1200 UNTIL 3000
+	local cHealth = math.random(1200, 3000) --1200 UNTIL 3000
 
 	if cHealth <= 1800 then
 		crystal:SetModel("models/ce_mining/tiberium/ce_tib_160_60.mdl")
@@ -135,7 +135,7 @@ function ENT:SpawnCrystal(auto)
 	SA.PP.MakeOwner(crystal)
 
 	if auto then
-		crystal:SetPos(tmpPos - Vector(0,0,(crystal:LocalToWorld(crystal:OBBMaxs()) - crystal:LocalToWorld(crystal:OBBMins())).z))
+		crystal:SetPos(tmpPos - Vector(0, 0, (crystal:LocalToWorld(crystal:OBBMaxs()) - crystal:LocalToWorld(crystal:OBBMins())).z))
 	end
 
 	local phys = crystal:GetPhysicsObject()
@@ -143,7 +143,7 @@ function ENT:SpawnCrystal(auto)
 	phys:SetMass(50000)
 	phys:EnableMotion(false)
 
-	SA.Functions.PropMoveSlow(crystal,tmpPos,2)
+	SA.Functions.PropMoveSlow(crystal, tmpPos, 2)
 
 	self:DeleteOnRemove(crystal)
 

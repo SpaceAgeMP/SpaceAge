@@ -76,14 +76,14 @@ function PANEL:UpdatePlayerData()
 	self:SetInfo(2, "AIM:", self.Player:GetAIM())
 	self:SetInfo(2, "XFire:", self.Player:GetXFire()) ]]
 
-	--[[self:SetInfo(1, "Tiberium Drills:","Level "..self.Player:GetNWInt("TibDLV"))
-	self:SetInfo(1, "Tib Storages:","Level "..self.Player:GetNWInt("TibSLV"))
-	self:SetInfo(1, "ICE Lasers:","Mark "..LaserMKRoman(self.Player,"IceLLV"))
-	self:SetInfo(1, "ICE Ref.:",ICERefWord(self.Player))
-	self:SetInfo(1, "ICE Storages:","Raw: "..(self.Player:GetNWInt("IceRSLV")+1).."; Product: "..(self.Player:GetNWInt("IcePSLV")+1))
-	self:SetInfo(1, "Ore Lasers:","Mark "..LaserMKRoman(self.Player) .." at level "..self.Player:GetNWInt("LaserLV"))
-	self:SetInfo(1, "Ore Storages:",OreMKStr(self.Player) .." storages at level "..self.Player:GetNWInt("OreLV"))]]
-	self:SetInfo(1, "Time played:",SA.FormatTime(math.abs(os.time() - self.Player:GetNWInt("Playtime"))))
+	--[[self:SetInfo(1, "Tiberium Drills:", "Level "..self.Player:GetNWInt("TibDLV"))
+	self:SetInfo(1, "Tib Storages:", "Level "..self.Player:GetNWInt("TibSLV"))
+	self:SetInfo(1, "ICE Lasers:", "Mark "..LaserMKRoman(self.Player, "IceLLV"))
+	self:SetInfo(1, "ICE Ref.:", ICERefWord(self.Player))
+	self:SetInfo(1, "ICE Storages:", "Raw: "..(self.Player:GetNWInt("IceRSLV")+1).."; Product: "..(self.Player:GetNWInt("IcePSLV")+1))
+	self:SetInfo(1, "Ore Lasers:", "Mark "..LaserMKRoman(self.Player) .." at level "..self.Player:GetNWInt("LaserLV"))
+	self:SetInfo(1, "Ore Storages:", OreMKStr(self.Player) .." storages at level "..self.Player:GetNWInt("OreLV"))]]
+	self:SetInfo(1, "Time played:", SA.FormatTime(math.abs(os.time() - self.Player:GetNWInt("Playtime"))))
 
 	self:InvalidateLayout()
 
@@ -120,7 +120,7 @@ function ICERefWord(ply)
 	end
 end
 
-function LaserMKRoman(ply,tmpX)
+function LaserMKRoman(ply, tmpX)
 	if not tmpX then tmpX = "LaserMK" end
 	local tmp = ply:GetNWInt(tmpX)
 	if tmp == 0 then

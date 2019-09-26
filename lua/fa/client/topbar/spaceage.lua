@@ -4,5 +4,5 @@ local function sa_info_msg_credsc(len, ply)
 end
 net.Receive("SA_CreditsScore", sa_info_msg_credsc) 
 
-FA.Topbar.Register(1,"Credits","fa_info","credits")
-FA.Topbar.Register(1,"Score","fa_info","totalcredits")
+FA.Topbar.Register(1, "Credits", "fa_info", "credits")
+FA.Topbar.Register(1, "Score", "fa_info", "totalcredits")

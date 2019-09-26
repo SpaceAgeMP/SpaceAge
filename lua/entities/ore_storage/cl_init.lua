@@ -1,2 +1,2 @@
 include("shared.lua")
-language.Add("ore_storage","Ore Storage")
+language.Add("ore_storage", "Ore Storage")

@@ -10,10 +10,10 @@ local CSelID = ""
 local function SA_RefreshApplications(len, ply)
 	-- TODO: This
 end
-net.Receive("SA_RefreshApplications",SA_RefreshApplications)
+net.Receive("SA_RefreshApplications", SA_RefreshApplications)
 
 local function SApp_ExtractSteamID(optiontext)
-	local temp = string.Explode("|",optiontext)
+	local temp = string.Explode("|", optiontext)
 	if #temp < 1 then return "" end
 	return string.Trim(temp[#temp])
 end
@@ -26,15 +26,15 @@ local function CreateAppGUI(BasePanel)
 		bPanelGiven = false
 		BasePanel = vgui.Create("DFrame")
 		BasePanel:SetPos((ScrX / 2) - 320, (ScrY / 2) - 243)
-		BasePanel:SetSize(640,486)
+		BasePanel:SetSize(640, 486)
 		BasePanel:SetTitle("Application Form")
 		BasePanel:SetDraggable(true)
 		BasePanel:ShowCloseButton(false)
 
-		local CloseButton = vgui.Create( "DButton", BasePanel )
+		local CloseButton = vgui.Create("DButton", BasePanel)
 		CloseButton:SetText("X")
 		CloseButton:SetPos(BasePanel:GetWide() - 25, 1)
-		CloseButton:SetSize(20,20)
+		CloseButton:SetSize(20, 20)
 		CloseButton.DoClick = SA.Application.Close
 
 		local BPanel = vgui.Create ("DPanel", BasePanel)
@@ -43,7 +43,7 @@ local function CreateAppGUI(BasePanel)
 	end
 	local plisleader = LocalPlayer():GetNWBool("isleader")
 
-	local ApplyText = vgui.Create( "DTextEntry", BasePanel )
+	local ApplyText = vgui.Create("DTextEntry", BasePanel)
 
 	if (not plisleader) then
 		ApplyText:SetValue(SA.Application.Text)
@@ -68,7 +68,7 @@ local function CreateAppGUI(BasePanel)
 
 	local SelFCombo = vgui.Create("DMultiChoice", BasePanel)
 	SelFCombo:SetEditable(false)
-	SelFCombo:SetPos(20,30)
+	SelFCombo:SetPos(20, 30)
 	SelFCombo:SetSize(BasePanel:GetWide() - 40, 20)
 	if (not plisleader) then
 		SelFCombo:AddChoice("Major Miners")
@@ -76,7 +76,7 @@ local function CreateAppGUI(BasePanel)
 		SelFCombo:AddChoice("The Corporation")
 		SelFCombo:AddChoice("Star Fleet")
 		SelFCombo:ChooseOption(SA.Application.Faction)
-		SelFCombo.OnSelect = function(index,value,data)
+		SelFCombo.OnSelect = function(index, value, data)
 			SA.Application.Faction = data
 		end
 	else
@@ -105,7 +105,7 @@ local function CreateAppGUI(BasePanel)
 		else
 			CSelID = ""
 		end
-		SelFCombo.OnSelect = function(index,value,data)
+		SelFCombo.OnSelect = function(index, value, data)
 			CSelID = SApp_ExtractSteamID(data)
 			if (CSelID and AppTable[CSelID]) then
 				ApplyText:SetValue(AppTable[CSelID][2])
@@ -116,28 +116,28 @@ local function CreateAppGUI(BasePanel)
 	end
 
 	if (not plisleader) then
-		local ApplyButton = vgui.Create( "DButton", BasePanel )
+		local ApplyButton = vgui.Create("DButton", BasePanel)
 		ApplyButton:SetText("Submit")
 		ApplyButton:SetPos((BasePanel:GetWide() / 2) - 50, BasePanel:GetTall() - 45)
-		ApplyButton:SetSize(100,40)
+		ApplyButton:SetSize(100, 40)
 		ApplyButton.DoClick = DoApply
 	else
-		local AcceptButton = vgui.Create( "DButton", BasePanel )
+		local AcceptButton = vgui.Create("DButton", BasePanel)
 		AcceptButton:SetText("Accept")
 		AcceptButton:SetPos((BasePanel:GetWide() / 2) - 105, BasePanel:GetTall() - 45)
-		AcceptButton:SetSize(100,40)
+		AcceptButton:SetSize(100, 40)
 		AcceptButton.DoClick = function()
 			if CSelID ~= "" and AppTable[CSelID] then
-				RunConsoleCommand("sa_application_accept",CSelID)
+				RunConsoleCommand("sa_application_accept", CSelID)
 			end
 		end
-		local DenyButton = vgui.Create( "DButton", BasePanel )
+		local DenyButton = vgui.Create("DButton", BasePanel)
 		DenyButton:SetText("Deny")
 		DenyButton:SetPos((BasePanel:GetWide() / 2) + 5, BasePanel:GetTall() - 45)
-		DenyButton:SetSize(100,40)
+		DenyButton:SetSize(100, 40)
 		DenyButton.DoClick = function()
 			if CSelID ~= "" and AppTable[CSelID] then
-				RunConsoleCommand("sa_application_deny",CSelID)
+				RunConsoleCommand("sa_application_deny", CSelID)
 			end
 		end
 	end

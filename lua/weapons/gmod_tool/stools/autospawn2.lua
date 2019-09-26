@@ -4,7 +4,7 @@ TOOL.Command = nil
 TOOL.ConfigName = ""
 TOOL.Tab = "Administration"
 
-if ( CLIENT ) then
+if (CLIENT) then
 	language.Add("tool.autospawn2.name", "Autospawn Special")
 	language.Add("tool.autospawn2.desc", "ASK DORIDIAN TO USE")
 	language.Add("tool.autospawn2.0", "Wut")
@@ -31,13 +31,13 @@ function TOOL:LeftClick(tr)
 				}
 
 				owner.Autospawner2List[ent:EntIndex()] = data
-				ent:SetColor(Color(0,255,0,150))
+				ent:SetColor(Color(0, 255, 0, 150))
 				ent.Autospawn2Selected = true
 				owner:ChatPrint("Selected")
 				return true
 			else
 				owner.Autospawner2List[ent:EntIndex()] = nil
-				ent:SetColor(Color(255,255,255,255))
+				ent:SetColor(Color(255, 255, 255, 255))
 				ent.Autospawn2Selected = false
 				owner:ChatPrint("Deselected")
 				return true
@@ -59,14 +59,14 @@ function TOOL:RightClick(tr)
 	if file.Exists(filename, "DATA") then
 		local oldfile = file.Read(filename)
 		local olddata = util.JSONToTable(oldfile)
-		for k,v in pairs(olddata) do
-			table.insert(owner.Autospawner2List,v)
+		for k, v in pairs(olddata) do
+			table.insert(owner.Autospawner2List, v)
 		end
 		output = util.TableToJSON(owner.Autospawner2List)
 		file.Delete(filename)
 	end
-	file.Write(filename,output)
-	--for k,v in pairs(removelist) do if(v and v:IsValid()) then v:Remove() end end
+	file.Write(filename, output)
+	--for k, v in pairs(removelist) do if(v and v:IsValid()) then v:Remove() end end
 	owner.Autospawner2List = {}
 	removelist = {}
 	owner:ChatPrint("Saved File")
@@ -74,7 +74,7 @@ end
 
 function TOOL:Reload(tr)
 	local owner = self:GetOwner()
-	for k,v in pairs(owner.Autospawner2List) do if (v and v:IsValid()) then v:SetColor(Color(255,255,255,255)) end end
+	for k, v in pairs(owner.Autospawner2List) do if (v and v:IsValid()) then v:SetColor(Color(255, 255, 255, 255)) end end
 	owner.Autospawner2List = {}
 	owner:ChatPrint("Cleared selection")
 end

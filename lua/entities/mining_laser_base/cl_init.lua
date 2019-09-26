@@ -7,7 +7,7 @@ function ENT:Think()
 	local entindex = self:GetNWEntity("r")
 	local ent = nil
 	if entindex then
-		ent =  ents.GetByIndex( entindex )
+		ent =  ents.GetByIndex(entindex)
 	end
 	if mining == true and ent:IsValid() then
 		local startpos = self:GetPos() + self:GetUp() * 24
@@ -16,7 +16,7 @@ function ENT:Think()
 		effectdata:SetOrigin(endpos)
 		effectdata:SetStart(startpos)
 		effectdata:SetMagnitude((endpos - startpos):Length())
-		util.Effect( "mining_beam", effectdata )
+		util.Effect("mining_beam", effectdata)
 	end
 end
 
@@ -28,5 +28,5 @@ function ENT:DoNormalDraw()
 	self:DrawModel()
 end
 
-function ENT:DrawEntityOutline( size )
+function ENT:DrawEntityOutline(size)
 end

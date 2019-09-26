@@ -10,7 +10,7 @@ function SA.AddCommasToInt(str)
 	for i = 1, len do
 		ret = ret .. str:sub(i, i)
 		if i % 3 == 0 then
-			ret = ret .. ","
+			ret = ret .. ", "
 		end
 	end
 	len = len + 1

@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 local RD = CAF.GetAddon("Resource Distribution")
@@ -11,10 +11,10 @@ function ENT:Initialize()
 		self:Remove()
 	end
 
-	self:SetModel( self.LaserModel )
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-	self:SetSolid( SOLID_VPHYSICS )
+	self:SetModel(self.LaserModel)
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 	self:SetUseType(SIMPLE_USE)
 
 	local phys = self:GetPhysicsObject()
@@ -26,10 +26,10 @@ function ENT:Initialize()
 		phys:EnableMotion(true)
 	end
 
-	RD.AddResource(self,"energy", 0)
+	RD.AddResource(self, "energy", 0)
 
-	self.Inputs = Wire_CreateInputs( self, { "Activate" } )
-	self.Outputs = Wire_CreateOutputs( self, { "Active", "Mineral", "Cycle %" } )
+	self.Inputs = Wire_CreateInputs(self, { "Activate" })
+	self.Outputs = Wire_CreateOutputs(self, { "Active", "Mineral", "Cycle %" })
 
 	self:SetNWBool("m", false)
 
@@ -40,10 +40,10 @@ function ENT:Initialize()
 	self.percent = 0
 end
 
-function ENT:SpawnFunction( ply, tr )
-	if ( not tr.Hit ) then return end
-	local ent = ents.Create( "mining_laser_base" )
-	ent:SetPos( tr.HitPos + tr.HitNormal * 100 )
+function ENT:SpawnFunction(ply, tr)
+	if (not tr.Hit) then return end
+	local ent = ents.Create("mining_laser_base")
+	ent:SetPos(tr.HitPos + tr.HitNormal * 100)
 	ent:Spawn()
 	ent:Activate()
 	return ent
@@ -75,8 +75,8 @@ function ENT:Mine()
 			self.nextpull = CurTime()
 			self.pulls = 0
 			self.nextpull = CurTime() + 1
-			Wire_TriggerOutput(self,"Active",0)
-			Wire_TriggerOutput(self,"Mineral",0)
+			Wire_TriggerOutput(self, "Active", 0)
+			Wire_TriggerOutput(self, "Mineral", 0)
 			return false
 		end
 
@@ -96,8 +96,8 @@ function ENT:Mine()
 			self.nextpull = CurTime()
 			self.pulls = 0
 			self.nextpull = CurTime() + 1
-			Wire_TriggerOutput(self,"Active",0)
-			Wire_TriggerOutput(self,"Mineral",0)
+			Wire_TriggerOutput(self, "Active", 0)
+			Wire_TriggerOutput(self, "Mineral", 0)
 			return false
 	end
 	--local range = (ent:GetPos() - self:GetPos()):Length()
@@ -110,8 +110,8 @@ function ENT:Mine()
 			self:ConsumeOre(ent, false, self.pulls)
 			self.pulls = 0
 			self.nextpull = CurTime() + 1
-			Wire_TriggerOutput(self,"Active",0)
-			Wire_TriggerOutput(self,"Mineral",0)
+			Wire_TriggerOutput(self, "Active", 0)
+			Wire_TriggerOutput(self, "Mineral", 0)
 			return false
 	end
 	self:DoRes()
@@ -119,8 +119,8 @@ function ENT:Mine()
 	if self.energytofire == true then
 		self.nextpull = CurTime() + 1
 		self:CalcOre(ent)
-		Wire_TriggerOutput(self,"Active",1)
-		Wire_TriggerOutput(self,"Mineral",ent.MineralName)
+		Wire_TriggerOutput(self, "Active", 1)
+		Wire_TriggerOutput(self, "Mineral", ent.MineralName)
 	else
 		self:SetNWBool("m", false)
 		self:SetNWEntity("r", nil)
@@ -129,8 +129,8 @@ function ENT:Mine()
 		self:ConsumeOre(ent, false, self.pulls)
 		self.pulls = 0
 		self.nextpull = CurTime() + 1
-		Wire_TriggerOutput(self,"Active",0)
-		Wire_TriggerOutput(self,"Mineral",0)
+		Wire_TriggerOutput(self, "Active", 0)
+		Wire_TriggerOutput(self, "Mineral", 0)
 		return false
 	end
 end
@@ -143,17 +143,17 @@ function ENT:CalcOre(ent) --Figures out how much ore to comsume once a cycle is 
 	local toextract = (((self.LaserExtract / self.LaserCycle) * self.pulls) / ent.MineralVol)
 
 	if toextract > ent.MineralAmount then
-		self:ConsumeOre(ent, true,self.pulls)
+		self:ConsumeOre(ent, true, self.pulls)
 		self.pulls = 0
-		Wire_TriggerOutput(self,"Active",0)
-		Wire_TriggerOutput(self,"Mineral",0)
+		Wire_TriggerOutput(self, "Active", 0)
+		Wire_TriggerOutput(self, "Mineral", 0)
 		self:SetNWBool("m", false)
 		self:SetNWEntity("r", nil)
 		return
 	end
 
 	if self.pulls >= self.LaserCycle then
-		self:ConsumeOre(ent, false,self.pulls)
+		self:ConsumeOre(ent, false, self.pulls)
 		self.pulls = 0
 	end
 end
@@ -175,8 +175,8 @@ function ENT:ConsumeOre(ent, takeall, pulls) --Comsumes the Ore
 	if self.InputActive == false then
 		self:SetNWBool("m", false)
 		self:SetNWEntity("r", nil)
-		Wire_TriggerOutput(self,"Active",0)
-		Wire_TriggerOutput(self,"Mineral",0)
+		Wire_TriggerOutput(self, "Active", 0)
+		Wire_TriggerOutput(self, "Mineral", 0)
 	end
 end
 
@@ -186,7 +186,7 @@ function ENT:FindRoid()
 	local dist = {}
 	local roids = {}
 
-	for _,i in pairs(find) do
+	for _, i in pairs(find) do
 		if string.find(i:GetClass(), "asteroid") then
 			local range = (i:NearestPoint(self:GetPos()) - self:GetPos()):Length()
 			roids[range] = i
@@ -196,7 +196,7 @@ function ENT:FindRoid()
 
 	table.sort(dist)  --Sort ranges from lowest to highest
 
-	for _,d in pairs(dist) do  --This should take the first value (lowest range) and get the entity it belongs to off the roids table
+	for _, d in pairs(dist) do  --This should take the first value (lowest range) and get the entity it belongs to off the roids table
 		return roids[d]
 	end
 end
@@ -211,7 +211,7 @@ function ENT:Think()
 	self.percent = math.Round((self.pulls / self.LaserCycle) * 100)
 	self:SetOverlayText(self.PrintName .. "\n" .. "Cycle: " .. self.percent .. "%")
 
-	Wire_TriggerOutput(self,"Cycle %",self.percent)
+	Wire_TriggerOutput(self, "Cycle %", self.percent)
 
 	if self.InputActive and self.nextpull < CurTime() then
 		self:Mine()

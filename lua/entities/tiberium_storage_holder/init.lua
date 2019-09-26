@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 local RD = CAF.GetAddon("Resource Distribution")
@@ -7,7 +7,7 @@ local RD = CAF.GetAddon("Resource Distribution")
 function ENT:SpawnFunction(ply, tr)
 	if (not tr.Hit) then return end
 	local ent = ents.Create("tiberium_storage_holder")
-	ent:SetPos(tr.HitPos + Vector(0,0,0))
+	ent:SetPos(tr.HitPos + Vector(0, 0, 0))
 	ent:Spawn()
 	ent:Activate()
 	self.TouchTable = {}
@@ -49,7 +49,7 @@ function ENT:TurnOff()
 		Wire_TriggerOutput(self, "On", self.Active)
 	end
 	self:SetOOO(0)
-	for k,v in pairs(self.TouchTable) do
+	for k, v in pairs(self.TouchTable) do
 		self:ReleaseStorage(v)
 	end
 	self.TouchTable = {}
@@ -65,19 +65,19 @@ function ENT:StartTouch(ent)
 	if (not ent.IsTiberiumStorage) then return end
 	local eOwner = SA.PP.GetOwner(ent)
 	if not (eOwner and eOwner:IsValid() and eOwner:IsPlayer()) then return end
-	if self.Active == 1 and SA.PP.PlyCanPerform(eOwner,self) then
-		local attachPlace = SA.Tiberium.FindFreeAttachPlace(ent,self)
+	if self.Active == 1 and SA.PP.PlyCanPerform(eOwner, self) then
+		local attachPlace = SA.Tiberium.FindFreeAttachPlace(ent, self)
 		if not attachPlace then return end
-		if not SA.Tiberium.AttachStorage(ent,self,attachPlace) then return end
+		if not SA.Tiberium.AttachStorage(ent, self, attachPlace) then return end
 		self.TouchTable[attachPlace] = ent
 		ent.TouchPos = attachPlace
 		constraint.RemoveAll(ent)
-		constraint.Weld(ent,self,0,0,false)
+		constraint.Weld(ent, self, 0, 0, false)
 		local tmp = RD.GetEntityTable(self)
 		if not tmp then return end
 		local tmpNet = tmp.network
 		if (not tmpNet) or tmpNet == 0 then return end
-		RD.Link(ent,tmpNet)
+		RD.Link(ent, tmpNet)
 	end
 end
 function ENT:EndTouch(ent)
@@ -85,11 +85,11 @@ function ENT:EndTouch(ent)
 end
 
 function ENT:ReleaseStorage(ent)
-	if table.HasValue(self.TouchTable,ent) and ent.TouchPos then
+	if table.HasValue(self.TouchTable, ent) and ent.TouchPos then
 		self.TouchTable[ent.TouchPos] = nil
 		ent.TouchPos = nil
-		SA.Tiberium.DestroyConstraints(ent,self,0,0,"weld")
-		SA.Tiberium.DestroyConstraints(ent,self,0,0,"Weld")
+		SA.Tiberium.DestroyConstraints(ent, self, 0, 0, "weld")
+		SA.Tiberium.DestroyConstraints(ent, self, 0, 0, "Weld")
 	end
 end
 
@@ -100,7 +100,7 @@ end
 
 function ENT:Destruct()
 	if CAF and CAF.GetAddon("Life Support") then
-		CAF.GetAddon("Life Support").Destruct( self, true )
+		CAF.GetAddon("Life Support").Destruct(self, true)
 	end
 end
 
@@ -114,6 +114,6 @@ function ENT:Think()
 end
 
 function ENT:UpdateWireOutput()
-	Wire_TriggerOutput(self, "Tiberium", RD.GetResourceAmount( self, "tiberium" ))
-	Wire_TriggerOutput(self, "Max Tiberium", RD.GetNetworkCapacity( self, "tiberium" ))
+	Wire_TriggerOutput(self, "Tiberium", RD.GetResourceAmount(self, "tiberium"))
+	Wire_TriggerOutput(self, "Max Tiberium", RD.GetNetworkCapacity(self, "tiberium"))
 end

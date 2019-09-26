@@ -1,10 +1,10 @@
 AddCSLuaFile("autorun/client/cl_sa_hud.lua")
 
-timer.Simple(1,function() RD = CAF.GetAddon("Resource Distribution") end)
+timer.Simple(1, function() RD = CAF.GetAddon("Resource Distribution") end)
 
 local WorldClasses = {}
 local function AddWorldClass(name)
-	table.insert(WorldClasses,name)
+	table.insert(WorldClasses, name)
 end
 AddWorldClass("prop_door_rotating")
 AddWorldClass("prop_dynamic")
@@ -19,7 +19,7 @@ AddWorldClass("func_movelinear")
 
 local function SetupConvars(name)
 	if (not ConVarExists(name)) then
-		return CreateConVar(name,0)
+		return CreateConVar(name, 0)
 	end
 	return GetConVar(name)
 end
@@ -36,7 +36,7 @@ function PlayerMeta:AssignFaction(name)
 	if name then self.SAData.FactionName = name end
 	if not self.SAData.FactionName then self.SAData.FactionName = "freelancer" end
 	if self.SAData.FactionName == "alliance" and self.SAData.AllianceMembershipExpiry < os.time() then self.SAData.FactionName = "freelancer" end
-	for k,v in pairs(SA.Factions.Table) do
+	for k, v in pairs(SA.Factions.Table) do
 		if self.SAData.FactionName == v[2] then
 			self:SetTeam(k)
 			return
@@ -58,21 +58,21 @@ local function SA_InitSpawn(ply)
 end
 hook.Add("PlayerInitialSpawn", "SA_LoadPlayer", SA_InitSpawn)
 
-hook.Add("Initialize","SA_MapCleanInitialize",function()
+hook.Add("Initialize", "SA_MapCleanInitialize", function()
 	local map = game.GetMap()
 	if map:lower() == "sb_forlorn_sb3_r2l" or map:lower() == "sb_forlorn_sb3_r3" then
-		timer.Simple(5,function()
+		timer.Simple(5, function()
 			for k, v in pairs(ents.FindByClass("func_breakable")) do
 				v:Remove()
 			end
 		end)
 	elseif map:lower() == "gm_galactic_rc1" then
-		timer.Simple(5,function()
+		timer.Simple(5, function()
 			for k, v in pairs(ents.FindByClass("prop_physics_multiplayer")) do
 				v:Remove()
 			end
-			ents.FindInSphere(Vector(1046, -7648, -3798.2813), 5)[1]:Fire("kill","",0) --:Remove() -- Remove Teleporter Button (Spawns Hula Dolls)
-			ents.FindInSphere(Vector(556, -7740, -3798.2813), 5)[1]:Fire("kill","",0) --:Remove() -- Remove Jet Engine Button (Spams console with errors after a while)
+			ents.FindInSphere(Vector(1046, -7648, -3798.2813), 5)[1]:Fire("kill", "", 0) --:Remove() -- Remove Teleporter Button (Spawns Hula Dolls)
+			ents.FindInSphere(Vector(556, -7740, -3798.2813), 5)[1]:Fire("kill", "", 0) --:Remove() -- Remove Jet Engine Button (Spams console with errors after a while)
 		end)
 	end
 end)
@@ -156,9 +156,9 @@ LoadRes = function(ply, body, code)
 	end
 
 	if sa_faction_only:GetBool() and
-	 ( ply:Team() < SA.Factions.Min or
+	 (ply:Team() < SA.Factions.Min or
 	   ply:Team() > SA.Factions.Max or
-	   tonumber(ply.SAData.TotalCredits) < 100000000 ) then
+	   tonumber(ply.SAData.TotalCredits) < 100000000) then
 			ply:Kick("You don't meet the requirements for this server!")
 	end
 
@@ -166,8 +166,8 @@ LoadRes = function(ply, body, code)
 	ply.IsAFK = false
 	ply.MayBePoked = false
 
-	ply:SetNWBool("isleader",ply.SAData.IsFactionLeader)
-	ply:SetNWInt("Score",ply.SAData.TotalCredits)
+	ply:SetNWBool("isleader", ply.SAData.IsFactionLeader)
+	ply:SetNWInt("Score", ply.SAData.TotalCredits)
 
 	timer.Simple(1, function()
 		if not SA.ValidEntity(ply) then return end
@@ -179,7 +179,7 @@ LoadRes = function(ply, body, code)
 		net.Send(ply)
 		ply:ChatPrint("Spawn limitations disengaged. Happy travels.")
 	end)
-	ply:SetNWBool("isloaded",true)
+	ply:SetNWBool("isloaded", true)
 	if ply.SAData.Loaded then
 		ply:Spawn()
 	end
@@ -188,7 +188,7 @@ end
 function SA.SaveUser(ply, isautosave)
 	if isautosave == "sa_autosaver" then
 		ply:SetNWInt("sa_save_int", autoSaveCVar:GetInt() * 60)
-		ply:SetNWInt("sa_last_saved",CurTime())
+		ply:SetNWInt("sa_last_saved", CurTime())
 	end
 
 	if not ply.SAData.Loaded then
@@ -213,14 +213,14 @@ local function SA_SaveAllUsers()
 	end
 end
 timer.Create("SA_Autosave", 60, 0, SA_SaveAllUsers)
-concommand.Add("sa_save_players",function(ply) if not ply or ply:IsAdmin() then SA_SaveAllUsers() end end)
+concommand.Add("sa_save_players", function(ply) if not ply or ply:IsAdmin() then SA_SaveAllUsers() end end)
 
 local function SA_Autospawner(ply)
 	if (GetConVarNumber("sa_autospawner") ~= 1) then
 		return
 	end
 
-	for k,v in ipairs(ents.GetAll()) do
+	for k, v in ipairs(ents.GetAll()) do
 		if v.RealAutospawned == true then
 			if v.SASound then v.SASound:Stop() end
 			v:Remove()
@@ -230,17 +230,17 @@ local function SA_Autospawner(ply)
 
 	local filename = "spaceage/autospawn2/" .. mapname .. ".txt"
 	if file.Exists(filename, "DATA") then
-		for k,v in pairs(util.JSONToTable(file.Read(filename))) do
-			local spawn = ents.Create(v["class"])
+		for k, v in pairs(util.JSONToTable(file.Read(filename))) do
+			local spawn = ents.Create(v.class)
 			if not SA.ValidEntity(spawn) then
-				print("Could not create: " .. v["class"])
+				print("Could not create: " .. v.class)
 				continue
 			end
 
-			spawn:SetPos(Vector(v["x"],v["y"],v["z"]))
-			spawn:SetAngles(Angle(v["pit"],v["yaw"],v["rol"]))
-			if v["model"] then
-				spawn:SetModel(v["model"])
+			spawn:SetPos(Vector(v.x, v.y, v.z))
+			spawn:SetAngles(Angle(v.pit, v.yaw, v.rol))
+			if v.model then
+				spawn:SetModel(v.model)
 			end
 			SA.PP.MakeOwner(spawn)
 			spawn:Spawn()
@@ -251,8 +251,8 @@ local function SA_Autospawner(ply)
 			spawn.CDSIgnore = true
 			spawn.Autospawned = true
 			spawn.RealAutospawned = true
-			if v["sound"] then
-				local mySND = CreateSound(spawn, Sound(v["sound"]))
+			if v.sound then
+				local mySND = CreateSound(spawn, Sound(v.sound))
 				if mySND then
 					spawn.SASound = mySND
 					spawn.SASound:Play()
@@ -266,16 +266,16 @@ local function SA_Autospawner(ply)
 	end
 end
 timer.Simple(1, SA_Autospawner)
-concommand.Add("sa_autospawn_run",function(ply) if ply:GetLevel() >= 3 then SA_Autospawner(ply) end end)
+concommand.Add("sa_autospawn_run", function(ply) if ply:GetLevel() >= 3 then SA_Autospawner(ply) end end)
 
 local SA_Don_Toollist = util.JSONToTable(file.Read("spaceage/donator/toollist.txt"))
 
-local function SA_DonatorCanTool(ply,tr,mode)
-	for k,v in pairs(SA_Don_Toollist) do
+local function SA_DonatorCanTool(ply, tr, mode)
+	for k, v in pairs(SA_Don_Toollist) do
 		if mode == v and not ply.donator then
 			ply:AddHint("This is a donator-only tool, a reward for contributing to the community.", NOTIFY_CLEANUP, 10)
 			return false
 		end
 	end
 end
-hook.Add("CanTool","SA_DonatorCanTool", SA_DonatorCanTool)
+hook.Add("CanTool", "SA_DonatorCanTool", SA_DonatorCanTool)

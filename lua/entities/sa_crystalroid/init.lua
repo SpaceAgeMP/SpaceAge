@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
@@ -14,7 +14,7 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	SA.Tiberium.RemoveIntersecting(self,{"sa_crystal","sa_mining_drill"})
+	SA.Tiberium.RemoveIntersecting(self, {"sa_crystal", "sa_mining_drill"})
 	self:NextThink(CurTime() + 2)
 	return true
 end
@@ -71,12 +71,12 @@ function ENT:FindCrystalPos()
 	local res = nil
 
 	local selfCenter = self:LocalToWorld(self:OBBCenter())
-	local tracedata = {start = selfCenter + Vector(math.random(-1,1),math.random(-1,1),math.random(-1,1)):GetNormalized() * 2000, endpos = selfCenter, filter = {}}
+	local tracedata = {start = selfCenter + Vector(math.random(-1, 1), math.random(-1, 1), math.random(-1, 1)):GetNormalized() * 2000, endpos = selfCenter, filter = {}}
 	local tries = 0
 	while not res or res.Entity ~= self do
 		res = util.TraceLine(tracedata)
 		if not (res.Hit and res.HitNonWorld and SA.ValidEntity(res.Entity)) then return end
-		table.insert(tracedata.filter,res.Entity)
+		table.insert(tracedata.filter, res.Entity)
 		if tries > 100 then return end
 		tries = tries + 1
 	end
@@ -86,7 +86,7 @@ end
 function ENT:SpawnCrystal(auto)
 	if not self then return end
 	if auto then
-		timer.Simple(math.random(1,10),function() self:SpawnCrystal(true) end)
+		timer.Simple(math.random(1, 10), function() self:SpawnCrystal(true) end)
 	end
 	if self.crystalCount >= SA.Tiberium.MaxCrystalCount then return end
 
@@ -95,7 +95,7 @@ function ENT:SpawnCrystal(auto)
 
 	local crystal = ents.Create("sa_crystal")
 
-	local cHealth = math.random(1200,3000) --1200 UNTIL 3000
+	local cHealth = math.random(1200, 3000) --1200 UNTIL 3000
 
 	if cHealth <= 1800 then
 		crystal:SetModel("models/ce_mining/tiberium/ce_tib_160_60.mdl")
@@ -105,7 +105,7 @@ function ENT:SpawnCrystal(auto)
 		crystal:SetModel("models/ce_mining/tiberium/ce_tib_360_125.mdl")
 	end
 
-	crystal:SetAngles(trace.HitNormal:Angle() + Angle(90,0,0))
+	crystal:SetAngles(trace.HitNormal:Angle() + Angle(90, 0, 0))
 	crystal:SetPos(trace.HitPos)
 
 	crystal:SetSkin(2)

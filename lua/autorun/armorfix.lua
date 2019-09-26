@@ -1,11 +1,11 @@
 if SERVER then
 	AddCSLuaFile()
 	local hudaf = {}
-	timer.Create("armorfix",0.4,0,function()
-		for k,pl in pairs(player.GetAll()) do
+	timer.Create("armorfix", 0.4, 0, function()
+		for k, pl in pairs(player.GetAll()) do
 			local userid = pl:UniqueID()
 			if pl:Armor() ~= hudaf[userid] then
-				pl:SetNWInt("armor",pl:Armor())
+				pl:SetNWInt("armor", pl:Armor())
 				hudaf[userid] = pl:Armor()
 			end
 		end

@@ -10,7 +10,7 @@ function ENT:SpawnFunction(ply, tr)
 	if (not tr.Hit) then return end
 	local ent = ents.Create("sa_statsscreen")
 	ent:SetModel("models/props/cs_assault/Billboard.mdl")
-	ent:SetPos(tr.HitPos + Vector(0,0,100))
+	ent:SetPos(tr.HitPos + Vector(0, 0, 100))
 	ent:Spawn()
 	ent:Activate()
 	return ent

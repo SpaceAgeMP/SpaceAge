@@ -1,10 +1,10 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-util.PrecacheSound( "apc_engine_start" )
-util.PrecacheSound( "apc_engine_stop" )
+util.PrecacheSound("apc_engine_start")
+util.PrecacheSound("apc_engine_stop")
 
 local SB = CAF.GetAddon("Spacebuild")
 
@@ -48,7 +48,7 @@ end
 function ENT:TurnOn()
 	if (self.Active == 0) then
 		if (not self.environment) or self.environment.IsProtected or self.environment == SB.GetSpace() then return end
-		self:EmitSound( "apc_engine_start" )
+		self:EmitSound("apc_engine_start")
 		self.Active = 1
 		if WireAddon ~= nil then
 			Wire_TriggerOutput(self, "On", self.Active)
@@ -60,8 +60,8 @@ end
 
 function ENT:TurnOff()
 	if (self.Active == 1) then
-		self:StopSound( "apc_engine_start" )
-		self:EmitSound( "apc_engine_stop" )
+		self:StopSound("apc_engine_start")
+		self:EmitSound("apc_engine_stop")
 		self.Active = 0
 		if WireAddon ~= nil then
 			Wire_TriggerOutput(self, "On", self.Active)
@@ -95,19 +95,19 @@ end
 
 function ENT:Destruct()
 	if CAF and CAF.GetAddon("Life Support") then
-		CAF.GetAddon("Life Support").Destruct( self, true )
+		CAF.GetAddon("Life Support").Destruct(self, true)
 	end
 end
 
 function ENT:OnRemove()
-	self:StopSound( "apc_engine_start" )
+	self:StopSound("apc_engine_start")
 	self.BaseClass.OnRemove(self)
 end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
 	self.StateTicks = self.StateTicks + 1
-	if ( self.Active == 1 ) then
+	if (self.Active == 1) then
 		if self.environment.IsProtected or (not self.environment:IsPlanet()) or self.environment == SB.GetSpace() then
 			self.TurnOff()
 			return
@@ -115,14 +115,14 @@ function ENT:Think()
 		if self.Stability > 0 then
 			SA.Terraformer.Run(self)
 		else
-			SA.Terraformer.SpazzOut(self,false)
+			SA.Terraformer.SpazzOut(self, false)
 		end
 	else
-		self:ChangeStability(math.random(1,3))
-		if ( self.Stability <= -300 ) then
-			SA.Terraformer.SpazzOut(self,false)
+		self:ChangeStability(math.random(1, 3))
+		if (self.Stability <= -300) then
+			SA.Terraformer.SpazzOut(self, false)
 		end
 	end
-	self:NextThink( CurTime() + 1 )
+	self:NextThink(CurTime() + 1)
 	return true
 end

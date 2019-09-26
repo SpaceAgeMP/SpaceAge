@@ -2,12 +2,12 @@ SA.Planets = {}
 
 local SB = CAF.GetAddon("Spacebuild")
 
-local SB_Terraforming_Target = {o2 = 29,co2 = 0.6,h = 0.4,n = 70,empty = 0}
+local SB_Terraforming_Target = {o2 = 29, co2 = 0.6, h = 0.4, n = 70, empty = 0}
 
 local SA_MyPlanets = {}
 local SA_DefEnvsA = {}
 local SA_DefEnvs = {}
-local SA_IgnoreValsA = {o2per = true,nper = true,hper = true, co2per = true,emptyper = true}
+local SA_IgnoreValsA = {o2per = true, nper = true, hper = true, co2per = true, emptyper = true}
 
 function SA.Planets.MakeHabitable(planet)
 	local mainenv = planet.sbenvironment
@@ -34,11 +34,11 @@ end
 local function MakePlanetProtected(planet)
 	planet.IsProtected = true
 	if not planet.OldConvertResource then planet.OldConvertResource = planet.ConvertResource end
-	planet.ConvertResource = function(ent,r1,r2,amount)
+	planet.ConvertResource = function(ent, r1, r2, amount)
 		return amount
 	end
 	if not planet.OldConvert then planet.OldConvert = planet.Convert end
-	planet.Convert = function(ent,a1,a2,amount)
+	planet.Convert = function(ent, a1, a2, amount)
 		return amount
 	end
 end
@@ -63,23 +63,23 @@ local function InitHabitablePlanets()
 	local dirname = "Spaceage/planetsave/" .. mapname .. "/"
 	if mapname == "sb_new_worlds_2" then
 		toTerraform = {"naar'ak asteroid base"}
-		toAdd = {{"Naar'ak Asteroid Base",Vector(-9275,-9818,-11428),900},
-				 {"Naar'ak Asteroid Base",Vector(-8257,-8609,-11229),600},
-				 {"Kestrel",Vector(8872,-7112,-7624),600}}
-		toProtect = {"maldoran","naar'ak asteroid base","kestrel"}
+		toAdd = {{"Naar'ak Asteroid Base", Vector(-9275, -9818, -11428), 900},
+				 {"Naar'ak Asteroid Base", Vector(-8257, -8609, -11229), 600},
+				 {"Kestrel", Vector(8872, -7112, -7624), 600}}
+		toProtect = {"maldoran", "naar'ak asteroid base", "kestrel"}
 	elseif mapname == "sb_gooniverse" then
 		toAdd = {
-					{"Hantar",Vector(3865,-10656,-1991),700},
-					{"Hantar",Vector(4023,-9866,-2047),640},
+					{"Hantar", Vector(3865, -10656, -1991), 700},
+					{"Hantar", Vector(4023, -9866, -2047), 640},
 
-					{"Hantar",Vector(4649,-8871,-2048),200},
-					{"Hantar",Vector(4641,-8459,-2048),200},
-					{"Hantar",Vector(4629,-7994,-2048),200},
+					{"Hantar", Vector(4649, -8871, -2048), 200},
+					{"Hantar", Vector(4641, -8459, -2048), 200},
+					{"Hantar", Vector(4629, -7994, -2048), 200},
 
-					{"Hantar",Vector(4880,-9155,-1911),100},
-					{"Hantar",Vector(5379,-9155,-1911),100}
+					{"Hantar", Vector(4880, -9155, -1911), 100},
+					{"Hantar", Vector(5379, -9155, -1911), 100}
 				}
-		toProtect = {"earth","termanon","hantar"}
+		toProtect = {"earth", "termanon", "hantar"}
 		toRename["planet 1"] = "Earth"
 		toRename["planet 2"] = "Gantron"
 		toRename["planet 3"] = "Hantar"
@@ -88,19 +88,19 @@ local function InitHabitablePlanets()
 		toRename["planet 6"] = "Xanit"
 	elseif mapname == "sb_wuwgalaxy_fix" then
 		toAdd = {
-					{"Space Station",Vector(8368,2689,7096),1150},
-					{"Space Station",Vector(8335,3257,7107),600},
-					{"Space Station",Vector(8997,3767,7099),850},
-					{"Space Station",Vector(8453,3762,7093),850},
-					{"Space Station",Vector(8338,4356,7079),800},
-					{"Space Station",Vector(8420,5365,7122),2500}
+					{"Space Station", Vector(8368, 2689, 7096), 1150},
+					{"Space Station", Vector(8335, 3257, 7107), 600},
+					{"Space Station", Vector(8997, 3767, 7099), 850},
+					{"Space Station", Vector(8453, 3762, 7093), 850},
+					{"Space Station", Vector(8338, 4356, 7079), 800},
+					{"Space Station", Vector(8420, 5365, 7122), 2500}
 				}
 		toTerraform = {"space station"}
 		toProtect = {"space station"}
 		toRemove = {"space station"}
 	elseif mapname == "sb_lostinspace_rc4" then
-		toAdd = {{"Umemeru",Vector(8548.4717,9319.7842,8059.2813),400}}
-		toProtect = {"ochl","umemeru","nuyitae"}
+		toAdd = {{"Umemeru", Vector(8548.4717, 9319.7842, 8059.2813), 400}}
+		toProtect = {"ochl", "umemeru", "nuyitae"}
 	elseif (mapname == "sb_forlorn_sb3_r2l") then
 		toProtect = {"spawn room", "shakuras", "station 457", "dunomane"}
 	elseif (mapname == "sb_forlorn_sb3_r3") then
@@ -113,26 +113,26 @@ local function InitHabitablePlanets()
 		if (v.SA_Created) then
 			print("Found SpaceAge environment: " .. v.sbenvironment.name .. "! Removing!")
 			v:Remove()
-		elseif table.HasValue(toRemove,string.lower(v.sbenvironment.name)) then
+		elseif table.HasValue(toRemove, string.lower(v.sbenvironment.name)) then
 			print("Found ToRemove environment: " .. v.sbenvironment.name .. "! Removing!")
 			v:Remove()
 		end
 	end
 	for k, v in pairs(toAdd) do
-		local planet = ents.Create( "base_sb_planet2" )
+		local planet = ents.Create("base_sb_planet2")
 		planet:SetModel("models/props_lab/huladoll.mdl")
-		planet:SetPos( v[2] )
+		planet:SetPos(v[2])
 		planet:Spawn()
 
-		local closestPlan = SB.FindClosestPlanet(v[2],false)
+		local closestPlan = SB.FindClosestPlanet(v[2], false)
 		local plSB = closestPlan.sbenvironment
 		planet.sbenvironment.bloom = table.Copy(plSB.bloom)
 		planet.sbenvironment.color = table.Copy(plSB.color)
-		planet:CreateEnvironment(planet,0,0,0,0,0,0,0,0,v[1])
-		planet:UpdateSize(0,v[3])
-		planet:PhysicsInit( SOLID_NONE )
-		planet:SetMoveType( MOVETYPE_NONE )
-		planet:SetSolid( SOLID_NONE )
+		planet:CreateEnvironment(planet, 0, 0, 0, 0, 0, 0, 0, 0, v[1])
+		planet:UpdateSize(0, v[3])
+		planet:PhysicsInit(SOLID_NONE)
+		planet:SetMoveType(MOVETYPE_NONE)
+		planet:SetSolid(SOLID_NONE)
 		planet.sbenvironment.temperature2 = 0
 		planet.sbenvironment.sunburn = false
 		planet.sbenvironment.unstable = false
@@ -152,11 +152,11 @@ local function InitHabitablePlanets()
 			v.sbenvironment.name = toRename[envname]
 			envname = string.lower(v.sbenvironment.name)
 		end
-		if (table.HasValue(toTerraform,envname)) then
+		if (table.HasValue(toTerraform, envname)) then
 			print("Making planet \"" .. v.sbenvironment.name .. "\" habitable!")
 			SA.Planets.MakeHabitable(v)
 		end
-		if (table.HasValue(toProtect,envname)) then
+		if (table.HasValue(toProtect, envname)) then
 			MakePlanetProtected(v)
 			v.sbenvironment.pressure = 1
 			v.sbenvironment.atmosphere = 1
@@ -167,7 +167,7 @@ local function InitHabitablePlanets()
 			SA_DefEnvs[envname] = v.sbenvironment
 			if file.Exists(filename .. "_default.txt", "DATA") == false then
 				local output = util.TableToJSON(v.sbenvironment)
-				file.Write(filename .. "_default.txt",output)
+				file.Write(filename .. "_default.txt", output)
 			end
 			if file.Exists(filename .. ".txt", "DATA") then
 				local envfile = file.Read(filename .. ".txt")
@@ -177,17 +177,17 @@ local function InitHabitablePlanets()
 				v.sbenvironment = envdata
 			end
 			print("DEBUG: " .. filename .. " : " .. tostring(v))
-			table.insert(SA_MyPlanets,v)
+			table.insert(SA_MyPlanets, v)
 		end
 	end
 end
-timer.Simple(1,InitHabitablePlanets)
+timer.Simple(1, InitHabitablePlanets)
 
 local function SA_PlanetRestore()
-	for k,v in pairs(SA_MyPlanets) do
+	for k, v in pairs(SA_MyPlanets) do
 		local envname = string.lower(v.sbenvironment.name)
 		if SA_DefEnvsA[envname] then
-			for ke,ve in pairs(SA_DefEnvsA[envname]) do
+			for ke, ve in pairs(SA_DefEnvsA[envname]) do
 				if not (SA_IgnoreValsA[ke] and SA_IgnoreValsA[ke] == true) then
 					local curair = v.sbenvironment.air[ke]
 					local newair = curair - math.ceil((curair - ve) * 0.01)
@@ -214,7 +214,7 @@ function SA.Planets.Save()
 	if not file.Exists(dirname, "DATA") then
 		file.CreateDir(dirname)
 	end
-	for k,v in pairs(SA_MyPlanets) do
+	for k, v in pairs(SA_MyPlanets) do
 		local envname = string.lower(v.sbenvironment.name)
 		if envname ~= "no name" then
 			file.Write(dirname .. envname .. ".txt", util.TableToJSON(v.sbenvironment))
@@ -222,9 +222,9 @@ function SA.Planets.Save()
 	end
 end
 
-concommand.Add("sa_restart_environment",function(ply)
+concommand.Add("sa_restart_environment", function(ply)
 	if ply:GetLevel() < 3 then return end
-	for k,v in pairs(SA_MyPlanets) do
+	for k, v in pairs(SA_MyPlanets) do
 		local envname = string.lower(v.sbenvironment.name)
 		local filename = "spaceage/planetsave/" .. string.lower(game:GetMap()) .. "/" .. envname .. "_default.txt"
 		if file.Exists(filename, "DATA") then
@@ -240,7 +240,7 @@ concommand.Add("sa_restart_environment",function(ply)
 	SA.Planets.Save()
 end)
 
-concommand.Add("sa_print_environment",function(ply)
+concommand.Add("sa_print_environment", function(ply)
 	if ply:GetLevel() < 3 then return end
 	local env = CAF.GetAddon("Spacebuild").FindClosestPlanet(ply:GetPos(), false)
 	local name = env:GetEnvironmentName()

@@ -9,7 +9,7 @@ ENT.AdminSpawnable = false
 
 ENT.AsteroidModel = "models/props_wasteland/rockgranite04c.mdl"
 
-ENT.AsteroidColor = Color(255,255,255,255)
+ENT.AsteroidColor = Color(255, 255, 255, 255)
 
 ENT.MineralName = "Veldspar"
 ENT.MineralVol = 0.1 --Volume of the mineral in m3

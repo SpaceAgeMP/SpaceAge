@@ -28,19 +28,19 @@ else
 			end
 
 			GAMEMODE.ShowScoreboard = true
-			gui.EnableScreenClicker( true )
+			gui.EnableScreenClicker(true)
 
-			SA.ScoreBoard:SetVisible( true )
-			SA.ScoreBoard:UpdateScoreboard( true )
+			SA.ScoreBoard:SetVisible(true)
+			SA.ScoreBoard:UpdateScoreboard(true)
 
 			return true
 		end
 
 		function GAMEMODE:ScoreboardHide()
 			GAMEMODE.ShowScoreboard = false
-			gui.EnableScreenClicker( false )
+			gui.EnableScreenClicker(false)
 
-			SA.ScoreBoard:SetVisible( false )
+			SA.ScoreBoard:SetVisible(false)
 
 			return true
 		end

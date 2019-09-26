@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
@@ -15,24 +15,24 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	for k,v in pairs(ents.FindInSphere(self:GetPos(),450)) do
-		local myDmg = math.ceil(math.random(1000,2000) * ((801 - v:GetPos():Distance(self:GetPos())) / 100))
+	for k, v in pairs(ents.FindInSphere(self:GetPos(), 450)) do
+		local myDmg = math.ceil(math.random(1000, 2000) * ((801 - v:GetPos():Distance(self:GetPos())) / 100))
 		if (v:IsPlayer() or v:IsNPC()) and (not (v.InVehicle and v:InVehicle())) then
-			v:TakeDamage(myDmg,self)
+			v:TakeDamage(myDmg, self)
 		--[[else
-			local res = cbt_dealdevhit(v,(myDmg/10),999999)
+			local res = cbt_dealdevhit(v, (myDmg/10), 999999)
 			if res == 2 then
-				local wreck = ents.Create( "wreckedstuff" )
-				wreck:SetModel( v:GetModel() )
-				wreck:SetAngles( v:GetAngles() )
-				wreck:SetPos( v:GetPos() )
+				local wreck = ents.Create("wreckedstuff")
+				wreck:SetModel(v:GetModel())
+				wreck:SetAngles(v:GetAngles())
+				wreck:SetPos(v:GetPos())
 				wreck:Spawn()
 				wreck:Activate()
 				v:Remove()
 			end]]
 		end
 	end
-	SA.Tiberium.RemoveIntersecting(self,{"sa_crystalroid","sa_crystaltower","sa_mining_drill"})
+	SA.Tiberium.RemoveIntersecting(self, {"sa_crystalroid", "sa_crystaltower", "sa_mining_drill"})
 	self:NextThink(CurTime() + 2)
 	return true
 end
@@ -54,7 +54,7 @@ function ENT:StartTouch(ent)
 		ent:SetMaterial(material)
 		constraint.RemoveAll(ent)
 		ent:GetPhysicsObject():EnableMotion()
-		timer.Simple(3,function() ent:Remove() end)
+		timer.Simple(3, function() ent:Remove() end)
 	elseif eClass == "sa_crystal" or eClass == "sa_crystaltower" then
 		self:Remove()
 	end

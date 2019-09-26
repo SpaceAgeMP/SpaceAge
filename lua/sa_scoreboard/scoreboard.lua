@@ -45,7 +45,7 @@ function PANEL:GetPlayerRow(ply)
 end
 
 function PANEL:Paint()
-	local x,y = self:GetSize()
+	local x, y = self:GetSize()
 	draw.RoundedBox(8, 0, 0, x, y, Color(100, 100, 100, 150))
 	surface.SetTexture(texGradientDown)
 	surface.SetDrawColor(Color(150, 150, 150, 200))
@@ -60,8 +60,8 @@ function PANEL:Paint()
 	surface.SetTexture(texGradient)
 	surface.SetDrawColor(0, 255, 0, 100)
 	surface.DrawTexturedRect(10, self.Description.y + self.Description:GetTall() + 6, x - 20, 12)
-	draw.RoundedBox(8, 4, 8, 100, 48, Color(200,200,200,220))
-	draw.SimpleText("SA", "SA_ScoreboardLogo", 52, 34, Color(50,50,50,250),1,1)
+	draw.RoundedBox(8, 4, 8, 100, 48, Color(200, 200, 200, 220))
+	draw.SimpleText("SA", "SA_ScoreboardLogo", 52, 34, Color(50, 50, 50, 250), 1, 1)
 	surface.SetTexture(texGradient)
 	surface.SetDrawColor(255, 255, 255, 100)
 end
@@ -105,8 +105,8 @@ function PANEL:PerformLayout()
 	self.lblPing:SizeToContents()
 	self.lblScore:SizeToContents()
 
-	self.lblPing:SetPos(self:GetWide() - 50 - self.lblPing:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 )
-	self.lblScore:SetPos(self:GetWide() - 50 * 4 - self.lblScore:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 )
+	self.lblPing:SetPos(self:GetWide() - 50 - self.lblPing:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3)
+	self.lblScore:SetPos(self:GetWide() - 50 * 4 - self.lblScore:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3)
 
 end
 

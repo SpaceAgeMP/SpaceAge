@@ -9,7 +9,7 @@ function EFFECT:Init(data)
 	self:SetModel(ent:GetModel());
 	self:SetPos(ent:GetPos());
 	self:SetAngles(ent:GetAngles());
-	ent:SetColor(Color(255,255,255,0))
+	ent:SetColor(Color(255, 255, 255, 0))
 	self:SetParent(ent);
 	self:SetSkin(ent:GetSkin())
 	self.ent = ent;
@@ -20,7 +20,7 @@ function EFFECT:Init(data)
 	self.buildtime = 2;
 	self.inittime = RealTime();
 	self.building = true;
-	self.buildcolor = Color(255,255,255,255);
+	self.buildcolor = Color(255, 255, 255, 255);
 	self.shouldremove = false;
 	self.FadeColor = 1;
 end
@@ -32,11 +32,11 @@ function EFFECT:RenderBuild()
 	local offset = front * self.dimx * (math.min((RealTime() - self.inittime) / self.buildtime, 1) - 0.5)
 	SetMaterialOverride(buildmat);
 	render.EnableClipping(true);
-	render.PushCustomClipPlane(-front,-front:Dot(center - offset));
+	render.PushCustomClipPlane(-front, -front:Dot(center - offset));
 		self:DrawModel();
 	render.PopCustomClipPlane();
 	SetMaterialOverride(nil);
-	render.PushCustomClipPlane(front,front:Dot(center - offset));
+	render.PushCustomClipPlane(front, front:Dot(center - offset));
 		self:DrawModel()
 	render.PopCustomClipPlane();
 	render.EnableClipping(false);
@@ -54,7 +54,7 @@ function EFFECT:RenderBuild()
 	local BRB = (center - offset + right - top);
 
 	render.SetMaterial(buildmat);
-	render.DrawQuad(BLT,BRT,BRB,BLB);
+	render.DrawQuad(BLT, BRT, BRB, BLB);
 
 	render.SetMaterial(beammat);
 	rDrawBeam(FLT, FRT, 5, 0, 0, col);
@@ -74,14 +74,14 @@ function EFFECT:RenderBuild()
 
 	render.SetMaterial(spritemat);
 	local sin = ((math.sin(RealTime() * 4) + 1) + 0.2) * 16;
-	rDrawSprite(FRT,sin,sin,col);
-	rDrawSprite(BLB,sin,sin,col);
-	rDrawSprite(FLT,sin,sin,col);
-	rDrawSprite(BRT,sin,sin,col);
-	rDrawSprite(BLT,sin,sin,col);
-	rDrawSprite(FRB,sin,sin,col);
-	rDrawSprite(FLB,sin,sin,col);
-	rDrawSprite(BRB,sin,sin,col);
+	rDrawSprite(FRT, sin, sin, col);
+	rDrawSprite(BLB, sin, sin, col);
+	rDrawSprite(FLT, sin, sin, col);
+	rDrawSprite(BRT, sin, sin, col);
+	rDrawSprite(BLT, sin, sin, col);
+	rDrawSprite(FRB, sin, sin, col);
+	rDrawSprite(FLB, sin, sin, col);
+	rDrawSprite(BRB, sin, sin, col);
 end
 
 function EFFECT:Think()
@@ -139,18 +139,18 @@ function EFFECT:RenderBuildEnd()
 	rDrawBeam(BLB, FLB, 5, 0, 0, col);
 
 	render.SetMaterial(spritemat);
-	rDrawSprite(FRT,18,18,col);
-	rDrawSprite(BLB,18,18,col);
-	rDrawSprite(FLT,18,18,col);
-	rDrawSprite(BRT,18,18,col);
-	rDrawSprite(BLT,18,18,col);
-	rDrawSprite(FRB,18,18,col);
-	rDrawSprite(FLB,18,18,col);
-	rDrawSprite(BRB,18,18,col);
+	rDrawSprite(FRT, 18, 18, col);
+	rDrawSprite(BLB, 18, 18, col);
+	rDrawSprite(FLT, 18, 18, col);
+	rDrawSprite(BRT, 18, 18, col);
+	rDrawSprite(BLT, 18, 18, col);
+	rDrawSprite(FRB, 18, 18, col);
+	rDrawSprite(FLB, 18, 18, col);
+	rDrawSprite(BRB, 18, 18, col);
 
 	self.FadeColor = self.FadeColor - 0.01;
 	if (self.FadeColor <= 0) then
-		self.ent:SetColor(Color(255,255,255,255))
+		self.ent:SetColor(Color(255, 255, 255, 255))
 		self.shouldremove = true;
 	end
 end

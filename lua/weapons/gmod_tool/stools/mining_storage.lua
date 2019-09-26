@@ -4,8 +4,8 @@ TOOL.Command = nil
 TOOL.ConfigName = ""
 TOOL.Tab = "Custom Addon Framework"
 
-TOOL.ClientConVar["type"] = "ore_storage"
-TOOL.ClientConVar["model"] = "models/slyfo/sat_resourcetank.mdl"
+TOOL.ClientConVar.type = "ore_storage"
+TOOL.ClientConVar.model = "models/slyfo/sat_resourcetank.mdl"
 
 cleanup.Register("asteroid mining")
 

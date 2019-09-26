@@ -10,7 +10,7 @@ if (CLIENT) then
 	language.Add("tool.turn_into_skinswitcher.desc" , "Easily turn props into skin switchers.")
 	language.Add("tool.turn_into_skinswitcher.0", "Left click a prop to turn it into a skin switcher.")
 	language.Add("undone_Skin Switcher", "Undone Habitable Module")
-	language.Add("TurnToSkinSwitcher","Make-A-Skin-Switcher")
+	language.Add("TurnToSkinSwitcher", "Make-A-Skin-Switcher")
 end
 
 function TOOL:LeftClick(trace)

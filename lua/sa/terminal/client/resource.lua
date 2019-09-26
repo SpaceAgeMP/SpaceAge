@@ -1,10 +1,10 @@
 local PANEL = {}
 
-local ResourceNameColor = Color(255,255,255,255)
-local ResourceAmountColor = Color(200,200,200,255)
+local ResourceNameColor = Color(255, 255, 255, 255)
+local ResourceAmountColor = Color(200, 200, 200, 255)
 
-local PanelColor = Color(100,100,100,255)
-local ImageBackColor = Color(25,25,25,255)
+local PanelColor = Color(100, 100, 100, 255)
+local ImageBackColor = Color(25, 25, 25, 255)
 
 local HASH = ""
 function SA.SetResourceItemPanelHash(xhas)
@@ -12,21 +12,21 @@ function SA.SetResourceItemPanelHash(xhas)
 end
 
 function PANEL:Init()
-	self.Image = vgui.Create("DImage",self)
-	self.Image:SetPos(5,5)
-	self.Image:SetSize(32,32)
+	self.Image = vgui.Create("DImage", self)
+	self.Image:SetPos(5, 5)
+	self.Image:SetSize(32, 32)
 
-	self.ResourceName = vgui.Create("DLabel",self)
-	self.ResourceName:SetPos(43,1)
-	self.ResourceName:SetSize(160,22)
+	self.ResourceName = vgui.Create("DLabel", self)
+	self.ResourceName:SetPos(43, 1)
+	self.ResourceName:SetSize(160, 22)
 	self.ResourceName:SetContentAlignment(7)
 	self.ResourceName:SetText("Unnamed")
 	self.ResourceName:SetFont("Trebuchet20")
 	self.ResourceName:SetColor(ResourceNameColor)
 
-	self.ResourceAmount = vgui.Create("DLabel",self)
-	self.ResourceAmount:SetPos(25,23)
-	self.ResourceAmount:SetSize(170,20)
+	self.ResourceAmount = vgui.Create("DLabel", self)
+	self.ResourceAmount:SetPos(25, 23)
+	self.ResourceAmount:SetSize(170, 20)
 	self.ResourceAmount:SetText("Amount: 0")
 	self.ResourceAmount:SetContentAlignment(6)
 	self.ResourceAmount:SetFont("Trebuchet18")
@@ -40,14 +40,14 @@ function PANEL:Init()
 	self.Location = nil
 end
 
-function PANEL:SetResource(name,amount,capacity)
+function PANEL:SetResource(name, amount, capacity)
 	self.ResourceName:SetText(tostring(name))
 	self.Image:SetImage("spaceage/SA_Research_Icon")
 	self.RName = name
-	if amount then self:SetAmount(amount,capacity) end
+	if amount then self:SetAmount(amount, capacity) end
 end
 
-function PANEL:SetAmount(amount,capacity)
+function PANEL:SetAmount(amount, capacity)
 	amount = math.floor(amount)
 	if not capacity then
 		self.ResourceAmount:SetText(SA.AddCommasToInt(amount))
@@ -69,19 +69,19 @@ function PANEL:OnMousePressed(mcode)
 	if mcode ~= MOUSE_LEFT and mcode ~= MOUSE_RIGHT then return end
 
 	local t = self:GetParent()
-	local x,y = self:GetPos()
-	local xt,yt
+	local x, y = self:GetPos()
+	local xt, yt
 	while not t.SA_IsTerminalGUI do
-		xt,yt = t:GetPos()
+		xt, yt = t:GetPos()
 		x = x + xt
 		y = y + yt
 		t = t:GetParent()
 	end
 	local item = vgui.Create("SA_Terminal_Resource", t)
-	item:SetPos(x,y)
-	item:SetSize(220,42)
+	item:SetPos(x, y)
+	item:SetSize(220, 42)
 	item:SetLocation(self.Location)
-	item:SetResource(self.RName,self.RAmount)
+	item:SetResource(self.RName, self.RAmount)
 	item:SetAlpha(128)
 	item.MCode = mcode
 	item.BCPosX, item.BCPosY = self:CursorPos()
@@ -89,7 +89,7 @@ function PANEL:OnMousePressed(mcode)
 		local px, py = self:GetPos()
 		px = px + (cpx - self.BCPosX)
 		py = py + (cpy - self.BCPosY)
-		self:SetPos(px,py)
+		self:SetPos(px, py)
 	end
 	function item:OnMouseReleased(mcode)
 		if mcode ~= self.MCode then self:QuitThis() return end
@@ -118,24 +118,24 @@ function PANEL:OnMousePressed(mcode)
 			function self:OnCursorMoved()
 			end
 			self.ResourceAmount:Remove()
-			self.ResourceAmount = vgui.Create("DNumberWang",self)
-			self.ResourceAmount:SetPos(103,24)
-			self.ResourceAmount:SetSize(90,16)
+			self.ResourceAmount = vgui.Create("DNumberWang", self)
+			self.ResourceAmount:SetPos(103, 24)
+			self.ResourceAmount:SetSize(90, 16)
 			self.ResourceAmount:SetMin(0)
 			self.ResourceAmount:SetMax(self.RAmount)
 			self.ResourceAmount:SetDecimals(0)
-			local OKB = vgui.Create("DButton",self)
-			OKB:SetPos(194,24)
-			OKB:SetSize(20,16)
+			local OKB = vgui.Create("DButton", self)
+			OKB:SetPos(194, 24)
+			OKB:SetSize(20, 16)
 			OKB:SetText("OK")
 			function OKB:DoClick()
 				local pp = self:GetParent()
 				pp.RAmount = math.floor(pp.ResourceAmount:GetValue())
 				pp:TransferStuff()
 			end
-			local AMTT = vgui.Create("DLabel",self)
-			AMTT:SetPos(43,23)
-			AMTT:SetSize(50,20)
+			local AMTT = vgui.Create("DLabel", self)
+			AMTT:SetPos(43, 23)
+			AMTT:SetSize(50, 20)
 			AMTT:SetContentAlignment(4)
 			AMTT:SetFont("Trebuchet18")
 			AMTT:SetColor(ResourceNameColor)
@@ -145,7 +145,7 @@ function PANEL:OnMousePressed(mcode)
 		end
 	end
 	function item:TransferStuff()
-		RunConsoleCommand("sa_move_resource",self.Location,self.ToLocation,self.RName,self.RAmount,HASH)
+		RunConsoleCommand("sa_move_resource", self.Location, self.ToLocation, self.RName, self.RAmount, HASH)
 		self:QuitThis()
 	end
 	function item:QuitThis()
@@ -158,9 +158,9 @@ function PANEL:OnMousePressed(mcode)
 end
 
 function PANEL:Paint()
-	draw.RoundedBox(8,0,0,self:GetWide(),self:GetTall(),PanelColor)
-	draw.RoundedBox(8,3,3,214,20,ImageBackColor)
-	draw.RoundedBox(8,3,3,36,36,ImageBackColor)
+	draw.RoundedBox(8, 0, 0, self:GetWide(), self:GetTall(), PanelColor)
+	draw.RoundedBox(8, 3, 3, 214, 20, ImageBackColor)
+	draw.RoundedBox(8, 3, 3, 36, 36, ImageBackColor)
 end
 
-vgui.Register( "SA_Terminal_Resource", PANEL, "DPanel" )
+vgui.Register("SA_Terminal_Resource", PANEL, "DPanel")

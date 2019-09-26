@@ -3,7 +3,7 @@ E2Lib.RegisterExtension("lifesupport", false)
 
 local function convert_table_to_e2_table(tab)
 	local newTab = {}
-	for k,v in pairs(tab) do
+	for k, v in pairs(tab) do
 		local ty = string.lower(type(v))
 		if ty == "string" then
 			newTab["s"..k] = v
@@ -19,7 +19,7 @@ end
 local function ls_table_to_e2_table(sbenv)
 	local retTab = convert_table_to_e2_table(sbenv)
 	if sbenv.air then
-		for k,v in pairs(sbenv.air) do
+		for k, v in pairs(sbenv.air) do
 			if type(v) == "number" then
 				retTab["nair"..k] = v
 			end
@@ -74,8 +74,8 @@ e2function array entity:lsGetResources()
 	local nettable = ls_get_res_by_ent(this)
 	if not nettable then return {} end
 	local aTab = {}
-	for k,v in pairs(nettable) do
-		table.insert(aTab,k)
+	for k, v in pairs(nettable) do
+		table.insert(aTab, k)
 		if #aTab >= E2_MAX_ARRAY_SIZE then break end
 	end
 	return aTab

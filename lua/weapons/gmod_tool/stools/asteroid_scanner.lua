@@ -4,8 +4,8 @@ TOOL.Command = nil
 TOOL.ConfigName = ""
 TOOL.Tab = "Custom Addon Framework"
 
-TOOL.ClientConVar["type"] = "sa_asteroid_scanner"
-TOOL.ClientConVar["model"] = "models/jaanus/wiretool/wiretool_beamcaster.mdl"
+TOOL.ClientConVar.type = "sa_asteroid_scanner"
+TOOL.ClientConVar.model = "models/jaanus/wiretool/wiretool_beamcaster.mdl"
 
 cleanup.Register("mininglasers")
 

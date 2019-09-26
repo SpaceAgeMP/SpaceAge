@@ -1,5 +1,5 @@
 include("shared.lua")
-language.Add("sa_crystaltower","Tiberium Crystal")
+language.Add("sa_crystaltower", "Tiberium Crystal")
 function ENT:Draw()
 	self:DrawModel()
 end

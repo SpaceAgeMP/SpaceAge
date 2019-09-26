@@ -1,15 +1,15 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
 ENT.WorldInternal = true
 
 function ENT:Initialize()
-	self:SetModel( "models/props_combine/combine_intwallunit.mdl" )
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-	self:SetSolid( SOLID_VPHYSICS )
+	self:SetModel("models/props_combine/combine_intwallunit.mdl")
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 
 	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
@@ -23,8 +23,8 @@ function ENT:Initialize()
 	if ply and ply.IsValid and ply:IsValid() then self:Remove() return end
 end
 
-function ENT:Use( ply, called )
+function ENT:Use(ply, called)
 	if self.LastUse > CurTime() then return end
-	SA.Teleporter.Open(ply,self.TeleKey)
+	SA.Teleporter.Open(ply, self.TeleKey)
 	self.LastUSe = CurTime() + 1
 end

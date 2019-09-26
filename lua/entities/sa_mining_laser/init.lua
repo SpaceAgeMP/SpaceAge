@@ -1,8 +1,8 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
-util.PrecacheSound( "common/warning.wav" )
-util.PrecacheSound( "ambient/energy/electric_loop.wav" )
+util.PrecacheSound("common/warning.wav")
+util.PrecacheSound("ambient/energy/electric_loop.wav")
 
 include("shared.lua")
 
@@ -26,7 +26,7 @@ function ENT:Initialize()
 		phys:SetMass(120)
 		phys:Wake()
 	end
-	self.lasersound = CreateSound(self,"ambient/energy/electric_loop.wav")
+	self.lasersound = CreateSound(self, "ambient/energy/electric_loop.wav")
 
 	self:CalcVars(self:GetTable().Founder)
 end
@@ -61,7 +61,7 @@ end
 function ENT:TurnOn()
 	if (self.Active == 0) then
 		self.Active = 1
-		if ( RD.GetResourceAmount(self, "energy") < self.consume ) then
+		if (RD.GetResourceAmount(self, "energy") < self.consume) then
 			self:TurnOff()
 			return
 		end
@@ -70,7 +70,7 @@ function ENT:TurnOn()
 			Wire_TriggerOutput(self, "On", 1)
 		end
 		self:SetOOO(1)
-		self:SetNWBool("o",true)
+		self:SetNWBool("o", true)
 	end
 end
 
@@ -82,7 +82,7 @@ function ENT:TurnOff()
 			Wire_TriggerOutput(self, "On", 0)
 		end
 		self:SetOOO(0)
-		self:SetNWBool("o",false)
+		self:SetNWBool("o", false)
 	end
 end
 
@@ -98,8 +98,8 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	if ( self.Active == 1 ) then
-			if ( RD.GetResourceAmount(self, "energy") >= self.consume ) then
+	if (self.Active == 1) then
+			if (RD.GetResourceAmount(self, "energy") >= self.consume) then
 				RD.ConsumeResource(self, "energy", self.consume)
 				SA.Functions.Discharge(self)
 				Wire_TriggerOutput(self, "Output", self.yield)

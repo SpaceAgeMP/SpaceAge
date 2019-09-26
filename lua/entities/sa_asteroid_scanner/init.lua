@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
@@ -27,12 +27,12 @@ end
 function ENT:TurnOn()
 	if (self.Active == 0) then
 		self.Active = 1
-		if ( RD.GetResourceAmount(self, "energy") < self.consume ) then
+		if (RD.GetResourceAmount(self, "energy") < self.consume) then
 			self:TurnOff()
 			return
 		end
 		self:SetOOO(1)
-		self:SetNWBool("o",true)
+		self:SetNWBool("o", true)
 	end
 end
 
@@ -40,7 +40,7 @@ function ENT:TurnOff()
 	if (self.Active == 1) then
 		self.Active = 0
 		self:SetOOO(0)
-		self:SetNWBool("o",false)
+		self:SetNWBool("o", false)
 	end
 end
 
@@ -53,9 +53,9 @@ end
 local function ScanRoid(ent)
 	local pos = ent:GetPos()
 	local up = ent:GetAngles():Up()
-	local tr = util.TraceLine( {start = pos + (up * ent:OBBMaxs().z), endpos = pos + (up * ent.BeamLength),filter = { ent }} )
+	local tr = util.TraceLine({start = pos + (up * ent:OBBMaxs().z), endpos = pos + (up * ent.BeamLength), filter = { ent }})
 	local hitent = tr.Entity
-	if ( not hitent ) then return end
+	if (not hitent) then return end
 	if hitent.IsAsteroid or hitent.IsCrystal then
 		ent:UpdateWireOutput(math.floor((hitent.health / hitent.maxhealth) * 10000) / 100)
 	elseif hitent.IsOreStorage then
@@ -71,8 +71,8 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	if ( self.Active == 1 ) then
-			if ( RD.GetResourceAmount(self, "energy") >= self.consume ) then
+	if (self.Active == 1) then
+			if (RD.GetResourceAmount(self, "energy") >= self.consume) then
 				RD.ConsumeResource(self, "energy", self.consume)
 				ScanRoid(self)
 			else

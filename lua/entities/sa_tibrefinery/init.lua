@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
@@ -39,11 +39,11 @@ function ENT:Initialize()
 end
 
 function ENT:StartTouch(ent)
-	if ent.IsTiberiumStorage and (RD.GetResourceAmount( ent, "tiberium" ) >= 0) then
-		local attachPlace = SA.Tiberium.FindFreeAttachPlace(ent,self)
+	if ent.IsTiberiumStorage and (RD.GetResourceAmount(ent, "tiberium") >= 0) then
+		local attachPlace = SA.Tiberium.FindFreeAttachPlace(ent, self)
 		if not attachPlace then return end
-		if not SA.Tiberium.AttachStorage(ent,self,attachPlace) then return end
-		constraint.Weld(ent, SA_TheWorld,0,0,false)
+		if not SA.Tiberium.AttachStorage(ent, self, attachPlace) then return end
+		constraint.Weld(ent, SA_TheWorld, 0, 0, false)
 		self.TouchTable[attachPlace] = ent
 		--local tmp = RD.GetEntityTable(ent)
 		--self.TouchNetTable[ent:EntIndex()] = tmp.network
@@ -53,7 +53,7 @@ end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
-	for k,v in pairs(self.TouchTable) do
+	for k, v in pairs(self.TouchTable) do
 		if not v.IsTiberiumStorage then
 			self.TouchTable[k] = nil
 			continue
@@ -61,7 +61,7 @@ function ENT:Think()
 		RD.Unlink(v)
 		local ply = SA.PP.GetOwner(v)
 		if ply and ply:IsValid() and ply:IsPlayer() then
-			local am = RD.GetResourceAmount( v, "tiberium" )
+			local am = RD.GetResourceAmount(v, "tiberium")
 			local taken = 10000
 			if am < taken then taken = am end
 			if taken <= 0 then
@@ -69,7 +69,7 @@ function ENT:Think()
 				self.TouchTable[k] = nil
 			else
 				RD.ConsumeResource(v, "tiberium", taken)
-				local creds = math.Round(taken * (math.random(20,30)))
+				local creds = math.Round(taken * (math.random(20, 30)))
 				if ply.SAData.FactionName == "corporation" or ply.SAData.FactionName == "alliance" then
 					creds = math.ceil((creds * 1.33) * 1000) / 1000
 				elseif ply.SAData.FactionName == "starfleet" then

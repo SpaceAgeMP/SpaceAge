@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 local RD = CAF.GetAddon("Resource Distribution")
@@ -44,10 +44,10 @@ function ENT:CalcVars(ply)
 	RD.AddResource(self, "Krystallos", Capacity)
 end
 
-function ENT:SpawnFunction( ply, tr )
-	if (not tr.Hit ) then return end
-	local ent = ents.Create( "mining_laser_base" )
-	ent:SetPos( tr.HitPos + tr.HitNormal * 100 )
+function ENT:SpawnFunction(ply, tr)
+	if (not tr.Hit) then return end
+	local ent = ents.Create("mining_laser_base")
+	ent:SetPos(tr.HitPos + tr.HitNormal * 100)
 	ent:Spawn()
 	ent:Activate()
 	return ent
@@ -59,21 +59,21 @@ function ENT:Think()
 end
 
 function ENT:UpdateWireOutput()
-	Wire_TriggerOutput(self, "Blue Ice", RD.GetResourceAmount(self, "Blue Ice") )
-	Wire_TriggerOutput(self, "Clear Ice", RD.GetResourceAmount(self, "Clear Ice") )
-	Wire_TriggerOutput(self, "Glacial Mass", RD.GetResourceAmount(self, "Glacial Mass") )
-	Wire_TriggerOutput(self, "White Glaze", RD.GetResourceAmount(self, "White Glaze") )
-	Wire_TriggerOutput(self, "Dark Glitter", RD.GetResourceAmount(self, "Dark Glitter") )
-	Wire_TriggerOutput(self, "Glare Crust", RD.GetResourceAmount(self, "Glare Crust") )
-	Wire_TriggerOutput(self, "Gelidus", RD.GetResourceAmount(self, "Gelidus") )
-	Wire_TriggerOutput(self, "Krystallos", RD.GetResourceAmount(self, "Krystallos") )
+	Wire_TriggerOutput(self, "Blue Ice", RD.GetResourceAmount(self, "Blue Ice"))
+	Wire_TriggerOutput(self, "Clear Ice", RD.GetResourceAmount(self, "Clear Ice"))
+	Wire_TriggerOutput(self, "Glacial Mass", RD.GetResourceAmount(self, "Glacial Mass"))
+	Wire_TriggerOutput(self, "White Glaze", RD.GetResourceAmount(self, "White Glaze"))
+	Wire_TriggerOutput(self, "Dark Glitter", RD.GetResourceAmount(self, "Dark Glitter"))
+	Wire_TriggerOutput(self, "Glare Crust", RD.GetResourceAmount(self, "Glare Crust"))
+	Wire_TriggerOutput(self, "Gelidus", RD.GetResourceAmount(self, "Gelidus"))
+	Wire_TriggerOutput(self, "Krystallos", RD.GetResourceAmount(self, "Krystallos"))
 
-	Wire_TriggerOutput(self, "Max Blue Ice", RD.GetNetworkCapacity(self, "Blue Ice") )
-	Wire_TriggerOutput(self, "Max Clear Ice", RD.GetNetworkCapacity(self, "Clear Ice") )
-	Wire_TriggerOutput(self, "Max Glacial Mass", RD.GetNetworkCapacity(self, "Glacial Mass") )
+	Wire_TriggerOutput(self, "Max Blue Ice", RD.GetNetworkCapacity(self, "Blue Ice"))
+	Wire_TriggerOutput(self, "Max Clear Ice", RD.GetNetworkCapacity(self, "Clear Ice"))
+	Wire_TriggerOutput(self, "Max Glacial Mass", RD.GetNetworkCapacity(self, "Glacial Mass"))
 	Wire_TriggerOutput(self, "Max White Glaze", RD.GetNetworkCapacity(self, "White Glaze"))
-	Wire_TriggerOutput(self, "Max Dark Glitter", RD.GetNetworkCapacity(self, "Dark Glitter") )
-	Wire_TriggerOutput(self, "Max Glare Crust", RD.GetNetworkCapacity(self, "Glare Crust") )
-	Wire_TriggerOutput(self, "Max Gelidus",  RD.GetNetworkCapacity(self, "Gelidus") )
+	Wire_TriggerOutput(self, "Max Dark Glitter", RD.GetNetworkCapacity(self, "Dark Glitter"))
+	Wire_TriggerOutput(self, "Max Glare Crust", RD.GetNetworkCapacity(self, "Glare Crust"))
+	Wire_TriggerOutput(self, "Max Gelidus",  RD.GetNetworkCapacity(self, "Gelidus"))
 	Wire_TriggerOutput(self, "Max Krystallos", RD.GetNetworkCapacity(self, "Krystallos"))
 end

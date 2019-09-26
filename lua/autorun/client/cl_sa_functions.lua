@@ -3,8 +3,8 @@ local function GetProceduralEdge(vertices, cornerRadius, divisions, startDegrees
 		local offset = (90 / divisions) * i
 		local degrees = startDegrees - offset
 
-		local finalX = circleCenterX + (math.cos(math.rad( degrees )) * cornerRadius)
-		local finalY = circleCenterY - (math.sin(math.rad( degrees )) * cornerRadius)
+		local finalX = circleCenterX + (math.cos(math.rad(degrees)) * cornerRadius)
+		local finalY = circleCenterY - (math.sin(math.rad(degrees)) * cornerRadius)
 
 		table.insert(vertices, {x = finalX, y = finalY, u = (finalX-x) / width, v = (finalY-y) / height})
 	end

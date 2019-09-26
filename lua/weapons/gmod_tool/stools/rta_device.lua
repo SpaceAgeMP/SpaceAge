@@ -90,8 +90,8 @@ function TOOL:UpdateGhostRTA(ent, player)
 end
 
 function TOOL:Think()
-	if (not self.GhostEntity or not self.GhostEntity:IsValid() ) then
-		self:MakeGhostEntity("models/slyfo/rover_na_large.mdl" , Vector(0,0,0), Angle(0,0,0))
+	if (not self.GhostEntity or not self.GhostEntity:IsValid()) then
+		self:MakeGhostEntity("models/slyfo/rover_na_large.mdl" , Vector(0, 0, 0), Angle(0, 0, 0))
 	end
 
 	self:UpdateGhostRTA(self.GhostEntity, self:GetOwner())

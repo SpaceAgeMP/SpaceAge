@@ -1,5 +1,5 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 local RD = CAF.GetAddon("Resource Distribution")
@@ -28,10 +28,10 @@ local GiveTranslate = {
 }
 
 function ENT:Initialize()
-	self:SetModel( self.Model )
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-	self:SetSolid( SOLID_VPHYSICS )
+	self:SetModel(self.Model)
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 
 	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
@@ -47,7 +47,7 @@ function ENT:Initialize()
 	RD.AddResource(self, "water", 0)
 	RD.AddResource(self, "heavy water", 0)
 
-	for _,Type in pairs(IceTypes) do
+	for _, Type in pairs(IceTypes) do
 		RD.AddResource(self, Type, 0)
 	end
 
@@ -60,8 +60,8 @@ function ENT:Initialize()
 
 	self:SetOverlayText(self.PrintName .. "\n" .. "Progress: 0%")
 
-	self.Inputs = Wire_CreateInputs( self, { "Activate" } )
-	self.Outputs = Wire_CreateOutputs( self, { "Active", "Progress" } )
+	self.Inputs = Wire_CreateInputs(self, { "Activate" })
+	self.Outputs = Wire_CreateOutputs(self, { "Active", "Progress" })
 
 	self.ShouldRefine = false;
 	self.CurrentRef = nil;
@@ -83,13 +83,13 @@ function ENT:Refine()
 
 	if (CurEnergy > EnergyReq) then
 		if not self.CurrentRef then
-			for _,Type in pairs(IceTypes) do
+			for _, Type in pairs(IceTypes) do
 				local Avail = RD.GetResourceAmount(self, Type)
 				if (Avail > 0) then
 					self.CurrentRef = Type
 					self.Volume = 1000
 					RD.ConsumeResource(self, Type, 1)
-					Wire_TriggerOutput(self,"Active",1)
+					Wire_TriggerOutput(self, "Active", 1)
 					break
 				end
 			end
@@ -99,17 +99,17 @@ function ENT:Refine()
 
 			local RefSpeed = (self.CycleVol / self.CycleTime) * 1000
 			self.Volume = self.Volume - RefSpeed
-			local Progress = math.Clamp((1000-self.Volume) / 10,0,100)
-			Wire_TriggerOutput(self,"Progress",Progress)
+			local Progress = math.Clamp((1000-self.Volume) / 10, 0, 100)
+			Wire_TriggerOutput(self, "Progress", Progress)
 			self:SetOverlayText(self.PrintName .. "\nProgress: " .. tostring(Progress) .. "%")
 			if (self.Volume <= 0) then
 				local Gives = SA.Ice.GetRefined(self.CurrentRef, self.RefineEfficiency)
-				for Res,Count in pairs(Gives) do
+				for Res, Count in pairs(Gives) do
 					RD.SupplyResource(self, GiveTranslate[Res], Count)
 				end
 				self.CurrentRef = nil
-				Wire_TriggerOutput(self,"Active",0)
-				Wire_TriggerOutput(self,"Progress",0)
+				Wire_TriggerOutput(self, "Active", 0)
+				Wire_TriggerOutput(self, "Progress", 0)
 				self:SetOverlayText(self.PrintName .. "\nProgress: 0%")
 			end
 		end
@@ -129,8 +129,8 @@ function ENT:TriggerInput(iname, value)
 			self.ShouldRefine = true
 		else
 			self.ShouldRefine = false
-			Wire_TriggerOutput(self,"Active",0)
-			Wire_TriggerOutput(self,"Progress",0)
+			Wire_TriggerOutput(self, "Active", 0)
+			Wire_TriggerOutput(self, "Progress", 0)
 			self:SetOverlayText(self.PrintName .. "\nProgress: 0%")
 		end
 	end
@@ -140,11 +140,11 @@ function ENT:PreEntityCopy()
 	RD.BuildDupeInfo(self)
 	local DupeInfo = self:BuildDupeInfo()
 	if DupeInfo then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",DupeInfo)
+		duplicator.StoreEntityModifier(self, "WireDupeInfo", DupeInfo)
 	end
 end
 
-function ENT:PostEntityPaste(ply,Ent,CreatedEntities)
+function ENT:PostEntityPaste(ply, Ent, CreatedEntities)
 	RD.ApplyDupeInfo(Ent, CreatedEntities)
 	if Ent.EntityMods and Ent.EntityMods.WireDupeInfo then
 		self.Owner = ply

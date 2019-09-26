@@ -1,8 +1,8 @@
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
-util.PrecacheSound( "apc_engine_start" )
-util.PrecacheSound( "apc_engine_stop" )
-util.PrecacheSound( "common/warning.wav" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
+util.PrecacheSound("apc_engine_start")
+util.PrecacheSound("apc_engine_stop")
+util.PrecacheSound("common/warning.wav")
 
 include("shared.lua")
 local Energy_Increment = 25
@@ -22,13 +22,13 @@ function ENT:Initialize()
 		self.Inputs = Wire_CreateInputs(self, { "On", "Radius", "Gravity" })
 		self.Outputs = Wire_CreateOutputs(self, { "On", "Gravity" })
 	else
-		self.Inputs = {{ Name = "On" },{ Name = "Radius" },{ Name = "Gravity" }}
+		self.Inputs = {{ Name = "On" }, { Name = "Radius" }, { Name = "Gravity" }}
 	end
 end
 
 function ENT:TurnOn()
 	if (self.Active == 0) then
-		self:EmitSound( "apc_engine_start" )
+		self:EmitSound("apc_engine_start")
 		self.Active = 1
 		self.sbenvironment.size = self.currentsize
 		if WireAddon ~= nil then Wire_TriggerOutput(self, "On", self.Active) end
@@ -38,8 +38,8 @@ end
 
 function ENT:TurnOff()
 	if (self.Active == 1) then
-		self:StopSound( "apc_engine_start" )
-		self:EmitSound( "apc_engine_stop" )
+		self:StopSound("apc_engine_start")
+		self:EmitSound("apc_engine_stop")
 		self.Active = 0
 		self.sbenvironment.size = 0
 		if WireAddon ~= nil then Wire_TriggerOutput(self, "On", self.Active) end
@@ -86,13 +86,13 @@ end
 
 function ENT:Destruct()
 	SB.RemoveEnvironment(self)
-	CAF.GetAddon("Life Support").LS_Destruct( self, true )
+	CAF.GetAddon("Life Support").LS_Destruct(self, true)
 end
 
 function ENT:OnRemove()
 	SB.RemoveEnvironment(self)
 	self.BaseClass.OnRemove(self)
-	self:StopSound( "apc_engine_start" )
+	self:StopSound("apc_engine_start")
 end
 
 function ENT:Think()
@@ -106,9 +106,9 @@ function ENT:Think()
 				dif = self.sbenvironment.gravity / self.environment:GetGravity()
 			end
 		end
-		local eneeded = math.Round( (Energy_Increment * self:GetMultiplier()) + (Energy_Increment * dif * self:GetMultiplier()))
+		local eneeded = math.Round((Energy_Increment * self:GetMultiplier()) + (Energy_Increment * dif * self:GetMultiplier()))
 		if (RD.GetResourceAmount(self, "energy") < eneeded) then
-			self:EmitSound( "common/warning.wav" )
+			self:EmitSound("common/warning.wav")
 			self:TurnOff(true)
 		else
 			RD.ConsumeResource(self, "energy", eneeded)
