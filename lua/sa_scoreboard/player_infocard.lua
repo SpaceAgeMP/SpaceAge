@@ -164,7 +164,7 @@ function PANEL:Think()
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout(w, h)
 
 	local x = 5
 
@@ -206,13 +206,13 @@ function PANEL:PerformLayout()
 		self.btnBan:SetVisible(true)
 		self.btnPBan:SetVisible(true)
 
-		self.btnKick:SetPos(self:GetWide() - 52 * 3, 90)
+		self.btnKick:SetPos(w - 52 * 3, 90)
 		self.btnKick:SetSize(48, 20)
 
-		self.btnBan:SetPos(self:GetWide() - 52 * 2, 90)
+		self.btnBan:SetPos(w - 52 * 2, 90)
 		self.btnBan:SetSize(48, 20)
 
-		self.btnPBan:SetPos(self:GetWide() - 52 * 1, 90)
+		self.btnPBan:SetPos(w - 52 * 1, 90)
 		self.btnPBan:SetSize(48, 20)
 
 	end
@@ -220,7 +220,7 @@ function PANEL:PerformLayout()
 	for k, v in ipairs(self.VoteButtons) do
 
 		v:InvalidateLayout()
-		v:SetPos(self:GetWide() -  k * 25, 0)
+		v:SetPos(w -  k * 25, 0)
 		v:SetSize(20, 32)
 
 	end

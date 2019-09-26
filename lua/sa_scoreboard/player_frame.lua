@@ -31,10 +31,10 @@ function PANEL:OnMouseWheeled(dlta)
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout(w, h)
 
 	self.pnlCanvas:SetPos(0, self.YOffset * -1)
-	self.pnlCanvas:SetSize(self:GetWide(), self.pnlCanvas:GetTall())
+	self.pnlCanvas:SetSize(w, self.pnlCanvas:GetTall())
 
 end
 

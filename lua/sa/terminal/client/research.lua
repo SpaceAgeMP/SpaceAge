@@ -141,8 +141,8 @@ function PANEL:Update(Rank, Cost)
 	end
 end
 
-function PANEL:Paint()
-	draw.RoundedBox(8, 0, 0, self:GetWide(), self:GetTall(), PanelColor)
+function PANEL:Paint(w, h)
+	draw.RoundedBox(8, 0, 0, w, h, PanelColor)
 	draw.RoundedBox(8, 585, 3, 104, 22, RankBackColor)
 	draw.RoundedBox(8, 419, 3, 144, 22, CostBackColor)
 	draw.RoundedBox(8, 3, 3, 390, 36, ImageBackColor)

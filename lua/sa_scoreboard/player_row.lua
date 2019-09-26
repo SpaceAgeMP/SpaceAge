@@ -21,7 +21,7 @@ local PANEL = {}
 
 local connectingColor = Color(200, 120, 50, 255)
 
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 	local _team = self.Player:Team()
 	local color = team.GetColor(_team)
 
@@ -30,8 +30,6 @@ function PANEL:Paint()
 	end
 
 	if (self.Open or self.Size ~= self.TargetSize) then
-
-		local w, h = self:GetSize()
 
 		draw.RoundedBox(4, 0, 16, w, h - 16, color)
 		draw.RoundedBox(4, 2, 16, w - 4, h - 16 - 2, Color(color.r, color.g, color.b, 255))
@@ -42,11 +40,11 @@ function PANEL:Paint()
 
 	end
 
-	draw.RoundedBox(4, 0, 0, self:GetWide(), 24, color)
+	draw.RoundedBox(4, 0, 0, w, 24, color)
 
 	surface.SetTexture(texGradient)
 	surface.SetDrawColor(0, 0, 0, 130)
-	surface.DrawTexturedRect(0, 0, self:GetWide(), 24)
+	surface.DrawTexturedRect(0, 0, w, 24)
 
 	surface.SetTexture(self.texRating)
 	surface.SetDrawColor(255, 255, 255, 255)
@@ -187,24 +185,24 @@ function PANEL:Think()
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout(w)
 
-	self:SetSize(self:GetWide(), self.Size)
+	self:SetSize(w, self.Size)
 
 	self.lblName:SizeToContents()
 	self.lblName:SetPos(24, 2)
 
 	local COLUMN_SIZE = 50
 
-	self.lblPing:SetPos(self:GetWide() - COLUMN_SIZE * 1, 0)
-	--self.lblTC:SetPos(self:GetWide() - COLUMN_SIZE * 2, 0)
+	self.lblPing:SetPos(w - COLUMN_SIZE * 1, 0)
+	--self.lblTC:SetPos(w - COLUMN_SIZE * 2, 0)
 	self.lblScore:SizeToContents()
-	self.lblScore:SetPos(self:GetWide() - COLUMN_SIZE * 4, 2)
+	self.lblScore:SetPos(w - COLUMN_SIZE * 4, 2)
 	if (self.Open or self.Size ~= self.TargetSize) then
 
 		self.infoCard:SetVisible(true)
 		self.infoCard:SetPos(4, self.lblName:GetTall() + 10)
-		self.infoCard:SetSize(self:GetWide() - 8, self:GetTall() - self.lblName:GetTall() - 10)
+		self.infoCard:SetSize(w - 8, h - self.lblName:GetTall() - 10)
 
 	else
 

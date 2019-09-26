@@ -44,8 +44,8 @@ function PANEL:SetNameDescID(intid, goodieid)
 	self.Image:SetImage("spaceage/" .. intid.image)
 end
 
-function PANEL:Paint()
-	draw.RoundedBox(8, 0, 0, self:GetWide(), self:GetTall(), PanelColor)
+function PANEL:Paint(w, h)
+	draw.RoundedBox(8, 0, 0, w, h, PanelColor)
 	draw.RoundedBox(8, 3, 3, 390, 36, ImageBackColor)
 	draw.RoundedBox(8, 3, 29, 580, 42, DescBackColor)
 	draw.RoundedBox(8, 3, 3, 68, 68, ImageBackColor)

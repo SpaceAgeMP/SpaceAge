@@ -15,7 +15,7 @@ local bgSelected = Color(0, 200, 255, 255)
 local bgArmed = Color(255, 255, 0, 255)
 local txt = Color(0, 0, 0, 150)
 
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 
 	local bgColor = bgDefault
 
@@ -25,9 +25,9 @@ function PANEL:Paint()
 		bgColor = bgArmed
 	end
 
-	draw.RoundedBox(4, 0, 0, self:GetWide(), self:GetTall(), bgColor)
+	draw.RoundedBox(4, 0, 0, w, h, bgColor)
 
-	draw.SimpleText(self.Text, "DefaultSmall", self:GetWide() / 2, self:GetTall() / 2, txt, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText(self.Text, "DefaultSmall", w / 2, h / 2, txt, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	return true
 

@@ -44,33 +44,33 @@ function PANEL:GetPlayerRow(ply)
 	return self.PlayerRows[ ply ]
 end
 
-function PANEL:Paint()
-	local x, y = self:GetSize()
-	draw.RoundedBox(8, 0, 0, x, y, Color(100, 100, 100, 150))
+function PANEL:Paint(w, h)
+	local descHeight = self.Description:GetTall()
+	draw.RoundedBox(8, 0, 0, w, h, Color(100, 100, 100, 150))
 	surface.SetTexture(texGradientDown)
 	surface.SetDrawColor(Color(150, 150, 150, 200))
-	surface.DrawTexturedRect(4, self.Description.y - 4, x - 8, y - self.Description.y - 4)
+	surface.DrawTexturedRect(4, self.Description.y - 4, w - 8, h - self.Description.y - 4)
 	surface.SetTexture(texGradient)
-	draw.RoundedBox(4, 5, self.Description.y - 3, x - 10, self.Description:GetTall() + 5, Color(150, 150, 150, 200))
+	draw.RoundedBox(4, 5, self.Description.y - 3, w - 10, descHeight + 5, Color(150, 150, 150, 200))
 	surface.SetTexture(texGradient)
 	surface.SetDrawColor(0, 0, 0, 150)
-	surface.DrawTexturedRect(4, self.Description.y - 4, x - 8, self.Description:GetTall() + 8)
+	surface.DrawTexturedRect(4, self.Description.y - 4, w - 8, descHeight + 8)
 
-	draw.RoundedBox(4, 10, self.Description.y + self.Description:GetTall() + 6, x - 20, 12, Color(0, 255, 255, 50))
+	draw.RoundedBox(4, 10, self.Description.y + descHeight + 6, w - 20, 12, Color(0, 255, 255, 50))
 	surface.SetTexture(texGradient)
 	surface.SetDrawColor(0, 255, 0, 100)
-	surface.DrawTexturedRect(10, self.Description.y + self.Description:GetTall() + 6, x - 20, 12)
+	surface.DrawTexturedRect(10, self.Description.y + descHeight + 6, w - 20, 12)
 	draw.RoundedBox(8, 4, 8, 100, 48, Color(200, 200, 200, 220))
 	draw.SimpleText("SA", "SA_ScoreboardLogo", 52, 34, Color(50, 50, 50, 250), 1, 1)
 	surface.SetTexture(texGradient)
 	surface.SetDrawColor(255, 255, 255, 100)
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout(w, h)
 
 	self:SetSize(640, ScrH() * 0.95)
 
-	self:SetPos((ScrW() - self:GetWide()) / 2, (ScrH() - self:GetTall()) / 2)
+	self:SetPos((ScrW() - w) / 2, (ScrH() - h) / 2)
 
 	self.Hostname:SizeToContents()
 	self.Hostname:SetPos(100, 16)
@@ -79,7 +79,7 @@ function PANEL:PerformLayout()
 	self.Description:SetPos(20, 64)
 
 	self.PlayerFrame:SetPos(5, self.Description.y + self.Description:GetTall() + 20)
-	self.PlayerFrame:SetSize(self:GetWide() - 10, self:GetTall() - self.PlayerFrame.y - 10)
+	self.PlayerFrame:SetSize(w - 10, h - self.PlayerFrame.y - 10)
 
 	local y = 0
 
@@ -105,8 +105,9 @@ function PANEL:PerformLayout()
 	self.lblPing:SizeToContents()
 	self.lblScore:SizeToContents()
 
-	self.lblPing:SetPos(self:GetWide() - 50 - self.lblPing:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3)
-	self.lblScore:SetPos(self:GetWide() - 50 * 4 - self.lblScore:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3)
+	local pingW, pingH = self.lblPing:GetSize()
+	self.lblPing:SetPos(w - 50 - pingW / 2, self.PlayerFrame.y - pingH - 3)
+	self.lblScore:SetPos(w - 50 * 4 - pingW / 2, self.PlayerFrame.y - pingH - 3)
 
 end
 

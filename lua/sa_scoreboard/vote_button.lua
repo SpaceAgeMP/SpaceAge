@@ -28,14 +28,14 @@ function PANEL:ApplySchemeSettings()
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout(w, h)
 
 	if (self:GetParent().Player and self:GetParent().Player:IsValid()) then
 		self.Label:SetText(self:GetParent().Player:GetNWInt("Rating." .. self.VoteName, 0))
 	end
 
 	self.Label:SizeToContents()
-	self.Label:SetPos((self:GetWide() - self.Label:GetWide()) / 2, self:GetTall() - self.Label:GetTall())
+	self.Label:SetPos((w - self.Label:GetWide()) / 2, h - self.Label:GetTall())
 
 end
 
@@ -51,7 +51,7 @@ local bgColorDefault = Color(0, 0, 0, 10)
 local bgColorSelected = Color(200, 200, 200, 255)
 local bgColorArmed = Color(100, 100, 100, 255)
 
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 
 	if (not self.Material) then
 		self.Material = surface.GetTextureID("gui/silkicons/" .. self.MaterialName)
@@ -65,17 +65,17 @@ function PANEL:Paint()
 		bgColor = bgColorArmed
 	end
 
-	draw.RoundedBox(4, 0, 0, self:GetWide(), self:GetTall(), bgColor)
+	draw.RoundedBox(4, 0, 0, w, h, bgColor)
 
 	local alpha = 200
 	if (self.Armed) then alpha = 255 end
 
 	surface.SetTexture(self.Material)
 	surface.SetDrawColor(255, 255, 255, alpha)
-	surface.DrawTexturedRect(self:GetWide() / 2 - 8, self:GetWide() / 2 - 8, 16, 16)
+	surface.DrawTexturedRect(w / 2 - 8, h / 2 - 8, 16, 16)
 
 
-	--draw.SimpleText(, "DefaultSmall", self:GetWide() / 2, 19, Color(0, 0, 0, 100), TEXT_ALIGN_CENTER)
+	--draw.SimpleText(, "DefaultSmall", w / 2, 19, Color(0, 0, 0, 100), TEXT_ALIGN_CENTER)
 
 	return true
 

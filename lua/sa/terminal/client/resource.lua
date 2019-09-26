@@ -157,8 +157,8 @@ function PANEL:OnMousePressed(mcode)
 	SA_TermDraggedElement = item
 end
 
-function PANEL:Paint()
-	draw.RoundedBox(8, 0, 0, self:GetWide(), self:GetTall(), PanelColor)
+function PANEL:Paint(w, h)
+	draw.RoundedBox(8, 0, 0, w, h, PanelColor)
 	draw.RoundedBox(8, 3, 3, 214, 20, ImageBackColor)
 	draw.RoundedBox(8, 3, 3, 36, 36, ImageBackColor)
 end
