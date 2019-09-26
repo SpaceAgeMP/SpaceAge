@@ -63,7 +63,7 @@ local SA_ErrorAlpha = 0
 
 local function SA_TermError(ErrText)
 	SA_ErrorText = ErrText
-	SA_ErrorAlpha = 150
+	SA_ErrorAlpha = 230
 end
 
 local function SA_DevSetVal(vnum, vval)
@@ -257,6 +257,12 @@ local function CreateTerminalGUI()
 	SellButton:SetText("Sell")
 	SellButton.DoClick = function()
 		local Amount = tonumber(SellAmount:GetValue())
+
+		if not Amount then
+			SA_TermError("Invalid amount")
+			return
+		end
+
 		if (Amount < 0) then
 			SA_TermError("You cannot sell negatives!")
 			return
@@ -705,14 +711,13 @@ timer.Create("SA_RecreateTermGUI", 1, 0, CreateTerminalGUI)
 local function SA_DrawTerminalError()
 	if (SA_ErrorAlpha > 0) then
 		local TermX, TermY = SA_Term_GUI:GetPos()
-		TermX = TermX + 395
-		TermY = TermY + 65
+		local _, TermSizeY = SA_Term_GUI:GetSize()
 		surface.SetFont("ServerHUDFontS")
-		local Wide, Tall = surface.GetTextSize(SA_ErrorText)
-		TermX = TermX - Wide / 2
-		TermY = TermY - Tall / 2
-		draw.WordBox(8, TermX, TermY, SA_ErrorText, "ServerHUDFontS", Color(200, 0, 0, SA_ErrorAlpha), Color(255, 255, 255, SA_ErrorAlpha))
-		SA_ErrorAlpha = SA_ErrorAlpha - FrameTime() * 50
+		local Wide = surface.GetTextSize(SA_ErrorText)
+		TermX = TermX + Wide / 2
+		TermY = TermY + TermSizeY + 4
+		draw.WordBox(8,TermX,TermY,SA_ErrorText,"ServerHUDFontS",Color(200,0,0,SA_ErrorAlpha),Color(255,255,255,SA_ErrorAlpha))
+		SA_ErrorAlpha = SA_ErrorAlpha - FrameTime() * 100
 	end
 end
 hook.Add("PostRenderVGUI", "SA_DrawTerminalError", SA_DrawTerminalError)

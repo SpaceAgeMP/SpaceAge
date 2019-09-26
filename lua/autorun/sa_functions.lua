@@ -3,19 +3,30 @@ if SERVER then
 end
 
 function SA.AddCommasToInt(str)
-	str = string.reverse(tostring(str)) -- Make sure this is a string!
+	str = tostring(str)
 
-	local len = str:len() - 1
+	local expl = string.Explode(".", str)
+	local numstr = expl[1]
+	local decimalstr = expl[2]
+
+	numstr = string.reverse(numstr)
+
+	local len = numstr:len() - 1
 	local ret = ""
 	for i = 1, len do
-		ret = ret .. str:sub(i, i)
+		ret = ret .. numstr:sub(i, i)
 		if i % 3 == 0 then
 			ret = ret .. ", "
 		end
 	end
 	len = len + 1
-	ret = ret .. str:sub(len , len)
-	return string.reverse(ret)
+	ret = ret .. numstr:sub(len , len)
+
+	if (decimalstr) then
+		return string.reverse(ret) .. "." .. decimalstr
+	else
+		return string.reverse(ret)
+	end
 end
 
 function SA.GetPlayerByName(name)

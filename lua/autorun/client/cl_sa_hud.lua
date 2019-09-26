@@ -115,14 +115,14 @@ local transparentDarkerGrey = Color(60, 60, 60, 230)
 
 local function DrawLSBar(BarNum, CaptionX, Value, ScH, ScW, ColBack, ColText)
 	local Caption = CAF.GetLangVar(CaptionX)
-	local BarHei = 114
-	local BarSpace = 24
-	local BarWid = 30
-	local Hei = (ScH - 30) - BarHei - 4
-	local XMinX = ScW / 2 - tempGaugeWid / 2 - (BarWid + BarSpace) * BarNum - 12
+	local BarHei = 80
+	local BarSpace = 32
+	local BarWid = 18
+	local Hei = (ScH - 15) - BarHei - 4
+	local XMinX = ScW / 2 - tempGaugeWid / 2 - (BarWid + BarSpace) * BarNum - 54
 
 	--draw.RoundedBox(4, xPos-8, yPos-40, MeterWid+22, MeterHei+12 + 40, ColBack)
-	draw.RoundedBox(4, XMinX-8, Hei-32, BarWid + 16, BarHei + 12 + 30, ColBack)
+	--draw.RoundedBox(4, XMinX-8, Hei-32, BarWid + 16, BarHei + 12 + 30, ColBack)
 
 	draw.RoundedBox(4, XMinX + 3, Hei + 6, BarWid-6, BarHei-6, transparentGrey)
 	draw.SimpleText(Caption, HUDFont, XMinX + BarWid / 2-1, Hei -20, ColText, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -132,10 +132,10 @@ local function DrawLSBar(BarNum, CaptionX, Value, ScH, ScW, ColBack, ColText)
 	local ValCol = Color(255 * (1-Perc), 255 * Perc, 0, 255)
 
 	if Value > 0 then
-		local YHei = (BarHei-4)  * Perc
-		YHei = math.max(YHei, 4)
-		draw.RoundedBox(4, XMinX + 5, math.Round(Hei + 6 + BarHei - 4) - math.Round(YHei), BarWid-10, math.Round(YHei-4), ValCol)
-		draw.SimpleText(tostring(math.Round(Perc * 100, 2)) .. " %", HUDFont, XMinX + BarWid / 2-1, Hei - 4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		local YHei = (BarHei-10)  * Perc
+		YHei = math.max(YHei,4)
+		draw.RoundedBoxEx(4, XMinX + 6, math.Round(Hei + BarHei - 2) - math.Round(YHei), BarWid-12, math.Round(YHei), ValCol, true, true, true, true)
+		draw.SimpleText(tostring(math.Round(Perc * 100,2)) .. " %", HUDFont, XMinX + BarWid / 2-1, Hei - 4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	else
 		if (SA_HUDBlink) then
 			draw.SimpleText("EMPTY", HUDFont, XMinX + BarWid / 2-1, Hei -4, ValCol, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -186,7 +186,7 @@ local function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 	--remember gmod y axis is flipped if you go to change anything! variable names can be confusing, always think about y direction!
 
 	local Caption = CAF.GetLangVar(CaptionX)
-	local MeterHei = 100
+	local MeterHei = 80-14
 	local MeterWid = 30
 	local batteryTipHei = 10
 	local batteryTipWid = 16
@@ -194,15 +194,20 @@ local function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 	-- the width of the lines drawn
 	local batLineWid = 6
 
-	local yPos = (ScH - MeterHei) - 40
-	local xPos = (ScW / 2) + (tempGaugeWid / 2) + MeterWid + 20
+	local slantAmount = 4
+	local slantHei = 7
+	local slantWid = MeterWid - batLineWid * 2
+	local gapSize = 4
+
+	local yPos = (ScH - MeterHei) - 25
+	local xPos = (ScW / 2) + (tempGaugeWid / 2) + MeterWid + 40
 
 
 	local ValCol = Color(255 * (1-(Value / 4000)), 255 * (Value / 4000), 0, 255)
 
 	local batteryColor = transparentDarkerGrey
 
-	draw.RoundedBox(4, xPos-8, yPos-40, MeterWid + 22, MeterHei + 16 + 40, ColBack)
+	--draw.RoundedBox(4, xPos-8, yPos-40, MeterWid + 22, MeterHei + 16 + 40, ColBack)
 
 	local batteryMeterColor = ValCol
 	-- vert - draw the sides of the battery, move them down and size them to compensate for the tip of the battery graphic
@@ -231,10 +236,7 @@ local function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 
 	--function DrawVerticalBrokenMeter(_gapSize, _xMin, _yMax, _vbWid, _vbHei, _meterMax, _curValue)
 
-	local slantAmount = 4
-	local slantHei = 14
-	local slantWid = MeterWid - batLineWid * 2
-	local gapSize = 4
+
 
 	local heightWithGap = slantHei + gapSize
 
@@ -278,8 +280,162 @@ local function DrawLSBattery(CaptionX, Value, ScH, ScW, ColBack, ColText)
 	end
 end
 
+--_dipWidth
+   --|--------------|--
+
+--LineYPos--\              /-------          --
+        -----\            /-----             | _dipHeight
+        ------\__________/-----             --
+
+    --|----------|--
+--_dipPlateu
+
+
+local function DrawScreenLineWithDip(_lineYPos, _lineWidth, _dipHeight, _dipWidth, _dipPlateu, _isOutline, _isBottom)
+
+	local healthAreaOffsetH = 210
+	local healthAreaOffsetW = 110
+
+--surface.DrawLine(0, 1,1119,1120)
+	if (not _isBottom) then
+		_isBottom = false
+	end
+
+	if (not _isOutline) then
+		_isOutline = false
+	end
+
+	local leftSide = {}
+	-- left to right top of line
+	--surface.DrawLine(0, _lineYPos,ScrW()/2-_dipWidth/2, _lineYPos)
+	table.insert(leftSide, {x = 0, y = _lineYPos})
+	table.insert(leftSide, {x = ScrW()/2-_dipWidth/2, y = _lineYPos})
+
+	table.insert(leftSide, {x = ScrW()/2-_dipWidth/2, y = _lineYPos + _lineWidth})
+	table.insert(leftSide, {x = 0, y = _lineYPos + _lineWidth})
+
+	local leftSlope = {}
+	-- left to right top of line
+	--surface.DrawLine(0, _lineYPos,ScrW()/2-_dipWidth/2, _lineYPos)
+	table.insert(leftSlope, {x = ScrW()/2-_dipWidth/2, y = _lineYPos})
+	table.insert(leftSlope, {x = ScrW()/2-_dipPlateu/2, y = _lineYPos + _dipHeight})
+	table.insert(leftSlope, {x = ScrW()/2-_dipPlateu/2, y = _lineYPos + _dipHeight + _lineWidth})
+	table.insert(leftSlope, {x = ScrW()/2-_dipWidth/2, y = _lineYPos + _lineWidth})
+
+	local plateu = {}
+
+	table.insert(plateu, {x = ScrW()/2-_dipPlateu/2, y = _lineYPos + _dipHeight})
+	table.insert(plateu, {x = ScrW()/2+_dipPlateu/2, y = _lineYPos + _dipHeight})
+
+	table.insert(plateu, {x = ScrW()/2+_dipPlateu/2, y = _lineYPos + _dipHeight + _lineWidth})
+	table.insert(plateu, {x = ScrW()/2-_dipPlateu/2, y = _lineYPos + _dipHeight + _lineWidth})
+
+
+	local rightSlope = {}
+	-- left to right top of line
+	--surface.DrawLine(0, _lineYPos,ScrW()/2-_dipWidth/2, _lineYPos)
+	table.insert(rightSlope, {x = ScrW()/2+_dipPlateu/2, y = _lineYPos + _dipHeight})
+	table.insert(rightSlope, {x = ScrW()/2+_dipWidth/2, y = _lineYPos})
+	table.insert(rightSlope, {x = ScrW()/2+_dipWidth/2, y = _lineYPos + _lineWidth})
+	table.insert(rightSlope, {x = ScrW()/2+_dipPlateu/2, y = _lineYPos + _dipHeight + _lineWidth})
+
+	local rightSide = {}
+	local rightSideRight = ScrW()
+	if (_isBottom) then
+		rightSideRight = rightSideRight - healthAreaOffsetW
+	end
+	-- left to right top of line
+	--surface.DrawLine(0, _lineYPos,ScrW()/2-_dipWidth/2, _lineYPos)
+	table.insert(rightSide, {x = ScrW()/2+_dipWidth/2, y = _lineYPos})
+	table.insert(rightSide, {x = rightSideRight, y = _lineYPos})
+	table.insert(rightSide, {x = rightSideRight, y = _lineYPos+ _lineWidth})
+	table.insert(rightSide, {x = ScrW()/2+_dipWidth/2, y = _lineYPos + _lineWidth})
+
+	surface.DrawPoly(leftSlope)
+	surface.DrawPoly(leftSide)
+	surface.DrawPoly(plateu)
+	surface.DrawPoly(rightSlope)
+	surface.DrawPoly(rightSide)
+
+	if (_isBottom == true) then
+
+		local healthAreaLeft = {}
+		-- left to right top of line
+		--surface.DrawLine(0, _lineYPos,ScrW()/2-_dipWidth/2, _lineYPos)
+		table.insert(healthAreaLeft, {x = ScrW() - healthAreaOffsetW, y = _lineYPos + _lineWidth})
+		table.insert(healthAreaLeft, {x = ScrW() - healthAreaOffsetW, y = _lineYPos - healthAreaOffsetH})
+		table.insert(healthAreaLeft, {x = ScrW() - healthAreaOffsetW + _lineWidth, y = _lineYPos - healthAreaOffsetH})
+		table.insert(healthAreaLeft, {x = ScrW() - healthAreaOffsetW + _lineWidth, y = _lineYPos + _lineWidth})
+
+		surface.DrawPoly(healthAreaLeft)
+
+		if (_isOutline) then
+			local healthAreaTop = {}
+			-- left to right top of line
+			--surface.DrawLine(0, _lineYPos,ScrW()/2-_dipWidth/2, _lineYPos)
+			table.insert(healthAreaTop, {x = ScrW() - healthAreaOffsetW + _lineWidth, y = _lineYPos - healthAreaOffsetH})
+			table.insert(healthAreaTop, {x = ScrW(), y = _lineYPos - healthAreaOffsetH})
+			table.insert(healthAreaTop, {x = ScrW(), y = _lineYPos - healthAreaOffsetH + _lineWidth})
+			table.insert(healthAreaTop, {x = ScrW() - healthAreaOffsetW + _lineWidth, y = _lineYPos - healthAreaOffsetH + _lineWidth})
+
+			surface.DrawPoly(healthAreaTop)
+		end
+
+	end
+
+
+	--table.insert(stylizedLinePoly, {x = 0, y = _lineYPos})
+	--table.insert(stylizedLinePoly, {x = ScrW()/2-_dipWidth/2, y = _lineYPos})
+	--table.insert(stylizedLinePoly, {x = ScrW()/2-_dipPlateu/2, y = _lineYPos + _dipPlateu})
+	--table.insert(stylizedLinePoly, {x = ScrW()/2+_dipPlateu/2, y = _lineYPos + _dipPlateu})
+	--table.insert(stylizedLinePoly, {x = ScrW()/2+_dipWidth/2, y = _lineYPos})
+	--table.insert(stylizedLinePoly, {x = ScrW(), y = _lineYPos})
+
+	-- left to right bottom of line
+	--table.insert(stylizedLinePoly, {x = ScrW(), y = _lineYPos + _lineWidth})
+	--table.insert(stylizedLinePoly, {x = ScrW()/2+_dipWidth/2, y = _lineYPos + _lineWidth})
+	--table.insert(stylizedLinePoly, {x = ScrW()/2+_dipPlateu/2, y = _lineYPos + _dipPlateu + _lineWidth})
+	--table.insert(stylizedLinePoly, {x = ScrW()/2-_dipPlateu/2, y = _lineYPos + _dipPlateu + _lineWidth})
+	--table.insert(stylizedLinePoly, {x = ScrW()/2-_dipWidth/2, y = _lineYPos + _lineWidth})
+	--table.insert(stylizedLinePoly, {x = 0, y = _lineYPos + _lineWidth})
+
+	--print("--")
+	--PrintTable(stylizedLinePoly)
+	--surface.DrawCircle(ScrW()/2,ScrH()/2,20,255,255,255)
+
+
+
+
+
+	--surface.DrawLine(0, 0,220,220)
+
+end
+
+--local function surface.drawLineThick(_lineX2, _lineY2, _lineX2, _lineY2, _thickness)
+--	table.insert(stylizedLinePoly, {x = 0, y = _lineYPos})
+--end
+
+local function SA_DrawTopBar()
+	-- draw fills
+	surface.SetDrawColor( 0, 0, 0, 160 )
+	draw.NoTexture()
+
+	DrawScreenLineWithDip(ScrH()-160, 200, 60, 600, 300, false, true)
+	DrawScreenLineWithDip(-140, 200, 40, 600, 300)
+
+
+	-- draw border
+	surface.SetDrawColor( 200, 0, 0, 60 )
+	draw.NoTexture()
+	DrawScreenLineWithDip(ScrH()-160, 5, 60, 600, 300, true, true)
+	DrawScreenLineWithDip(55, 5, 40, 600, 300)
+end
+
 local function SA_CustomHUDPaint()
 	if GetConVarNumber("cl_drawhud") == 0 then return end
+
+	SA_DrawTopBar()
+
 	local lp = LocalPlayer()
 	local health = lp:Health()
 	local armor = lp:Armor()
@@ -384,6 +540,9 @@ local function SA_CustomHUDPaint()
 
 	--BEGIN OF TEMPERATURE
 	if ls_current_unhabitable or alwaysshowtemp:GetBool() then
+
+
+
 		local tempUnit = " K"
 
 		local FairTemp_Mid = (FairTemp_Min + FairTemp_Max) / 2
@@ -403,24 +562,27 @@ local function SA_CustomHUDPaint()
 
 		local Perc = math.Clamp(FairTemp_Mid / GlobalTemp_Max, 0, 1)
 		local Wid = Perc * tempGaugeWid
-		--draw.RoundedBox(4, (ScW - tempGaugeWid) / 2, ScH - 90 + 5, Wid, 40, coolTemp)
-		--draw.RoundedBox(4, Wid + XMinX, ScH - 90 + 5, tempGaugeWid - Wid, 40, hotTemp)
+
+		local tempX = ScW/2 - tempGaugeWid/2
+		local tempY = ScrH() - 55
+		--draw.RoundedBox(4, (ScW - tempGaugeWid) / 2, tempY + 5, Wid, 40, coolTemp)
+		--draw.RoundedBox(4, Wid + XMinX, tempY + 5, tempGaugeWid - Wid, 40, hotTemp)
 
 		local outlineW = 2
 
 		--temp bar outline
 		surface.SetDrawColor(black)
 		draw.NoTexture()
-		surface.DrawTexturedRectRounded((ScW - tempGaugeWid) / 2 - outlineW, ScH - 90 + 5 - outlineW, tempGaugeWid + outlineW * 2 + 1, 20 + outlineW * 2, 4, 4, true, true, true, true)
+		surface.DrawTexturedRectRounded( tempX - outlineW, tempY + 5 - outlineW, tempGaugeWid + outlineW * 2 + 1, 20 + outlineW * 2, 4, 4, true, true, true, true)
 
 		-- cool temp
 		surface.SetDrawColor(coolTemp)
 		draw.NoTexture()
-		surface.DrawTexturedRectRounded((ScW - tempGaugeWid) / 2, ScH - 90 + 5, Wid, 20, 4, 4, true, false, true, false)
+		surface.DrawTexturedRectRounded( tempX, tempY + 5, Wid, 20, 4, 4, true, false, true, false)
 
 		-- hot temp
 		surface.SetDrawColor(hotTemp)
-		surface.DrawTexturedRectRounded(Wid + XMinX, ScH - 90 + 5, tempGaugeWid - Wid, 20, 4, 4, false, true, false , true)
+		surface.DrawTexturedRectRounded( tempX + Wid, tempY + 5, tempGaugeWid - Wid, 20, 4, 4, false, true, false ,true )
 
 
 		local Perc = math.Clamp(FairTemp_Min / GlobalTemp_Max, 0, 1)
@@ -431,34 +593,34 @@ local function SA_CustomHUDPaint()
 		-- good temp
 
 		surface.SetDrawColor(goodTemp)
-		surface.DrawTexturedRectRounded(XMinX + Wid, ScH - 90 + 5, Wid2-2, 20, 1, 3, true, true, true , true)
+		surface.DrawTexturedRectRounded(tempX + Wid, tempY + 5, Wid2-2, 20, 1, 3, true, true, true ,true )
 
 
 		-- fade blue-red-green
 
 		surface.SetDrawColor(green)
 		surface.SetTexture(surface.GetTextureID("vgui/gradient-r"))
-		surface.DrawTexturedRect(XMinX + Wid - 3, ScH - 90 + 5, 5, 20)
+		surface.DrawTexturedRect(tempX + Wid-1, tempY + 5, 5, 20)
 
 		surface.SetTexture(surface.GetTextureID("vgui/gradient-l"))
-		surface.DrawTexturedRect(XMinX + Wid + Wid2-2, ScH - 90 + 5, 5, 20)
+		surface.DrawTexturedRect(tempX + Wid + Wid2 -5, tempY + 5, 5, 20)
 
 
 
 		--dark gradients
 		surface.SetDrawColor(Color(0, 0, 0, 235))
 		surface.SetTexture(surface.GetTextureID("vgui/gradient-d"))
-		surface.DrawTexturedRectRounded((ScW - tempGaugeWid) / 2, ScH - 90 + 5, Wid, 20, 4, 4, true, false, true, false)
-		surface.DrawTexturedRectRounded(Wid + XMinX + Wid2-1, ScH - 90 + 5, tempGaugeWid - Wid - Wid2 + 1, 20, 4, 4, false, true, false , true)
+		surface.DrawTexturedRectRounded( tempX, tempY + 5, Wid, 20, 4, 4, true, false, true, false)
+		surface.DrawTexturedRectRounded( Wid + tempX + Wid2, tempY + 5, tempGaugeWid - Wid - Wid2 + 1, 20, 4, 4, false, true, false ,true )
 
-		surface.DrawTexturedRectRounded(Wid + XMinX-1, ScH - 90 + 5, Wid2, 20, 2, 2, false, false, false, false)
+		surface.DrawTexturedRectRounded( Wid + tempX, tempY + 5, Wid2, 20, 2, 2, false, false, false, false)
 
 
 		surface.SetTexture(surface.GetTextureID("vgui/gradient-u"))
-		surface.DrawTexturedRectRounded((ScW - tempGaugeWid) / 2, ScH - 90 + 5, Wid, 20, 4, 4, true, false, true, false)
-		surface.DrawTexturedRectRounded(Wid + XMinX + Wid2-1, ScH - 90 + 5, tempGaugeWid - Wid - Wid2 + 1, 20, 4, 4, false, true, false , true)
+		--surface.DrawTexturedRectRounded( tempX, tempY + 5, Wid, 20, 4, 4, true, false, true, false)
+		--surface.DrawTexturedRectRounded( Wid + tempX + Wid2-1, tempY + 5, tempGaugeWid - Wid - Wid2 + 1, 20, 4, 4, false, true, false ,true )
 
-		surface.DrawTexturedRectRounded(Wid + XMinX-1, ScH - 90 + 5, Wid2, 20, 2, 2, false, false, false, false)
+		--surface.DrawTexturedRectRounded( Wid + tempX, tempY + 5, Wid2, 20, 2, 2, false, false, false, false)
 
 		--surface.SetTexture(textSlider)
 		draw.NoTexture()
@@ -468,10 +630,10 @@ local function SA_CustomHUDPaint()
 		local Wid = Perc * tempGaugeWid
 		local XWidX = XMinX + Wid
 
-		--surface.RoundedBoxTextued(cornerRadius, x, y, width, height, divisions)
-		surface.DrawTexturedRect(XWidX-1, ScH - 98, 2, 34)
+		--surface.RoundedBoxTextued( cornerRadius, x, y, width, height, divisions )
+		surface.DrawTexturedRect(tempX, tempY - 8, 2, 34)
 		--surface.DrawTexturedRect(XWidX - 8+4, ScH - 98, 2, 34)
-		surface.DrawTexturedRect(XWidX-1, ScH - 98, 6, 10)
+		surface.DrawTexturedRect(tempX, tempY - 8, 6, 10)
 
 		local xMyTemp = goodTemp
 		if ls_tmp < FairTemp_Min then xMyTemp = coolTemp
@@ -480,10 +642,10 @@ local function SA_CustomHUDPaint()
 
 		-- temperature texts
 
-		draw.SimpleTextOutlined(tostring(ls_tmp) .. tempUnit, "ScoreboardDefault", XWidX-3, ScH - 122, xMyTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, veryDarkGrey)
+		draw.SimpleTextOutlined(tostring(ls_tmp) .. tempUnit, "ScoreboardDefault", XWidX-3, tempY-32, xMyTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, veryDarkGrey)
 
-		draw.SimpleTextOutlined(tostring(GlobalTemp_Min) .. tempUnit, "Default", XMinX, ScH - 55, coolTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, veryDarkGrey)
-		draw.SimpleTextOutlined(tostring(GlobalTemp_Max) .. tempUnit, "Default", XMinX + 380, ScH - 55, hotTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, veryDarkGrey)
+		draw.SimpleTextOutlined(tostring(GlobalTemp_Min) .. tempUnit, "Default", tempX, tempY + 35, coolTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, veryDarkGrey)
+		draw.SimpleTextOutlined(tostring(GlobalTemp_Max) .. tempUnit, "Default", tempX + 380, tempY + 35, hotTemp, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 0, veryDarkGrey)
 
 
 
@@ -497,7 +659,7 @@ local function SA_CustomHUDPaint()
 		DrawLSBar(BarNum, "Air", ls_air, ScH, ScW, HUDGrey, ColText)
 		if ls_tmp < FairTemp_Min then
 			BarNum = BarNum + 1
-			DrawLSBattery("Energy", ls_energy, ScH, ScW, HUDGrey, ColText)
+			DrawLSBattery("Energy",ls_energy,ScH,ScW,HUDGrey,ColText)
 		elseif ls_tmp > FairTemp_Max then
 			BarNum = BarNum + 1
 			DrawLSBar(BarNum, "Coolant", ls_coolant, ScH, ScW, HUDGrey, ColText)
