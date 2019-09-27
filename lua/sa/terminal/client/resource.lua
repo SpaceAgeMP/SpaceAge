@@ -3,7 +3,7 @@ ResourceIcons = {}
 local function RegisterResourceIcon(_name, _icon)
 
 	if (_name) then
-		print(_name .. " icon registered")
+		--print(_name .. " icon registered")
 		ResourceIcons[_name] = "spaceage/" .. _icon
 	end
 end
@@ -75,7 +75,6 @@ end
 
 function PANEL:SetResource(name, amount, capacity)
 	self.ResourceName:SetText(tostring(name))
-	print(string.lower(tostring(name)))
 	self.Image:SetImage(ResourceIcons[string.lower(tostring(name))] || "spaceage/sa_research_icon")
 	self.RName = name
 	if amount then self:SetAmount(amount, capacity) end
