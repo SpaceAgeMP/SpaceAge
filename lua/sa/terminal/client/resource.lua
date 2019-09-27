@@ -1,3 +1,36 @@
+ResourceIcons = {}
+
+local function RegisterResourceIcon(_name, _icon)
+
+	if (_name) then
+		print(_name .. " icon registered")
+		ResourceIcons[_name] = "spaceage/" .. _icon
+	end
+end
+
+RegisterResourceIcon("ore", "res_icon_solid.png")
+RegisterResourceIcon("metals", "res_icon_solid.png")
+RegisterResourceIcon("carbon dioxide", "res_icon_gas.png")
+RegisterResourceIcon("water", "res_icon_liquid.png")
+RegisterResourceIcon("hydrogen", "res_icon_gas.png")
+RegisterResourceIcon("nitrogen", "res_icon_gas.png")
+RegisterResourceIcon("terracrystal", "res_icon_crystal.png")
+RegisterResourceIcon("oxygen", "res_icon_gas.png")
+RegisterResourceIcon("valuable minerals", "res_icon_valuableminerals.png")
+RegisterResourceIcon("dark matter", "res_icon_solid.png")
+RegisterResourceIcon("permafrost", "res_icon_solid.png")
+RegisterResourceIcon("hydrogen isotopes", "res_icon_isotope.png")
+RegisterResourceIcon("helium isotopes", "res_icon_isotope.png")
+RegisterResourceIcon("strontium clathrates", "res_icon_crystal.png")
+RegisterResourceIcon("nitrogen isotopes", "res_icon_isotope.png")
+RegisterResourceIcon("oxygen isotopes", "res_icon_isotope.png")
+RegisterResourceIcon("liquid ozone", "res_icon_liquid.png")
+RegisterResourceIcon("steam", "res_icon_gas.png")
+RegisterResourceIcon("liquid nitrogen", "res_icon_liquid.png")
+RegisterResourceIcon("energy", "res_icon_energy.png")
+RegisterResourceIcon("heavy water", "res_icon_liquid.png")
+RegisterResourceIcon("tiberium", "res_icon_crystal.png")
+
 local PANEL = {}
 
 local ResourceNameColor = Color(255, 255, 255, 255)
@@ -42,7 +75,8 @@ end
 
 function PANEL:SetResource(name, amount, capacity)
 	self.ResourceName:SetText(tostring(name))
-	self.Image:SetImage("spaceage/SA_Research_Icon")
+	print(string.lower(tostring(name)))
+	self.Image:SetImage(ResourceIcons[string.lower(tostring(name))] || "spaceage/sa_research_icon")
 	self.RName = name
 	if amount then self:SetAmount(amount, capacity) end
 end
