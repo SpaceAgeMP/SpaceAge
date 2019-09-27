@@ -1,4 +1,4 @@
-ResourceIcons = {}
+local ResourceIcons = {}
 
 local function RegisterResourceIcon(_name, _icon)
 
