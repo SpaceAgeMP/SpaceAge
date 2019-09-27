@@ -134,5 +134,3 @@ for k, v in pairs(ResearchIcons) do
 	--resource.AddFile("materials/spaceage/" .. k .. ".vmf")
 	resource.AddFile("materials/spaceage/" .. k .. ".png")
 end
-
-resource.AddFile("materials/spaceage/sa_addfiletest.dll")
