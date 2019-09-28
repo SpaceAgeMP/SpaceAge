@@ -1,19 +1,19 @@
 include("shared.lua")
 
-surface.CreateFont( "SAToolTipFont",
+surface.CreateFont("SAToolTipFont",
 {
 	font = "neuropol",
 	size = 20,
 	weight = 700
 })
 
-local cl_drawworldtooltips = GetConVar( "cl_drawworldtooltips", "1")
+local cl_drawworldtooltips = GetConVar("cl_drawworldtooltips", "1")
 local worldTip = nil
 
 --
 -- Adds a hint to the queue
 --
-function AddWorldTip( unused1, text, unused2, pos, ent )
+function AddWorldTip(unused1, text, unused2, pos, ent)
 	worldTip = {
 		dietime = SysTime() + 0.05,
 		text = text,
@@ -38,12 +38,12 @@ local offset = 50
 local border = 2
 
 function GM:PaintWorldTips()
-	if ( !cl_drawworldtooltips:GetBool() ) then return end
+	if (not cl_drawworldtooltips:GetBool()) then return end
 
-	if ( not worldTip or worldTip.dietime < SysTime() ) then
+	if (not worldTip or worldTip.dietime < SysTime()) then
 		return
 	end
-	if ( IsValid( worldTip.ent ) ) then
+	if (IsValid(worldTip.ent)) then
 		worldTip.pos = worldTip.ent:GetPos()
 	end
 
@@ -53,8 +53,8 @@ function GM:PaintWorldTips()
 
 	fdColor.a = 200
 
-	surface.SetFont( "SAToolTipFont" )
-	local w, h = surface.GetTextSize( worldTip.text )
+	surface.SetFont("SAToolTipFont")
+	local w, h = surface.GetTextSize(worldTip.text)
 
 	local x = (pos.x - w) - offset
 	local y = (pos.y - h) - offset
@@ -68,5 +68,5 @@ function GM:PaintWorldTips()
 	surface.SetDrawColor(fdColor)
 	drawThiccBox(bX, bY, bW, bH, border)
 
-	draw.DrawText( worldTip.text, "SAToolTipFont", x + (w - padding) / 2, (y - padding / 2), fdColor, TEXT_ALIGN_CENTER )
+	draw.DrawText(worldTip.text, "SAToolTipFont", x + (w - padding) / 2, y - padding / 2, fdColor, TEXT_ALIGN_CENTER)
 end

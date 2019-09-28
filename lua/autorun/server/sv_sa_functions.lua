@@ -34,9 +34,7 @@ function SA.Functions.PropMoveSlow(ent, endPos, speed)
 	local veloTime = diffVec:Length() / speed
 	timer.Create("SA_ControlMovement_" .. entID, 0.01, 0, function()
 		timePassed = timePassed + 0.01
-		local ent = ents.GetByIndex(entID)
-		if not (ent and ent.IsValid and ent:IsValid()) then timer.Remove("SA_ControlMovement_" .. entID) return end
-		local phys = ent:GetPhysicsObject()
+		if not (ent:IsValid()) then timer.Remove("SA_ControlMovement_" .. entID) return end
 		local shouldBe = startPos + (diffVecN * (speed * timePassed))
 		if phys and phys.IsValid and phys:IsValid() then
 			phys:EnableMotion(false)

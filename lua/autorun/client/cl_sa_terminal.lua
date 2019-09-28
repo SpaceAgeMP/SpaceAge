@@ -151,8 +151,8 @@ local function CreateTerminalGUI()
 	end
 
 	local StatsList = vgui.Create ("DListView", StatTab)
-	StatsList:Dock( FILL )
-	StatsList:SetMultiSelect( false )
+	StatsList:Dock(FILL)
+	StatsList:SetMultiSelect(false)
 	StatsList:AddColumn("Rank")
 	StatsList:AddColumn("Name")
 	StatsList:AddColumn("Score")

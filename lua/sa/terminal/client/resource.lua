@@ -75,7 +75,7 @@ end
 
 function PANEL:SetResource(name, amount, capacity)
 	self.ResourceName:SetText(tostring(name))
-	self.Image:SetImage(ResourceIcons[string.lower(tostring(name))] || "spaceage/sa_research_icon")
+	self.Image:SetImage(ResourceIcons[string.lower(tostring(name))] or "spaceage/sa_research_icon")
 	self.RName = name
 	if amount then self:SetAmount(amount, capacity) end
 end
@@ -124,12 +124,12 @@ function PANEL:OnMousePressed(mcode)
 		py = py + (cpy - self.BCPosY)
 		self:SetPos(px, py)
 	end
-	function item:OnMouseReleased(mcode)
-		if mcode ~= self.MCode then self:QuitThis() return end
+	function item:OnMouseReleased(itemMouseCode)
+		if itemMouseCode ~= self.MCode then self:QuitThis() return end
 		local cx, cy = self:CursorPos()
-		local x, y = self:GetPos()
-		cx = cx + x
-		cy = cy + y
+		local ix, iy = self:GetPos()
+		cx = cx + ix
+		cy = cy + iy
 		if cy >= 160 and cy <= 588 then
 			local tl = nil
 			if cx >= 45 and cx <= 275 then
@@ -145,7 +145,7 @@ function PANEL:OnMousePressed(mcode)
 			end
 			self.ToLocation = tl
 		end
-		if mcode == MOUSE_RIGHT then
+		if itemMouseCode == MOUSE_RIGHT then
 			function self:OnCursorExited()
 			end
 			function self:OnCursorMoved()

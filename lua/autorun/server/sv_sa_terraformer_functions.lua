@@ -258,9 +258,7 @@ function SA.Terraformer.SpazzOut(terent, forcekill)
 	local envair = myenv.air
 	terent:ChangeStability(math.random(-50, -30))
 	for k, v in pairs(envair) do
-		if string.Right(k, 3) == "per" or k == "empty" or k == "max" then
-			--Do nothing
-		elseif v > 5000000 then
+		if v > 5000000 then
 			envair[k] = v - 5000000
 			envair.empty = envair.empty + 5000000
 			haschanged = true
@@ -303,9 +301,6 @@ function SA.Terraformer.SpazzOut(terent, forcekill)
 		lastval = math.random(0, leftair)
 		envair.co2 = lastval
 		leftair = leftair - lastval
-		--lastval = math.random(0, leftair)
-		--envair.o2 = lastval
-		--leftair = leftair - lastval
 		envair.empty = leftair
 		leftair = 0
 		if not forcekill then

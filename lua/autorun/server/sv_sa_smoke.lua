@@ -1,5 +1,3 @@
-local SA_SmokeSpeed = 200
-local SA_SmokeWindSpeed = SA_SmokeSpeed / 10
 local SA_SmokeTable = {}
 local SA_SmokeSpawners = {}
 
@@ -75,7 +73,7 @@ end
 
 local function SA_MapSmokers()
 	SA_DeleteAllSmoke()
-	local mapname = game.GetMap()
+	--local mapname = game.GetMap()
 	local mapSmokers = {}
 	--[[if mapname == "sb_gooniverse" or mapname == "sb_gooniverse_v4" then
 		mapSmokers = {

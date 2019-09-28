@@ -311,7 +311,6 @@ SA_UpdateInfo = function(ply, CanPass)
 	--Send the player a list of nodes within range.
 	SA_UpdateNodeSelection(ply)
 
-	local uid = ply:UniqueID()
 	local TempStorageU = SA_GetTempStorage(ply)
 
 	local orecount = SA_GetResource(ply, "ore")
@@ -625,10 +624,8 @@ local function SA_Research(ply, cmd, args)
 	if (cap ~= 0) and cap == cur then
 		return
 	end
-	if (Research.faction and #Research.faction > 0) then
-		if not table.HasValue(Research.faction, ply.SAData.FactionName) then
-			return
-		end
+	if (Research.faction and #Research.faction > 0) and not table.HasValue(Research.faction, ply.SAData.FactionName) then
+		return
 	end
 	if (Research.type ~= "none") then
 		local prereq = Research.prereq
@@ -648,10 +645,8 @@ local function SA_Research(ply, cmd, args)
 			local tbl = Research.prereq[idx]
 			if tbl and #tbl > 0 then
 				for k, v in pairs(tbl) do
-					if v[1] == "faction" then
-						if not table.HasValue(v[2], ply.SAData.FactionName) then
-							return
-						end
+					if v[1] == "faction" and not table.HasValue(v[2], ply.SAData.FactionName) then
+						return
 					elseif SA.Research.GetFromPlayer(ply, v[1]) < v[2] then
 						return
 					end
@@ -737,25 +732,25 @@ concommand.Add("sa_dev_set_var", SA_DevSetVar)
 
 local function CheckCanDevice(ply, tr, mode)
 	if (mode == "mining_laser_sa") then
-		local lvl = ply.SAData.Research.OreLaserLevel[1]
+		local oreLevel = ply.SAData.Research.OreLaserLevel[1]
 		local sel = ply:GetActiveWeapon().Tool.mining_laser_sa:GetClientInfo("type")
 		if sel == "sa_mining_laser_ii" then
-			if lvl < 1 then
+			if oreLevel < 1 then
 				ply:AddHint("You must have Rank 1 Mining Theory to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "sa_mining_laser_iii" then
-			if lvl < 2 then
+			if oreLevel < 2 then
 				ply:AddHint("You must have Rank 2 Mining Theory to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "sa_mining_laser_iv" then
-			if lvl < 3 then
+			if oreLevel < 3 then
 				ply:AddHint("You must have Rank 3 Mining Theory to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "sa_mining_laser_v" then
-			if lvl < 4 then
+			if oreLevel < 4 then
 				ply:AddHint("You must have Rank 4 Mining Theory to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
@@ -763,61 +758,61 @@ local function CheckCanDevice(ply, tr, mode)
 			if ply.SAData.FactionName ~= "miners" and ply.SAData.FactionName ~= "alliance" then
 				ply:AddHint("You must be in Major Miners or The Alliance to use this!", NOTIFY_CLEANUP, 5)
 				return false
-			elseif lvl < 5 then
+			elseif oreLevel < 5 then
 				ply:AddHint("You must have Rank 5 Mining Theory to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		end
-		local lvl = ply.SAData.Research.IceLaserLevel[1]
+		local iceLaserLevel = ply.SAData.Research.IceLaserLevel[1]
 		if sel == "ice_mining_laser_2" then
-			if lvl < 1 then
+			if iceLaserLevel < 1 then
 				ply:AddHint("You must have Rank 1 ICE Lasers to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "ice_mining_laser_3" then
-			if lvl < 2 then
+			if iceLaserLevel < 2 then
 				ply:AddHint("You must have Rank 2 ICE Lasers to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		end
-		local lvl = ply.SAData.Research.IceRefineryLevel[1]
+		local iceRefineryLevel = ply.SAData.Research.IceRefineryLevel[1]
 		if sel == "ice_refinery_imrpoved" then
-			if lvl < 1 then
+			if iceRefineryLevel < 1 then
 				ply:AddHint("You must have Rank 1 ICE Refineries to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "ice_refinery_advanced" then
-			if lvl < 2 then
+			if iceRefineryLevel < 2 then
 				ply:AddHint("You must have Rank 2 ICE Refineries to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		end
-		local lvl = ply.SAData.Research.TiberiumDrillLevel[1]
+		local tiberiumLevel = ply.SAData.Research.TiberiumDrillLevel[1]
 		if sel == "sa_mining_drill_ii" then
 			if ply.SAData.FactionName ~= "legion" and ply.SAData.FactionName ~= "alliance" then
 				ply:AddHint("You must be in The Legion or The Alliance to use this!", NOTIFY_CLEANUP, 5)
 				return false
-			elseif lvl < 1 then
+			elseif tiberiumLevel < 1 then
 				ply:AddHint("You must have Rank 1 Tiberium Drills to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		end
 	elseif (mode == "mining_storage") then
-		local lvl = ply.SAData.Research.OreStorageLevel[1]
+		local oreStorageLevel = ply.SAData.Research.OreStorageLevel[1]
 		local sel = ply:GetActiveWeapon().Tool.mining_storage:GetClientInfo("type")
 		local sel2 = ply:GetActiveWeapon().Tool.mining_storage:GetClientInfo("model")
 		if sel == "ore_storage_ii" then
-			if lvl < 1 then
+			if oreStorageLevel < 1 then
 				ply:AddHint("You must have Rank 1 Ore Management to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "ore_storage_iii" then
-			if lvl < 2 then
+			if oreStorageLevel < 2 then
 				ply:AddHint("You must have Rank 2 Ore Management to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "ore_storage_iv" then
-			if lvl < 3 then
+			if oreStorageLevel < 3 then
 				ply:AddHint("You must have Rank 3 Ore Management to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
@@ -825,34 +820,34 @@ local function CheckCanDevice(ply, tr, mode)
 			if ply.SAData.FactionName ~= "starfleet" and ply.SAData.FactionName ~= "miners" and ply.SAData.FactionName ~= "alliance" then
 				ply:AddHint("You must be in Star Fleet or Major Miners or The Alliance to use this!", NOTIFY_CLEANUP, 5)
 				return false
-			elseif lvl < 4 then
+			elseif oreStorageLevel < 4 then
 				ply:AddHint("You must have Rank 4 Ore Management to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "storage_ice" then
-			local lvl = ply.SAData.Research.IceRawStorageLevel[1]
+			local iceStorageLevel = ply.SAData.Research.IceRawStorageLevel[1]
 			local reqLvl = SA.Ice.GetLevelForStorageModel(sel2)
 			if not reqLvl then return false end
-			if lvl < reqLvl then
+			if iceStorageLevel < reqLvl then
 				ply:AddHint("You must have Rank " .. reqLvl .. " ICE Storages to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		elseif sel == "storage_ice_product" then
-			local lvl = ply.SAData.Research.IceProductStorageLevel[1]
+			local iceProductStorageLevel = ply.SAData.Research.IceProductStorageLevel[1]
 			local reqLvl = SA.Ice.GetLevelForProductStorageModel(sel2)
 			if not reqLvl then return false end
-			if lvl < reqLvl then
+			if iceProductStorageLevel < reqLvl then
 				ply:AddHint("You must have Rank " .. reqLvl .. " ICE Product Storages to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end
 		end
-		local lvl = ply.SAData.Research.TiberiumStorageLevel[1]
+		local tiberiumStorageLevel = ply.SAData.Research.TiberiumStorageLevel[1]
 		if (sel == "tiberium_storage_ii" or sel == "tiberium_storage") and (SA.ValidEntity(tr.Entity) and tr.Entity:GetClass() == "tiberium_storage_holder") then return false end
 		if sel == "tiberium_storage_ii" then
 			if ply.SAData.FactionName ~= "legion" and ply.SAData.FactionName ~= "alliance" then
 				ply:AddHint("You must be in The Legion or The Alliance to use this!", NOTIFY_CLEANUP, 5)
 				return false
-			elseif lvl < 1 then
+			elseif tiberiumStorageLevel < 1 then
 				ply:AddHint("You must have Rank 1 Tiberium Storages to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			end

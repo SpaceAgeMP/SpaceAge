@@ -4,6 +4,8 @@ surface.CreateFont("rulesTitle", { font = "Trebuchet18", size = 200, weight = 70
 surface.CreateFont("rulesFont", { font = "Trebuchet18", size = 75, weight = 700, antialias = true, shadow = false})
 surface.CreateFont("rulesSmallFont", { font = "Trebuchet18", size = 50, weight = 700, antialias = true, shadow = false})
 
+local maxPlayersCVar = GetConVar("maxplayers")
+
 ENT.Rules = {
 	"Treat fellow players with the same respect as treating admins.",
 	"Do not cause harm with props.",
@@ -66,13 +68,13 @@ function ENT:RulesAndInfo()
 	surface.SetTextColor(60, 157, 255, 255)
 	self:DrawText("Amount of players:", 1000, 400 + #self.Rules * 100, "rulesSmallFont")
 	surface.SetTextColor(168, 255, 0, 255)
-	self:DrawText(#player.GetHumans() .. "/" .. GetConVarString("maxplayers"), 1000, 450 + #self.Rules * 100, "rulesFont")
+	self:DrawText(#player.GetHumans() .. "/" .. maxPlayersCVar:GetInt(), 1000, 450 + #self.Rules * 100, "rulesFont")
 
 	-- Online admins
 	surface.SetTextColor(60, 157, 255, 255)
 	self:DrawText("Online admins:", 1500, 400 + #self.Rules * 100, "rulesSmallFont")
 	surface.SetTextColor(168, 255, 0, 255)
-	i = 0
+	local i = 0
 	for _, pl in pairs(player.GetHumans()) do
 		if (pl:IsAdmin()) then
 			self:DrawText(pl:Nick(), 1500, 450 + #self.Rules * 100 + i * 100, "rulesFont")
@@ -97,7 +99,6 @@ function ENT:Scoreboard()
 	self:DrawText("Frags", 5200, 200, "rulesSmallFont")
 	self:DrawText("Deaths", 5450, 200, "rulesSmallFont")
 	self:DrawText("Ping", 5700, 200, "rulesSmallFont")
-	--self:DrawText("Entities", 5950, 200, "rulesSmallFont")
 
 	-- Players
 	local i = 0
@@ -109,12 +110,6 @@ function ENT:Scoreboard()
 		self:DrawText(pl:Frags(), 5200, y, "rulesFont")
 		self:DrawText(pl:Deaths(), 5450, y, "rulesFont")
 		self:DrawText(pl:Ping(), 5700, y, "rulesFont")
-
-		--local entc = 0
-		--for _, ent in pairs(ents.GetAll()) do
-		--	if (ent:GetNWString("Owner") == pl:Nick()) then entc = entc + 1 end
-		--end
-		--self:DrawText(entc, 5950, y, "rulesFont")
 
 		i = i + 1
 	end

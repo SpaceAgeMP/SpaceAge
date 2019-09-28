@@ -154,7 +154,7 @@ local function SA_FriendlyFire(vic, atk)
 		return true
 	end
 
-	if ((vic:Team() == atk:Team()) and (GetConVarNumber("sa_friendlyfire") == 0)) then
+	if ((vic:Team() == atk:Team()) and not GetConVar("sa_friendlyfire"):GetBool()) then
 		return false
 	else
 		return true

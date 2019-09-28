@@ -97,8 +97,9 @@ function SA.Teleporter.Open(ply, TeleKey)
 	net.Start("SA_OpenTeleporter")
 		net.WriteString(TeleKey)
 	net.Send(ply)
-	hook.Add("KeyPress", "SA_TeleAbortMove_" .. ply:EntIndex(), function(ply, key)
-		if key ~= IN_USE and ply and ply.IsValid and ply:IsValid() then
+
+	hook.Add("KeyPress", "SA_TeleAbortMove_" .. ply:EntIndex(), function(_, key)
+		if key ~= IN_US then
 			AbortTeleport(ply)
 			hook.Remove("KeyPress", "SA_TeleAbortMove_" .. ply:EntIndex())
 		end

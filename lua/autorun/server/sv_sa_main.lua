@@ -247,7 +247,7 @@ timer.Create("SA_Autosave", 60, 0, SA_SaveAllUsers)
 concommand.Add("sa_save_players", function(ply) if not ply or ply:IsAdmin() then SA_SaveAllUsers() end end)
 
 local function SA_Autospawner(ply)
-	if (GetConVarNumber("sa_autospawner") ~= 1) then
+	if (not GetConVar("sa_autospawner"):GetBool()) then
 		return
 	end
 

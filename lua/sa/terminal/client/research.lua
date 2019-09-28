@@ -60,61 +60,63 @@ function PANEL:SetDesc()
 	local Desc = self.ResearchTbl.desc
 	local reqtype = self.ResearchTbl.type
 	local prereq = self.ResearchTbl.prereq
-	if reqtype ~= "none" then
-		local DescAdd = "\nRequires: "
-		if reqtype == "unlock" then
-			for k, v in pairs(prereq) do
-				if v[1] == "faction" then
-					DescAdd = DescAdd .. " (Faction: "
-					for ke, ve in pairs(v[2]) do
-						DescAdd = DescAdd .. SA.Factions.ToLong[ve] .. ", "
-					end
-					DescAdd = string.Left(DescAdd, string.len(DescAdd) - 1) .. ")"
-				else
-					local name = ""
-					if self.ResearchTbl.name == v[1] then -- TODO: ???
-						name = n.display
-					end
-					if name ~= "" then
-						DescAdd = DescAdd .. " (" .. name .. ": " .. v[2] .. ")"
-					end
+	if reqtype == "none" then
+		self.ResearchDesc:SetText(Desc)
+		return
+	end
+	local DescAdd = "\nRequires: "
+	if reqtype == "unlock" then
+		for k, v in pairs(prereq) do
+			if v[1] == "faction" then
+				DescAdd = DescAdd .. " (Faction: "
+				for ke, ve in pairs(v[2]) do
+					DescAdd = DescAdd .. SA.Factions.ToLong[ve] .. ", "
+				end
+				DescAdd = string.Left(DescAdd, string.len(DescAdd) - 1) .. ")"
+			else
+				local name = ""
+				if self.ResearchTbl.name == v[1] then -- TODO: ???
+					name = n.display
+				end
+				if name ~= "" then
+					DescAdd = DescAdd .. " (" .. name .. ": " .. v[2] .. ")"
 				end
 			end
-		elseif reqtype == "perrank" then
-			local cur = tonumber(self.CurrentRank)
-			local max = tonumber(self.MaxRank)
-			if cur < max then
-				local offset = cur + 1
-				local name = ""
-				local level = 0
-				local tbl = prereq[offset]
-				if tbl and #tbl > 0 then
-					for k, v in pairs(tbl) do
-						if v[1] == "faction" then
-							DescAdd = DescAdd .. " (Faction: "
-							for ke, ve in pairs(v[2]) do
-								DescAdd = DescAdd .. SA.Factions.ToLong[ve] .. ", "
-							end
-							DescAdd = string.Left(DescAdd, string.len(DescAdd) - 1) .. ")"
-						else
-							local name = ""
-							if self.ResearchTbl.name == v[1] then -- TODO: ???
-								name = n.display
-							end
-							if name ~= "" then
-								DescAdd = DescAdd .. " (" .. name .. ": " .. v[2] .. ")"
-							end
+		end
+	elseif reqtype == "perrank" then
+		local cur = tonumber(self.CurrentRank)
+		local max = tonumber(self.MaxRank)
+		if cur < max then
+			local offset = cur + 1
+			local name = ""
+			local level = 0
+			local tbl = prereq[offset]
+			if tbl and #tbl > 0 then
+				for k, v in pairs(tbl) do
+					if v[1] == "faction" then
+						DescAdd = DescAdd .. " (Faction: "
+						for ke, ve in pairs(v[2]) do
+							DescAdd = DescAdd .. SA.Factions.ToLong[ve] .. ", "
+						end
+						DescAdd = string.Left(DescAdd, string.len(DescAdd) - 1) .. ")"
+					else
+						local name = ""
+						if self.ResearchTbl.name == v[1] then -- TODO: ???
+							name = n.display
+						end
+						if name ~= "" then
+							DescAdd = DescAdd .. " (" .. name .. ": " .. v[2] .. ")"
 						end
 					end
 				end
-				if name ~= "" then
-					DescAdd = DescAdd .. " (" .. name .. ": " .. level .. ")"
-				end
+			end
+			if name ~= "" then
+				DescAdd = DescAdd .. " (" .. name .. ": " .. level .. ")"
 			end
 		end
-		if (DescAdd ~= "\nRequires: ") then
-			Desc = Desc .. DescAdd
-		end
+	end
+	if (DescAdd ~= "\nRequires: ") then
+		Desc = Desc .. DescAdd
 	end
 	self.ResearchDesc:SetText(Desc)
 end
