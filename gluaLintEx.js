@@ -76,20 +76,39 @@ const checkId = defineCheck({
     started_at: new Date(),
 }).catch(e => console.error(e));
 
+let errorCount = 0, warningCount = 0;
+const annotations = [];
+
+function endCheck() {
+    defineCheck({
+        status: 'completed',
+        completed_at: new Date(),
+        conclusion: (errorCount > 0) ? 'failure' : 'success',
+        output: {
+            title: 'GLuaLint',
+            summary: `${errorCount} error(s), ${warningCount} warning(s)`,
+            annotations,
+        },
+    }, checkId).catch(e => console.error(e));
+}
+
 const res = spawnSync('glualint', ['.']);
 if (res.status === null) {
+    errorCount++;
     console.error('Interrupted');
-    process.exit(1);
+    endCheck().then(() => process.exit(1));
+    return;
 }
 if (res.status === 0) {
-    process.exit(0);
+    endCheck().then(() => process.exit(0));
+    return;
 }
 
 if (res.status !== 1) {
-    process.exit(res.status);
+    errorCount++;
+    endCheck().then(() => process.exit(res.status));
+    return;
 }
-
-let errorCount = 0, warningCount = 0;
 
 const errRegExp = /^(.+): \[(Warning|Error)\] line (\d+), column (\d+) - line (\d+), column (\d+): (.+)$/;
 const output = res.stdout.toString().split(/\r?\n/).filter(l => !!l).map(l => l.match(errRegExp)).map(m => ({
@@ -118,8 +137,6 @@ const reportErrors = output.filter(o => {
     return true;
 });
 
-const annotations = [];
-
 for (const r of reportErrors) {
     switch (r.type) {
         case 'warning':
@@ -141,14 +158,3 @@ for (const r of reportErrors) {
     }
     console.log(`${r.type} ${r.file}:${r.lineStart}:${r.columnStart}-${r.lineEnd}:${r.columnEnd} ${r.message}`);
 }
-
-defineCheck({
-    status: 'completed',
-    completed_at: new Date(),
-    conclusion: (errorCount > 0) ? 'failure' : 'success',
-    output: {
-        title: 'GLuaLint',
-        summary: `${errorCount} error(s), ${warningCount} warning(s)`,
-        annotations,
-    },
-}, checkId).catch(e => console.error(e));
