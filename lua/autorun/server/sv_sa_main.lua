@@ -90,6 +90,12 @@ hook.Add("Initialize", "SA_MapCleanInitialize", function()
 			ents.FindInSphere(Vector(1046, -7648, -3798.2813), 5)[1]:Fire("kill", "", 0) --:Remove() -- Remove Teleporter Button (Spawns Hula Dolls)
 			ents.FindInSphere(Vector(556, -7740, -3798.2813), 5)[1]:Fire("kill", "", 0) --:Remove() -- Remove Jet Engine Button (Spams console with errors after a while)
 		end)
+	elseif map == "sb_gooniverse_v4" or map == "sb_gooniverse" then
+		timer.Simple(5, function()
+			for k, v in pairs(ents.FindByClass("func_physbox_multiplayer")) do
+				v:Remove()
+			end
+		end)
 	end
 end)
 
