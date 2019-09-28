@@ -17,21 +17,25 @@ if not GTableMeta.__newindex_sa_checker then
 	local oldNewIndex = GTableMeta.__newindex or rawset
 	local oldIndex = GTableMeta.__index or rawget
 
-	local detections = {}
+	local detections = {
+		SCRIPTNAME = true,
+		SCRIPTPATH = true,
+		ENT = true,
+		SA = true,
+		supernet = true,
+	}
 
 	local function GVDetector(tbl, idx)
-		if idx == "SCRIPTNAME" or idx == "SCRIPTPATH" or idx == "ENT" or idx == "SA" or idx == "supernet" or detections[idx] then
+		if detections[idx] then
 			return
 		end
-
-		detections[idx] = true
 
 		local tbidx = 2
 		local tb
 
 		repeat
 			tbidx = tbidx + 1
-			tb = debug.getinfo(tbidx)
+			tb = debug.getinfo(tbidx, "S")
 			if not tb or not tb.short_src then
 				return
 			end
@@ -40,6 +44,8 @@ if not GTableMeta.__newindex_sa_checker then
 		if tb.short_src:sub(1, 16) ~= "addons/spaceage/" then
 			return
 		end
+
+		detections[idx] = true
 
 		local side
 		if CLIENT then
