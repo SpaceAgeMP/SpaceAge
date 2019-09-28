@@ -35,7 +35,7 @@ if not GTableMeta.__newindex_sa_checker then
 			if not tb or not tb.short_src then
 				return
 			end
-		until tb.name ~= "__newindex"
+		until tb.name ~= "__newindex" and tb.name ~= "__index"
 
 		if tb.short_src:sub(1, 16) ~= "addons/spaceage/" then
 			return
