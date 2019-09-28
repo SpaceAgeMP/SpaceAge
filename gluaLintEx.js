@@ -10,7 +10,8 @@ let owner = 'NA';
 if (GITHUB_EVENT_PATH) {
     const githubEvent = require(GITHUB_EVENT_PATH);
     const { repository } = githubEvent;
-    owner = repository.owner;
+    console.log(repository);
+    owner = repository.login;
     repo = repository.name;
 }
 
