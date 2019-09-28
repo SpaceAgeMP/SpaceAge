@@ -4,6 +4,8 @@ const { spawnSync } = require('child_process');
 const https = require('https');
 const { GITHUB_SHA, GITHUB_EVENT_PATH, GITHUB_TOKEN } = process.env;
 
+const warningsAreErrors = true;
+
 let repo = 'NA';
 let owner = 'NA';
 
@@ -140,6 +142,11 @@ const reportErrors = output.filter(o => {
 for (const r of reportErrors) {
     switch (r.type) {
         case 'warning':
+            if (warningsAreErrors) {
+                errorCount++;
+                r.type = 'error';
+                break;
+            }
             warningCount++;
             break;
         case 'error':
