@@ -2,6 +2,12 @@ const { readFileSync } = require('fs');
 const { normalize } = require('path');
 const { spawnSync } = require('child_process');
 const { GITHUB_SHA, GITHUB_EVENT_PATH, GITHUB_TOKEN, GITHUB_WORKSPACE } = process.env;
+const githubEvent = require(GITHUB_EVENT_PATH);
+const { repository } = githubEvent;
+const {
+  owner: { login: owner }
+} = repository;
+const { name: repo } = repository;
 
 async function request(url, options) {
     return new Promise((resolve, reject) => {
