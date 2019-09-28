@@ -77,7 +77,7 @@ local function SA_MapSmokers()
 	SA_DeleteAllSmoke()
 	local mapname = game.GetMap()
 	local mapSmokers = {}
-	--[[if mapname == "sb_gooniverse" then
+	--[[if mapname == "sb_gooniverse" or mapname == "sb_gooniverse_v4" then
 		mapSmokers = {
 			{"factory1", Vector(3962.6250, -10867.1563, -1815.1250), 400, nil, 200},
 			{"factory2", Vector(3839.1563, -10866.7188, -1739.5938), 400, nil, 200},

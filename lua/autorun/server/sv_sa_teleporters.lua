@@ -15,15 +15,11 @@ end
 local function InitSATeleporters()
 	for k, v in pairs(ents.FindByClass("teleport_panel")) do v:Remove() end
 	local mapname = string.lower(game:GetMap())
-	if mapname == "sb_gooniverse" then
+	if mapname == "sb_gooniverse" or mapname == "sb_gooniverse_v4" then
 		AddSATeleporter("Terminal planet", {Vector(-107.3, 363.4, 4624), Vector(-242, 335.8, 4624), Vector(-388, 295.5, 4624) }, { { Vector(-464.3, 226, 4692.4), Angle(0, 15, 90) } })
 		AddSATeleporter("Tiberium planet", {Vector(3981.2, -10679.4, -2037.6), Vector(3991.8, -10572.6, -2037.6), Vector(4087.3, -10492.2, -2037.6) }, { { Vector(4052.3, -10809.3, -1974.5), Angle(0, 90, 0) } })
 		AddSATeleporter("Spawn planet", {Vector(-10746.2, -7594.7, -8095.9), Vector(-10737.8, -7325.8, -8095.9), Vector(-10732.4, -7152, -8095.9) }, { { Vector(-11085.7, -2945.1, -8003.6), Angle(0, -90, 0)} })
-	elseif mapname == "sb_forlorn_sb3_r2l" then
-		AddSATeleporter("Terminal station", {Vector(9551.2, 10629, 830), Vector(9400.1, 10634.3, 830), Vector(9156.1, 10642.4, 830) }, { { Vector(9803, 10775.4, 889.9), Angle(0, -90, -0) } })
-		AddSATeleporter("Tiberium planet", {Vector(10563.2, 11922.6, -8857.6), Vector(10661.3, 11840.2, -8857.2), Vector(10718.4, 11787.4, -8856.9) }, { { Vector(10441, 11944.4, -8797.5), Angle(-0, -38, -0) } })
-		AddSATeleporter("Spawn planet", {Vector(7492, -11339.4, -9233.9), Vector(7499, -11126.4, -9233.9), Vector(7506.7, -10855.1, -9233.9) }, { { Vector(7611.5, -11516.4, -9055), Angle(-0, 90, 0) } })
-	elseif mapname == "sb_forlorn_sb3_r3" then
+	elseif mapname == "sb_forlorn_sb3_r2l" or mapname == "sb_forlorn_sb3_r3" then
 		AddSATeleporter("Terminal station", {Vector(9551.2, 10629, 830), Vector(9400.1, 10634.3, 830), Vector(9156.1, 10642.4, 830) }, { { Vector(9803, 10775.4, 889.9), Angle(0, -90, -0) } })
 		AddSATeleporter("Tiberium planet", {Vector(10563.2, 11922.6, -8857.6), Vector(10661.3, 11840.2, -8857.2), Vector(10718.4, 11787.4, -8856.9) }, { { Vector(10441, 11944.4, -8797.5), Angle(-0, -38, -0) } })
 		AddSATeleporter("Spawn planet", {Vector(7492, -11339.4, -9233.9), Vector(7499, -11126.4, -9233.9), Vector(7506.7, -10855.1, -9233.9) }, { { Vector(7611.5, -11516.4, -9055), Angle(-0, 90, 0) } })

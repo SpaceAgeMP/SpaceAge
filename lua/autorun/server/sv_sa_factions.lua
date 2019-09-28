@@ -20,7 +20,7 @@ local function InitSAFactions()
 	end
 
 	local mapname = string.lower(game.GetMap())
-	if mapname == "sb_gooniverse" then
+	if mapname == "sb_gooniverse" or mapname == "sb_gooniverse_v4" then
 		SA.Factions.Table[1][6] = SetFactionSpawn(
 			Vector(-10582.343750, -7122.343750, -8011.968750),
 			Vector(-10599.000000, -7483.375000, -8011.968750),
@@ -46,33 +46,7 @@ local function InitSAFactions()
 			Vector(-125.218750, -763.937500, 4660.031250),
 			Vector(-129.562500, -847.718750, 4660.031250)
 		)
-	elseif mapname == "sb_forlorn_sb3_r2l" then
-		SA.Factions.Table[1][6] = SetFactionSpawn(
-			Vector(7769.562500, -11401.250000, -8954.968750),
-			Vector(7504.875000, -11396.343750, -8954.968750),
-			Vector(7245.843750, -11400.531250, -8954.968750)
-		)
-		SA.Factions.Table[2][6] = SetFactionSpawn(
-			Vector(9749.156250, 9996.843750, 400.031250),
-			Vector(9417.656250, 9998.156250, 400.031250),
-			Vector(9090.000000, 9999.437500, 400.031250)
-		)
-		SA.Factions.Table[3][6] = SetFactionSpawn(
-			Vector(10653.000000, 11797.906250, -8822.750000),
-			Vector(10700.468750, 11856.687500, -8823.593750),
-			Vector(10753.812500, 11922.750000, -8824.5937)
-		)
-		SA.Factions.Table[4][6] = SetFactionSpawn(
-			Vector(9749.156250, 9996.843750, 611.593750),
-			Vector(9417.656250, 9998.156250, 611.593750),
-			Vector(9090.000000, 9999.437500, 611.593750)
-		)
-		SA.Factions.Table[5][6] = SetFactionSpawn(
-			Vector(9596.812500, 10761.187500, 874.031250),
-			Vector(9453.125000, 10768.406250, 874.031250),
-			Vector(9260.718750, 10778.031250, 874.031250)
-		)
-	elseif mapname == "sb_forlorn_sb3_r3" then
+	elseif mapname == "sb_forlorn_sb3_r2l" or mapname == "sb_forlorn_sb3_r3" then
 		SA.Factions.Table[1][6] = SetFactionSpawn(
 			Vector(7769.562500, -11401.250000, -8954.968750),
 			Vector(7504.875000, -11396.343750, -8954.968750),

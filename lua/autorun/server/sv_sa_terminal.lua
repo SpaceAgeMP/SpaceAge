@@ -72,7 +72,7 @@ local function InitSATerminal()
 	if mapname == "gm_galactic_rc1" then
 		StationPos = Vector(-8896, 10192, 768)
 		StationSize = 1024
-	elseif mapname == "sb_forlorn_sb3_r2l" then
+	elseif mapname == "sb_forlorn_sb3_r2l" or mapname == "sb_forlorn_sb3_r3" then
 		StationPos = Vector(9447, 9824, 461)
 		StationSize = 2650
 	elseif mapname == "sb_forlorn_sb3_r3" then
@@ -81,7 +81,7 @@ local function InitSATerminal()
 	elseif mapname == "sb_new_worlds_2" then
 		StationPos = Vector(-8253, -9771, -11041)
 		StationSize = 3000
-	elseif mapname == "sb_gooniverse" then
+	elseif mapname == "sb_gooniverse" or mapname == "sb_gooniverse_v4" then
 		StationSize = 1130
 		StationPos = Vector(2, -1, 4620)
 	elseif mapname == "sb_lostinspace_rc4" then
