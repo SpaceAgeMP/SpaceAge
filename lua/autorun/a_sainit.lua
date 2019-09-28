@@ -13,15 +13,20 @@ end
 
 if not GTableMeta.__newindex_sa_checker then
 	GTableMeta.__newindex_sa_checker = true
-	local oldNewIndex = GTableMeta.__newindex or rawset
-	function GTableMeta.__newindex(tbl, idx, val)
-		oldNewIndex(tbl, idx, val)
 
-		if idx == "SCRIPTNAME" or idx == "SCRIPTPATH" or idx == "ENT" or idx == "SA" or idx == "supernet" then
+	local oldNewIndex = GTableMeta.__newindex or rawset
+	local oldIndex = GTableMeta.__index or rawget
+
+	local detections = {}
+
+	local function GVDetector(tbl, idx)
+		if idx == "SCRIPTNAME" or idx == "SCRIPTPATH" or idx == "ENT" or idx == "SA" or idx == "supernet" or detections[idx] then
 			return
 		end
 
-		local tbidx = 1
+		detections[idx] = true
+
+		local tbidx = 2
 		local tb
 
 		repeat
@@ -47,6 +52,17 @@ if not GTableMeta.__newindex_sa_checker then
 		local str = idx .. " " .. tostring(tb.short_src) .. " @ " .. tostring(tb.linedefined) .. "\n"
 		file.Append("gvars_" .. side .. ".txt", str)
 		print("GVars DETECTOR on ", side, str)
+	end
+
+	function GTableMeta.__newindex(tbl, idx, val)
+		oldNewIndex(tbl, idx, val)
+		GVDetector(tbl, idx)
+	end
+
+	function GTableMeta.__index(tbl, idx)
+		local res = oldIndex(tbl, idx)
+		GVDetector(tbl, idx)
+		return res
 	end
 end
 
