@@ -1,3 +1,4 @@
+--glualint:ignore-file
 local RD = CAF.GetAddon("Resource Distribution")
 E2Lib.RegisterExtension("lifesupport", false)
 

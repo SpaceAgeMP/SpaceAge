@@ -1,3 +1,4 @@
+--glualint:ignore-file
 E2Lib.RegisterExtension("sa_money", false)
 
 local lastMoneyFunc = {}
@@ -32,7 +33,7 @@ end
 
 e2function number entity:payCredits(amount)
 	if not (callMoneyFunc(self.player) and this and SA.ValidEntity(this) and this:IsPlayer()) then return 0 end
-	return bool_to_number(SA.GiveCredits.Confirm(this, self.player, amount, 
+	return bool_to_number(SA.GiveCredits.Confirm(this, self.player, amount,
 		function(resultTable, allowed)
 			callMyselfGive(self, resultTable, allowed)
 		end))

@@ -1,3 +1,4 @@
+--glualint:ignore-file
 E2Lib.RegisterExtension("sa_various", false)
 
 local Clamp = math.Clamp
