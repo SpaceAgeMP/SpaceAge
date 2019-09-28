@@ -328,13 +328,6 @@ function SA.Terraformer.SpazzOut(terent, forcekill)
 				end
 				if v:IsPlayer() or v:IsNPC() then
 					v:Kill()
-				elseif v:IsVehicle() then
-					for _, pass in pairs({ v:GetPassenger(), v:GetDriver() }) do
-						if (pass and pass:IsValid() and (pass:IsPlayer() or pass:IsNPC())) then
-							pass:Kill()
-						end
-					end
-					v:Remove()
 				else
 					v:Remove()
 				end

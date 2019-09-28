@@ -96,16 +96,19 @@ function PANEL:SetDesc()
 					if v[1] == "faction" then
 						DescAdd = DescAdd .. " (Faction: "
 						for ke, ve in pairs(v[2]) do
+							--glualint:ignore-next-line
 							DescAdd = DescAdd .. SA.Factions.ToLong[ve] .. ", "
 						end
 						DescAdd = string.Left(DescAdd, string.len(DescAdd) - 1) .. ")"
 					else
-						local name = ""
+						local subName = ""
 						if self.ResearchTbl.name == v[1] then -- TODO: ???
-							name = n.display
+							--glualint:ignore-next-line
+							subName = n.display
 						end
 						if name ~= "" then
-							DescAdd = DescAdd .. " (" .. name .. ": " .. v[2] .. ")"
+							--glualint:ignore-next-line
+							DescAdd = DescAdd .. " (" .. subName .. ": " .. v[2] .. ")"
 						end
 					end
 				end
