@@ -38,13 +38,13 @@ const headers = {
     'User-Agent': 'glualint-action',
 };
 
-async function defineCheck(data, id) {
+async function defineCheck(requestBody, id) {
     if (!process.env.CI) {
         return;
     }
 
     const body = {
-        ...data,
+        ...requestBody,
         name: 'GLuaLint',
         head_sha: GITHUB_SHA,
     };
