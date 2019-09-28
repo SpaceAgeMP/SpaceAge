@@ -70,7 +70,7 @@ async function defineCheck(requestBody, checkId) {
 const checkId = defineCheck({
     status: 'in_progress',
     started_at: new Date(),
-});
+}).catch(e => console.error(e));
 
 const res = spawnSync('glualint', ['.']);
 if (res.status === null) {
@@ -147,4 +147,4 @@ defineCheck({
         summary: `${errorCount} error(s), ${warningCount} warning(s)`,
         annotations,
     },
-}, checkId);
+}, checkId).catch(e => console.error(e));
