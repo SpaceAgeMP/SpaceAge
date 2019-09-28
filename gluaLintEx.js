@@ -53,6 +53,10 @@ async function defineCheck(requestBody, checkId) {
         return;
     }
 
+    if (checkId && checkId.then) {
+        checkId = await checkId;
+    }
+
     const body = {
         ...requestBody,
         name: 'GLuaLint',
