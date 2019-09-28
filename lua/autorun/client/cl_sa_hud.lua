@@ -675,12 +675,12 @@ local function SA_CustomHUDPaint()
 
 		local Perc = math.Clamp(ls_tmp / GlobalTemp_Max, 0, 1)
 		local Wid = Perc * tempGaugeWid
-		local XWidX = XMinX + Wid
+		local XWidX = math.min(XMinX + Wid, XMinX + tempGaugeWid-2)
 
 		--surface.RoundedBoxTextued( cornerRadius, x, y, width, height, divisions )
-		surface.DrawTexturedRect(tempX, tempY - 8, 2, 34)
+		surface.DrawTexturedRect(XWidX, tempY - 8, 2, 34)
 		--surface.DrawTexturedRect(XWidX - 8+4, ScH - 98, 2, 34)
-		surface.DrawTexturedRect(tempX, tempY - 8, 6, 10)
+		surface.DrawTexturedRect(XWidX, tempY - 8, 6, 10)
 
 		local xMyTemp = goodTemp
 		if ls_tmp < FairTemp_Min then xMyTemp = coolTemp
