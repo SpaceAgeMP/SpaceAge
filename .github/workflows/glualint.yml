@@ -1,4 +1,4 @@
-name: Node CI
+name: GLuaLint
 
 on: [push]
 
@@ -15,8 +15,9 @@ jobs:
       run: |
         export PATH=$PATH:/tmp/bin
         mkdir -p /tmp/bin
-        wget https://doridian.net/glualint -O /tmp/bin/glualint
+        wget -q https://doridian.net/glualint -O /tmp/bin/glualint
         chmod +x /tmp/bin/glualint
+        echo "Running linter..."
         node gluaLintEx.js
       env:
         CI: true
