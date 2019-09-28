@@ -104,7 +104,7 @@ const reportErrors = output.filter(o => {
     return true;
 });
 
-const annotations = {};
+const annotations = [];
 
 for (const r of reportErrors) {
     switch (r.type) {
