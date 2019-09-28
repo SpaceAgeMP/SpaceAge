@@ -38,7 +38,7 @@ const headers = {
     'User-Agent': 'glualint-action',
 };
 
-async function defineCheck(requestBody, id) {
+async function defineCheck(requestBody, checkId) {
     if (!process.env.CI) {
         return;
     }
@@ -48,8 +48,8 @@ async function defineCheck(requestBody, id) {
         name: 'GLuaLint',
         head_sha: GITHUB_SHA,
     };
-    const { data } = await request(`https://api.github.com/repos/${owner}/${repo}/check-runs${id ? `/${id}` : ''}`, {
-        method: id ? 'PATCH' : 'POST',
+    const { data } = await request(`https://api.github.com/repos/${owner}/${repo}/check-runs${checkId ? `/${checkId}` : ''}`, {
+        method: checkId ? 'PATCH' : 'POST',
         headers,
         body
     });
