@@ -1,1 +1,439 @@
-{"9":{"pit":0.0,"x":6069.3311,"y":-11641.3936,"rol":0.0,"class":"sa_crystaltower","z":-2048.0,"yaw":0.0},"11":{"pit":1.3513,"x":3674.3811,"rol":0.2444,"class":"prop_physics","y":-10923.9424,"model":"models/props_c17/fence01a.mdl","z":-1993.3063,"yaw":-13.127},"13":{"pit":0.0592,"x":4328.395,"rol":0.0394,"class":"prop_physics","y":-10241.3711,"model":"models/props_wasteland/interior_fence002e.mdl","z":-1983.1354,"yaw":47.166},"16":{"pit":89.833,"x":-10240.0479,"model":"models/props_phx/construct/metal_plate2x4.mdl","yaw":0.1488,"y":-7537.1479,"class":"no_build_zone_sign","z":-8051.8135,"rol":0.1507},"22":{"pit":89.9832,"x":-10239.1094,"model":"models/props_phx/construct/metal_plate2x4.mdl","yaw":179.9998,"y":-8070.2651,"class":"no_build_zone_sign","z":-8052.0605,"rol":180.0},"24":{"pit":1.883,"x":3937.1665,"yaw":84.9878,"class":"prop_physics","y":-10792.3623,"model":"models/props_combine/combine_intmonitor001.mdl","z":-1976.4666,"rol":0.1664},"27":{"pit":-0.0723,"x":3941.3679,"yaw":85.0736,"class":"prop_physics","y":-10772.6406,"model":"models/props_combine/combine_interface001.mdl","z":-2037.076,"rol":-0.0036},"65":{"pit":89.0764,"x":3788.4912,"yaw":-94.5758,"class":"sa_tibrefinery","y":-10649.3506,"model":"models/slyfo/sat_rtankstand.mdl","z":-1967.7124,"rol":-89.598},"70":{"pit":0.3522,"x":4451.1069,"z":-1993.6171,"class":"prop_physics","y":-10969.0674,"model":"models/props_c17/fence03a.mdl","yaw":-7.9685,"rol":-0.0002},"71":{"pit":-0.1705,"x":4468.2451,"z":-1993.641,"class":"prop_physics","y":-10407.4209,"model":"models/props_c17/fence03a.mdl","yaw":-6.517,"rol":-0.021},"73":{"pit":90.0,"x":-11056.4922,"model":"models/props_phx/construct/metal_plate2x4.mdl","yaw":0.0,"y":-7368.561,"class":"no_build_zone_sign","z":-8045.4854,"rol":180.0},"74":{"x":3981.3706,"rol":-0.0003,"class":"prop_physics","yaw":-4.9763,"pit":-0.0042,"sound":"ambient/atmosphere/indoor2.wav","model":"models/ce_mining/buildings/ce_tib_station1.mdl","z":-2047.644,"y":-10612.0859},"75":{"pit":0.0,"x":8197.4658,"z":-2024.2971,"rol":0.0,"class":"sa_crystaltower","yaw":0.0,"y":-11687.3594},"76":{"pit":89.7201,"x":-10529.2588,"model":"models/props_phx/construct/metal_plate2x4.mdl","yaw":-179.9973,"y":-6655.4795,"class":"no_build_zone_sign","z":-8046.2012,"rol":90.1035},"79":{"pit":-0.0001,"x":-480.1193,"model":"models/props/terminal.mdl","rol":0.0,"y":413.061,"class":"terminal","z":4625.4199,"yaw":-45.0},"81":{"pit":0.0002,"x":-174.4405,"model":"models/props_phx/construct/windows/window4x4.mdl","yaw":-179.9165,"y":-761.5495,"class":"prop_physics","z":4736.2593,"rol":-0.0011},"89":{"pit":90.0,"x":192.312,"z":4660.3843,"rol":-180.0,"y":733.2536,"model":"models/props_phx/construct/metal_plate2x4.mdl","yaw":180.0,"class":"no_build_zone_sign"},"96":{"pit":89.7966,"x":3795.5288,"yaw":-93.8195,"class":"sa_tibrefinery","y":-10568.5195,"model":"models/slyfo/sat_rtankstand.mdl","z":-1968.5323,"rol":-88.8433},"101":{"pit":78.6501,"x":-11025.2715,"z":-7988.8838,"rol":1.0389,"y":-2611.1423,"model":"models/props_phx/construct/metal_plate2x4.mdl","yaw":1.0898,"class":"afk_room_sign"},"102":{"pit":89.9291,"x":-11252.9043,"z":-8016.0537,"rol":-1.8199,"y":-2939.158,"model":"models/props_phx/construct/metal_plate2x2.mdl","yaw":-91.812,"class":"x_sign"},"104":{"pit":-0.0539,"x":-262.7798,"model":"models/props/terminal.mdl","rol":-0.5957,"y":469.9494,"class":"terminal","z":4624.5601,"yaw":-78.5106},"105":{"pit":0.0098,"x":3678.291,"z":-1993.4725,"class":"prop_physics","y":-9333.0693,"model":"models/props_c17/fence03a.mdl","yaw":79.472,"rol":0.0026},"108":{"pit":0.0002,"x":-174.6305,"model":"models/props_phx/construct/windows/window4x4.mdl","yaw":-179.9165,"y":-631.2472,"class":"prop_physics","z":4736.2612,"rol":-0.0011},"109":{"pit":89.999,"x":-10239.0117,"model":"models/props_phx/construct/metal_plate2x4.mdl","yaw":179.9998,"y":-7023.0044,"class":"no_build_zone_sign","z":-8052.0693,"rol":180.0},"111":{"pit":-0.1705,"x":4557.0659,"z":-1993.9277,"class":"prop_physics","y":-9629.9023,"model":"models/props_c17/fence03a.mdl","yaw":-6.517,"rol":-0.021},"112":{"pit":-1.6412,"x":4043.7163,"z":-1993.4564,"class":"prop_physics","y":-11042.4824,"model":"models/props_c17/fence03a.mdl","yaw":82.236,"rol":-0.0001},"113":{"pit":-1.6412,"x":4302.1855,"z":-1993.4562,"class":"prop_physics","y":-11077.7217,"model":"models/props_c17/fence03a.mdl","yaw":82.236,"rol":-0.0001},"116":{"pit":0.0,"x":174.6502,"z":4736.2632,"rol":0.0,"y":729.0315,"model":"models/props_phx/construct/windows/window4x4.mdl","yaw":0.0085,"class":"prop_physics"},"117":{"pit":0.0098,"x":4447.6948,"z":-1993.5117,"class":"prop_physics","y":-9476.0498,"model":"models/props_c17/fence03a.mdl","yaw":79.472,"rol":0.0026},"118":{"pit":0.0098,"x":3934.7583,"z":-1993.4856,"class":"prop_physics","y":-9380.7295,"model":"models/props_c17/fence03a.mdl","yaw":79.472,"rol":0.0026},"119":{"pit":0.0,"x":4173.8301,"rol":-0.0001,"class":"prop_physics","y":-10216.2324,"model":"models/props_c17/fence03a.mdl","z":-1993.6511,"yaw":90.0},"121":{"pit":0.0,"x":3652.2329,"rol":0.0,"class":"prop_physics","y":-10219.6064,"model":"models/props_c17/fence03a.mdl","z":-1993.1453,"yaw":90.0083},"122":{"pit":90.0,"x":-187.0207,"z":4658.8481,"rol":45.0,"y":-767.9913,"model":"models/props_phx/construct/metal_plate2x4.mdl","yaw":-135.0,"class":"no_build_zone_sign"},"123":{"pit":0.0,"x":7278.5537,"y":-7961.1367,"rol":0.0,"class":"sa_crystaltower","z":-2048.0,"yaw":0.0},"124":{"pit":-0.135,"x":3746.3701,"rol":0.0,"class":"prop_physics","y":-10278.7041,"model":"models/props_c17/fence01a.mdl","z":-1993.6407,"yaw":149.1772},"125":{"pit":0.0,"x":174.6691,"z":4736.2632,"rol":0.0,"y":602.5261,"model":"models/props_phx/construct/windows/window4x4.mdl","yaw":0.0085,"class":"prop_physics"},"127":{"pit":0.0,"x":-85.1173,"model":"models/props/terminal.mdl","rol":0.0,"y":518.1118,"class":"terminal","z":4624.313,"yaw":-117.9357},"132":{"pit":-0.4814,"x":4447.0498,"z":-1983.5897,"class":"prop_physics","y":-10814.7939,"model":"models/props_wasteland/interior_fence002e.mdl","yaw":35.3362,"rol":0.2474},"129":{"pit":0.0098,"x":4191.2271,"z":-1993.4987,"class":"prop_physics","y":-9428.3896,"model":"models/props_c17/fence03a.mdl","yaw":79.472,"rol":0.0026},"130":{"pit":-0.1833,"x":4438.6348,"z":-1993.5453,"class":"prop_physics","y":-10666.5938,"model":"models/props_c17/fence03a.mdl","yaw":-6.5216,"rol":-0.021},"138":{"pit":-1.6412,"x":3785.25,"z":-1993.4567,"class":"prop_physics","y":-11007.2432,"model":"models/props_c17/fence03a.mdl","yaw":82.236,"rol":-0.0001},"137":{"pit":-0.0586,"x":3911.6062,"rol":0.0041,"class":"prop_physics","y":-10217.3271,"model":"models/props_c17/fence03a.mdl","z":-1993.5093,"yaw":89.999},"135":{"pit":0.0,"x":9901.7207,"y":-9908.9248,"rol":0.0,"class":"sa_crystaltower","z":-1875.4871,"yaw":0.0},"131":{"pit":0.1481,"x":4418.9971,"z":-1993.5886,"class":"prop_physics","y":-10271.0996,"model":"models/props_c17/fence01a.mdl","yaw":85.1371,"rol":-0.0194}}
+{
+  "9": {
+    "pit": 0,
+    "x": 6069.3311,
+    "y": -11641.3936,
+    "rol": 0,
+    "class": "sa_crystaltower",
+    "z": -2048,
+    "yaw": 0
+  },
+  "11": {
+    "pit": 1.3513,
+    "x": 3674.3811,
+    "rol": 0.2444,
+    "class": "prop_physics",
+    "y": -10923.9424,
+    "model": "models/props_c17/fence01a.mdl",
+    "z": -1993.3063,
+    "yaw": -13.127
+  },
+  "13": {
+    "pit": 0.0592,
+    "x": 4328.395,
+    "rol": 0.0394,
+    "class": "prop_physics",
+    "y": -10241.3711,
+    "model": "models/props_wasteland/interior_fence002e.mdl",
+    "z": -1983.1354,
+    "yaw": 47.166
+  },
+  "16": {
+    "pit": 89.833,
+    "x": -10240.0479,
+    "model": "models/props_phx/construct/metal_plate2x4.mdl",
+    "yaw": 0.1488,
+    "y": -7537.1479,
+    "class": "no_build_zone_sign",
+    "z": -8051.8135,
+    "rol": 0.1507
+  },
+  "22": {
+    "pit": 89.9832,
+    "x": -10239.1094,
+    "model": "models/props_phx/construct/metal_plate2x4.mdl",
+    "yaw": 179.9998,
+    "y": -8070.2651,
+    "class": "no_build_zone_sign",
+    "z": -8052.0605,
+    "rol": 180
+  },
+  "24": {
+    "pit": 1.883,
+    "x": 3937.1665,
+    "yaw": 84.9878,
+    "class": "prop_physics",
+    "y": -10792.3623,
+    "model": "models/props_combine/combine_intmonitor001.mdl",
+    "z": -1976.4666,
+    "rol": 0.1664
+  },
+  "27": {
+    "pit": -0.0723,
+    "x": 3941.3679,
+    "yaw": 85.0736,
+    "class": "prop_physics",
+    "y": -10772.6406,
+    "model": "models/props_combine/combine_interface001.mdl",
+    "z": -2037.076,
+    "rol": -0.0036
+  },
+  "65": {
+    "pit": 89.0764,
+    "x": 3788.4912,
+    "yaw": -94.5758,
+    "class": "sa_tibrefinery",
+    "y": -10649.3506,
+    "model": "models/slyfo/sat_rtankstand.mdl",
+    "z": -1967.7124,
+    "rol": -89.598
+  },
+  "70": {
+    "pit": 0.3522,
+    "x": 4451.1069,
+    "z": -1993.6171,
+    "class": "prop_physics",
+    "y": -10969.0674,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": -7.9685,
+    "rol": -0.0002
+  },
+  "71": {
+    "pit": -0.1705,
+    "x": 4468.2451,
+    "z": -1993.641,
+    "class": "prop_physics",
+    "y": -10407.4209,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": -6.517,
+    "rol": -0.021
+  },
+  "73": {
+    "pit": 90,
+    "x": -11056.4922,
+    "model": "models/props_phx/construct/metal_plate2x4.mdl",
+    "yaw": 0,
+    "y": -7368.561,
+    "class": "no_build_zone_sign",
+    "z": -8045.4854,
+    "rol": 180
+  },
+  "74": {
+    "x": 3981.3706,
+    "rol": -0.0003,
+    "class": "prop_physics",
+    "yaw": -4.9763,
+    "pit": -0.0042,
+    "sound": "ambient/atmosphere/indoor2.wav",
+    "model": "models/ce_mining/buildings/ce_tib_station1.mdl",
+    "z": -2047.644,
+    "y": -10612.0859
+  },
+  "75": {
+    "pit": 0,
+    "x": 8197.4658,
+    "z": -2024.2971,
+    "rol": 0,
+    "class": "sa_crystaltower",
+    "yaw": 0,
+    "y": -11687.3594
+  },
+  "76": {
+    "pit": 89.7201,
+    "x": -10529.2588,
+    "model": "models/props_phx/construct/metal_plate2x4.mdl",
+    "yaw": -179.9973,
+    "y": -6655.4795,
+    "class": "no_build_zone_sign",
+    "z": -8046.2012,
+    "rol": 90.1035
+  },
+  "79": {
+    "pit": -0.0001,
+    "x": -480.1193,
+    "model": "models/props/terminal.mdl",
+    "rol": 0,
+    "y": 413.061,
+    "class": "terminal",
+    "z": 4625.4199,
+    "yaw": -45
+  },
+  "81": {
+    "pit": 0.0002,
+    "x": -174.4405,
+    "model": "models/props_phx/construct/windows/window4x4.mdl",
+    "yaw": -179.9165,
+    "y": -761.5495,
+    "class": "prop_physics",
+    "z": 4736.2593,
+    "rol": -0.0011
+  },
+  "89": {
+    "pit": 90,
+    "x": 192.312,
+    "z": 4660.3843,
+    "rol": -180,
+    "y": 733.2536,
+    "model": "models/props_phx/construct/metal_plate2x4.mdl",
+    "yaw": 180,
+    "class": "no_build_zone_sign"
+  },
+  "96": {
+    "pit": 89.7966,
+    "x": 3795.5288,
+    "yaw": -93.8195,
+    "class": "sa_tibrefinery",
+    "y": -10568.5195,
+    "model": "models/slyfo/sat_rtankstand.mdl",
+    "z": -1968.5323,
+    "rol": -88.8433
+  },
+  "101": {
+    "pit": 78.6501,
+    "x": -11025.2715,
+    "z": -7988.8838,
+    "rol": 1.0389,
+    "y": -2611.1423,
+    "model": "models/props_phx/construct/metal_plate2x4.mdl",
+    "yaw": 1.0898,
+    "class": "afk_room_sign"
+  },
+  "102": {
+    "pit": 89.9291,
+    "x": -11252.9043,
+    "z": -8016.0537,
+    "rol": -1.8199,
+    "y": -2939.158,
+    "model": "models/props_phx/construct/metal_plate2x2.mdl",
+    "yaw": -91.812,
+    "class": "x_sign"
+  },
+  "104": {
+    "pit": -0.0539,
+    "x": -262.7798,
+    "model": "models/props/terminal.mdl",
+    "rol": -0.5957,
+    "y": 469.9494,
+    "class": "terminal",
+    "z": 4624.5601,
+    "yaw": -78.5106
+  },
+  "105": {
+    "pit": 0.0098,
+    "x": 3678.291,
+    "z": -1993.4725,
+    "class": "prop_physics",
+    "y": -9333.0693,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": 79.472,
+    "rol": 0.0026
+  },
+  "108": {
+    "pit": 0.0002,
+    "x": -174.6305,
+    "model": "models/props_phx/construct/windows/window4x4.mdl",
+    "yaw": -179.9165,
+    "y": -631.2472,
+    "class": "prop_physics",
+    "z": 4736.2612,
+    "rol": -0.0011
+  },
+  "109": {
+    "pit": 89.999,
+    "x": -10239.0117,
+    "model": "models/props_phx/construct/metal_plate2x4.mdl",
+    "yaw": 179.9998,
+    "y": -7023.0044,
+    "class": "no_build_zone_sign",
+    "z": -8052.0693,
+    "rol": 180
+  },
+  "111": {
+    "pit": -0.1705,
+    "x": 4557.0659,
+    "z": -1993.9277,
+    "class": "prop_physics",
+    "y": -9629.9023,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": -6.517,
+    "rol": -0.021
+  },
+  "112": {
+    "pit": -1.6412,
+    "x": 4043.7163,
+    "z": -1993.4564,
+    "class": "prop_physics",
+    "y": -11042.4824,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": 82.236,
+    "rol": -0.0001
+  },
+  "113": {
+    "pit": -1.6412,
+    "x": 4302.1855,
+    "z": -1993.4562,
+    "class": "prop_physics",
+    "y": -11077.7217,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": 82.236,
+    "rol": -0.0001
+  },
+  "116": {
+    "pit": 0,
+    "x": 174.6502,
+    "z": 4736.2632,
+    "rol": 0,
+    "y": 729.0315,
+    "model": "models/props_phx/construct/windows/window4x4.mdl",
+    "yaw": 0.0085,
+    "class": "prop_physics"
+  },
+  "117": {
+    "pit": 0.0098,
+    "x": 4447.6948,
+    "z": -1993.5117,
+    "class": "prop_physics",
+    "y": -9476.0498,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": 79.472,
+    "rol": 0.0026
+  },
+  "118": {
+    "pit": 0.0098,
+    "x": 3934.7583,
+    "z": -1993.4856,
+    "class": "prop_physics",
+    "y": -9380.7295,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": 79.472,
+    "rol": 0.0026
+  },
+  "119": {
+    "pit": 0,
+    "x": 4173.8301,
+    "rol": -0.0001,
+    "class": "prop_physics",
+    "y": -10216.2324,
+    "model": "models/props_c17/fence03a.mdl",
+    "z": -1993.6511,
+    "yaw": 90
+  },
+  "121": {
+    "pit": 0,
+    "x": 3652.2329,
+    "rol": 0,
+    "class": "prop_physics",
+    "y": -10219.6064,
+    "model": "models/props_c17/fence03a.mdl",
+    "z": -1993.1453,
+    "yaw": 90.0083
+  },
+  "122": {
+    "pit": 90,
+    "x": -187.0207,
+    "z": 4658.8481,
+    "rol": 45,
+    "y": -767.9913,
+    "model": "models/props_phx/construct/metal_plate2x4.mdl",
+    "yaw": -135,
+    "class": "no_build_zone_sign"
+  },
+  "123": {
+    "pit": 0,
+    "x": 7278.5537,
+    "y": -7961.1367,
+    "rol": 0,
+    "class": "sa_crystaltower",
+    "z": -2048,
+    "yaw": 0
+  },
+  "124": {
+    "pit": -0.135,
+    "x": 3746.3701,
+    "rol": 0,
+    "class": "prop_physics",
+    "y": -10278.7041,
+    "model": "models/props_c17/fence01a.mdl",
+    "z": -1993.6407,
+    "yaw": 149.1772
+  },
+  "125": {
+    "pit": 0,
+    "x": 174.6691,
+    "z": 4736.2632,
+    "rol": 0,
+    "y": 602.5261,
+    "model": "models/props_phx/construct/windows/window4x4.mdl",
+    "yaw": 0.0085,
+    "class": "prop_physics"
+  },
+  "127": {
+    "pit": 0,
+    "x": -85.1173,
+    "model": "models/props/terminal.mdl",
+    "rol": 0,
+    "y": 518.1118,
+    "class": "terminal",
+    "z": 4624.313,
+    "yaw": -117.9357
+  },
+  "132": {
+    "pit": -0.4814,
+    "x": 4447.0498,
+    "z": -1983.5897,
+    "class": "prop_physics",
+    "y": -10814.7939,
+    "model": "models/props_wasteland/interior_fence002e.mdl",
+    "yaw": 35.3362,
+    "rol": 0.2474
+  },
+  "129": {
+    "pit": 0.0098,
+    "x": 4191.2271,
+    "z": -1993.4987,
+    "class": "prop_physics",
+    "y": -9428.3896,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": 79.472,
+    "rol": 0.0026
+  },
+  "130": {
+    "pit": -0.1833,
+    "x": 4438.6348,
+    "z": -1993.5453,
+    "class": "prop_physics",
+    "y": -10666.5938,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": -6.5216,
+    "rol": -0.021
+  },
+  "138": {
+    "pit": -1.6412,
+    "x": 3785.25,
+    "z": -1993.4567,
+    "class": "prop_physics",
+    "y": -11007.2432,
+    "model": "models/props_c17/fence03a.mdl",
+    "yaw": 82.236,
+    "rol": -0.0001
+  },
+  "137": {
+    "pit": -0.0586,
+    "x": 3911.6062,
+    "rol": 0.0041,
+    "class": "prop_physics",
+    "y": -10217.3271,
+    "model": "models/props_c17/fence03a.mdl",
+    "z": -1993.5093,
+    "yaw": 89.999
+  },
+  "135": {
+    "pit": 0,
+    "x": 9901.7207,
+    "y": -9908.9248,
+    "rol": 0,
+    "class": "sa_crystaltower",
+    "z": -1875.4871,
+    "yaw": 0
+  },
+  "131": {
+    "pit": 0.1481,
+    "x": 4418.9971,
+    "z": -1993.5886,
+    "class": "prop_physics",
+    "y": -10271.0996,
+    "model": "models/props_c17/fence01a.mdl",
+    "yaw": 85.1371,
+    "rol": -0.0194
+  }
+}

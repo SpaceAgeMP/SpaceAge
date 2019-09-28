@@ -1,1 +1,147 @@
-{"Ring":[{"Counts":{"Krystallos":1.0,"Clear Ice":1.0,"Glare Crust":1.0,"Blue Ice":1.0,"Glacial Mass":1.0},"Config":{"OuterRadius":4096.0,"InnerRadius":3072.0,"MineralAmountMultiplier":2.0,"Origin":[12193.0,12394.0,12424.0],"Angle":[-16.0,0.0,0.0]}},{"Counts":{"White Glaze":3.0,"Dark Glitter":2.0,"Gelidus":4.0,"Glare Crust":1.0,"Glacial Mass":2.0},"Config":{"OuterRadius":5000.0,"InnerRadius":3408.0,"MineralAmountMultiplier":2.0,"Origin":[-5915.0,-2376.0,9594.0],"Angle":[-20.0,0.0,0.0]}},{"Counts":{"Clear Ice":4.0,"Glare Crust":6.0,"Dark Glitter":1.0},"Config":{"OuterRadius":4500.0,"InnerRadius":3722.0,"MineralAmountMultiplier":2.0,"Origin":[-8914.0,-9239.0,221.0],"Angle":[-45.0,0.0,0.0]}},{"Counts":{"Clear Ice":3.0,"Gelidus":5.0,"Dark Glitter":1.0,"White Glaze":4.0},"Config":{"OuterRadius":4800.0,"InnerRadius":4000.0,"MineralAmountMultiplier":2.0,"Origin":[1582.0,7805.0,-10344.0],"Angle":[-45.0,0.0,0.0]}},{"Counts":{"White Glaze":5.0,"Krystallos":2.0,"Dark Glitter":1.0,"Clear Ice":2.0,"Glare Crust":5.0,"Gelidus":2.0},"Config":{"OuterRadius":8000.0,"InnerRadius":6820.0,"MineralAmountMultiplier":2.0,"Origin":[9651.0,-7454.0,-10151.0],"Angle":[-10.0,0.0,0.0]}},{"Counts":{"Krystallos":1.0,"Dark Glitter":2.0,"Clear Ice":2.0,"Blue Ice":3.0,"Glacial Mass":1.0},"Config":{"OuterRadius":5000.0,"InnerRadius":4532.0,"MineralAmountMultiplier":2.0,"Origin":[-9301.0,9171.0,-1324.0],"Angle":[-45.0,0.0,0.0]}}],"Custom":[]}
+{
+  "Ring": [
+    {
+      "Counts": {
+        "Krystallos": 1,
+        "Clear Ice": 1,
+        "Glare Crust": 1,
+        "Blue Ice": 1,
+        "Glacial Mass": 1
+      },
+      "Config": {
+        "OuterRadius": 4096,
+        "InnerRadius": 3072,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          12193,
+          12394,
+          12424
+        ],
+        "Angle": [
+          -16,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "White Glaze": 3,
+        "Dark Glitter": 2,
+        "Gelidus": 4,
+        "Glare Crust": 1,
+        "Glacial Mass": 2
+      },
+      "Config": {
+        "OuterRadius": 5000,
+        "InnerRadius": 3408,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          -5915,
+          -2376,
+          9594
+        ],
+        "Angle": [
+          -20,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "Clear Ice": 4,
+        "Glare Crust": 6,
+        "Dark Glitter": 1
+      },
+      "Config": {
+        "OuterRadius": 4500,
+        "InnerRadius": 3722,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          -8914,
+          -9239,
+          221
+        ],
+        "Angle": [
+          -45,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "Clear Ice": 3,
+        "Gelidus": 5,
+        "Dark Glitter": 1,
+        "White Glaze": 4
+      },
+      "Config": {
+        "OuterRadius": 4800,
+        "InnerRadius": 4000,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          1582,
+          7805,
+          -10344
+        ],
+        "Angle": [
+          -45,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "White Glaze": 5,
+        "Krystallos": 2,
+        "Dark Glitter": 1,
+        "Clear Ice": 2,
+        "Glare Crust": 5,
+        "Gelidus": 2
+      },
+      "Config": {
+        "OuterRadius": 8000,
+        "InnerRadius": 6820,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          9651,
+          -7454,
+          -10151
+        ],
+        "Angle": [
+          -10,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "Krystallos": 1,
+        "Dark Glitter": 2,
+        "Clear Ice": 2,
+        "Blue Ice": 3,
+        "Glacial Mass": 1
+      },
+      "Config": {
+        "OuterRadius": 5000,
+        "InnerRadius": 4532,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          -9301,
+          9171,
+          -1324
+        ],
+        "Angle": [
+          -45,
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "Custom": []
+}

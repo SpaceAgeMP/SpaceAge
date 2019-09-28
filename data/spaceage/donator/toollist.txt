@@ -1,1 +1,6 @@
-["shuttle_stool","ol_stacker","smartwelder","rt_antinoclip"]
+[
+  "shuttle_stool",
+  "ol_stacker",
+  "smartwelder",
+  "rt_antinoclip"
+]

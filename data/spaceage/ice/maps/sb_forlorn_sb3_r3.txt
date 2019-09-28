@@ -1,1 +1,100 @@
-{"Ring":[{"Counts":{"Krystallos":1.0,"Dark Glitter":2.0,"Clear Ice":8.0,"Glare Crust":1.0,"Gelidus":2.0},"Config":{"OuterRadius":7680.0,"InnerRadius":6144.0,"MineralAmountMultiplier":2.0,"Origin":[9174.0,9284.0,-8876.0],"Angle":[45.0,0.0,0.0]}},{"Counts":{"Krystallos":1.0,"Dark Glitter":1.0,"Gelidus":2.0,"Glare Crust":2.0,"Blue Ice":8.0},"Config":{"OuterRadius":4096.0,"InnerRadius":3064.0,"MineralAmountMultiplier":2.0,"Origin":[5864.0,-3890.0,6480.0],"Angle":[0.0,0.0,-45.0]}},{"Counts":{"Gelidus":1.0,"Glare Crust":2.0,"Krystallos":1.0,"Glacial Mass":8.0},"Config":{"OuterRadius":5632.0,"InnerRadius":4608.0,"MineralAmountMultiplier":2.0,"Origin":[-8840.0,-9114.0,228.0],"Angle":[-45.0,0.0,0.0]}},{"Counts":{"White Glaze":8.0,"Krystallos":1.0,"Dark Glitter":2.0,"Gelidus":2.0,"Glare Crust":1.0},"Config":{"OuterRadius":4096.0,"InnerRadius":3064.0,"MineralAmountMultiplier":2.0,"Origin":[-1564.0,-6796.0,10432.0],"Angle":[0.0,0.0,45.0]}}],"Custom":[]}
+{
+  "Ring": [
+    {
+      "Counts": {
+        "Krystallos": 1,
+        "Dark Glitter": 2,
+        "Clear Ice": 8,
+        "Glare Crust": 1,
+        "Gelidus": 2
+      },
+      "Config": {
+        "OuterRadius": 7680,
+        "InnerRadius": 6144,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          9174,
+          9284,
+          -8876
+        ],
+        "Angle": [
+          45,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "Krystallos": 1,
+        "Dark Glitter": 1,
+        "Gelidus": 2,
+        "Glare Crust": 2,
+        "Blue Ice": 8
+      },
+      "Config": {
+        "OuterRadius": 4096,
+        "InnerRadius": 3064,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          5864,
+          -3890,
+          6480
+        ],
+        "Angle": [
+          0,
+          0,
+          -45
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "Gelidus": 1,
+        "Glare Crust": 2,
+        "Krystallos": 1,
+        "Glacial Mass": 8
+      },
+      "Config": {
+        "OuterRadius": 5632,
+        "InnerRadius": 4608,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          -8840,
+          -9114,
+          228
+        ],
+        "Angle": [
+          -45,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "White Glaze": 8,
+        "Krystallos": 1,
+        "Dark Glitter": 2,
+        "Gelidus": 2,
+        "Glare Crust": 1
+      },
+      "Config": {
+        "OuterRadius": 4096,
+        "InnerRadius": 3064,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          -1564,
+          -6796,
+          10432
+        ],
+        "Angle": [
+          0,
+          0,
+          45
+        ]
+      }
+    }
+  ],
+  "Custom": []
+}

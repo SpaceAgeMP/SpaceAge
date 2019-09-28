@@ -1,1 +1,172 @@
-{"1":{"pit":0.1726,"x":8851.0781,"model":"models/ce_mining/buildings/ce_tib_station1.mdl","yaw":129.0699,"y":-7133.876,"class":"prop_physics","z":-7634.5342,"rol":0.6771},"2":{"pit":0.0,"x":6370.4204,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","yaw":0.0,"y":-7698.0771,"class":"sa_crystaltower","z":-8123.5195,"rol":0.0},"3":{"pit":0.0,"x":9503.2617,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","yaw":0.0,"y":-5193.2446,"class":"sa_crystaltower","z":-7529.1582,"rol":0.0},"4":{"pit":1.2135,"x":9009.4199,"model":"models/props_combine/combine_intmonitor001.mdl","yaw":-140.9067,"y":-7038.9478,"class":"prop_physics","z":-7569.3926,"rol":-0.1194},"5":{"pit":0.0,"x":4256.313,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","yaw":0.0,"y":-5942.4292,"class":"sa_crystaltower","z":-7962.5742,"rol":0.0},"6":{"pit":89.7169,"x":9009.2803,"z":-7565.9878,"rol":134.2857,"y":-7248.688,"model":"models/slyfo/sat_rtankstand.mdl","yaw":-96.6742,"class":"sa_tibrefinery"},"7":{"pit":89.3126,"x":8937.5957,"z":-7564.5269,"rol":103.4365,"y":-7306.8931,"model":"models/slyfo/sat_rtankstand.mdl","yaw":-127.5211,"class":"sa_tibrefinery"},"8":{"pit":0.0,"x":-9257.4219,"z":-11435.04,"class":"sa_doorchecker","y":-9823.6016,"model":"models/props/cs_assault/billboard.mdl","yaw":0.0,"rol":-0.0001},"9":{"pit":-89.9977,"x":-8156.1572,"rol":180.0,"class":"sa_doorchecker","y":-9784.082,"model":"models/props/cs_assault/billboard.mdl","z":-11644.5146,"yaw":-177.7931},"10":{"pit":0.0,"x":5131.9805,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","yaw":0.0,"y":-3882.186,"class":"sa_crystaltower","z":-7909.2188,"rol":0.0},"11":{"pit":0.0,"x":7585.1538,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","yaw":0.0,"y":-5168.667,"class":"sa_crystaltower","z":-7638.3965,"rol":0.0},"12":{"pit":-0.6783,"x":8996.4141,"model":"models/props_combine/combine_interface002.mdl","yaw":-140.9177,"y":-7053.2837,"class":"prop_physics","z":-7626.0181,"rol":0.1714},"13":{"pit":0.0,"x":7008.6621,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","yaw":0.0,"y":-3253.866,"class":"sa_crystaltower","z":-7638.0,"rol":0.0},"14":{"pit":-89.9917,"x":-8275.2344,"rol":180.0,"class":"sa_doorchecker","y":-9429.8535,"model":"models/props/cs_assault/billboard.mdl","z":-11644.5225,"yaw":179.9998},"15":{"pit":0.0,"x":-7105.8677,"z":-11562.0322,"class":"sa_doorchecker","y":-9977.4189,"model":"models/props/cs_assault/billboard.mdl","yaw":-180.0,"rol":0.0},"97":{"pit":0.0,"x":-8395.8301,"yaw":57.0047,"class":"terminal","y":-8744.8271,"model":"models/ce_sbc/terminals/terminal_standard.mdl","z":-11305.3877,"rol":0.0},"96":{"pit":-0.0001,"x":-8227.5039,"yaw":133.3448,"class":"terminal","y":-8750.4961,"model":"models/ce_sbc/terminals/terminal_standard.mdl","z":-11305.3877,"rol":0.0}}
+{
+  "1": {
+    "pit": 0.1726,
+    "x": 8851.0781,
+    "model": "models/ce_mining/buildings/ce_tib_station1.mdl",
+    "yaw": 129.0699,
+    "y": -7133.876,
+    "class": "prop_physics",
+    "z": -7634.5342,
+    "rol": 0.6771
+  },
+  "2": {
+    "pit": 0,
+    "x": 6370.4204,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "yaw": 0,
+    "y": -7698.0771,
+    "class": "sa_crystaltower",
+    "z": -8123.5195,
+    "rol": 0
+  },
+  "3": {
+    "pit": 0,
+    "x": 9503.2617,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "yaw": 0,
+    "y": -5193.2446,
+    "class": "sa_crystaltower",
+    "z": -7529.1582,
+    "rol": 0
+  },
+  "4": {
+    "pit": 1.2135,
+    "x": 9009.4199,
+    "model": "models/props_combine/combine_intmonitor001.mdl",
+    "yaw": -140.9067,
+    "y": -7038.9478,
+    "class": "prop_physics",
+    "z": -7569.3926,
+    "rol": -0.1194
+  },
+  "5": {
+    "pit": 0,
+    "x": 4256.313,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "yaw": 0,
+    "y": -5942.4292,
+    "class": "sa_crystaltower",
+    "z": -7962.5742,
+    "rol": 0
+  },
+  "6": {
+    "pit": 89.7169,
+    "x": 9009.2803,
+    "z": -7565.9878,
+    "rol": 134.2857,
+    "y": -7248.688,
+    "model": "models/slyfo/sat_rtankstand.mdl",
+    "yaw": -96.6742,
+    "class": "sa_tibrefinery"
+  },
+  "7": {
+    "pit": 89.3126,
+    "x": 8937.5957,
+    "z": -7564.5269,
+    "rol": 103.4365,
+    "y": -7306.8931,
+    "model": "models/slyfo/sat_rtankstand.mdl",
+    "yaw": -127.5211,
+    "class": "sa_tibrefinery"
+  },
+  "8": {
+    "pit": 0,
+    "x": -9257.4219,
+    "z": -11435.04,
+    "class": "sa_doorchecker",
+    "y": -9823.6016,
+    "model": "models/props/cs_assault/billboard.mdl",
+    "yaw": 0,
+    "rol": -0.0001
+  },
+  "9": {
+    "pit": -89.9977,
+    "x": -8156.1572,
+    "rol": 180,
+    "class": "sa_doorchecker",
+    "y": -9784.082,
+    "model": "models/props/cs_assault/billboard.mdl",
+    "z": -11644.5146,
+    "yaw": -177.7931
+  },
+  "10": {
+    "pit": 0,
+    "x": 5131.9805,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "yaw": 0,
+    "y": -3882.186,
+    "class": "sa_crystaltower",
+    "z": -7909.2188,
+    "rol": 0
+  },
+  "11": {
+    "pit": 0,
+    "x": 7585.1538,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "yaw": 0,
+    "y": -5168.667,
+    "class": "sa_crystaltower",
+    "z": -7638.3965,
+    "rol": 0
+  },
+  "12": {
+    "pit": -0.6783,
+    "x": 8996.4141,
+    "model": "models/props_combine/combine_interface002.mdl",
+    "yaw": -140.9177,
+    "y": -7053.2837,
+    "class": "prop_physics",
+    "z": -7626.0181,
+    "rol": 0.1714
+  },
+  "13": {
+    "pit": 0,
+    "x": 7008.6621,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "yaw": 0,
+    "y": -3253.866,
+    "class": "sa_crystaltower",
+    "z": -7638,
+    "rol": 0
+  },
+  "14": {
+    "pit": -89.9917,
+    "x": -8275.2344,
+    "rol": 180,
+    "class": "sa_doorchecker",
+    "y": -9429.8535,
+    "model": "models/props/cs_assault/billboard.mdl",
+    "z": -11644.5225,
+    "yaw": 179.9998
+  },
+  "15": {
+    "pit": 0,
+    "x": -7105.8677,
+    "z": -11562.0322,
+    "class": "sa_doorchecker",
+    "y": -9977.4189,
+    "model": "models/props/cs_assault/billboard.mdl",
+    "yaw": -180,
+    "rol": 0
+  },
+  "97": {
+    "pit": 0,
+    "x": -8395.8301,
+    "yaw": 57.0047,
+    "class": "terminal",
+    "y": -8744.8271,
+    "model": "models/ce_sbc/terminals/terminal_standard.mdl",
+    "z": -11305.3877,
+    "rol": 0
+  },
+  "96": {
+    "pit": -0.0001,
+    "x": -8227.5039,
+    "yaw": 133.3448,
+    "class": "terminal",
+    "y": -8750.4961,
+    "model": "models/ce_sbc/terminals/terminal_standard.mdl",
+    "z": -11305.3877,
+    "rol": 0
+  }
+}

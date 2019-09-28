@@ -1,1 +1,242 @@
-{"3":{"pit":0.0,"x":9303.1689,"z":830.2989,"class":"terminal","y":10292.9111,"model":"models/props/terminal.mdl","yaw":45.0,"rol":0.0},"5":{"pit":0.0,"x":7526.459,"z":-9293.376,"rol":0.0,"y":-11105.2314,"model":"models/props_combine/combine_window001.mdl","yaw":180.0,"class":"prop_physics"},"7":{"pit":89.3404,"x":10787.5293,"yaw":-131.348,"class":"sa_tibrefinery","y":12012.8398,"model":"models/slyfo/sat_rtankstand.mdl","z":-8795.8584,"rol":-2.0422},"10":{"pit":0.0,"x":10829.8154,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","rol":0.0,"y":6847.1826,"class":"sa_crystaltower","z":-8872.0908,"yaw":0.0},"13":{"pit":-0.0001,"x":7526.459,"z":-9293.376,"rol":0.0,"y":-10874.2842,"model":"models/props_combine/combine_window001.mdl","yaw":-180.0,"class":"prop_physics"},"15":{"pit":-0.0001,"x":9551.6309,"z":830.4439,"class":"terminal","y":10293.2227,"model":"models/props/terminal.mdl","yaw":135.0,"rol":-0.0001},"16":{"pit":0.0,"x":9380.1318,"z":830.2895,"class":"terminal","y":10290.4082,"model":"models/props/terminal.mdl","yaw":90.0,"rol":0.0},"17":{"pit":-0.0001,"x":7526.459,"z":-9293.376,"rol":0.0,"y":-11336.1797,"model":"models/props_combine/combine_window001.mdl","yaw":-180.0,"class":"prop_physics"},"18":{"pit":-0.0001,"x":7526.459,"z":-9293.376,"rol":0.0,"y":-10798.1162,"model":"models/props_combine/combine_window001.mdl","yaw":-180.0,"class":"prop_physics"},"23":{"pit":-0.0001,"x":9475.6523,"z":830.4212,"class":"terminal","y":10290.2109,"model":"models/props/terminal.mdl","yaw":90.0,"rol":0.0},"24":{"pit":89.2293,"x":10711.998,"yaw":-142.8308,"class":"sa_tibrefinery","y":12072.4512,"model":"models/slyfo/sat_rtankstand.mdl","z":-8795.5449,"rol":-14.0705},"29":{"pit":-0.6607,"x":10638.6299,"yaw":-128.0678,"class":"prop_physics","y":11889.4785,"model":"models/ce_mining/buildings/ce_tib_station1.mdl","z":-8867.9717,"rol":0.1656},"37":{"pit":0.0,"x":9097.3457,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","rol":0.0,"y":9309.1621,"class":"sa_crystaltower","z":-9063.9453,"yaw":0.0},"40":{"pit":0.0,"x":8074.2949,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","rol":0.0,"y":11147.4102,"class":"sa_crystaltower","z":-8782.3564,"yaw":0.0},"42":{"pit":0.5119,"x":10517.8652,"yaw":-38.227,"class":"prop_physics","y":12028.6045,"model":"models/props_combine/combine_intmonitor001.mdl","z":-8794.2061,"rol":-0.064},"46":{"pit":0.0,"x":8528.9414,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","rol":0.0,"y":6942.2329,"class":"sa_crystaltower","z":-8873.9824,"yaw":0.0},"48":{"pit":-0.0001,"x":7526.459,"z":-9293.376,"rol":-0.0001,"y":-11259.1963,"model":"models/props_combine/combine_window001.mdl","yaw":180.0,"class":"prop_physics"},"52":{"pit":0.0,"x":7526.459,"z":-9293.376,"rol":0.0,"y":-11028.249,"model":"models/props_combine/combine_window001.mdl","yaw":-180.0,"class":"prop_physics"},"53":{"pit":-0.0001,"x":7526.459,"z":-9293.376,"rol":0.0,"y":-11413.1611,"model":"models/props_combine/combine_window001.mdl","yaw":180.0,"class":"prop_physics"},"54":{"pit":0.0,"x":7526.459,"z":-9293.376,"rol":0.0,"y":-11182.2139,"model":"models/props_combine/combine_window001.mdl","yaw":-180.0,"class":"prop_physics"},"56":{"pit":-0.0001,"x":7526.459,"z":-9293.376,"rol":0.0,"y":-10951.2666,"model":"models/props_combine/combine_window001.mdl","yaw":180.0,"class":"prop_physics"},"63":{"pit":-0.2133,"x":10529.9873,"yaw":-38.0412,"class":"prop_physics","y":12016.0107,"model":"models/props_combine/combine_interface001.mdl","z":-8858.3633,"rol":-0.688},"65":{"pit":0.0,"x":6454.1704,"model":"models/ce_mining/tiberium/ce_tib_500_200.mdl","rol":0.0,"y":9120.3643,"class":"sa_crystaltower","z":-8853.4326,"yaw":0.0},"435":{"pit":90.0,"x":7663.7749,"yaw":-0.0002,"class":"afk_room_sign","y":-11147.9941,"model":"models/props_phx/construct/metal_plate2x4.mdl","z":-9186.0957,"rol":180.0}}
+{
+  "3": {
+    "pit": 0,
+    "x": 9303.1689,
+    "z": 830.2989,
+    "class": "terminal",
+    "y": 10292.9111,
+    "model": "models/props/terminal.mdl",
+    "yaw": 45,
+    "rol": 0
+  },
+  "5": {
+    "pit": 0,
+    "x": 7526.459,
+    "z": -9293.376,
+    "rol": 0,
+    "y": -11105.2314,
+    "model": "models/props_combine/combine_window001.mdl",
+    "yaw": 180,
+    "class": "prop_physics"
+  },
+  "7": {
+    "pit": 89.3404,
+    "x": 10787.5293,
+    "yaw": -131.348,
+    "class": "sa_tibrefinery",
+    "y": 12012.8398,
+    "model": "models/slyfo/sat_rtankstand.mdl",
+    "z": -8795.8584,
+    "rol": -2.0422
+  },
+  "10": {
+    "pit": 0,
+    "x": 10829.8154,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "rol": 0,
+    "y": 6847.1826,
+    "class": "sa_crystaltower",
+    "z": -8872.0908,
+    "yaw": 0
+  },
+  "13": {
+    "pit": -0.0001,
+    "x": 7526.459,
+    "z": -9293.376,
+    "rol": 0,
+    "y": -10874.2842,
+    "model": "models/props_combine/combine_window001.mdl",
+    "yaw": -180,
+    "class": "prop_physics"
+  },
+  "15": {
+    "pit": -0.0001,
+    "x": 9551.6309,
+    "z": 830.4439,
+    "class": "terminal",
+    "y": 10293.2227,
+    "model": "models/props/terminal.mdl",
+    "yaw": 135,
+    "rol": -0.0001
+  },
+  "16": {
+    "pit": 0,
+    "x": 9380.1318,
+    "z": 830.2895,
+    "class": "terminal",
+    "y": 10290.4082,
+    "model": "models/props/terminal.mdl",
+    "yaw": 90,
+    "rol": 0
+  },
+  "17": {
+    "pit": -0.0001,
+    "x": 7526.459,
+    "z": -9293.376,
+    "rol": 0,
+    "y": -11336.1797,
+    "model": "models/props_combine/combine_window001.mdl",
+    "yaw": -180,
+    "class": "prop_physics"
+  },
+  "18": {
+    "pit": -0.0001,
+    "x": 7526.459,
+    "z": -9293.376,
+    "rol": 0,
+    "y": -10798.1162,
+    "model": "models/props_combine/combine_window001.mdl",
+    "yaw": -180,
+    "class": "prop_physics"
+  },
+  "23": {
+    "pit": -0.0001,
+    "x": 9475.6523,
+    "z": 830.4212,
+    "class": "terminal",
+    "y": 10290.2109,
+    "model": "models/props/terminal.mdl",
+    "yaw": 90,
+    "rol": 0
+  },
+  "24": {
+    "pit": 89.2293,
+    "x": 10711.998,
+    "yaw": -142.8308,
+    "class": "sa_tibrefinery",
+    "y": 12072.4512,
+    "model": "models/slyfo/sat_rtankstand.mdl",
+    "z": -8795.5449,
+    "rol": -14.0705
+  },
+  "29": {
+    "pit": -0.6607,
+    "x": 10638.6299,
+    "yaw": -128.0678,
+    "class": "prop_physics",
+    "y": 11889.4785,
+    "model": "models/ce_mining/buildings/ce_tib_station1.mdl",
+    "z": -8867.9717,
+    "rol": 0.1656
+  },
+  "37": {
+    "pit": 0,
+    "x": 9097.3457,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "rol": 0,
+    "y": 9309.1621,
+    "class": "sa_crystaltower",
+    "z": -9063.9453,
+    "yaw": 0
+  },
+  "40": {
+    "pit": 0,
+    "x": 8074.2949,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "rol": 0,
+    "y": 11147.4102,
+    "class": "sa_crystaltower",
+    "z": -8782.3564,
+    "yaw": 0
+  },
+  "42": {
+    "pit": 0.5119,
+    "x": 10517.8652,
+    "yaw": -38.227,
+    "class": "prop_physics",
+    "y": 12028.6045,
+    "model": "models/props_combine/combine_intmonitor001.mdl",
+    "z": -8794.2061,
+    "rol": -0.064
+  },
+  "46": {
+    "pit": 0,
+    "x": 8528.9414,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "rol": 0,
+    "y": 6942.2329,
+    "class": "sa_crystaltower",
+    "z": -8873.9824,
+    "yaw": 0
+  },
+  "48": {
+    "pit": -0.0001,
+    "x": 7526.459,
+    "z": -9293.376,
+    "rol": -0.0001,
+    "y": -11259.1963,
+    "model": "models/props_combine/combine_window001.mdl",
+    "yaw": 180,
+    "class": "prop_physics"
+  },
+  "52": {
+    "pit": 0,
+    "x": 7526.459,
+    "z": -9293.376,
+    "rol": 0,
+    "y": -11028.249,
+    "model": "models/props_combine/combine_window001.mdl",
+    "yaw": -180,
+    "class": "prop_physics"
+  },
+  "53": {
+    "pit": -0.0001,
+    "x": 7526.459,
+    "z": -9293.376,
+    "rol": 0,
+    "y": -11413.1611,
+    "model": "models/props_combine/combine_window001.mdl",
+    "yaw": 180,
+    "class": "prop_physics"
+  },
+  "54": {
+    "pit": 0,
+    "x": 7526.459,
+    "z": -9293.376,
+    "rol": 0,
+    "y": -11182.2139,
+    "model": "models/props_combine/combine_window001.mdl",
+    "yaw": -180,
+    "class": "prop_physics"
+  },
+  "56": {
+    "pit": -0.0001,
+    "x": 7526.459,
+    "z": -9293.376,
+    "rol": 0,
+    "y": -10951.2666,
+    "model": "models/props_combine/combine_window001.mdl",
+    "yaw": 180,
+    "class": "prop_physics"
+  },
+  "63": {
+    "pit": -0.2133,
+    "x": 10529.9873,
+    "yaw": -38.0412,
+    "class": "prop_physics",
+    "y": 12016.0107,
+    "model": "models/props_combine/combine_interface001.mdl",
+    "z": -8858.3633,
+    "rol": -0.688
+  },
+  "65": {
+    "pit": 0,
+    "x": 6454.1704,
+    "model": "models/ce_mining/tiberium/ce_tib_500_200.mdl",
+    "rol": 0,
+    "y": 9120.3643,
+    "class": "sa_crystaltower",
+    "z": -8853.4326,
+    "yaw": 0
+  },
+  "435": {
+    "pit": 90,
+    "x": 7663.7749,
+    "yaw": -0.0002,
+    "class": "afk_room_sign",
+    "y": -11147.9941,
+    "model": "models/props_phx/construct/metal_plate2x4.mdl",
+    "z": -9186.0957,
+    "rol": 180
+  }
+}

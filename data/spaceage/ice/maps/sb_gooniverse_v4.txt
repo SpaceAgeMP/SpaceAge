@@ -1,1 +1,80 @@
-{"Ring":[{"Counts":{"White Glaze":2.0,"Krystallos":1.0,"Dark Glitter":1.0,"Gelidus":3.0,"Glare Crust":2.0,"Blue Ice":8.0},"Config":{"OuterRadius":7168.0,"InnerRadius":5120.0,"MineralAmountMultiplier":2.0,"Origin":[-8204.0,8804.0,10250.0],"Angle":[-16.0,0.0,0.0]}},{"Counts":{"White Glaze":3.0,"Krystallos":2.0,"Dark Glitter":2.0,"Clear Ice":8.0,"Glare Crust":1.0,"Gelidus":1.0},"Config":{"OuterRadius":7680.0,"InnerRadius":6144.0,"MineralAmountMultiplier":2.0,"Origin":[8108.0,-10218.0,-2064.0],"Angle":[-45.0,0.0,0.0]}},{"Counts":{"White Glaze":3.0,"Krystallos":2.0,"Dark Glitter":1.0,"Gelidus":2.0,"Glare Crust":2.0,"Glacial Mass":8.0},"Config":{"OuterRadius":6144.0,"InnerRadius":5120.0,"MineralAmountMultiplier":2.0,"Origin":[1548.0,7680.0,-10242.0],"Angle":[20.0,0.0,20.0]}}],"Custom":[]}
+{
+  "Ring": [
+    {
+      "Counts": {
+        "White Glaze": 2,
+        "Krystallos": 1,
+        "Dark Glitter": 1,
+        "Gelidus": 3,
+        "Glare Crust": 2,
+        "Blue Ice": 8
+      },
+      "Config": {
+        "OuterRadius": 7168,
+        "InnerRadius": 5120,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          -8204,
+          8804,
+          10250
+        ],
+        "Angle": [
+          -16,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "White Glaze": 3,
+        "Krystallos": 2,
+        "Dark Glitter": 2,
+        "Clear Ice": 8,
+        "Glare Crust": 1,
+        "Gelidus": 1
+      },
+      "Config": {
+        "OuterRadius": 7680,
+        "InnerRadius": 6144,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          8108,
+          -10218,
+          -2064
+        ],
+        "Angle": [
+          -45,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "Counts": {
+        "White Glaze": 3,
+        "Krystallos": 2,
+        "Dark Glitter": 1,
+        "Gelidus": 2,
+        "Glare Crust": 2,
+        "Glacial Mass": 8
+      },
+      "Config": {
+        "OuterRadius": 6144,
+        "InnerRadius": 5120,
+        "MineralAmountMultiplier": 2,
+        "Origin": [
+          1548,
+          7680,
+          -10242
+        ],
+        "Angle": [
+          20,
+          0,
+          20
+        ]
+      }
+    }
+  ],
+  "Custom": []
+}
