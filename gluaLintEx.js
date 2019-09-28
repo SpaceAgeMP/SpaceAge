@@ -158,3 +158,5 @@ for (const r of reportErrors) {
     }
     console.log(`${r.type} ${r.file}:${r.lineStart}:${r.columnStart}-${r.lineEnd}:${r.columnEnd} ${r.message}`);
 }
+
+endCheck();
