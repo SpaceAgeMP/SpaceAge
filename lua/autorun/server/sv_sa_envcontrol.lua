@@ -246,6 +246,6 @@ end)
 
 timer.Simple(1, function()
 	for k,v in pairs(ents.FindByModel("models/props_lab/huladoll.mdl")) do
-		v:SetNoDraw(true)
+		v:SetRenderMode(RENDERMODE_NONE)
 	end
 end)
