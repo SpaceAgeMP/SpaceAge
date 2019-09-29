@@ -19,7 +19,6 @@ function SA.Config.Load(typ, isGlobal)
 		typ = "maps/" .. game.GetMap() .. "/" .. typ
 	end
 	local path = "sa_config/" .. typ .. ".json"
-	print("CONFIGLOADER", path)
 	local data = file.Read(path, "GAME")
 	if not data then
 		return

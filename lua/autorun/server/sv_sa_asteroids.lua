@@ -54,10 +54,10 @@ local function CreateAsteroids(cnt, noamount)
 	if not noamount then
 		SA.Asteroids.MaxCount = roids.amount
 	end
-	if (cnt ~= 0) then
-		roids.num = cnt
+	if cnt ~= 0 then
+		roids.amount = cnt
 	end
-	for k = 1, roids.num do
+	for k = 1, roids.amount do
 		local picked = math.random(1, table.Count(AllAsteroids))
 		SpawnAsteroid(AllAsteroids[picked][1], Vector(roids.x + math.random(-roids.radius, roids.radius), roids.y + math.random(-roids.radius, roids.radius), roids.z + (math.random(-roids.radius, roids.radius) / 2)), AllAsteroids[picked][2])
 	end

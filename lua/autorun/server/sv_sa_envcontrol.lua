@@ -54,74 +54,51 @@ function SA.Planets.MakeSpace(planet)
 end
 
 local function InitHabitablePlanets()
-	local toTerraform = {}
-	local toAdd = {}
-	local toRename = {}
-	local toRemove = {}
-	local toProtect = {}
-	local mapname = string.lower(game.GetMap())
-	local dirname = "sa_planetsave/" .. mapname .. "/"
-	if mapname == "sb_new_worlds_2" then
-		toTerraform = {"naar'ak asteroid base"}
-		toAdd = {{"Naar'ak Asteroid Base", Vector(-9275, -9818, -11428), 900},
-				 {"Naar'ak Asteroid Base", Vector(-8257, -8609, -11229), 600},
-				 {"Kestrel", Vector(8872, -7112, -7624), 600}}
-		toProtect = {"maldoran", "naar'ak asteroid base", "kestrel"}
-	elseif mapname == "sb_gooniverse" or mapname == "sb_gooniverse_v4" then
-		toAdd = {
-					{"Cerebus", Vector(3865, -10656, -1991), 700},
-					{"Cerebus", Vector(4023, -9866, -2047), 640},
+	local dirname = "sa_planetsave/" .. game.GetMap():lower() .. "/"
 
-					{"Cerebus", Vector(4649, -8871, -2048), 200},
-					{"Cerebus", Vector(4641, -8459, -2048), 200},
-					{"Cerebus", Vector(4629, -7994, -2048), 200},
-
-					{"Cerebus", Vector(4880, -9155, -1911), 100},
-					{"Cerebus", Vector(5379, -9155, -1911), 100}
-				}
-		toProtect = {"hiigara", "coruscant", "cerebus"}
-	elseif mapname == "sb_wuwgalaxy_fix" then
-		toAdd = {
-					{"Space Station", Vector(8368, 2689, 7096), 1150},
-					{"Space Station", Vector(8335, 3257, 7107), 600},
-					{"Space Station", Vector(8997, 3767, 7099), 850},
-					{"Space Station", Vector(8453, 3762, 7093), 850},
-					{"Space Station", Vector(8338, 4356, 7079), 800},
-					{"Space Station", Vector(8420, 5365, 7122), 2500}
-				}
-		toTerraform = {"space station"}
-		toProtect = {"space station"}
-		toRemove = {"space station"}
-	elseif mapname == "sb_lostinspace_rc4" then
-		toAdd = {{"Umemeru", Vector(8548.4717, 9319.7842, 8059.2813), 400}}
-		toProtect = {"ochl", "umemeru", "nuyitae"}
-	elseif mapname == "sb_forlorn_sb3_r2l" or mapname == "sb_forlorn_sb3_r3" then
-		toProtect = {"spawn room", "shakuras", "station 457", "dunomane"}
-	elseif mapname == "gm_galactic" then
-		toProtect = {"Planet 1", "Planet 2", "Planet 4", "Planet 5", "Planet 8", "Planet 9"}
+	local config = SA.Config.Load("environments")
+	if not config then
+		config = {}
+	end
+	if not config.Add then
+		config.Add = {}
+	end
+	if not config.Remove then
+		config.Remove = {}
+	end
+	if not config.Rename then
+		config.Rename = {}
+	end
+	if not config.Terraform then
+		config.Terraform = {}
+	end
+	if not config.Protect then
+		config.Protect = {}
 	end
 
 	for k, v in pairs(ents.FindByClass("base_sb_planet*")) do
 		if (v.SA_Created) then
 			print("Found SpaceAge environment: " .. v.sbenvironment.name .. "! Removing!")
 			v:Remove()
-		elseif table.HasValue(toRemove, string.lower(v.sbenvironment.name)) then
+		elseif table.HasValue(config.Remove, string.lower(v.sbenvironment.name)) then
 			print("Found ToRemove environment: " .. v.sbenvironment.name .. "! Removing!")
 			v:Remove()
 		end
 	end
-	for k, v in pairs(toAdd) do
+	for k, v in pairs(config.Add) do
+		local position = Vector(unpack(v.Position))
+
 		local planet = ents.Create("base_sb_planet2")
 		planet:SetModel("models/props_lab/huladoll.mdl")
-		planet:SetPos(v[2])
+		planet:SetPos(position)
 		planet:Spawn()
 
-		local closestPlan = SB.FindClosestPlanet(v[2], false)
+		local closestPlan = SB.FindClosestPlanet(position, false)
 		local plSB = closestPlan.sbenvironment
 		planet.sbenvironment.bloom = table.Copy(plSB.bloom)
 		planet.sbenvironment.color = table.Copy(plSB.color)
 		planet:CreateEnvironment(planet, 0, 0, 0, 0, 0, 0, 0, 0, v[1])
-		planet:UpdateSize(0, v[3])
+		planet:UpdateSize(0, v.Radius)
 		planet:PhysicsInit(SOLID_NONE)
 		planet:SetMoveType(MOVETYPE_NONE)
 		planet:SetSolid(SOLID_NONE)
@@ -130,8 +107,8 @@ local function InitHabitablePlanets()
 		planet.sbenvironment.unstable = false
 		planet:SetNotSolid(true)
 		planet:DrawShadow(false)
-		planet:SetNoDraw(true)
-		planet.sbenvironment.name = v[1]
+		planet:SetRenderMode(RENDERMODE_NONE)
+		planet.sbenvironment.name = v.Name
 		planet.SA_Created = true
 		planet.MyPriority = 2
 		SA.Planets.MakeHabitable(planet)
@@ -140,15 +117,15 @@ local function InitHabitablePlanets()
 	local envname
 	for k, v in pairs(ents.FindByClass("base_sb_planet*")) do
 		envname = string.lower(v.sbenvironment.name)
-		if toRename[envname] then
-			v.sbenvironment.name = toRename[envname]
+		if config.Rename[envname] then
+			v.sbenvironment.name = config.Rename[envname]
 			envname = string.lower(v.sbenvironment.name)
 		end
-		if (table.HasValue(toTerraform, envname)) then
+		if (table.HasValue(config.Terraform, envname)) then
 			print("Making planet \"" .. v.sbenvironment.name .. "\" habitable!")
 			SA.Planets.MakeHabitable(v)
 		end
-		if (table.HasValue(toProtect, envname)) then
+		if (table.HasValue(config.Protect, envname)) then
 			MakePlanetProtected(v)
 			v.sbenvironment.pressure = 1
 			v.sbenvironment.atmosphere = 1
@@ -173,7 +150,7 @@ local function InitHabitablePlanets()
 		end
 	end
 end
-timer.Simple(1, InitHabitablePlanets)
+timer.Simple(2, InitHabitablePlanets)
 
 local function SA_PlanetRestore()
 	for k, v in pairs(SA_MyPlanets) do
