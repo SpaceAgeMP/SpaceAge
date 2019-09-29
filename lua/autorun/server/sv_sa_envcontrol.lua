@@ -245,7 +245,7 @@ concommand.Add("sa_print_environment", function(ply)
 end)
 
 timer.Simple(1, function()
-	for k,v in pairs (ents.FindByModel("models/props_lab/huladoll.mdl")) do1
+	for k,v in pairs (ents.FindByModel("models/props_lab/huladoll.mdl")) do
 		v:SetNoDraw(true)
 	end
 end)
