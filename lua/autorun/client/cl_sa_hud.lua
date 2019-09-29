@@ -1,3 +1,13 @@
+local Color = Color
+local draw = draw
+local math = math
+local net = net
+local ScrH = ScrH
+local ScrW = ScrW
+local surface = surface
+local team = team
+local tostring = tostring
+
 local alwaysshowtemp = CreateClientConVar("cl_alwaysshowtemperature", 0, true, false)
 local drawHud = GetConVar("cl_drawhud")
 
@@ -45,7 +55,6 @@ local function CheckHookIn()
 end
 timer.Create("SA_CheckHUDHookIn", 1, 0, CheckHookIn)
 
-
 surface.CreateFont("DefaultLarge", {
 	font = "Arial", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
 	extended = false,
@@ -78,18 +87,19 @@ timer.Create("SA_HealthBarRed", 0.01, 0, function()
 end)
 local SA_LastHealth = 0
 
-local WeaponMaxAmmo = {}
-WeaponMaxAmmo.weapon_pistol = 18
-WeaponMaxAmmo.weapon_357 = 6
-WeaponMaxAmmo.weapon_smg1 = 45
-WeaponMaxAmmo.weapon_ar2 = 30
-WeaponMaxAmmo.weapon_shotgun = 6
-WeaponMaxAmmo.weapon_crossbow = 1
-WeaponMaxAmmo.weapon_frag = 0
-WeaponMaxAmmo.weapon_rpg = 0
-WeaponMaxAmmo.weapon_crowbar = 0
-WeaponMaxAmmo.weapon_physcannon = 0
-WeaponMaxAmmo.weapon_physgun = 0
+local WeaponMaxAmmo = {
+	weapon_pistol = 18,
+	weapon_357 = 6,
+	weapon_smg1 = 45,
+	weapon_ar2 = 30,
+	weapon_shotgun = 6,
+	weapon_crossbow = 1,
+	weapon_frag = 0,
+	weapon_rpg = 0,
+	weapon_crowbar = 0,
+	weapon_physcannon = 0,
+	weapon_physgun = 0
+}
 
 local function GetMaxAmmo(SWEP)
 	if SWEP.Primary and SWEP.Primary.ClipSize then
@@ -151,8 +161,6 @@ local function DrawMeterSlantSection(slantAmount, width, height, xMax, yMax, yMa
 	local xMin = xMax - width
 	local yMin = yMax - height
 
-	draw.NoTexture()
-	local slantSection = {}
 
 
 	-- if the top right point is less than  our current value (as a bar y position)
@@ -166,11 +174,14 @@ local function DrawMeterSlantSection(slantAmount, width, height, xMax, yMax, yMa
 		return
 	end
 
-	-- top left, top right, bottom left, bottom right
-	table.insert(slantSection, {x = xMin, y = yMin - slantAmount + cutAmount, u = 0, v = 1})
-	table.insert(slantSection, {x = xMax, y = yMin + cutAmount, u = 1, v = 1})
-	table.insert(slantSection, {x = xMax, y = yMax, u = 1, v = 0})
-	table.insert(slantSection, {x = xMin, y = yMax - slantAmount, u = 0, v = 0})
+	draw.NoTexture()
+	local slantSection = {
+		-- top left, top right, bottom left, bottom right
+		{x = xMin, y = yMin - slantAmount + cutAmount, u = 0, v = 1},
+		{x = xMax, y = yMin + cutAmount, u = 1, v = 1},
+		{x = xMax, y = yMax, u = 1, v = 0},
+		{x = xMin, y = yMax - slantAmount, u = 0, v = 0}
+	}
 
 	surface.DrawPoly(slantSection)
 end
@@ -265,6 +276,9 @@ end
 
 local function DrawScreenLineWithDip(lineYPos, lineWidth, dipHeight, dipWidth, dipPlateu, isOutline, isBottom)
 
+	local scrW = ScrW()
+	local scrWCenter = scrWCenter
+
 	local healthAreaOffsetH = 210
 	local healthAreaOffsetW = 110
 
@@ -276,47 +290,49 @@ local function DrawScreenLineWithDip(lineYPos, lineWidth, dipHeight, dipWidth, d
 		isOutline = false
 	end
 
-	local leftSide = {}
-	-- left to right top of line
-	table.insert(leftSide, {x = 0, y = lineYPos})
-	table.insert(leftSide, {x = ScrW() / 2-dipWidth / 2, y = lineYPos})
+	local leftSide = {
+		-- left to right top of line
+		{x = 0, y = lineYPos},
+		{x = scrWCenter-dipWidth / 2, y = lineYPos},
 
-	table.insert(leftSide, {x = ScrW() / 2-dipWidth / 2, y = lineYPos + lineWidth})
-	table.insert(leftSide, {x = 0, y = lineYPos + lineWidth})
+		{x = scrWCenter-dipWidth / 2, y = lineYPos + lineWidth},
+		{x = 0, y = lineYPos + lineWidth},
+	}
 
-	local leftSlope = {}
-	-- left to right top of line
-	table.insert(leftSlope, {x = ScrW() / 2-dipWidth / 2, y = lineYPos})
-	table.insert(leftSlope, {x = ScrW() / 2-dipPlateu / 2, y = lineYPos + dipHeight})
-	table.insert(leftSlope, {x = ScrW() / 2-dipPlateu / 2, y = lineYPos + dipHeight + lineWidth})
-	table.insert(leftSlope, {x = ScrW() / 2-dipWidth / 2, y = lineYPos + lineWidth})
+	local leftSlope = {
+		-- left to right top of line
+		{x = scrWCenter-dipWidth / 2, y = lineYPos},
+		{x = scrWCenter-dipPlateu / 2, y = lineYPos + dipHeight},
+		{x = scrWCenter-dipPlateu / 2, y = lineYPos + dipHeight + lineWidth},
+		{x = scrWCenter-dipWidth / 2, y = lineYPos + lineWidth},
+	}
 
-	local plateu = {}
+	local plateu = {
+		{x = scrWCenter-dipPlateu / 2, y = lineYPos + dipHeight},
+		{x = scrWCenter + dipPlateu / 2, y = lineYPos + dipHeight},
+		{x = scrWCenter + dipPlateu / 2, y = lineYPos + dipHeight + lineWidth},
+		{x = scrWCenter-dipPlateu / 2, y = lineYPos + dipHeight + lineWidth}
+	}
 
-	table.insert(plateu, {x = ScrW() / 2-dipPlateu / 2, y = lineYPos + dipHeight})
-	table.insert(plateu, {x = ScrW() / 2 + dipPlateu / 2, y = lineYPos + dipHeight})
+	local rightSlope = {
+		-- left to right top of line
+		{x = scrWCenter + dipPlateu / 2, y = lineYPos + dipHeight},
+		{x = scrWCenter + dipWidth / 2, y = lineYPos},
+		{x = scrWCenter + dipWidth / 2, y = lineYPos + lineWidth},
+		{x = scrWCenter + dipPlateu / 2, y = lineYPos + dipHeight + lineWidth}
+	}
 
-	table.insert(plateu, {x = ScrW() / 2 + dipPlateu / 2, y = lineYPos + dipHeight + lineWidth})
-	table.insert(plateu, {x = ScrW() / 2-dipPlateu / 2, y = lineYPos + dipHeight + lineWidth})
-
-
-	local rightSlope = {}
-	-- left to right top of line
-	table.insert(rightSlope, {x = ScrW() / 2 + dipPlateu / 2, y = lineYPos + dipHeight})
-	table.insert(rightSlope, {x = ScrW() / 2 + dipWidth / 2, y = lineYPos})
-	table.insert(rightSlope, {x = ScrW() / 2 + dipWidth / 2, y = lineYPos + lineWidth})
-	table.insert(rightSlope, {x = ScrW() / 2 + dipPlateu / 2, y = lineYPos + dipHeight + lineWidth})
-
-	local rightSide = {}
-	local rightSideRight = ScrW()
+	local rightSideRight = scrW
 	if (isBottom) then
 		rightSideRight = rightSideRight - healthAreaOffsetW
 	end
-	-- left to right top of line
-	table.insert(rightSide, {x = ScrW() / 2 + dipWidth / 2, y = lineYPos})
-	table.insert(rightSide, {x = rightSideRight, y = lineYPos})
-	table.insert(rightSide, {x = rightSideRight, y = lineYPos + lineWidth})
-	table.insert(rightSide, {x = ScrW() / 2 + dipWidth / 2, y = lineYPos + lineWidth})
+	local rightSide = {
+		-- left to right top of line
+		{x = scrWCenter + dipWidth / 2, y = lineYPos},
+		{x = rightSideRight, y = lineYPos},
+		{x = rightSideRight, y = lineYPos + lineWidth},
+		{x = scrWCenter + dipWidth / 2, y = lineYPos + lineWidth}
+	}
 
 	surface.DrawPoly(leftSlope)
 	surface.DrawPoly(leftSide)
@@ -326,26 +342,27 @@ local function DrawScreenLineWithDip(lineYPos, lineWidth, dipHeight, dipWidth, d
 
 	if (isBottom == true) then
 
-		local healthAreaLeft = {}
-		-- left to right top of line
-		table.insert(healthAreaLeft, {x = ScrW() - healthAreaOffsetW, y = lineYPos + lineWidth})
-		table.insert(healthAreaLeft, {x = ScrW() - healthAreaOffsetW, y = lineYPos - healthAreaOffsetH})
-		table.insert(healthAreaLeft, {x = ScrW() - healthAreaOffsetW + lineWidth, y = lineYPos - healthAreaOffsetH})
-		table.insert(healthAreaLeft, {x = ScrW() - healthAreaOffsetW + lineWidth, y = lineYPos + lineWidth})
+		local healthAreaLeft = {
+			-- left to right top of line
+			{x = scrW - healthAreaOffsetW, y = lineYPos + lineWidth},
+			{x = scrW - healthAreaOffsetW, y = lineYPos - healthAreaOffsetH},
+			{x = scrW - healthAreaOffsetW + lineWidth, y = lineYPos - healthAreaOffsetH},
+			{x = scrW - healthAreaOffsetW + lineWidth, y = lineYPos + lineWidth}
+		}
 
 		surface.DrawPoly(healthAreaLeft)
 
 		if (isOutline) then
-			local healthAreaTop = {}
-			-- left to right top of line
-			table.insert(healthAreaTop, {x = ScrW() - healthAreaOffsetW + lineWidth, y = lineYPos - healthAreaOffsetH})
-			table.insert(healthAreaTop, {x = ScrW(), y = lineYPos - healthAreaOffsetH})
-			table.insert(healthAreaTop, {x = ScrW(), y = lineYPos - healthAreaOffsetH + lineWidth})
-			table.insert(healthAreaTop, {x = ScrW() - healthAreaOffsetW + lineWidth, y = lineYPos - healthAreaOffsetH + lineWidth})
+			local healthAreaTop = {
+				-- left to right top of line
+				{x = scrW - healthAreaOffsetW + lineWidth, y = lineYPos - healthAreaOffsetH},
+				{x = scrW, y = lineYPos - healthAreaOffsetH},
+				{x = scrW, y = lineYPos - healthAreaOffsetH + lineWidth},
+				{x = scrW - healthAreaOffsetW + lineWidth, y = lineYPos - healthAreaOffsetH + lineWidth}
+			}
 
 			surface.DrawPoly(healthAreaTop)
 		end
-
 	end
 end
 
@@ -410,6 +427,12 @@ local function SA_DrawTopBar()
 	draw.SimpleText("Credits: " .. credits, topBarFont, ScrW() / 2, yPos + 26 + 8, colorWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 end
+
+local texGradR = surface.GetTextureID("vgui/gradient-r")
+local texGradL = surface.GetTextureID("vgui/gradient-l")
+local texGradD = surface.GetTextureID("vgui/gradient-d")
+local texGradU = surface.GetTextureID("vgui/gradient-u")
+
 
 local function SA_CustomHUDPaint()
 	if drawHud:GetInt() == 0 then return end
@@ -568,24 +591,22 @@ local function SA_CustomHUDPaint()
 		-- fade blue-red-green
 
 		surface.SetDrawColor(green)
-		surface.SetTexture(surface.GetTextureID("vgui/gradient-r"))
+		surface.SetTexture(texGradR)
 		surface.DrawTexturedRect(tempX + MinWid-1, tempY + 5, 5, 20)
 
-		surface.SetTexture(surface.GetTextureID("vgui/gradient-l"))
+		surface.SetTexture(texGradL)
 		surface.DrawTexturedRect(tempX + MinWid + Wid2 -5, tempY + 5, 5, 20)
-
-
 
 		--dark gradients
 		surface.SetDrawColor(Color(0, 0, 0, 235))
-		surface.SetTexture(surface.GetTextureID("vgui/gradient-d"))
+		surface.SetTexture(texGradD)
 		surface.DrawTexturedRectRounded(tempX, tempY + 5, MinWid, 20, 4, 4, true, false, true, false)
 		surface.DrawTexturedRectRounded(MinWid + tempX + Wid2, tempY + 5, tempGaugeWid - MinWid - Wid2 + 1, 20, 4, 4, false, true, false ,true)
 
 		surface.DrawTexturedRectRounded(MinWid + tempX, tempY + 5, Wid2, 20, 2, 2, false, false, false, false)
 
 
-		surface.SetTexture(surface.GetTextureID("vgui/gradient-u"))
+		surface.SetTexture(texGradU)
 
 		draw.NoTexture()
 		surface.SetDrawColor(255, 255, 255, 20)

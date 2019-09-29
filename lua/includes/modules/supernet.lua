@@ -4,8 +4,9 @@ if SERVER then
 	AddCSLuaFile("includes/modules/supernet.lua")
 end
 
-local tinsert = table.insert
-local tremove = table.remove
+local table = table
+local net = net
+local util = util
 
 local TOTAL_SIZE_MAX = SERVER and 2000000 or nil
 local SIZE_MAX = 60000
@@ -29,7 +30,7 @@ function supernet.Send(trg, name, data, cb)
 	end
 	local dJSON = util.TableToJSON(data)
 	local dComp = util.Compress(dJSON)
-	tinsert(queue, {msgid, trg, name, dComp, cb, 1, dComp:len()})
+	table.insert(queue, {msgid, trg, name, dComp, cb, 1, dComp:len()})
 end
 
 function supernet.Hook(name, cb)
@@ -94,7 +95,7 @@ local function NetReceive(len, ply)
 			print("Invalid message for ID " .. tostring(msgId) .. "from " .. tostring(ply) .. ": Not found")
 			return
 		end
-		tinsert(data[2], dBin)
+		table.insert(data[2], dBin)
 	end
 
 	local bits = data[2]
@@ -129,7 +130,7 @@ local function RunQueue()
 		end
 
 		isNew = true
-		current = tremove(queue, #queue)
+		current = table.remove(queue, #queue)
 	end
 
 	--local msgid = current[1]

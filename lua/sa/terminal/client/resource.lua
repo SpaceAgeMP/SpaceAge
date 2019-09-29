@@ -1,11 +1,7 @@
 local ResourceIcons = {}
 
-local function RegisterResourceIcon(_name, _icon)
-
-	if (_name) then
-		--print(_name .. " icon registered")
-		ResourceIcons[_name] = "spaceage/" .. _icon
-	end
+local function RegisterResourceIcon(name, icon)
+	ResourceIcons[name] = "spaceage/" .. icon
 end
 
 RegisterResourceIcon("ore", "res_icon_solid.png")

@@ -27,9 +27,9 @@ local SA_CrystalRadius
 local SA_Max_Roid_Count
 
 local textBackgroundExtraWidth = 15
-local function GetTextBackgroundWidth(_font, _text)
-	surface.SetFont(_font)
-	return select(1, surface.GetTextSize(_text)) + textBackgroundExtraWidth
+local function GetTextBackgroundWidth(font, text)
+	surface.SetFont(font)
+	return select(1, surface.GetTextSize(text)) + textBackgroundExtraWidth
 end
 
 surface.CreateFont("ServerHUDFontS", { font = "Arial", size = 22, weight = 700, antialias = true, shadow = false})
