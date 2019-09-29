@@ -1,3 +1,4 @@
+-- Find upvalue of function by name
 local function findUpvalue(func, name)
 	for i = 1, 50 do
 			local _name, val = debug.getupvalue(func, i)
@@ -12,6 +13,8 @@ end
 
 SA.OldE2RegisterCallback = SA.OldE2RegisterCallback or registerCallback
 
+-- Overwrite forbidden_classes list of E2 find module to be able to prevent certain classes from being seen
+-- https://github.com/wiremod/wire/blob/master/lua/entities/gmod_wire_expression2/core/find.lua#L16
 local function fixE2FinderCB(func)
 	local filter_default = findUpvalue(func, "filter_default")
 	if not filter_default then
@@ -31,6 +34,7 @@ local function fixE2FinderCB(func)
 	return true
 end
 
+-- Overwrite E2 registerCallback function with hooked version
 function registerCallback(name, func)
 	if name == "construct" then
 		fixE2FinderCB(func)
@@ -38,6 +42,7 @@ function registerCallback(name, func)
 	return SA.OldE2RegisterCallback(name, func)
 end
 
+-- Overwrite existing E2 callbacks on map load
 local function fixE2Finder()
 	if not wire_expression_callbacks then
 		return false
