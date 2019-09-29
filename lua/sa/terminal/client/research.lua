@@ -54,6 +54,16 @@ function PANEL:Init()
 	self.UpgradeButton.DoClick = function()
 		self:UpgradeCommand()
 	end
+	function self.UpgradeButton:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function self.UpgradeButton:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(0,0,0,180),2)
+		return false
+	end
 end
 
 function PANEL:SetDesc()

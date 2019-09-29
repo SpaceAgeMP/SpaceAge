@@ -92,10 +92,34 @@ function SA.Application.CreateGUI(BasePanel)
 	ApplyText:SetNumeric(false)
 	ApplyText:SetEnterAllowed(true)
 
+	ApplyText:SetPaintBackground(false)
+	
+	function ApplyText:Paint( w, h )
+
+		derma.SkinHook( "Paint", "TextEntry", self, w, h )
+
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,8),1)
+
+		return false
+
+	end
+
 	SelFCombo = vgui.Create("DComboBox", BasePanel)
 	--SelFCombo:SetEditable(false)
 	SelFCombo:SetPos(15, 60)
 	SelFCombo:SetSize(BasePanel:GetWide() - 40, 20)
+
+	SelFCombo:SetFont("Trebuchet16")
+	function SelFCombo:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function SelFCombo:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+		return false
+	end
 
 	if not plisleader then
 		ApplyText:SetPos(15, 85)
@@ -121,10 +145,34 @@ function SA.Application.CreateGUI(BasePanel)
 		ApplyButton:SetPos((BasePanel:GetWide() / 2) - 50, BasePanel:GetTall() - 85)
 		ApplyButton:SetSize(100, 40)
 		ApplyButton.DoClick = SA.Application.Do
+		ApplyButton:SetFont("Trebuchet16")
+		function ApplyButton:UpdateColours( skin )
+			if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+			if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+			if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+			return self:SetTextStyleColor( Color(255,255,255,255) )
+		end
+		function ApplyButton:Paint( w, h )
+			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+			return false
+		end
+		
 	else
 		ApplyText:SetPos(15, 110)
 		ApplyText:SetSize(BasePanel:GetWide() - 40, 385)
 		ApplyText:SetEditable(false)
+
+		ApplyText:SetFont("Trebuchet16")
+		function ApplyText:UpdateColours( skin )
+			if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+			if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+			if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+			return self:SetTextStyleColor( Color(255,255,255,255) )
+		end
+		function ApplyText:Paint( w, h )
+			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+			return false
+		end
 
 		PTimeLBL = vgui.Create("DLabel", BasePanel)
 		PTimeLBL:SetPos(20, 85)

@@ -6,6 +6,8 @@ include("sa/terminal/client/goodies.lua")
 
 require("supernet")
 
+local SA_Term_BorderWid = 4
+
 local SA_FactionData = {}
 local ResearchPanels = {}
 local term_info = {}
@@ -83,30 +85,93 @@ local function CreateTerminalGUI()
 	local BasePanel = vgui.Create("DFrame")
 	local x = ScrX / 2
 	local y = ScrY / 2
-	BasePanel:SetPos(x - 400, y - 350)
-	BasePanel:SetSize(800, 700)
+	local w = 840
+	local h = 740
+	BasePanel:SetPos(x - w/2, y - h/2)
+	BasePanel:SetSize(w, h)
 	BasePanel:SetTitle("Terminal v3, Powered by Intel Pentium IV 3.2 GHz Processor!")
 	BasePanel:SetDraggable(true)
 	BasePanel:ShowCloseButton(false)
 	BasePanel:SetBackgroundBlur(true)
 
+	function draw.RoundedBoxOutlined(_rounding, _x, _y, _w, _h, _color, _borderWid, _borderCol)
+
+		if not _borderCol then
+			_borderCol = team.GetColor(LocalPlayer():Team())	
+		end
+
+		if not _borderWid then
+			_borderWid = 2
+		end
+
+		local halfBorder = _borderWid/2
+		local doubleBorder = _borderWid*2
+
+		local horizWid = _w-doubleBorder
+
+		-- draw background
+		draw.RoundedBox( _rounding, _x, _y, _w, _h, _color )
+
+		-- left and right outlines
+		draw.RoundedBoxEx( _rounding, _x, _y, _borderWid, _h, _borderCol)
+		draw.RoundedBoxEx( _rounding, math.floor(_x + _w-_borderWid), _y, _borderWid, _h, _borderCol )
+
+		-- top and bottom outlines
+		-- draw them inside the left and right lines
+		draw.RoundedBox( 0, _x + _borderWid, _y, horizWid, _borderWid, _borderCol )
+
+		draw.RoundedBox( 0, _x + _borderWid, _y + _h-_borderWid, horizWid, _borderWid, _borderCol )
+
+	end
+
+	function BasePanel:Paint( w, h )
+		local border = SA_Term_BorderWid
+
+		local halfBorder = border/2
+		local doubleBorder = border*2
+
+		local horizWid = w-doubleBorder
+
+		draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid)
+
+		
+	end
+
 	SA_Term_GUI = BasePanel
 	SA_Term_GUI.SA_IsTerminalGUI = true
 
-	local guiSizeX = SA_Term_GUI:GetSize()
+	local guiSizeX, guiSizeY = SA_Term_GUI:GetSize()
 
 	local CloseButton = vgui.Create("DButton", BasePanel)
 	CloseButton:SetText("Close Terminal")
-	CloseButton:SetPos(370, 660)
-	CloseButton:SetSize(90, 30)
+	local cl_btn_wid = 110
+	local cl_btn_hei = 40
+	CloseButton:SetPos(guiSizeX/2 - cl_btn_wid/2, guiSizeY-cl_btn_hei-16)
+	CloseButton:SetSize(cl_btn_wid, cl_btn_hei)
 	CloseButton.DoClick = function()
 		RunConsoleCommand("sa_terminal_close")
 	end
 
+	CloseButton:SetFont("Trebuchet16")
+	function CloseButton:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function CloseButton:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+		return false
+	end
+
 	local NodeSelect = vgui.Create("DComboBox", BasePanel)
-	NodeSelect:SetPos(25, 665)
+	NodeSelect:SetPos(25, guiSizeY-38)
 	NodeSelect:SetSize(120, 20)
 	--NodeSelect:SetEditable(false)
+
+	function NodeSelect:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+	end
 
 	local function UpdateNodeSelect(len, ply)
 		NodeSelect:Clear()
@@ -146,19 +211,37 @@ local function CreateTerminalGUI()
 	StatTab.Paint = function()
 		local text = "Stats"
 		local width = GetTextBackgroundWidth(font, text)
-		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 20), 2)
 		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
 	local StatsList = vgui.Create ("DListView", StatTab)
-	StatsList:Dock(FILL)
-	StatsList:SetMultiSelect(false)
+	--StatsList:Dock( FILL )
+	StatsList:SetMultiSelect( false )
 	StatsList:AddColumn("Rank")
 	StatsList:AddColumn("Name")
 	StatsList:AddColumn("Score")
 	StatsList:AddColumn("Faction")
 	StatsList:SetPos(30, 70)
 	StatsList:SetSize(730, 500)
+	StatsList:SetDataHeight(28)
+
+	function StatsList:Paint(w,h)
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
+	end
+
+	for k,v in pairs(StatsList:GetLines()) do
+		function v:UpdateColours( skin )
+
+			if ( self:GetParent():IsLineSelected() ) then return self:SetTextStyleColor( skin.Colours.Label.Bright ) end
+
+			return self:SetTextStyleColor( Color(255,255,255,255) )
+
+		end
+		--draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,1),2)
+	end
+
+	--StatsList:SetPaintBackground(false)
 
 	SA_Term_StatList = StatsList
 
@@ -170,7 +253,7 @@ local function CreateTerminalGUI()
 	GoodieTab.Paint = function()
 		local text = "Goodies"
 		local width = GetTextBackgroundWidth(font, text)
-		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 20), 2)
 		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
@@ -183,8 +266,97 @@ local function CreateTerminalGUI()
 	SA_Term_GoodieList = GoodieList
 
 	local Tabs = vgui.Create("DPropertySheet", BasePanel)
-	Tabs:SetPos(5, 25)
-	Tabs:SetSize(790, 625)
+	local propSheetInset = 50
+	local propSheetW = guiSizeX-propSheetInset
+	local propSheetH = guiSizeY-70 - propSheetInset
+	Tabs:SetPos(propSheetInset/2, 25+propSheetInset/2)
+	Tabs:SetSize(propSheetW, propSheetH)
+
+	function Tabs:Paint()
+
+	end
+
+	--local PANEL = {}
+	--Derma_Hook( PANEL, "Paint", "Paint", "PropertySheet" )
+
+	function Tabs:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip )
+
+		if ( !IsValid( panel ) ) then
+			ErrorNoHalt( "DPropertySheet:AddSheet tried to add invalid panel!" )
+			debug.Trace()
+			return
+		end
+
+		local Sheet = {}
+
+		Sheet.Name = label
+
+		Sheet.Tab = vgui.Create( "DTab", self )
+		Sheet.Tab:SetTooltip( Tooltip )
+
+		function Sheet.Tab:Setup( label, pPropertySheet, pPanel, strMaterial )
+
+				self:SetText( label )
+				self:SetPropertySheet( pPropertySheet )
+				self:SetPanel( pPanel )
+
+
+
+				self:SetFont("DermaLarge")
+
+				if ( strMaterial ) then
+
+					--[[self.Image = vgui.Create( "DImage", self )
+					self.Image:SetImage( strMaterial )
+					self.Image:SetSize(20, 20)
+					self:InvalidateLayout()]]
+
+				end
+
+			end
+
+			
+			Sheet.Tab:Setup( label, self, panel, material )
+
+			
+
+			function Sheet.Tab:GetTabHeight()
+
+				if ( self:IsActive() ) then
+					return 48
+				else
+					return 38
+				end
+
+			end
+
+		Sheet.Tab:Setup( label, self, panel, material )
+
+		function Sheet.Tab:Paint()
+
+		end
+
+		Sheet.Panel = panel
+		Sheet.Panel.NoStretchX = NoStretchX
+		Sheet.Panel.NoStretchY = NoStretchY
+		--Sheet.Panel:SetBackgroundColor(Color(0,0,0,0))
+		Sheet.Panel:SetPos( self:GetPadding(), 20 + self:GetPadding() )
+		Sheet.Panel:SetVisible( false )
+
+		panel:SetParent( self )
+
+		table.insert( self.Items, Sheet )
+
+		if ( !self:GetActiveTab() ) then
+			self:SetActiveTab( Sheet.Tab )
+			Sheet.Panel:SetVisible( true )
+		end
+
+		self.tabScroller:AddPanel( Sheet.Tab )
+
+		return Sheet
+
+	end
 
 	SA.Application.Refresh(true)
 
@@ -195,14 +367,14 @@ local function CreateTerminalGUI()
 
 		local text = "Market"
 		local width = GetTextBackgroundWidth(font, text)
-		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(0, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 20), 2)
 		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-		draw.RoundedBox(6, 30, 70, 730, 240, Color(90, 90, 90, 255))
-		draw.RoundedBox(6, 30, 330, 730, 240, Color(90, 90, 90, 255))
-		draw.RoundedBox(6, 580, 90, 150, 30, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(6, 30, 70, 730, 240, Color(0, 0, 0, 180),2)
+		draw.RoundedBoxOutlined(6, 30, 330, 730, 240, Color(0, 0, 0, 180),2)
+		--draw.RoundedBoxOutlined(6, 580, 90, 150, 30, Color(50, 50, 50, 255),2)
 		draw.SimpleText("Sell Resources", font, 655, 105, Color(255, 255, 255, 255), 1, 1)
-		draw.RoundedBox(6, 580, 350, 150, 30, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(6, 580, 350, 150, 30, Color(50, 50, 50, 20), 2)
 		draw.SimpleText("Buy Resources", font, 655, 365, Color(255, 255, 255, 255), 1, 1)
 	end
 
@@ -214,6 +386,12 @@ local function CreateTerminalGUI()
 	MarkSell:AddColumn("Amount")
 	MarkSell:AddColumn("Price")
 
+	MarkSell:SetDataHeight(28)
+
+	function MarkSell:Paint(w,h)
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
+	end
+
 	SA_Term_MarketSell = MarkSell
 
 	local SellAmount = vgui.Create("DTextEntry", MarketTab)
@@ -222,11 +400,34 @@ local function CreateTerminalGUI()
 	SellAmount:AllowInput(false)
 	SellAmount:SetValue("0")
 	SellAmount:SetNumeric(true)
+	SellAmount:SetPaintBackground(false)
+	function SellAmount:Paint( w, h )
+
+		derma.SkinHook( "Paint", "TextEntry", self, w, h )
+
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),1)
+
+		return false
+
+	end
 
 	local SellButton = vgui.Create("DButton", MarketTab)
 	SellButton:SetPos(600, 250)
 	SellButton:SetSize(110, 30)
 	SellButton:SetText("Sell")
+
+	SellButton:SetFont("Trebuchet16")
+	function SellButton:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function SellButton:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),2)
+		return false
+	end
+
 	SellButton.DoClick = function()
 		local Amount = tonumber(SellAmount:GetValue())
 
@@ -259,6 +460,11 @@ local function CreateTerminalGUI()
 	MarkBuy:SetMultiSelect(false)
 	MarkBuy:AddColumn("Resource")
 	MarkBuy:AddColumn("Price")
+	MarkBuy:SetDataHeight(28)
+
+	function MarkBuy:Paint(w,h)
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
+	end
 
 
 	SA_Term_MarketBuy = MarkBuy
@@ -269,6 +475,16 @@ local function CreateTerminalGUI()
 	BuyAmount:AllowInput(false)
 	BuyAmount:SetValue("0")
 	BuyAmount:SetNumeric(true)
+	BuyAmount:SetPaintBackground(false)
+	function BuyAmount:Paint( w, h )
+
+		derma.SkinHook( "Paint", "TextEntry", self, w, h )
+
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),1)
+
+		return false
+
+	end
 
 	local BuyButton = vgui.Create("DButton", MarketTab)
 	BuyButton:SetPos(600, 510)
@@ -288,6 +504,17 @@ local function CreateTerminalGUI()
 		local Type = tmpX:GetValue(1)
 		RunConsoleCommand("sa_market_buy", Type, Amount, HASH)
 	end
+	BuyButton:SetFont("Trebuchet16")
+	function BuyButton:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function BuyButton:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),2)
+		return false
+	end
 
 	local ResourceTab = vgui.Create ("DPanel")
 	ResourceTab:SetPos(5, 25)
@@ -295,19 +522,19 @@ local function CreateTerminalGUI()
 	ResourceTab.Paint = function()
 		local text = "Resources"
 		local width = GetTextBackgroundWidth(font, text)
-		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 40))
 		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-		draw.RoundedBox(6, 30, 70, 240, 500, Color(90, 90, 90, 255))
-		draw.RoundedBox(6, 275, 70, 240, 500, Color(90, 90, 90, 255))
-		draw.RoundedBox(6, 520, 70, 240, 500, Color(90, 90, 90, 255))
+		draw.RoundedBox(4, 30, 70, 240, 500, Color(20, 20, 20, 140))
+		draw.RoundedBox(4, 275, 70, 240, 500, Color(20, 20, 20, 140))
+		draw.RoundedBox(4, 520, 70, 240, 500, Color(20, 20, 20, 140))
 
-		draw.RoundedBox(4, 35, 75, 230, 40, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(4, 35, 75, 230, 40, Color(50, 50, 50, 20))
 		draw.SimpleText("Temporary / Market", font, 150, 90 + 7, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-		draw.RoundedBox(4, 280, 75, 230, 40, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(4, 280, 75, 230, 40, Color(50, 50, 50, 20))
 		draw.SimpleText("Station", font, 395, 82 + 5, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		draw.SimpleText("(" .. tostring(SA_Term_StationCap) .. " / " .. tostring(SA_Term_StationMax) .. ")", "Trebuchet18", 395, 97 + 8, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-		draw.RoundedBox(4, 525, 75, 230, 40, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(4, 525, 75, 230, 40, Color(50, 50, 50, 20))
 		draw.SimpleText("Ship / Selected Node", font, 640, 90 + 5, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
@@ -336,11 +563,33 @@ local function CreateTerminalGUI()
 	RefineButton:SetPos(35, 533)
 	RefineButton:SetSize(230, 30)
 	RefineButton:SetText("Refine Ore")
+	RefineButton:SetFont("Trebuchet16")
+	function RefineButton:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function RefineButton:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+		return false
+	end
 
 	local RefineButton1 = vgui.Create("DButton", ResourceTab)
 	RefineButton1:SetPos(525, 533)
 	RefineButton1:SetSize(230, 30)
 	RefineButton1:SetText("Refine Ore")
+	RefineButton1:SetFont("Trebuchet16")
+	function RefineButton1:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function RefineButton1:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+		return false
+	end
 
 	RefineButton.DoClick = function()
 		RunConsoleCommand("sa_refine_ore", HASH)
@@ -352,11 +601,36 @@ local function CreateTerminalGUI()
 	BuyStorageAmt:SetSize(100, 20)
 	BuyStorageAmt:SetNumeric(true)
 	BuyStorageAmt:SetValue(5000)
+	BuyStorageAmt:SetFont("Trebuchet16")
+
+	BuyStorageAmt:SetPaintBackground(false)
+	function BuyStorageAmt:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function BuyStorageAmt:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+		return false
+	end
 
 	local BuyStorageButton = vgui.Create("DButton", ResourceTab)
 	BuyStorageButton:SetPos(280, 533)
 	BuyStorageButton:SetSize(125, 30)
 	BuyStorageButton:SetText("Buy Station Storage")
+
+	BuyStorageButton:SetFont("Trebuchet16")
+	function BuyStorageButton:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function BuyStorageButton:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+		return false
+	end
 
 	BuyStorageButton.DoClick = function()
 		RunConsoleCommand("sa_buy_perm_storage", BuyStorageAmt:GetValue(), HASH)
@@ -370,13 +644,13 @@ local function CreateTerminalGUI()
 	ResearchTab:SetPos(5, 25)
 	ResearchTab:SetSize(790, 625)
 	ResearchTab.Paint = function()
-		draw.RoundedBox(4, 355, 10, 80, 30, Color(50, 50, 50, 255))
-		draw.RoundedBox(16, 25, 450, 520, 100, Color(50, 50, 50, 255))
-		draw.RoundedBox(16, 590, 450, 165, 100, Color(50, 50, 50, 255))
+		--draw.RoundedBox(4, 355, 10, 80, 30, Color(50, 50, 50, 255))
+		--draw.RoundedBox(16, 25, 450, 520, 100, Color(50, 50, 50, 255))
+		--draw.RoundedBox(16, 590, 450, 165, 100, Color(50, 50, 50, 255))
 
 		local text = "Research"
 		local width = GetTextBackgroundWidth(font, text)
-		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 20), 4)
 		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
@@ -391,6 +665,10 @@ local function CreateTerminalGUI()
 	local SubResearchTab = vgui.Create("DPropertySheet", ResearchTab)
 	SubResearchTab:SetPos(25, 60)
 	SubResearchTab:SetSize(730, 490)
+
+	function SubResearchTab:Paint(w, h)
+		draw.RoundedBoxOutlined(2,0,39,w,h-48,Color(0,0,0,0),4)
+	end
 
 	local Researches = SA.Research.Get()
 	local ResearchGroups = SA.Research.GetGroups()
@@ -412,6 +690,118 @@ local function CreateTerminalGUI()
 
 		GroupPanels[RGroup] = GroupList
 		GroupPanelItems[RGroup] = {}
+
+		function SubResearchTab:Init()
+
+			self:SetShowIcons( true )
+
+			self.tabScroller = vgui.Create( "DHorizontalScroller", self )
+			self.tabScroller:SetOverlap( 5 )
+			self.tabScroller:Dock( TOP )
+			self.tabScroller:DockMargin( 3, 0, 3, 0 )
+
+			self:SetFadeTime( 0.1 )
+			self:SetPadding( 20 )
+
+			self.animFade = Derma_Anim( "Fade", self, self.CrossFade )
+
+			self.Items = {}
+
+		end
+
+		function SubResearchTab:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip )
+
+			if ( !IsValid( panel ) ) then
+				ErrorNoHalt( "DPropertySheet:AddSheet tried to add invalid panel!" )
+				debug.Trace()
+				return
+			end
+
+			local Sheet = {}
+
+			Sheet.Name = label
+
+			Sheet.Tab = vgui.Create( "DTab", self )
+
+			Sheet.Tab:SetTooltip( Tooltip )
+
+			function Sheet.Tab:PerformLayout()
+
+				self:ApplySchemeSettings()
+
+				if ( !self.Image ) then return end
+
+				self.Image:SetPos( 7, 3 )
+
+				if ( !self:IsActive() ) then
+					self.Image:SetImageColor( Color( 255, 255, 255, 155 ) )
+				else
+					self.Image:SetImageColor( Color( 255, 255, 255, 255 ) )
+				end
+
+			end
+
+			function Sheet.Tab:Setup( label, pPropertySheet, pPanel, strMaterial )
+
+				self:SetText( label )
+				self:SetPropertySheet( pPropertySheet )
+				self:SetPanel( pPanel )
+
+
+
+				self:SetFont("Trebuchet24")
+
+				if ( strMaterial ) then
+
+					self.Image = vgui.Create( "DImage", self )
+					self.Image:SetImage( strMaterial )
+					self.Image:SetSize(24, 24)
+					self:InvalidateLayout()
+
+				end
+
+			end
+
+			
+			Sheet.Tab:Setup( label, self, panel, material )
+
+			function Sheet.Tab:Paint(w,h)
+					--draw.RoundedBoxOutlined(2,2,0,w-4, h,Color(0,0,0,0),1)
+			end
+
+			
+
+			function Sheet.Tab:GetTabHeight()
+
+				if ( self:IsActive() ) then
+					return 38
+				else
+					return 30
+				end
+
+			end
+
+			Sheet.Panel = panel
+			Sheet.Panel.NoStretchX = NoStretchX
+			Sheet.Panel.NoStretchY = NoStretchY
+			--Sheet.Panel:SetBackgroundColor(Color(0,0,0,0))
+			Sheet.Panel:SetPos( self:GetPadding(), 30 + self:GetPadding() )
+			Sheet.Panel:SetVisible( false )
+
+			panel:SetParent( self )
+
+			table.insert( self.Items, Sheet )
+
+			if ( !self:GetActiveTab() ) then
+				self:SetActiveTab( Sheet.Tab )
+				Sheet.Panel:SetVisible( true )
+			end
+
+			self.tabScroller:AddPanel( Sheet.Tab )
+
+			return Sheet
+
+		end
 
 		SubResearchTab:AddSheet(RGroup, GroupPanel, "VGUI/application-monitor", false, false, RGroup)
 	end
@@ -440,7 +830,7 @@ local function CreateTerminalGUI()
 	ApplicationTab.Paint = function()
 		local text = "Application"
 		local width = GetTextBackgroundWidth(font, text)
-		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
+		draw.RoundedBoxOutlined(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 20), 2)
 		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
@@ -455,7 +845,7 @@ local function CreateTerminalGUI()
 		DeveloperTab.Paint = function()
 			local text = "Development"
 			local width = GetTextBackgroundWidth(font, text)
-			draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
+			draw.RoundedBoxOutlined(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 20), 2)
 			draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
@@ -464,6 +854,16 @@ local function CreateTerminalGUI()
 		SA_MaxCrystalCount:SetEditable(true)
 		SA_MaxCrystalCount:SetPos(270, 60)
 		SA_MaxCrystalCount:SetSize(100, 20)
+		SA_MaxCrystalCount:SetPaintBackground(false)
+		function SA_MaxCrystalCount:Paint( w, h )
+
+			derma.SkinHook( "Paint", "TextEntry", self, w, h )
+
+			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
+
+			return false
+
+		end
 
 		local SA_MaxCrystalCount_LBL = vgui.Create("DLabel", DeveloperTab)
 		SA_MaxCrystalCount_LBL:SetText("Maximum Crystals per Tower:")
@@ -475,6 +875,16 @@ local function CreateTerminalGUI()
 		SA_CrystalRadius:SetEditable(true)
 		SA_CrystalRadius:SetPos(270, 85)
 		SA_CrystalRadius:SetSize(100, 20)
+		SA_CrystalRadius:SetPaintBackground(false)
+		function SA_CrystalRadius:Paint( w, h )
+
+			derma.SkinHook( "Paint", "TextEntry", self, w, h )
+
+			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
+
+			return false
+
+		end
 
 		local SA_CrystalRadius_LBL = vgui.Create("DLabel", DeveloperTab)
 		SA_CrystalRadius_LBL:SetText("Maximum Radius of Crystals around Tower:")
@@ -486,6 +896,17 @@ local function CreateTerminalGUI()
 		SA_Max_Roid_Count:SetEditable(true)
 		SA_Max_Roid_Count:SetPos(270, 110)
 		SA_Max_Roid_Count:SetSize(100, 20)
+
+		SA_Max_Roid_Count:SetPaintBackground(false)
+		function SA_Max_Roid_Count:Paint( w, h )
+
+			derma.SkinHook( "Paint", "TextEntry", self, w, h )
+
+			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
+
+			return false
+
+		end
 
 		local SA_Max_Roid_Count_LBL = vgui.Create("DLabel", DeveloperTab)
 		SA_Max_Roid_Count_LBL:SetText("Maximum Asteroids:")
@@ -569,7 +990,7 @@ local function CreateTerminalGUI()
 
 
 	if DeveloperTab then
-		Tabs:AddSheet("Development", DeveloperTab, "VGUI/bank", false, false, "Development")
+		Tabs:AddSheet("Dev", DeveloperTab, "VGUI/bank", false, false, "Development")
 	end
 
 	BasePanel:MakePopup()
@@ -658,6 +1079,17 @@ local function sa_term_update(ply, tbl)
 	if SA_UpgradeLevelButton then
 		SA_UpgradeLevelButton:SetDisabled(not canReset)
 		SA_UpgradeLevelButton:SetText("Advance Level (current: " .. tostring(lv) .. " / 5) [Price: " .. SA.AddCommasToInt(5000000000 * (lv * lv)) .. "]")
+		SA_UpgradeLevelButton:SetFont("Trebuchet16")
+		function SA_UpgradeLevelButton:UpdateColours( skin )
+			if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+			if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+			if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+			return self:SetTextStyleColor( Color(255,255,255,255) )
+		end
+		function SA_UpgradeLevelButton:Paint( w, h )
+			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+			return false
+		end
 	end
 
 
