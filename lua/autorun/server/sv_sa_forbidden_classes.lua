@@ -1,6 +1,9 @@
 local function findUpvalue(func, name)
 	for i = 1, 50 do
 			local _name, val = debug.getupvalue(func, i)
+			if not _name then
+				return
+			end
 			if _name == name then
 					return val
 			end
