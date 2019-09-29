@@ -6,13 +6,24 @@ local defaultText = "Hi"
 local defaultFaction = "miners"
 
 SA.Application = {}
-SA.Application.Me = {}
 SA.Application.Table = {}
-SA.Application.Me.Text = defaultText
-SA.Application.Me.Faction = defaultFaction
+
+local function InitSelfApplication()
+	if not SA.Application.Me then
+		SA.Application.Me = {}
+	end
+	if not SA.Application.Me.Text then
+		SA.Application.Me.Text = defaultText
+	end
+	if not SA.Application.Me.FactionName then
+		SA.Application.Me.FactionName = defaultFaction
+	end
+end
+InitSelfApplication()
 
 local function SA_Applications_Player(ply, data)
 	SA.Application.Me = data
+	InitSelfApplication()
 	SA.Application.Refresh()
 end
 supernet.Hook("SA_Applications_Player", SA_Applications_Player)
@@ -100,7 +111,7 @@ function SA.Application.CreateGUI(BasePanel)
 		SelFCombo:AddChoice("Star Fleet")
 
 		function SelFCombo:OnSelect(index, value, data)
-			SA.Application.Me.FactionName = SA.Factions.ToShort[data]
+			SA.Application.Me.FactionName = SA.Factions.ToShort[value] or defaultFaction
 		end
 
 		SelFCombo:ChooseOption(SA.Factions.ToLong[SA.Application.Me.FactionName or defaultFaction])
