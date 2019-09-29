@@ -1,1 +1,72 @@
-{"Add":[{"Position":[3865.0,-10656.0,-1991.0],"Name":"Cerebus","Radius":700.0},{"Position":[4023.0,-9866.0,-2047.0],"Name":"Cerebus","Radius":640.0},{"Position":[4649.0,-8871.0,-2048.0],"Name":"Cerebus","Radius":200.0},{"Position":[4641.0,-8459.0,-2048.0],"Name":"Cerebus","Radius":200.0},{"Position":[4629.0,-7994.0,-2048.0],"Name":"Cerebus","Radius":200.0},{"Position":[4880.0,-9155.0,-1911.0],"Name":"Cerebus","Radius":100.0},{"Position":[5379.0,-9155.0,-1911.0],"Name":"Cerebus","Radius":100.0}],"Protect":["hiigara","coruscant","cerebus"]}
+{
+  "Add": [
+    {
+      "Position": [
+        3865,
+        -10656,
+        -1991
+      ],
+      "Name": "Cerebus",
+      "Radius": 700
+    },
+    {
+      "Position": [
+        4023,
+        -9866,
+        -2047
+      ],
+      "Name": "Cerebus",
+      "Radius": 640
+    },
+    {
+      "Position": [
+        4649,
+        -8871,
+        -2048
+      ],
+      "Name": "Cerebus",
+      "Radius": 200
+    },
+    {
+      "Position": [
+        4641,
+        -8459,
+        -2048
+      ],
+      "Name": "Cerebus",
+      "Radius": 200
+    },
+    {
+      "Position": [
+        4629,
+        -7994,
+        -2048
+      ],
+      "Name": "Cerebus",
+      "Radius": 200
+    },
+    {
+      "Position": [
+        4880,
+        -9155,
+        -1911
+      ],
+      "Name": "Cerebus",
+      "Radius": 100
+    },
+    {
+      "Position": [
+        5379,
+        -9155,
+        -1911
+      ],
+      "Name": "Cerebus",
+      "Radius": 100
+    }
+  ],
+  "Protect": [
+    "hiigara",
+    "coruscant",
+    "cerebus"
+  ]
+}

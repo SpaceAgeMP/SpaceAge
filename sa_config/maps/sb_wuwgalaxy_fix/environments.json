@@ -1,1 +1,67 @@
-{"Remove":["space station"],"Add":[{"Position":[8368.0,2689.0,7096.0],"Name":"Space Station","Radius":1150.0},{"Position":[8335.0,3257.0,7107.0],"Name":"Space Station","Radius":600.0},{"Position":[8997.0,3767.0,7099.0],"Name":"Space Station","Radius":850.0},{"Position":[8453.0,3762.0,7093.0],"Name":"Space Station","Radius":850.0},{"Position":[8338.0,4356.0,7079.0],"Name":"Space Station","Radius":800.0},{"Position":[8420.0,5365.0,7122.0],"Name":"Space Station","Radius":2500.0}],"Protect":["space station"],"Terraform":["space station"]}
+{
+  "Remove": [
+    "space station"
+  ],
+  "Add": [
+    {
+      "Position": [
+        8368,
+        2689,
+        7096
+      ],
+      "Name": "Space Station",
+      "Radius": 1150
+    },
+    {
+      "Position": [
+        8335,
+        3257,
+        7107
+      ],
+      "Name": "Space Station",
+      "Radius": 600
+    },
+    {
+      "Position": [
+        8997,
+        3767,
+        7099
+      ],
+      "Name": "Space Station",
+      "Radius": 850
+    },
+    {
+      "Position": [
+        8453,
+        3762,
+        7093
+      ],
+      "Name": "Space Station",
+      "Radius": 850
+    },
+    {
+      "Position": [
+        8338,
+        4356,
+        7079
+      ],
+      "Name": "Space Station",
+      "Radius": 800
+    },
+    {
+      "Position": [
+        8420,
+        5365,
+        7122
+      ],
+      "Name": "Space Station",
+      "Radius": 2500
+    }
+  ],
+  "Protect": [
+    "space station"
+  ],
+  "Terraform": [
+    "space station"
+  ]
+}
