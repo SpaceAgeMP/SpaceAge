@@ -48,15 +48,9 @@ local function CreateTeleportPanel()
 
 	function BasePanel:Paint( w, h )
 		local border = 4
-
-		local halfBorder = border/2
 		local doubleBorder = border*2
 
-		local horizWid = w-doubleBorder
-
 		draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid)
-
-		
 	end
 
 	local TeleLBox = vgui.Create("DListView", BasePanel)
@@ -91,7 +85,7 @@ local function CreateTeleportPanel()
 	end
 	AcceptButton:SetFont("Trebuchet16")
 	function AcceptButton:UpdateColours( skin )
-		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( not self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
 		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
 		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
 		return self:SetTextStyleColor( Color(255,255,255,255) )
@@ -111,7 +105,7 @@ local function CreateTeleportPanel()
 	end
 	DenyButton:SetFont("Trebuchet16")
 	function DenyButton:UpdateColours( skin )
-		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( not self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
 		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
 		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
 		return self:SetTextStyleColor( Color(255,255,255,255) )
