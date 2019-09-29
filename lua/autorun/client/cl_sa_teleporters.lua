@@ -46,11 +46,30 @@ local function CreateTeleportPanel()
 	BasePanel:ShowCloseButton(false)
 	BasePanel:SetDeleteOnClose(false)
 
+	function BasePanel:Paint( w, h )
+		local border = 4
+
+		local halfBorder = border/2
+		local doubleBorder = border*2
+
+		local horizWid = w-doubleBorder
+
+		draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid)
+
+		
+	end
+
 	local TeleLBox = vgui.Create("DListView", BasePanel)
 	TeleLBox:SetMultiSelect(false)
 	TeleLBox:SetPos(20, 30)
 	TeleLBox:AddColumn("Name")
 	TeleLBox:SetSize(BasePanel:GetWide() - 40, 405)
+
+	TeleLBox:SetDataHeight(28)
+
+	function TeleLBox:Paint(w,h)
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,50),2)
+	end
 
 	SA_TeleportLocaLBox = TeleLBox
 
@@ -70,7 +89,19 @@ local function CreateTeleportPanel()
 			end
 		end
 	end
+	AcceptButton:SetFont("Trebuchet16")
+	function AcceptButton:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function AcceptButton:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+		return false
+	end
 	SA_TeleportLocaLBox.DoDoubleClick = AcceptButton.DoClick
+
 	local DenyButton = vgui.Create("DButton", BasePanel)
 	DenyButton:SetText("Cancel")
 	DenyButton:SetPos((BasePanel:GetWide() / 2) + 5, BasePanel:GetTall() - 45)
@@ -78,6 +109,18 @@ local function CreateTeleportPanel()
 	DenyButton.DoClick = function()
 		RunConsoleCommand("sa_teleporter_cancel")
 	end
+	DenyButton:SetFont("Trebuchet16")
+	function DenyButton:UpdateColours( skin )
+		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+		return self:SetTextStyleColor( Color(255,255,255,255) )
+	end
+	function DenyButton:Paint( w, h )
+		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+		return false
+	end
+
 	BasePanel:SetVisible(false)
 	SA_TeleportPanel = BasePanel
 	RefreshTeleportPanel()
