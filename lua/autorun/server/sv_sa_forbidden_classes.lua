@@ -7,6 +7,34 @@ local function findUpvalue(func, name)
 	end
 end
 
+SA.OldE2RegisterCallback = SA.OldE2RegisterCallback or registerCallback
+
+local function fixE2FinderCB(func)
+	local filter_default = findUpvalue(func, "filter_default")
+	if not filter_default then
+		return false
+	end
+
+	local forbidden_classes = findUpvalue(filter_default, "forbidden_classes")
+	if not forbidden_classes then
+		return false
+	end
+
+	if forbidden_classes.iceroid then
+		return true
+	end
+
+	forbidden_classes.iceroid = true
+	return true
+end
+
+function registerCallback(name, func)
+	if name == "construct" then
+		fixE2FinderCB(func)
+	end
+	return SA.OldE2RegisterCallback(name, func)
+end
+
 local function fixE2Finder()
 	if not wire_expression_callbacks then
 		return false
@@ -17,32 +45,18 @@ local function fixE2Finder()
 		return false
 	end
 
-	local filter_default
 	for _, func in pairs(construct_callbacks) do
-			filter_default = findUpvalue(func, "filter_default")
-			if filter_default then
-					break
-			end
+		if fixE2FinderCB(func) then
+			return true
+		end
 	end
 
-	if not filter_default then
-		return false
-	end
-
-	local forbidden_classes = findUpvalue(filter_default, "forbidden_classes")
-	if not forbidden_classes then
-		return false
-	end
-
-	forbidden_classes["iceroid"] = true
-	--forbidden_classes["sa_crystal"] = true
-	--forbidden_classes["sa_crystalroid"] = true
-	--forbidden_classes["sa_crystaltower"] = true
-	return true
+	return false
 end
 
 timer.Create("SA_Fix_E2_Finder", 1, 0, function()
 	if fixE2Finder() then
 		timer.Remove("SA_Fix_E2_Finder")
+		wire_expression2_reload()
 	end
 end)
