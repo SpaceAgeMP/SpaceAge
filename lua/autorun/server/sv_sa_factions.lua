@@ -3,11 +3,11 @@ AddCSLuaFile("autorun/client/cl_sa_application.lua")
 require("supernet")
 local SA_FactionData = {}
 
-local function SetFactionSpawn(...)
+local function SetFactionSpawn(tbl)
 	local ent = {}
-	for _, pos in ipairs({...}) do
+	for _, pos in ipairs(tbl) do
 		local entx = ents.Create("info_player_start")
-		entx:SetPos(pos)
+		entx:SetPos(Vector(unpack(pos)))
 		entx:Spawn()
 		entx.IsSpaceAge = true
 		table.insert(ent, entx)
@@ -19,73 +19,14 @@ local function InitSAFactions()
 		if v.IsSpaceAge then v:Remove() end
 	end
 
-	local mapname = string.lower(game.GetMap())
-	if mapname == "sb_gooniverse" or mapname == "sb_gooniverse_v4" then
-		SA.Factions.Table[1][6] = SetFactionSpawn(
-			Vector(-10582.343750, -7122.343750, -8011.968750),
-			Vector(-10599.000000, -7483.375000, -8011.968750),
-			Vector(-10610.656250, -7735.750000, -8011.968750)
-		)
-		SA.Factions.Table[2][6] = SetFactionSpawn(
-			Vector(9640.250000, 10959.062500, 4652.000000),
-			Vector(10621.593750, 10793.406250, 4652.031250),
-			Vector(10224.375000, 10891.750000, 4651.375000)
-		)
-		SA.Factions.Table[3][6] = SetFactionSpawn(
-			Vector(3779.468750, -10047.125000, -1983.968750),
-			Vector(3816.062500, -9695.156250, -1983.968750),
-			Vector(3835.593750, -9507.312500, -1983.968750)
-		)
-		SA.Factions.Table[4][6] = SetFactionSpawn(
-			Vector(113.125000, 794.843750, 4660.031250),
-			Vector(113.000000, 714.718750, 4660.031250),
-			Vector(112.906250, 647.562500, 4660.031250)
-		)
-		SA.Factions.Table[5][6] = SetFactionSpawn(
-			Vector(-121.625000, -695.156250, 4660.031250),
-			Vector(-125.218750, -763.937500, 4660.031250),
-			Vector(-129.562500, -847.718750, 4660.031250)
-		)
-	elseif mapname == "sb_forlorn_sb3_r2l" or mapname == "sb_forlorn_sb3_r3" then
-		SA.Factions.Table[1][6] = SetFactionSpawn(
-			Vector(7769.562500, -11401.250000, -8954.968750),
-			Vector(7504.875000, -11396.343750, -8954.968750),
-			Vector(7245.843750, -11400.531250, -8954.968750)
-		)
-		SA.Factions.Table[2][6] = SetFactionSpawn(
-			Vector(9749.156250, 9996.843750, 400.031250),
-			Vector(9417.656250, 9998.156250, 400.031250),
-			Vector(9090.000000, 9999.437500, 400.031250)
-		)
-		SA.Factions.Table[3][6] = SetFactionSpawn(
-			Vector(10653.000000, 11797.906250, -8822.750000),
-			Vector(10700.468750, 11856.687500, -8823.593750),
-			Vector(10753.812500, 11922.750000, -8824.5937)
-		)
-		SA.Factions.Table[4][6] = SetFactionSpawn(
-			Vector(9749.156250, 9996.843750, 611.593750),
-			Vector(9417.656250, 9998.156250, 611.593750),
-			Vector(9090.000000, 9999.437500, 611.593750)
-		)
-		SA.Factions.Table[5][6] = SetFactionSpawn(
-			Vector(9596.812500, 10761.187500, 874.031250),
-			Vector(9453.125000, 10768.406250, 874.031250),
-			Vector(9260.718750, 10778.031250, 874.031250)
-		)
-	elseif mapname == "sb_forlorn_sb3_r3" then
-		for _, v in pairs(SA.Factions.Table) do
-			v[6] = SetFactionSpawn(
-				Vector(10864, 1078, 305),
-				Vector(10864, 1178, 305),
-				Vector(10864, 978, 305),
-				Vector(10964, 1078, 305),
-				Vector(10764, 1078, 305)
-			)
-		end
+	local spawns = SA.Config.Load("faction_spawns")
+	if not spawns then
+		return
 	end
-	SA.Factions.Table[6][6] = SA.Factions.Table[5][6] --ALLIANCE
 
-	SA.Factions.Table[SA.Factions.Max + 1][6] = SA.Factions.Table[1][6]
+	for name, fSpawns in pairs(spawns) do
+		SA.Factions.Table[SA.Factions.IndexByShort[name]][6] = SetFactionSpawn(fSpawns)
+	end
 end
 timer.Simple(0, InitSAFactions)
 

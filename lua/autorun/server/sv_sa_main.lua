@@ -74,29 +74,23 @@ local function SA_InitSpawn(ply)
 end
 hook.Add("PlayerInitialSpawn", "SA_LoadPlayer", SA_InitSpawn)
 
-hook.Add("Initialize", "SA_MapCleanInitialize", function()
-	local map = game.GetMap():lower()
-	if map == "sb_forlorn_sb3_r2l" or map == "sb_forlorn_sb3_r3" then
-		timer.Simple(5, function()
-			for k, v in pairs(ents.FindByClass("func_breakable")) do
-				v:Remove()
-			end
-		end)
-	elseif map == "gm_galactic_rc1" then
-		timer.Simple(5, function()
-			for k, v in pairs(ents.FindByClass("prop_physics_multiplayer")) do
-				v:Remove()
-			end
-			ents.FindInSphere(Vector(1046, -7648, -3798.2813), 5)[1]:Fire("kill", "", 0) --:Remove() -- Remove Teleporter Button (Spawns Hula Dolls)
-			ents.FindInSphere(Vector(556, -7740, -3798.2813), 5)[1]:Fire("kill", "", 0) --:Remove() -- Remove Jet Engine Button (Spams console with errors after a while)
-		end)
-	elseif map == "sb_gooniverse_v4" or map == "sb_gooniverse" then
-		timer.Simple(5, function()
-			for k, v in pairs(ents.FindByClass("func_physbox_multiplayer")) do
-				v:Remove()
-			end
-		end)
+local function SA_MapCleanInitialize()
+	local entityToRemove = SA.Config.Load("remove_entities")
+	if not entityToRemove then
+		return
 	end
+
+	if entityToRemove.Classes then
+		for _, cls in pairs(entityToRemove.Classes) do
+			for _, ent in pairs(ents.FindByClass(cls)) do
+				ent:Remove()
+			end
+		end
+	end
+end
+
+hook.Add("Initialize", "SA_MapCleanInitialize", function()
+	timer.Simple(5, SA_MapCleanInitialize)
 end)
 
 local function AddSAData(ply)
