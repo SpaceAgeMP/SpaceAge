@@ -245,9 +245,7 @@ concommand.Add("sa_print_environment", function(ply)
 end)
 
 timer.Simple(1, function()
-	for k,v in pairs (ents.GetAll()) do
-		if v:GetModel() == "models/props_lab/huladoll.mdl" then
-			v:SetRenderMode(RENDERMODE_NONE)
-		end
+	for k,v in pairs (ents.FindByModel("models/props_lab/huladoll.mdl")) do1
+		v:SetNoDraw(true)
 	end
 end)
