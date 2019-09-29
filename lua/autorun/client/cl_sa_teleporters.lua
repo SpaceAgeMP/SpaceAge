@@ -48,7 +48,6 @@ local function CreateTeleportPanel()
 
 	function BasePanel:Paint( w, h )
 		local border = 4
-		local doubleBorder = border*2
 
 		draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid)
 	end
