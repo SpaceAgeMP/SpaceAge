@@ -60,7 +60,7 @@ local function InitHabitablePlanets()
 	local toRemove = {}
 	local toProtect = {}
 	local mapname = string.lower(game.GetMap())
-	local dirname = "Spaceage/planetsave/" .. mapname .. "/"
+	local dirname = "sa_planetsave/" .. mapname .. "/"
 	if mapname == "sb_new_worlds_2" then
 		toTerraform = {"naar'ak asteroid base"}
 		toAdd = {{"Naar'ak Asteroid Base", Vector(-9275, -9818, -11428), 900},
@@ -202,7 +202,7 @@ end
 timer.Create("SA_PlanetBackfall", 50, 0, SA_PlanetRestore)
 
 function SA.Planets.Save()
-	local dirname = "spaceage/planetsave/" .. string.lower(game.GetMap()) .. "/"
+	local dirname = "sa_planetsave/" .. string.lower(game.GetMap()) .. "/"
 	if not file.Exists(dirname, "DATA") then
 		file.CreateDir(dirname)
 	end
@@ -218,7 +218,7 @@ concommand.Add("sa_restart_environment", function(ply)
 	if ply:GetLevel() < 3 then return end
 	for k, v in pairs(SA_MyPlanets) do
 		local envname = string.lower(v.sbenvironment.name)
-		local filename = "spaceage/planetsave/" .. string.lower(game:GetMap()) .. "/" .. envname .. "_default.txt"
+		local filename = "sa_planetsave/" .. string.lower(game:GetMap()) .. "/" .. envname .. "_default.txt"
 		if file.Exists(filename, "DATA") then
 			local envfile = file.Read(filename)
 			local envdata = util.JSONToTable(envfile)

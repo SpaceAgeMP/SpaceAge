@@ -49,26 +49,28 @@ function TOOL:RightClick(tr)
 	if CLIENT then return end
 	local owner = self:GetOwner()
 	if not owner:IsSuperAdmin() then owner:ChatPrint("You are not authorized to use this.") return false end
-	local output = util.TableToJSON(owner.Autospawner2List)
-	--local removelist = owner.Autospawner2List
-	if not file.IsDir("spaceage/autospawn2") then
-		file.CreateDir("spaceage/autospawn2")
+	if not file.IsDir("autospawn2_tmp") then
+		file.CreateDir("autospawn2_tmp")
 	end
 	local mapname = game.GetMap():lower()
-	local filename = "spaceage/autospawn2/" .. mapname .. ".txt"
+	local filename = "autospawn2_tmp/" .. mapname .. ".txt"
 	if file.Exists(filename, "DATA") then
 		local oldfile = file.Read(filename)
 		local olddata = util.JSONToTable(oldfile)
-		for k, v in pairs(olddata) do
+		for _, v in pairs(olddata) do
 			table.insert(owner.Autospawner2List, v)
 		end
 		output = util.TableToJSON(owner.Autospawner2List)
-		file.Delete(filename)
+	else
+		local oldConfig = SA.Config.Load("autospawn2")
+		if oldConfig then
+			for _, v in pairs(oldConfig) do
+				table.insert(owner.Autospawner2List, v)
+			end
+		end
 	end
-	file.Write(filename, output)
-	--for k, v in pairs(removelist) do if(v and v:IsValid()) then v:Remove() end end
+	file.Write(filename, util.TableToJSON(owner.Autospawner2List))
 	owner.Autospawner2List = {}
-	removelist = {}
 	owner:ChatPrint("Saved File")
 end
 

@@ -257,11 +257,11 @@ local function SA_Autospawner(ply)
 			v:Remove()
 		end
 	end
-	local mapname = game.GetMap():lower()
 
-	local filename = "spaceage/autospawn2/" .. mapname .. ".txt"
-	if file.Exists(filename, "DATA") then
-		for k, v in pairs(util.JSONToTable(file.Read(filename))) do
+	local autospawn2 = SA.Config.Load("autospawn2")
+
+	if autospawn2 then
+		for k, v in pairs(autospawn2) do
 			local spawn = ents.Create(v.class)
 			if not SA.ValidEntity(spawn) then
 				print("Could not create: " .. v.class)
@@ -299,7 +299,7 @@ end
 timer.Simple(1, SA_Autospawner)
 concommand.Add("sa_autospawn_run", function(ply) if ply:GetLevel() >= 3 then SA_Autospawner(ply) end end)
 
-local SA_Don_Toollist = util.JSONToTable(file.Read("spaceage/donator/toollist.txt"))
+local SA_Don_Toollist = SA.Config.Load("donator_tools", true)
 
 local function SA_DonatorCanTool(ply, tr, mode)
 	for k, v in pairs(SA_Don_Toollist) do

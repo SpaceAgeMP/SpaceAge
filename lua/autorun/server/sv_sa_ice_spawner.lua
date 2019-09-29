@@ -67,9 +67,9 @@ local function AM_Spawn_Ice(tbl)
 end
 
 timer.Simple(1, function()
-	local iceTxt = file.Read("spaceage/ice/maps/" .. game.GetMap():lower() .. ".txt")
-	if not iceTxt then
+	local ice = SA.Config.Load("ice")
+	if not ice then
 		return
 	end
-	AM_Spawn_Ice(util.JSONToTable(iceTxt))
+	AM_Spawn_Ice(ice)
 end)

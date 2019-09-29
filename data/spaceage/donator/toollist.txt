@@ -1,6 +1,0 @@
-[
-  "shuttle_stool",
-  "ol_stacker",
-  "smartwelder",
-  "rt_antinoclip"
-]

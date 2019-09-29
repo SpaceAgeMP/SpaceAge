@@ -12,7 +12,7 @@ end
 if SERVER then
 	AddCSLuaFile()
 
-	local apiConfig = util.JSONToTable(file.Read("spaceage/config/api.txt"))
+	local apiConfig = SA.Config.Load("api", true)
 	if apiConfig.auth then
 		API_HEADERS.Authorization = apiConfig.auth
 	end

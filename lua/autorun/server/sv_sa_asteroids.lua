@@ -46,24 +46,20 @@ local function SpawnAsteroid(model, pos, size)
 end
 
 local function CreateAsteroids(cnt, noamount)
-	local Afield = {}
-	local filename = "spaceage/asteroids/" .. game.GetMap() .. ".txt"
-	local roids
-	if file.Exists(filename, "DATA") then
-		roids = util.JSONToTable(file.Read(filename))
-		Afield.x, Afield.y, Afield.z, Afield.radius, Afield.num = roids.x, roids.y, roids.z, roids.radius, roids.amount
-	else
+	local roids = SA.Config.Load("asteroids")
+	if not roids then
 		return
 	end
+
 	if not noamount then
 		SA.Asteroids.MaxCount = roids.amount
 	end
 	if (cnt ~= 0) then
-		Afield.num = cnt
+		roids.num = cnt
 	end
-	for k = 1, Afield.num do
+	for k = 1, roids.num do
 		local picked = math.random(1, table.Count(AllAsteroids))
-		SpawnAsteroid(AllAsteroids[picked][1], Vector(Afield.x + math.random(-Afield.radius, Afield.radius), Afield.y + math.random(-Afield.radius, Afield.radius), Afield.z + (math.random(-Afield.radius, Afield.radius) / 2)), AllAsteroids[picked][2])
+		SpawnAsteroid(AllAsteroids[picked][1], Vector(roids.x + math.random(-roids.radius, roids.radius), roids.y + math.random(-roids.radius, roids.radius), roids.z + (math.random(-roids.radius, roids.radius) / 2)), AllAsteroids[picked][2])
 	end
 end
 timer.Simple(5, function() CreateAsteroids(0) end)
