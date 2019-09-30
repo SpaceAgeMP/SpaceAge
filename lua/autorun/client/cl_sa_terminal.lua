@@ -28,6 +28,43 @@ local SA_MaxCrystalCount
 local SA_CrystalRadius
 local SA_Max_Roid_Count
 
+local SA_Paint_ListView = function(w, h)
+	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
+end
+
+local SA_Paint_TextEntry = function(w, h)
+	derma.SkinHook( "Paint", "TextEntry", self, w, h )
+
+	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
+
+	return false
+end
+
+local SA_Paint_PropSheet = function(w, h)
+	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+end
+local SA_Paint_ListView = function(w, h)
+	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
+end
+
+local SA_Paint_Button = function(w, h)
+	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
+end
+local SA_Paint_Button_Opaque = function(w, h)
+	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
+end
+
+local SA_Paint_Panel = function(w, h)
+	draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid)
+end
+
+local SA_UpdateColors_Button_White = function ( skin )
+	if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+	if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+	if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+	return self:SetTextStyleColor( Color(255,255,255,255) )
+end
+
 local textBackgroundExtraWidth = 15
 local function GetTextBackgroundWidth(font, text)
 	surface.SetFont(font)
@@ -124,18 +161,7 @@ local function CreateTerminalGUI()
 
 	end
 
-	function BasePanel:Paint( w, h )
-		local border = SA_Term_BorderWid
-
-		local halfBorder = border/2
-		local doubleBorder = border*2
-
-		local horizWid = w-doubleBorder
-
-		draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid)
-
-		
-	end
+	BasePanel.Paint = SA_Paint_Panel
 
 	SA_Term_GUI = BasePanel
 	SA_Term_GUI.SA_IsTerminalGUI = true
@@ -153,25 +179,15 @@ local function CreateTerminalGUI()
 	end
 
 	CloseButton:SetFont("Trebuchet16")
-	function CloseButton:UpdateColours( skin )
-		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
-		return self:SetTextStyleColor( Color(255,255,255,255) )
-	end
-	function CloseButton:Paint( w, h )
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
-		return false
-	end
+	CloseButton.UpdateColours = SA_UpdateColors_Button_White
+	CloseButton.Paint = SA_Paint_Button
 
 	local NodeSelect = vgui.Create("DComboBox", BasePanel)
 	NodeSelect:SetPos(25, guiSizeY-38)
 	NodeSelect:SetSize(120, 20)
 	--NodeSelect:SetEditable(false)
 
-	function NodeSelect:Paint( w, h )
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
-	end
+	NodeSelect.Paint = SA_Paint_Button
 
 	local function UpdateNodeSelect(len, ply)
 		NodeSelect:Clear()
@@ -226,20 +242,7 @@ local function CreateTerminalGUI()
 	StatsList:SetSize(730, 500)
 	StatsList:SetDataHeight(28)
 
-	function StatsList:Paint(w,h)
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
-	end
-
-	for k,v in pairs(StatsList:GetLines()) do
-		function v:UpdateColours( skin )
-
-			if ( self:GetParent():IsLineSelected() ) then return self:SetTextStyleColor( skin.Colours.Label.Bright ) end
-
-			return self:SetTextStyleColor( Color(255,255,255,255) )
-
-		end
-		--draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,1),2)
-	end
+	StatsList.Paint = SA_Paint_ListView
 
 	--StatsList:SetPaintBackground(false)
 
@@ -388,9 +391,7 @@ local function CreateTerminalGUI()
 
 	MarkSell:SetDataHeight(28)
 
-	function MarkSell:Paint(w,h)
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
-	end
+	MarkSell.Paint = SA_Paint_Button_Opaque
 
 	SA_Term_MarketSell = MarkSell
 
@@ -401,15 +402,8 @@ local function CreateTerminalGUI()
 	SellAmount:SetValue("0")
 	SellAmount:SetNumeric(true)
 	SellAmount:SetPaintBackground(false)
-	function SellAmount:Paint( w, h )
 
-		derma.SkinHook( "Paint", "TextEntry", self, w, h )
-
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),1)
-
-		return false
-
-	end
+	SellAmount.Paint = SA_Paint_Button_Opaque
 
 	local SellButton = vgui.Create("DButton", MarketTab)
 	SellButton:SetPos(600, 250)
@@ -417,16 +411,8 @@ local function CreateTerminalGUI()
 	SellButton:SetText("Sell")
 
 	SellButton:SetFont("Trebuchet16")
-	function SellButton:UpdateColours( skin )
-		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
-		return self:SetTextStyleColor( Color(255,255,255,255) )
-	end
-	function SellButton:Paint( w, h )
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),2)
-		return false
-	end
+	SellButton.UpdateColours = SA_UpdateColors_Button_White
+	SellButton.Paint = SA_Paint_Button
 
 	SellButton.DoClick = function()
 		local Amount = tonumber(SellAmount:GetValue())
@@ -462,9 +448,7 @@ local function CreateTerminalGUI()
 	MarkBuy:AddColumn("Price")
 	MarkBuy:SetDataHeight(28)
 
-	function MarkBuy:Paint(w,h)
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
-	end
+	MarkBuy.Paint = SA_Paint_Button_Opaque
 
 
 	SA_Term_MarketBuy = MarkBuy
@@ -476,15 +460,7 @@ local function CreateTerminalGUI()
 	BuyAmount:SetValue("0")
 	BuyAmount:SetNumeric(true)
 	BuyAmount:SetPaintBackground(false)
-	function BuyAmount:Paint( w, h )
-
-		derma.SkinHook( "Paint", "TextEntry", self, w, h )
-
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),1)
-
-		return false
-
-	end
+	BuyAmount.Paint = SA_Paint_TextEntry
 
 	local BuyButton = vgui.Create("DButton", MarketTab)
 	BuyButton:SetPos(600, 510)
@@ -505,16 +481,8 @@ local function CreateTerminalGUI()
 		RunConsoleCommand("sa_market_buy", Type, Amount, HASH)
 	end
 	BuyButton:SetFont("Trebuchet16")
-	function BuyButton:UpdateColours( skin )
-		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
-		return self:SetTextStyleColor( Color(255,255,255,255) )
-	end
-	function BuyButton:Paint( w, h )
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),2)
-		return false
-	end
+	BuyButton.UpdateColours = SA_UpdateColors_Button_White
+	BuyButton.Paint = SA_Paint_Button
 
 	local ResourceTab = vgui.Create ("DPanel")
 	ResourceTab:SetPos(5, 25)
@@ -564,32 +532,16 @@ local function CreateTerminalGUI()
 	RefineButton:SetSize(230, 30)
 	RefineButton:SetText("Refine Ore")
 	RefineButton:SetFont("Trebuchet16")
-	function RefineButton:UpdateColours( skin )
-		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
-		return self:SetTextStyleColor( Color(255,255,255,255) )
-	end
-	function RefineButton:Paint( w, h )
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
-		return false
-	end
+	RefineButton.UpdateColours = SA_UpdateColors_Button_White
+	RefineButton.Paint  = SA_Paint_Button
 
 	local RefineButton1 = vgui.Create("DButton", ResourceTab)
 	RefineButton1:SetPos(525, 533)
 	RefineButton1:SetSize(230, 30)
 	RefineButton1:SetText("Refine Ore")
 	RefineButton1:SetFont("Trebuchet16")
-	function RefineButton1:UpdateColours( skin )
-		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
-		return self:SetTextStyleColor( Color(255,255,255,255) )
-	end
-	function RefineButton1:Paint( w, h )
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
-		return false
-	end
+	RefineButton1.UpdateColours = SA_UpdateColors_Button_White
+	RefineButton1.Paint  = SA_Paint_Button
 
 	RefineButton.DoClick = function()
 		RunConsoleCommand("sa_refine_ore", HASH)
@@ -604,16 +556,8 @@ local function CreateTerminalGUI()
 	BuyStorageAmt:SetFont("Trebuchet16")
 
 	BuyStorageAmt:SetPaintBackground(false)
-	function BuyStorageAmt:UpdateColours( skin )
-		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
-		return self:SetTextStyleColor( Color(255,255,255,255) )
-	end
-	function BuyStorageAmt:Paint( w, h )
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
-		return false
-	end
+	BuyStorageAmt.UpdateColours = SA_UpdateColors_Button_White
+	BuyStorageAmt.Paint  = SA_Paint_Button
 
 	local BuyStorageButton = vgui.Create("DButton", ResourceTab)
 	BuyStorageButton:SetPos(280, 533)
@@ -621,16 +565,8 @@ local function CreateTerminalGUI()
 	BuyStorageButton:SetText("Buy Station Storage")
 
 	BuyStorageButton:SetFont("Trebuchet16")
-	function BuyStorageButton:UpdateColours( skin )
-		if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-		if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-		if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
-		return self:SetTextStyleColor( Color(255,255,255,255) )
-	end
-	function BuyStorageButton:Paint( w, h )
-		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
-		return false
-	end
+	BuyStorageButton.UpdateColours = SA_UpdateColors_Button_White
+	BuyStorageButton.Paint  = SA_Paint_Button
 
 	BuyStorageButton.DoClick = function()
 		RunConsoleCommand("sa_buy_perm_storage", BuyStorageAmt:GetValue(), HASH)
@@ -666,8 +602,7 @@ local function CreateTerminalGUI()
 	SubResearchTab:SetPos(25, 60)
 	SubResearchTab:SetSize(730, 490)
 
-	function SubResearchTab:Paint(w, h)
-		draw.RoundedBoxOutlined(2,0,39,w,h-48,Color(0,0,0,0),4)
+	function SubResearchTab:Paint()
 	end
 
 	local Researches = SA.Research.Get()
@@ -765,8 +700,7 @@ local function CreateTerminalGUI()
 			
 			Sheet.Tab:Setup( label, self, panel, material )
 
-			function Sheet.Tab:Paint(w,h)
-					--draw.RoundedBoxOutlined(2,2,0,w-4, h,Color(0,0,0,0),1)
+			function Sheet.Tab:Paint()
 			end
 
 			
@@ -855,15 +789,7 @@ local function CreateTerminalGUI()
 		SA_MaxCrystalCount:SetPos(270, 60)
 		SA_MaxCrystalCount:SetSize(100, 20)
 		SA_MaxCrystalCount:SetPaintBackground(false)
-		function SA_MaxCrystalCount:Paint( w, h )
-
-			derma.SkinHook( "Paint", "TextEntry", self, w, h )
-
-			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
-
-			return false
-
-		end
+		SA_MaxCrystalCount.Paint = SA_Paint_TextEntry
 
 		local SA_MaxCrystalCount_LBL = vgui.Create("DLabel", DeveloperTab)
 		SA_MaxCrystalCount_LBL:SetText("Maximum Crystals per Tower:")
@@ -876,15 +802,7 @@ local function CreateTerminalGUI()
 		SA_CrystalRadius:SetPos(270, 85)
 		SA_CrystalRadius:SetSize(100, 20)
 		SA_CrystalRadius:SetPaintBackground(false)
-		function SA_CrystalRadius:Paint( w, h )
-
-			derma.SkinHook( "Paint", "TextEntry", self, w, h )
-
-			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
-
-			return false
-
-		end
+		SA_CrystalRadius.Paint  = SA_Paint_TextEntry
 
 		local SA_CrystalRadius_LBL = vgui.Create("DLabel", DeveloperTab)
 		SA_CrystalRadius_LBL:SetText("Maximum Radius of Crystals around Tower:")
@@ -898,15 +816,7 @@ local function CreateTerminalGUI()
 		SA_Max_Roid_Count:SetSize(100, 20)
 
 		SA_Max_Roid_Count:SetPaintBackground(false)
-		function SA_Max_Roid_Count:Paint( w, h )
-
-			derma.SkinHook( "Paint", "TextEntry", self, w, h )
-
-			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
-
-			return false
-
-		end
+		SA_Max_Roid_Count.Paint  = SA_Paint_TextEntry
 
 		local SA_Max_Roid_Count_LBL = vgui.Create("DLabel", DeveloperTab)
 		SA_Max_Roid_Count_LBL:SetText("Maximum Asteroids:")
@@ -1080,16 +990,8 @@ local function sa_term_update(ply, tbl)
 		SA_UpgradeLevelButton:SetDisabled(not canReset)
 		SA_UpgradeLevelButton:SetText("Advance Level (current: " .. tostring(lv) .. " / 5) [Price: " .. SA.AddCommasToInt(5000000000 * (lv * lv)) .. "]")
 		SA_UpgradeLevelButton:SetFont("Trebuchet16")
-		function SA_UpgradeLevelButton:UpdateColours( skin )
-			if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-			if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-			if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
-			return self:SetTextStyleColor( Color(255,255,255,255) )
-		end
-		function SA_UpgradeLevelButton:Paint( w, h )
-			draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
-			return false
-		end
+		SA_UpgradeLevelButton.UpdateColours = SA_UpdateColors_Button_White
+		SA_UpgradeLevelButton.Paint  = SA_Paint_Button
 	end
 
 
