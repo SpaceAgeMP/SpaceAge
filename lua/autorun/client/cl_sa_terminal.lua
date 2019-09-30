@@ -28,11 +28,11 @@ local SA_MaxCrystalCount
 local SA_CrystalRadius
 local SA_Max_Roid_Count
 
-local SA_Paint_ListView = function(w, h)
+local SA_Paint_ListView = function(self, w, h)
 	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
 end
 
-local SA_Paint_TextEntry = function(w, h)
+local SA_Paint_TextEntry = function(self, w, h)
 	derma.SkinHook( "Paint", "TextEntry", self, w, h )
 
 	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
@@ -40,25 +40,25 @@ local SA_Paint_TextEntry = function(w, h)
 	return false
 end
 
-local SA_Paint_PropSheet = function(w, h)
+local SA_Paint_PropSheet = function(self, w, h)
 	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
 end
-local SA_Paint_ListView = function(w, h)
+local SA_Paint_ListView = function(self, w, h)
 	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
 end
 
-local SA_Paint_Button = function(w, h)
+local SA_Paint_Button = function(self, w, h)
 	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
 end
-local SA_Paint_Button_Opaque = function(w, h)
+local SA_Paint_Button_Opaque = function(self, w, h)
 	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
 end
 
-local SA_Paint_Panel = function(w, h)
+local SA_Paint_Panel = function(self, w, h)
 	draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid)
 end
 
-local SA_UpdateColors_Button_White = function ( skin )
+local SA_UpdateColors_Button_White = function (self, skin)
 	if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
 	if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
 	if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
@@ -602,8 +602,7 @@ local function CreateTerminalGUI()
 	SubResearchTab:SetPos(25, 60)
 	SubResearchTab:SetSize(730, 490)
 
-	function SubResearchTab:Paint()
-	end
+	SubResearchTab.Paint = SA_Paint_PropSheet
 
 	local Researches = SA.Research.Get()
 	local ResearchGroups = SA.Research.GetGroups()
