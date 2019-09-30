@@ -29,7 +29,7 @@ local SA_CrystalRadius
 local SA_Max_Roid_Count
 
 local SA_Paint_TextEntry = function(self, w, h)
-	derma.SkinHook( "Paint", "TextEntry", self, w, h )
+	derma.SkinHook("Paint", "TextEntry", self, w, h)
 	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
 	return false
 end
@@ -38,13 +38,13 @@ local SA_Paint_PropSheet = function(self, w, h) 	draw.RoundedBoxOutlined(2,0,0,w
 local SA_Paint_ListView = function(self, w, h) 		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2) end
 local SA_Paint_Button = function(self, w, h) 		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2) end
 local SA_Paint_Button_Opaque = function(self, w, h)	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2) end
-local SA_Paint_Panel = function(self, w, h)			draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid) end
+local SA_Paint_Panel = function(self, w, h)			draw.RoundedBoxOutlined(0, 0, 0, w, h, Color(0, 0, 0, 120), SA_Term_BorderWid) end
 
 local SA_UpdateColors_Button_White = function (self, skin)
-	if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-	if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-	if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
-	return self:SetTextStyleColor( Color(255,255,255,255) )
+	if (!self:IsEnabled())					then return self:SetTextStyleColor(skin.Colours.Button.Disabled) end
+	if (self:IsDown() || self.m_bSelected)	then return self:SetTextStyleColor(skin.Colours.Button.Down) end
+	if (self.Hovered)							then return self:SetTextStyleColor(skin.Colours.Button.Hover) end
+	return self:SetTextStyleColor(Color(255,255,255,255))
 end
 
 local textBackgroundExtraWidth = 15
@@ -129,17 +129,17 @@ local function CreateTerminalGUI()
 		local horizWid = _w-doubleBorder
 
 		-- draw background
-		draw.RoundedBox( _rounding, _x, _y, _w, _h, _color )
+		draw.RoundedBox(_rounding, _x, _y, _w, _h, _color)
 
 		-- left and right outlines
-		draw.RoundedBoxEx( _rounding, _x, _y, _borderWid, _h, _borderCol)
-		draw.RoundedBoxEx( _rounding, math.floor(_x + _w-_borderWid), _y, _borderWid, _h, _borderCol )
+		draw.RoundedBoxEx(_rounding, _x, _y, _borderWid, _h, _borderCol)
+		draw.RoundedBoxEx(_rounding, math.floor(_x + _w-_borderWid), _y, _borderWid, _h, _borderCol)
 
 		-- top and bottom outlines
 		-- draw them inside the left and right lines
-		draw.RoundedBox( 0, _x + _borderWid, _y, horizWid, _borderWid, _borderCol )
+		draw.RoundedBox(0, _x + _borderWid, _y, horizWid, _borderWid, _borderCol)
 
-		draw.RoundedBox( 0, _x + _borderWid, _y + _h-_borderWid, horizWid, _borderWid, _borderCol )
+		draw.RoundedBox(0, _x + _borderWid, _y + _h-_borderWid, horizWid, _borderWid, _borderCol)
 
 	end
 
@@ -214,8 +214,8 @@ local function CreateTerminalGUI()
 	end
 
 	local StatsList = vgui.Create ("DListView", StatTab)
-	--StatsList:Dock( FILL )
-	StatsList:SetMultiSelect( false )
+	--StatsList:Dock(FILL)
+	StatsList:SetMultiSelect(false)
 	StatsList:AddColumn("Rank")
 	StatsList:AddColumn("Name")
 	StatsList:AddColumn("Score")
@@ -262,12 +262,12 @@ local function CreateTerminalGUI()
 	end
 
 	--local PANEL = {}
-	--Derma_Hook( PANEL, "Paint", "Paint", "PropertySheet" )
+	--Derma_Hook(PANEL, "Paint", "Paint", "PropertySheet")
 
-	function Tabs:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip )
+	function Tabs:AddSheet(label, panel, material, NoStretchX, NoStretchY, Tooltip)
 
-		if ( !IsValid( panel ) ) then
-			ErrorNoHalt( "DPropertySheet:AddSheet tried to add invalid panel!" )
+		if (!IsValid(panel)) then
+			ErrorNoHalt("DPropertySheet:AddSheet tried to add invalid panel!")
 			debug.Trace()
 			return
 		end
@@ -276,23 +276,23 @@ local function CreateTerminalGUI()
 
 		Sheet.Name = label
 
-		Sheet.Tab = vgui.Create( "DTab", self )
-		Sheet.Tab:SetTooltip( Tooltip )
+		Sheet.Tab = vgui.Create("DTab", self)
+		Sheet.Tab:SetTooltip(Tooltip)
 
-		function Sheet.Tab:Setup( label, pPropertySheet, pPanel, strMaterial )
+		function Sheet.Tab:Setup(label, pPropertySheet, pPanel, strMaterial)
 
-				self:SetText( label )
-				self:SetPropertySheet( pPropertySheet )
-				self:SetPanel( pPanel )
+				self:SetText(label)
+				self:SetPropertySheet(pPropertySheet)
+				self:SetPanel(pPanel)
 
 
 
 				self:SetFont("DermaLarge")
 
-				if ( strMaterial ) then
+				if (strMaterial) then
 
-					--[[self.Image = vgui.Create( "DImage", self )
-					self.Image:SetImage( strMaterial )
+					--[[self.Image = vgui.Create("DImage", self)
+					self.Image:SetImage(strMaterial)
 					self.Image:SetSize(20, 20)
 					self:InvalidateLayout()]]
 
@@ -301,13 +301,13 @@ local function CreateTerminalGUI()
 			end
 
 			
-			Sheet.Tab:Setup( label, self, panel, material )
+			Sheet.Tab:Setup(label, self, panel, material)
 
 			
 
 			function Sheet.Tab:GetTabHeight()
 
-				if ( self:IsActive() ) then
+				if (self:IsActive()) then
 					return 48
 				else
 					return 38
@@ -315,7 +315,7 @@ local function CreateTerminalGUI()
 
 			end
 
-		Sheet.Tab:Setup( label, self, panel, material )
+		Sheet.Tab:Setup(label, self, panel, material)
 
 		function Sheet.Tab:Paint()
 
@@ -325,19 +325,19 @@ local function CreateTerminalGUI()
 		Sheet.Panel.NoStretchX = NoStretchX
 		Sheet.Panel.NoStretchY = NoStretchY
 		--Sheet.Panel:SetBackgroundColor(Color(0,0,0,0))
-		Sheet.Panel:SetPos( self:GetPadding(), 20 + self:GetPadding() )
-		Sheet.Panel:SetVisible( false )
+		Sheet.Panel:SetPos(self:GetPadding(), 20 + self:GetPadding())
+		Sheet.Panel:SetVisible(false)
 
-		panel:SetParent( self )
+		panel:SetParent(self)
 
-		table.insert( self.Items, Sheet )
+		table.insert(self.Items, Sheet)
 
-		if ( !self:GetActiveTab() ) then
-			self:SetActiveTab( Sheet.Tab )
-			Sheet.Panel:SetVisible( true )
+		if (!self:GetActiveTab()) then
+			self:SetActiveTab(Sheet.Tab)
+			Sheet.Panel:SetVisible(true)
 		end
 
-		self.tabScroller:AddPanel( Sheet.Tab )
+		self.tabScroller:AddPanel(Sheet.Tab)
 
 		return Sheet
 
@@ -609,26 +609,26 @@ local function CreateTerminalGUI()
 
 		function SubResearchTab:Init()
 
-			self:SetShowIcons( true )
+			self:SetShowIcons(true)
 
-			self.tabScroller = vgui.Create( "DHorizontalScroller", self )
-			self.tabScroller:SetOverlap( 5 )
-			self.tabScroller:Dock( TOP )
-			self.tabScroller:DockMargin( 3, 0, 3, 0 )
+			self.tabScroller = vgui.Create("DHorizontalScroller", self)
+			self.tabScroller:SetOverlap(5)
+			self.tabScroller:Dock(TOP)
+			self.tabScroller:DockMargin(3, 0, 3, 0)
 
-			self:SetFadeTime( 0.1 )
-			self:SetPadding( 20 )
+			self:SetFadeTime(0.1)
+			self:SetPadding(20)
 
-			self.animFade = Derma_Anim( "Fade", self, self.CrossFade )
+			self.animFade = Derma_Anim("Fade", self, self.CrossFade)
 
 			self.Items = {}
 
 		end
 
-		function SubResearchTab:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip )
+		function SubResearchTab:AddSheet(label, panel, material, NoStretchX, NoStretchY, Tooltip)
 
-			if ( !IsValid( panel ) ) then
-				ErrorNoHalt( "DPropertySheet:AddSheet tried to add invalid panel!" )
+			if (!IsValid(panel)) then
+				ErrorNoHalt("DPropertySheet:AddSheet tried to add invalid panel!")
 				debug.Trace()
 				return
 			end
@@ -637,40 +637,40 @@ local function CreateTerminalGUI()
 
 			Sheet.Name = label
 
-			Sheet.Tab = vgui.Create( "DTab", self )
+			Sheet.Tab = vgui.Create("DTab", self)
 
-			Sheet.Tab:SetTooltip( Tooltip )
+			Sheet.Tab:SetTooltip(Tooltip)
 
 			function Sheet.Tab:PerformLayout()
 
 				self:ApplySchemeSettings()
 
-				if ( !self.Image ) then return end
+				if (!self.Image) then return end
 
-				self.Image:SetPos( 7, 3 )
+				self.Image:SetPos(7, 3)
 
-				if ( !self:IsActive() ) then
-					self.Image:SetImageColor( Color( 255, 255, 255, 155 ) )
+				if (!self:IsActive()) then
+					self.Image:SetImageColor(Color(255, 255, 255, 155))
 				else
-					self.Image:SetImageColor( Color( 255, 255, 255, 255 ) )
+					self.Image:SetImageColor(Color(255, 255, 255, 255))
 				end
 
 			end
 
-			function Sheet.Tab:Setup( label, pPropertySheet, pPanel, strMaterial )
+			function Sheet.Tab:Setup(label, pPropertySheet, pPanel, strMaterial)
 
-				self:SetText( label )
-				self:SetPropertySheet( pPropertySheet )
-				self:SetPanel( pPanel )
+				self:SetText(label)
+				self:SetPropertySheet(pPropertySheet)
+				self:SetPanel(pPanel)
 
 
 
 				self:SetFont("Trebuchet24")
 
-				if ( strMaterial ) then
+				if (strMaterial) then
 
-					self.Image = vgui.Create( "DImage", self )
-					self.Image:SetImage( strMaterial )
+					self.Image = vgui.Create("DImage", self)
+					self.Image:SetImage(strMaterial)
 					self.Image:SetSize(24, 24)
 					self:InvalidateLayout()
 
@@ -679,7 +679,7 @@ local function CreateTerminalGUI()
 			end
 
 			
-			Sheet.Tab:Setup( label, self, panel, material )
+			Sheet.Tab:Setup(label, self, panel, material)
 
 			function Sheet.Tab:Paint()
 			end
@@ -688,7 +688,7 @@ local function CreateTerminalGUI()
 
 			function Sheet.Tab:GetTabHeight()
 
-				if ( self:IsActive() ) then
+				if (self:IsActive()) then
 					return 38
 				else
 					return 30
@@ -700,19 +700,19 @@ local function CreateTerminalGUI()
 			Sheet.Panel.NoStretchX = NoStretchX
 			Sheet.Panel.NoStretchY = NoStretchY
 			--Sheet.Panel:SetBackgroundColor(Color(0,0,0,0))
-			Sheet.Panel:SetPos( self:GetPadding(), 30 + self:GetPadding() )
-			Sheet.Panel:SetVisible( false )
+			Sheet.Panel:SetPos(self:GetPadding(), 30 + self:GetPadding())
+			Sheet.Panel:SetVisible(false)
 
-			panel:SetParent( self )
+			panel:SetParent(self)
 
-			table.insert( self.Items, Sheet )
+			table.insert(self.Items, Sheet)
 
-			if ( !self:GetActiveTab() ) then
-				self:SetActiveTab( Sheet.Tab )
-				Sheet.Panel:SetVisible( true )
+			if (!self:GetActiveTab()) then
+				self:SetActiveTab(Sheet.Tab)
+				Sheet.Panel:SetVisible(true)
 			end
 
-			self.tabScroller:AddPanel( Sheet.Tab )
+			self.tabScroller:AddPanel(Sheet.Tab)
 
 			return Sheet
 
