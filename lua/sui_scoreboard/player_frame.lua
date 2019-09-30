@@ -20,9 +20,9 @@ function PANEL:OnMouseWheeled(dlta)
 	self:InvalidateLayout()
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout(w)
 	self.pnlCanvas:SetPos(0, self.YOffset * -1)
-	self.pnlCanvas:SetSize(self:GetWide(), self.pnlCanvas:GetTall())
+	self.pnlCanvas:SetSize(w, self.pnlCanvas:GetTall())
 end
 
 vgui.Register("suiplayerframe", PANEL, "Panel")

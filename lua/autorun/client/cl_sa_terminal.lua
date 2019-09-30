@@ -40,10 +40,10 @@ local HASH = ""
 
 local function SA_RecvFactionData(len, ply)
 	local fn = net.ReadString()
-	local tbl = {}
-	tbl.Score = tonumber(net.ReadString())
-	tbl.Credits = tonumber(net.ReadString())
-	SA_FactionData[fn] = tbl
+	SA_FactionData[fn] = {
+		Score = tonumber(net.ReadString()),
+		Credits = tonumber(net.ReadString())
+	}
 end
 net.Receive("SA_FactionData", SA_RecvFactionData)
 

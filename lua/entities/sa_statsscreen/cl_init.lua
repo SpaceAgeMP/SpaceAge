@@ -29,12 +29,13 @@ function ENT:Draw()
 	local Res = 0
 	local RatioX = 0
 
-	if (WireGPU_Monitors[self:GetModel()]) and (WireGPU_Monitors[self:GetModel()].OF) then
-		OF = WireGPU_Monitors[self:GetModel()].OF
-		OU = WireGPU_Monitors[self:GetModel()].OU
-		OR = WireGPU_Monitors[self:GetModel()].OR
-		Res = WireGPU_Monitors[self:GetModel()].RS
-		RatioX = WireGPU_Monitors[self:GetModel()].RatioX
+	local monEntry = WireGPU_Monitors[self:GetModel()]
+	if (monEntry and monEntry.OF) then
+		OF = monEntry.OF
+		OU = monEntry.OU
+		OR = monEntry.OR
+		Res = monEntry.RS
+		RatioX = monEntry.RatioX
 	else
 		OF = 0
 		OU = 0

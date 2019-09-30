@@ -16,8 +16,9 @@ end
 
 function ENT:Think()
 	BaseClass.Think(self)
-	for k, v in pairs(ents.FindInSphere(self:GetPos(), 450)) do
-		local myDmg = math.ceil(math.random(1000, 2000) * ((801 - v:GetPos():Distance(self:GetPos())) / 100))
+	local pos = self:GetPos()
+	for k, v in pairs(ents.FindInSphere(pos, 450)) do
+		local myDmg = math.ceil(math.random(1000, 2000) * ((801 - v:GetPos():Distance(pos)) / 100))
 		if (v:IsPlayer() or v:IsNPC()) and (not (v.InVehicle and v:InVehicle())) then
 			v:TakeDamage(myDmg, self)
 		--[[else

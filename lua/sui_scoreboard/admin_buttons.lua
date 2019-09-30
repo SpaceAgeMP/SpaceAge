@@ -9,7 +9,7 @@ function PANEL:DoClick()
 
 end
 
-function PANEL:Paint(w,h)
+function PANEL:Paint(w, h)
 
 	local bgColor = Color(200,200,200,100)
 
@@ -19,9 +19,9 @@ function PANEL:Paint(w,h)
 		bgColor = Color(175, 175, 175, 100)
 	end
 
-	draw.RoundedBox(4, 0, 0, self:GetWide(), self:GetTall(), bgColor)
+	draw.RoundedBox(4, 0, 0, w, h, bgColor)
 
-	draw.SimpleText(self.Text, "DefaultSmall", self:GetWide() / 2, self:GetTall() / 2, Color(0,0,0,150), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+	draw.SimpleText(self.Text, "DefaultSmall", w / 2, h / 2, Color(0,0,0,150), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 	return true
 

@@ -68,19 +68,19 @@ function PANEL:Paint(w, h)
 	end
 
 	if self.Open or self.Size ~= self.TargetSize then
-		draw.RoundedBox(4, 18, 16, self:GetWide() - 36, self:GetTall() - 16, color)
-		draw.RoundedBox(4, 20, 16, self:GetWide() - 40, self:GetTall() - 16 - 2, Color(225, 225, 225, 150))
+		draw.RoundedBox(4, 18, 16, w - 36, h - 16, color)
+		draw.RoundedBox(4, 20, 16, w - 40, h - 16 - 2, Color(225, 225, 225, 150))
 
 		surface.SetTexture(texGradient)
 		surface.SetDrawColor(255, 255, 255, 100)
-		surface.DrawTexturedRect(20, 16, self:GetWide() - 40, self:GetTall() - 18)
+		surface.DrawTexturedRect(20, 16, w - 40, h - 18)
 	end
 
-	draw.RoundedBox(4, 18, 0, self:GetWide() - 36, 20, color)
+	draw.RoundedBox(4, 18, 0, w - 36, 20, color)
 
 	surface.SetTexture(texGradient)
 	surface.SetDrawColor(255, 255, 255, 150)
-	surface.DrawTexturedRect(0, 0, self:GetWide() - 36, 20)
+	surface.DrawTexturedRect(0, 0, w - 36, 20)
 
 	/*surface.SetTexture(self.texRating)
 	surface.SetDrawColor(255, 255, 255, 255)
@@ -215,8 +215,8 @@ function PANEL:Think()
 	end
 end
 
-function PANEL:PerformLayout()
-	self:SetSize(self:GetWide(), self.Size)
+function PANEL:PerformLayout(w, h)
+	self:SetSize(w, self.Size)
 
 	self.btnAvatar:SetPos(21, 2)
 	self.btnAvatar:SetSize(16, 16)
@@ -234,18 +234,21 @@ function PANEL:PerformLayout()
 	self.lblPing:SetWide(100)
 
 	self.lblName:SetPos(60, 2)
-	if utimecheck then self.lblHours:SetPos(self:GetParent():GetWide() - 45 * 13.7 - 6, 2) end
-	if ulibcheck then self.lblTeam:SetPos(self:GetParent():GetWide() - 45 * 10.2 - 6, 2) end
-	self.lblHealth:SetPos(self:GetParent():GetWide() - 45 * 5.4 - 6, 2)
-	self.lblFrags:SetPos(self:GetParent():GetWide() - 45 * 4.4 - 6, 2)
-	self.lblDeaths:SetPos(self:GetParent():GetWide() - 45 * 3.4 - 6, 2)
-	self.lblRatio:SetPos(self:GetParent():GetWide() - 45 * 2.4 - 6, 2)
-	self.lblPing:SetPos(self:GetParent():GetWide() - 45 - 6, 2)
+
+	local parentWidth = self:GetParent():GetWide()
+
+	if utimecheck then self.lblHours:SetPos(parentWidth - 45 * 13.7 - 6, 2) end
+	if ulibcheck then self.lblTeam:SetPos(parentWidth - 45 * 10.2 - 6, 2) end
+	self.lblHealth:SetPos(parentWidth - 45 * 5.4 - 6, 2)
+	self.lblFrags:SetPos(parentWidth - 45 * 4.4 - 6, 2)
+	self.lblDeaths:SetPos(parentWidth - 45 * 3.4 - 6, 2)
+	self.lblRatio:SetPos(parentWidth - 45 * 2.4 - 6, 2)
+	self.lblPing:SetPos(parentWidth - 45 - 6, 2)
 
 	if self.Open or self.Size ~= self.TargetSize then
 		self.infoCard:SetVisible(true)
 		self.infoCard:SetPos(18, self.lblName:GetTall() + 27)
-		self.infoCard:SetSize(self:GetWide() - 36, self:GetTall() - self.lblName:GetTall() + 5)
+		self.infoCard:SetSize(w - 36, h - self.lblName:GetTall() + 5)
 	else
 		self.infoCard:SetVisible(false)
 	end

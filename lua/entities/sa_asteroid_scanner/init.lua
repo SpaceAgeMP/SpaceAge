@@ -74,12 +74,12 @@ end
 function ENT:Think()
 	BaseClass.Think(self)
 	if (self.Active == 1) then
-			if (RD.GetResourceAmount(self, "energy") >= self.consume) then
-				RD.ConsumeResource(self, "energy", self.consume)
-				ScanRoid(self)
-			else
-				self:TurnOff()
-			end
+		if (RD.GetResourceAmount(self, "energy") >= self.consume) then
+			RD.ConsumeResource(self, "energy", self.consume)
+			ScanRoid(self)
+		else
+			self:TurnOff()
+		end
 	end
 	self:NextThink(CurTime() + 1)
 	return true
