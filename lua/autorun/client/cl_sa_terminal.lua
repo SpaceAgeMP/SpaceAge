@@ -28,35 +28,17 @@ local SA_MaxCrystalCount
 local SA_CrystalRadius
 local SA_Max_Roid_Count
 
-local SA_Paint_ListView = function(self, w, h)
-	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
-end
-
 local SA_Paint_TextEntry = function(self, w, h)
 	derma.SkinHook( "Paint", "TextEntry", self, w, h )
-
 	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,4),1)
-
 	return false
 end
 
-local SA_Paint_PropSheet = function(self, w, h)
-	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
-end
-local SA_Paint_ListView = function(self, w, h)
-	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
-end
-
-local SA_Paint_Button = function(self, w, h)
-	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2)
-end
-local SA_Paint_Button_Opaque = function(self, w, h)
-	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2)
-end
-
-local SA_Paint_Panel = function(self, w, h)
-	draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid)
-end
+local SA_Paint_PropSheet = function(self, w, h) 	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2) end
+local SA_Paint_ListView = function(self, w, h) 		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2) end
+local SA_Paint_Button = function(self, w, h) 		draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,2),2) end
+local SA_Paint_Button_Opaque = function(self, w, h)	draw.RoundedBoxOutlined(2,0,0,w,h,Color(255,255,255,20),2) end
+local SA_Paint_Panel = function(self, w, h)			draw.RoundedBoxOutlined(0, 0, 0, w, h, Color( 0, 0, 0, 120 ), SA_Term_BorderWid) end
 
 local SA_UpdateColors_Button_White = function (self, skin)
 	if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
