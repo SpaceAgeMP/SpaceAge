@@ -403,7 +403,7 @@ local function CreateTerminalGUI()
 	SellAmount:SetNumeric(true)
 	SellAmount:SetPaintBackground(false)
 
-	SellAmount.Paint = SA_Paint_Button_Opaque
+	SellAmount.Paint = SA_Paint_TextEntry
 
 	local SellButton = vgui.Create("DButton", MarketTab)
 	SellButton:SetPos(600, 250)
