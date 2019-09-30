@@ -68,29 +68,12 @@ local StationSize = 0
 local RD = CAF.GetAddon("Resource Distribution")
 
 local function InitSATerminal()
-	local mapname = string.lower(game:GetMap())
-	if mapname == "gm_galactic_rc1" then
-		StationPos = Vector(-8896, 10192, 768)
-		StationSize = 1024
-	elseif mapname == "sb_forlorn_sb3_r2l" or mapname == "sb_forlorn_sb3_r3" then
-		StationPos = Vector(9447, 9824, 461)
-		StationSize = 2650
-	elseif mapname == "sb_new_worlds_2" then
-		StationPos = Vector(-8253, -9771, -11041)
-		StationSize = 3000
-	elseif mapname == "sb_gooniverse" or mapname == "sb_gooniverse_v4" then
-		StationSize = 1130
-		StationPos = Vector(2, -1, 4620)
-	elseif mapname == "sb_lostinspace_rc4" then
-		StationSize = 4200
-		StationPos = Vector(-8996, 8636, -6500)
-	elseif mapname == "sb_wuwgalaxy_fix" then
-		StationSize = 2750
-		StationPos = Vector(8348, 4520, 7271)
-	elseif mapname == "gm_flatgrass" then
-		StationSize = 256
-		StationPos = Vector(740, 0, 0)
+	local config = SA.Config.Load("terminals")
+	if config then
+		StationPos = Vector(unpack(config.Station.Position))
+		StationSize = config.Station.Size
 	end
+
 	RD.AddProperResourceName("valuable minerals", "Valuable Minerals")
 	RD.AddProperResourceName("dark matter", "Dark Matter")
 	RD.AddProperResourceName("terracrystal", "Terracrystal")
