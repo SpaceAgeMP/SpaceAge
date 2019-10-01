@@ -29,6 +29,13 @@ function ENT:DrawLaser()
 	self:DrawLaserDef(self.LaserColor, self.LaserWidth)
 end
 
+function ENT:Think()
+	if (CurTime() >= (self.NextUpdate or 0)) then
+		self.NextUpdate = CurTime() + 1
+		self:SetRenderBounds(self:OBBMins(), self:OBBMaxs() + Vector(0, 0, self.BeamLength))
+	end
+end
+
 function ENT:DrawLaserDef(color, width)
 	local width2 = width / 2
 	local ang = self:GetAngles()
