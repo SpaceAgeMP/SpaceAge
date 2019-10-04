@@ -9,16 +9,16 @@ local function CommonUserAgent(side)
 	return "SpaceAge/GMod-" .. side .. " " .. game.GetIPAddress()
 end
 
+local apiConfig = SA.Config.Load("api", true) or {}
+if apiConfig.auth then
+	API_HEADERS.Authorization = apiConfig.auth
+end
+if apiConfig.url then
+	API_BASE = apiConfig.url
+end
+
 if SERVER then
 	AddCSLuaFile()
-
-	local apiConfig = SA.Config.Load("api", true)
-	if apiConfig.auth then
-		API_HEADERS.Authorization = apiConfig.auth
-	end
-	if apiConfig.url then
-		API_BASE = apiConfig.url
-	end
 
 	MakeUserAgent = function()
 		return CommonUserAgent("Server")

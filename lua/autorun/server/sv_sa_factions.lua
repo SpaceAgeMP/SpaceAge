@@ -42,19 +42,19 @@ local function LoadFactionResults(body, code)
 
 	for _, faction in pairs(body) do
 		local tbl = {}
-		tbl.Credits = tonumber(faction.Credits)
-		tbl.Score = tonumber(faction.Score)
+		tbl.Credits = tonumber(faction.credits)
+		tbl.Score = tonumber(faction.score)
 		tbl.AddScore = 0
-		local fn = faction.FactionName
+		local fn = faction.faction_name
 		SA_FactionData[fn] = tbl
 
 		for _, ply in pairs(allply) do
 			if not ply then continue end
 			net.Start("SA_FactionData")
 				net.WriteString(fn)
-				net.WriteString(tbl.Score)
+				net.WriteString(tbl.score)
 				if ply.SAData.FactionName == fn then
-					net.WriteString(tbl.Credits)
+					net.WriteString(tbl.credits)
 				else
 					net.WriteString("-1")
 				end
