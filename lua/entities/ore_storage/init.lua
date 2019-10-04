@@ -45,7 +45,7 @@ function ENT:CalcVars(ply)
 	end
 
 	self.IsOreStorage = true
-	RD.AddResource(self, "ore", (self.StorageOffset + (self:GetPlayerLevel(ply) * self.StorageIncrement)) * ply.SAData.AdvancementLevel, 0)
+	RD.AddResource(self, "ore", (self.StorageOffset + (self:GetPlayerLevel(ply) * self.StorageIncrement)) * ply.SAData.advancement_level, 0)
 end
 
 function ENT:Think()

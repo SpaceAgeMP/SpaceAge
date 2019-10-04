@@ -6,13 +6,13 @@ local RD = CAF.GetAddon("Resource Distribution")
 SA.Functions = {}
 
 function SA.SendBasicInfo(ply)
-	ply.SAData.Credits = math.floor(ply.SAData.Credits)
-	ply.SAData.Score = math.floor(ply.SAData.Score)
-	ply:SetNWInt("Score", ply.SAData.Score)
+	ply.SAData.credits = math.floor(ply.SAData.credits)
+	ply.SAData.score = math.floor(ply.SAData.score)
+	ply:SetNWInt("Score", ply.SAData.score)
 	net.Start("SA_SendBasicInfo")
-		net.WriteString(ply.SAData.Credits)
-		net.WriteString(ply.SAData.Score)
-		net.WriteInt(ply.SAData.Playtime, 32)
+		net.WriteString(ply.SAData.credits)
+		net.WriteString(ply.SAData.score)
+		net.WriteInt(ply.SAData.playtime, 32)
 	net.Send(ply)
 end
 

@@ -15,7 +15,7 @@ ENT.YieldIncrement = 20
 ENT.MinTibDrillMod = 1
 
 function ENT:CalcVars(ply)
-	if ply.SAData.FactionName ~= "legion" and ply.SAData.FactionName ~= "alliance" then
+	if ply.SAData.faction_name ~= "legion" and ply.SAData.faction_name ~= "alliance" then
 		self:Remove()
 		return
 	end

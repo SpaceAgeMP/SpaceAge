@@ -12,7 +12,7 @@ local function SA_ReceiveStatsUpdate(body, code)
 
 		local newEntry = {}
 		newEntry.Name = string.Left(v.name, SA_MaxNameLength)
-		newEntry.Score = SA.AddCommasToInt(v.score)
+		newEntry.score = SA.AddCommasToInt(v.score)
 		local tempColor = SA.Factions.Colors[v.faction_name]
 		if not tempColor then tempColor = Color(255, 100, 0, 255) end
 		newEntry.FactionColor = tempColor

@@ -33,18 +33,18 @@ local sa_faction_only = GetConVar("sa_faction_only")
 
 local PlayerMeta = FindMetaTable("Player")
 function PlayerMeta:AssignFaction(name)
-	if name then self.SAData.FactionName = name end
-	if not self.SAData.FactionName then self.SAData.FactionName = "freelancer" end
-	if self.SAData.FactionName == "alliance" and self.SAData.AllianceMembershipExpiry < os.time() then self.SAData.FactionName = "freelancer" end
+	if name then self.SAData.faction_name = name end
+	if not self.SAData.faction_name then self.SAData.faction_name = "freelancer" end
+	if self.SAData.faction_name == "alliance" and self.SAData.alliance_membership_expiry < os.time() then self.SAData.faction_name = "freelancer" end
 	for k, v in pairs(SA.Factions.Table) do
-		if self.SAData.FactionName == v[2] then
+		if self.SAData.faction_name == v[2] then
 			self:SetTeam(k)
 			return
 		end
 	end
 	if not self:Team() then
 		self:SetTeam(1)
-		self.SAData.FactionName = "freelancer"
+		self.SAData.faction_name = "freelancer"
 		return
 	end
 end
@@ -95,47 +95,50 @@ local function AddSAData(ply)
 	end
 	local data = ply.SAData
 	data.Name = ply:Nick()
-	if data.Credits == nil then
-		data.Credits = 0
+	if data.credits == nil then
+		data.credits = 0
 	end
-	if data.Playtime == nil then
-		data.Playtime = 0
+	if data.playtime == nil then
+		data.playtime = 0
 	end
-	if data.Score == nil then
-		data.Score = 0
+	if data.score == nil then
+		data.score = 0
 	end
-	if data.IsFactionLeader == nil then
-		data.IsFactionLeader = false
+	if data.is_faction_leader == nil then
+		data.is_faction_leader = false
 	end
-	data.Loaded = false
-	if data.StationStorage == nil then
-		data.StationStorage = {}
+	data.loaded = false
+	if data.station_storage == nil then
+		data.station_storage = {}
 	end
-	if data.StationStorage.Capacity == nil then
-		data.StationStorage.Capacity = 0
+	if data.station_storage.capacity == nil then
+		data.station_storage.capacity = 0
 	end
-	if data.StationStorage.Contents == nil then
-		data.StationStorage.Contents = {}
+	if data.station_storage.remaining == nil then
+		data.station_storage.remaining = 0
 	end
-	if data.AllianceMembershipExpiry == nil then
-		data.AllianceMembershipExpiry = 0
+	if data.station_storage.contents == nil then
+		data.station_storage.contents = {}
 	end
-	if data.FactionName == nil then
-		data.FactionName = "freelancer"
+	if data.alliance_membership_expiry == nil then
+		data.alliance_membership_expiry = 0
+	end
+	if data.faction_name == nil then
+		data.faction_name = "freelancer"
 	end
 	if data.research == nil then
 		data.research = {}
 	end
 	SA.Research.InitPlayer(ply)
-	if data.AdvancementLevel == nil or data.AdvancementLevel <= 0 then
-		data.AdvancementLevel = 1
+	if data.advancement_level == nil or data.advancement_level <= 0 then
+		data.advancement_level = 1
 	end
 end
 
 timer.Create("SA_PlayTimeTracker", 1, 0, function()
 	for _, ply in pairs(player.GetHumans()) do
-		if ply.SAData and ply.SAData.Loaded then
-			ply.SAData.Playtime = ply.SAData.Playtime + 1
+		if ply.SAData and ply.SAData.loaded then
+			ply.SAData.playtime = ply.SAData.playtime + 1
 		end
 	end
 end)
@@ -152,7 +155,7 @@ LoadFailed = function(ply, err)
 			return
 		end
 		SA_InitSpawn(ply)
-		if ply.SAData.Loaded then
+		if ply.SAData.loaded then
 			ply:Spawn()
 		end
 	end)
@@ -162,7 +165,7 @@ LoadRes = function(ply, body, code)
 	print("Loaded:", ply:Name(), code)
 	if code == 404 then
 		AddSAData(ply)
-		ply.SAData.Loaded = true
+		ply.SAData.loaded = true
 		ply:ChatPrint("You have not been found in the database, an account has been created for you.")
 		SA.Terminal.SetupStorage(ply)
 		ply:AssignFaction()
@@ -170,8 +173,8 @@ LoadRes = function(ply, body, code)
 	elseif code == 200 then
 		ply.SAData = SA.API.SnakeToPascal(body)
 		AddSAData(ply)
-		ply.SAData.Loaded = true
-		SA.Terminal.SetupStorage(ply, ply.SAData.StationStorage.Contents)
+		ply.SAData.loaded = true
+		SA.Terminal.SetupStorage(ply, ply.SAData.station_storage.contents)
 		ply:ChatPrint("Your account has been loaded, welcome on duty.")
 		ply:AssignFaction()
 	else
@@ -181,7 +184,7 @@ LoadRes = function(ply, body, code)
 	if sa_faction_only:GetBool() and
 		(ply:Team() < SA.Factions.Min or
 		ply:Team() > SA.Factions.Max or
-		tonumber(ply.SAData.Score) < 100000000) then
+		tonumber(ply.SAData.score) < 100000000) then
 			ply:Kick("You don't meet the requirements for this server!")
 	end
 
@@ -189,8 +192,8 @@ LoadRes = function(ply, body, code)
 	ply.IsAFK = false
 	ply.MayBePoked = false
 
-	ply:SetNWBool("isleader", ply.SAData.IsFactionLeader)
-	ply:SetNWInt("Score", ply.SAData.Score)
+	ply:SetNWBool("isleader", ply.SAData.is_faction_leader)
+	ply:SetNWInt("Score", ply.SAData.score)
 
 	timer.Simple(1, function()
 		if not SA.ValidEntity(ply) then return end
@@ -200,7 +203,7 @@ LoadRes = function(ply, body, code)
 		ply:ChatPrint("Spawn limitations disengaged. Happy travels.")
 	end)
 	ply:SetNWBool("isloaded", true)
-	if ply.SAData.Loaded then
+	if ply.SAData.loaded then
 		ply:Spawn()
 	end
 end
@@ -212,12 +215,12 @@ function SA.SaveUser(ply, isautosave)
 	end
 
 	local sid = ply:SteamID()
-	if not ply.SAData.Loaded or not SA_IsValidSteamID(sid) then
+	if not ply.SAData.loaded or not SA_IsValidSteamID(sid) then
 		return false
 	end
 
 	ply.SAData.Name = ply:Nick()
-	ply.SAData.StationStorage.Contents = SA.Terminal.GetPermStorage(ply)
+	ply.SAData.station_storage.contents = SA.Terminal.GetPermStorage(ply)
 	SA.API.UpsertPlayer(ply)
 	return true
 end

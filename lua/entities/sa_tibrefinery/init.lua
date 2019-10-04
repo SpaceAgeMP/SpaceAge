@@ -72,20 +72,20 @@ function ENT:Think()
 			else
 				RD.ConsumeResource(v, "tiberium", taken)
 				local creds = math.Round(taken * (math.random(20, 30)))
-				if ply.SAData.FactionName == "corporation" or ply.SAData.FactionName == "alliance" then
+				if ply.SAData.faction_name == "corporation" or ply.SAData.faction_name == "alliance" then
 					creds = math.ceil((creds * 1.33) * 1000) / 1000
-				elseif ply.SAData.FactionName == "starfleet" then
+				elseif ply.SAData.faction_name == "starfleet" then
 					creds = math.ceil((creds * 1.11) * 1000) / 1000
 				end
-				ply.SAData.Credits = ply.SAData.Credits + creds
-				if ply.SAData.Score > 100000000 then
-					if ply.SAData.FactionName  == "legion" then
+				ply.SAData.credits = ply.SAData.credits + creds
+				if ply.SAData.score > 100000000 then
+					if ply.SAData.faction_name  == "legion" then
 						creds = creds * 0.5
 					else
 						creds = creds * 0.4
 					end
 				end
-				ply.SAData.Score = ply.SAData.Score + creds
+				ply.SAData.score = ply.SAData.score + creds
 				SA.SendBasicInfo(ply)
 			end
 		else

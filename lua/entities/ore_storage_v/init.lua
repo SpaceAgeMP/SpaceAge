@@ -11,7 +11,7 @@ ENT.StorageOffset = 19600000
 ENT.StorageIncrement = 80000
 
 function ENT:CalcVars(ply)
-	if ply.SAData.FactionName ~= "starfleet" and ply.SAData.FactionName ~= "miners" and ply.SAData.FactionName ~= "alliance" then
+	if ply.SAData.faction_name ~= "starfleet" and ply.SAData.faction_name ~= "miners" and ply.SAData.faction_name ~= "alliance" then
 		self:Remove()
 		return
 	end

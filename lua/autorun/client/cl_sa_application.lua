@@ -12,11 +12,11 @@ local function InitSelfApplication()
 	if not SA.Application.Me then
 		SA.Application.Me = {}
 	end
-	if not SA.Application.Me.Text then
-		SA.Application.Me.Text = defaultText
+	if not SA.Application.Me.text then
+		SA.Application.Me.text = defaultText
 	end
-	if not SA.Application.Me.FactionName then
-		SA.Application.Me.FactionName = defaultFaction
+	if not SA.Application.Me.faction_name then
+		SA.Application.Me.faction_name = defaultFaction
 	end
 end
 InitSelfApplication()
@@ -48,15 +48,15 @@ function SA.Application.Refresh()
 		local fValue = false
 		SelFCombo:Clear()
 		for k, v in pairs(SA.Application.Table) do
-			SelFCombo:AddChoice(v.Player.Name .. " | " .. v.SteamID)
+			SelFCombo:AddChoice(v.Player.Name .. " | " .. v.steamid)
 			fValue = true
 		end
 		if fValue then
 			SelFCombo:ChooseOptionID(1)
 		end
 	else
-		SelFCombo:ChooseOption(SA.Factions.ToLong[SA.Application.Me.FactionName])
-		ApplyText:SetValue(SA.Application.Me.Text)
+		SelFCombo:ChooseOption(SA.Factions.ToLong[SA.Application.Me.faction_name])
+		ApplyText:SetValue(SA.Application.Me.text)
 	end
 end
 
@@ -88,7 +88,7 @@ function SA.Application.CreateGUI(BasePanel)
 	ApplyText = vgui.Create("DTextEntry", BasePanel)
 
 	if not plisleader then
-		ApplyText:SetValue(SA.Application.Me.Text or defaultText)
+		ApplyText:SetValue(SA.Application.Me.text or defaultText)
 	end
 
 	ApplyText:SetMultiline(true)
@@ -105,7 +105,7 @@ function SA.Application.CreateGUI(BasePanel)
 		ApplyText:SetSize(BasePanel:GetWide() - 40, 410)
 		ApplyText:SetUpdateOnType(true)
 		ApplyText.OnTextChanged = function()
-			SA.Application.Me.Text = ApplyText:GetValue()
+			SA.Application.Me.text = ApplyText:GetValue()
 		end
 
 		SelFCombo:AddChoice("Major Miners")
@@ -114,10 +114,10 @@ function SA.Application.CreateGUI(BasePanel)
 		SelFCombo:AddChoice("Star Fleet")
 
 		function SelFCombo:OnSelect(index, value, data)
-			SA.Application.Me.FactionName = SA.Factions.ToShort[value] or defaultFaction
+			SA.Application.Me.faction_name = SA.Factions.ToShort[value] or defaultFaction
 		end
 
-		SelFCombo:ChooseOption(SA.Factions.ToLong[SA.Application.Me.FactionName or defaultFaction])
+		SelFCombo:ChooseOption(SA.Factions.ToLong[SA.Application.Me.faction_name or defaultFaction])
 
 		local ApplyButton = vgui.Create("DButton", BasePanel)
 		ApplyButton:SetText("Submit")
@@ -143,14 +143,14 @@ function SA.Application.CreateGUI(BasePanel)
 			if not index then
 				return
 			end
-			ApplyText:SetValue(SA.Application.Table[index].Text)
-			PTimeLBL:SetText("Playtime: " .. SA.FormatTime(SA.Application.Table[index].Player.Playtime))
-			ScoreLBL:SetText("Score: " .. SA.Application.Table[index].Player.Score)
+			ApplyText:SetValue(SA.Application.Table[index].text)
+			PTimeLBL:SetText("Playtime: " .. SA.FormatTime(SA.Application.Table[index].player.playtime))
+			ScoreLBL:SetText("Score: " .. SA.Application.Table[index].player.score)
 		end
 
 		local fValue = false
 		for k, v in pairs(SA.Application.Table) do
-			SelFCombo:AddChoice(v.Player.Name .. " | " .. v.SteamID)
+			SelFCombo:AddChoice(v.player.Name .. " | " .. v.steamid)
 			fValue = true
 		end
 		if fValue then
@@ -164,7 +164,7 @@ function SA.Application.CreateGUI(BasePanel)
 		AcceptButton.DoClick = function()
 			local app = SA.Application.Table[SelAppIndex]
 			if app then
-				RunConsoleCommand("sa_application_accept", app.SteamID)
+				RunConsoleCommand("sa_application_accept", app.steamid)
 			end
 		end
 		local DenyButton = vgui.Create("DButton", BasePanel)
@@ -174,7 +174,7 @@ function SA.Application.CreateGUI(BasePanel)
 		DenyButton.DoClick = function()
 			local app = SA.Application.Table[SelAppIndex]
 			if app then
-				RunConsoleCommand("sa_application_deny", app.SteamID)
+				RunConsoleCommand("sa_application_deny", app.steamid)
 			end
 		end
 	end
@@ -202,7 +202,7 @@ end
 
 function SA.Application.Do()
 	net.Start("SA_DoApplyFaction")
-		net.WriteString(SA.Application.Me.Text)
-		net.WriteString(SA.Application.Me.FactionName)
+		net.WriteString(SA.Application.Me.text)
+		net.WriteString(SA.Application.Me.faction_name)
 	net.SendToServer()
 end

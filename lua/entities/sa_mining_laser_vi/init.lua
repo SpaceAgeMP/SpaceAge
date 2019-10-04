@@ -10,7 +10,7 @@ function ENT:GetPlayerLevel(ply)
 end
 
 function ENT:CalcVars(ply)
-	if ply.SAData.FactionName ~= "miners" and ply.SAData.FactionName ~= "alliance" then
+	if ply.SAData.faction_name ~= "miners" and ply.SAData.faction_name ~= "alliance" then
 		self:Remove()
 		return
 	end
