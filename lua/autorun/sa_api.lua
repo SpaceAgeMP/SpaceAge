@@ -207,7 +207,7 @@ function SA.API.GetPlayerGoodies(ply, onok, onerror)
 end
 
 function SA.API.DeletePlayerGoodie(ply, id, onok, onerror)
-	return SA.API.Get(MakePlayerResIDURL(ply, "goodies", id), onok, onerror)
+	return SA.API.Delete(MakePlayerResIDURL(ply, "goodies", id), onok, onerror)
 end
 
 -- FACTION -> APPLICATION functions
