@@ -55,9 +55,6 @@ local function SA_IsValidSteamID(sid, allowzero)
 	if not sid or sid == "" or sid == "STEAM_ID_PENDING" then
 		return false
 	end
-	if not allowzero and sid == "STEAM_0:0:0" then
-		return false
-	end
 	return true
 end
 
@@ -104,8 +101,8 @@ local function AddSAData(ply)
 	if data.Playtime == nil then
 		data.Playtime = 0
 	end
-	if data.TotalCredits == nil then
-		data.TotalCredits = 0
+	if data.Score == nil then
+		data.Score = 0
 	end
 	if data.IsFactionLeader == nil then
 		data.IsFactionLeader = false
@@ -171,7 +168,7 @@ LoadRes = function(ply, body, code)
 		ply:AssignFaction()
 		SA.SaveUser(ply)
 	elseif code == 200 then
-		ply.SAData = body
+		ply.SAData = SA.API.SnakeToPascal(body)
 		AddSAData(ply)
 		ply.SAData.Loaded = true
 		SA.Terminal.SetupStorage(ply, ply.SAData.StationStorage.Contents)
@@ -184,7 +181,7 @@ LoadRes = function(ply, body, code)
 	if sa_faction_only:GetBool() and
 		(ply:Team() < SA.Factions.Min or
 		ply:Team() > SA.Factions.Max or
-		tonumber(ply.SAData.TotalCredits) < 100000000) then
+		tonumber(ply.SAData.Score) < 100000000) then
 			ply:Kick("You don't meet the requirements for this server!")
 	end
 
@@ -193,7 +190,7 @@ LoadRes = function(ply, body, code)
 	ply.MayBePoked = false
 
 	ply:SetNWBool("isleader", ply.SAData.IsFactionLeader)
-	ply:SetNWInt("Score", ply.SAData.TotalCredits)
+	ply:SetNWInt("Score", ply.SAData.Score)
 
 	timer.Simple(1, function()
 		if not SA.ValidEntity(ply) then return end

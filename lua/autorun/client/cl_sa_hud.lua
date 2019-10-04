@@ -382,12 +382,12 @@ local function SA_DrawHelmet(color)
 end
 
 local credits = "LOADING"
-local totalCredits = "LOADING"
+local score = "LOADING"
 local playtime = 0
 local formattedPlaytime = "LOADING"
 local function sa_info_msg_credsc(len, ply)
 	credits = SA.AddCommasToInt(net.ReadString())
-	totalCredits = SA.AddCommasToInt(net.ReadString())
+	score = SA.AddCommasToInt(net.ReadString())
 	playtime = net.ReadInt(32)
 	formattedPlaytime = SA.FormatTime(playtime)
 end
@@ -420,7 +420,7 @@ local function SA_DrawTopBar()
 
 	draw.SimpleText("Name: " .. lp:Name(), topBarFont, section[1], yPos, colorWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 	draw.SimpleText("Playtime: " .. formattedPlaytime, topBarFont, section[5], yPos, colorWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-	draw.SimpleText("Score: " .. totalCredits, topBarFont, section[6], yPos, colorWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+	draw.SimpleText("Score: " .. score, topBarFont, section[6], yPos, colorWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 
 	draw.SimpleText("Faction: " .. team.GetName(LocalPlayer():Team()), topBarFont, ScrW() / 2, yPos + 8, colorWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 	draw.SimpleText("Credits: " .. credits, topBarFont, ScrW() / 2, yPos + 26 + 8, colorWhite, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)

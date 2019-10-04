@@ -446,7 +446,7 @@ local function SA_MarketSell(ply, cmd, args)
 					count = math.ceil(count * 1.11)
 				end
 				ply.SAData.Credits = ply.SAData.Credits + count
-				ply.SAData.TotalCredits = ply.SAData.TotalCredits + count
+				ply.SAData.Score = ply.SAData.Score + count
 				TempStorage[uid][index] = amount - selling
 			end
 		end
@@ -842,10 +842,10 @@ local function CheckCanDevice(ply, tr, mode)
 			return false
 		end
 	elseif (mode == "terraforming") then
-		if sel == "sa_terraformer" and ply.SAData.TotalCredits < 100000000 then
+		if sel == "sa_terraformer" and ply.SAData.Score < 100000000 then
 			ply:AddHint("You need to have at least 100000000 Score to use this!", NOTIFY_CLEANUP, 5)
 			return false
-		elseif ply.SAData.TotalCredits < 1000000 then
+		elseif ply.SAData.Score < 1000000 then
 			ply:AddHint("You need to have at least 1000000 Score to use this!", NOTIFY_CLEANUP, 5)
 			return false
 		end

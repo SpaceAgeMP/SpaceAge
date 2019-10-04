@@ -97,7 +97,7 @@ function ENT:Draw()
 						if (SA_PosColors[i]) then PosColor = SA_PosColors[i] end
 						draw.DrawText(tostring(i), "textScreenfont10", xColumns[1], linePos, PosColor, 0)
 						draw.DrawText(SA.StatsTable[i].Name, "textScreenfont10", xColumns[2], linePos, FactionColor, 0)
-						draw.DrawText(SA.StatsTable[i].TotalCredits, "textScreenfont10", xColumns[3], linePos, PosColor, 0)
+						draw.DrawText(SA.StatsTable[i].Score, "textScreenfont10", xColumns[3], linePos, PosColor, 0)
 					end
 				end
 			end

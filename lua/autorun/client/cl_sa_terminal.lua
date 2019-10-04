@@ -63,7 +63,7 @@ local function SA_Term_UpdateStats()
 	if not SA_Term_StatList then return end
 	SA_Term_StatList:Clear()
 	for k, v in pairs(SA.StatsTable) do
-		SA_Term_StatList:AddLine(tostring(k) , v.Name, v.TotalCredits, SA.Factions.ToLong[v.Info.FactionName or ""] or "Freelancers")
+		SA_Term_StatList:AddLine(tostring(k) , v.Name, v.Score, SA.Factions.ToLong[v.Info.FactionName or ""] or "Freelancers")
 	end
 end
 hook.Add("SA_StatsUpdate", "SA_Term_UpdateStats", SA_Term_UpdateStats)

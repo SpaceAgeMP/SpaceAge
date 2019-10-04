@@ -78,14 +78,14 @@ function ENT:Think()
 					creds = math.ceil((creds * 1.11) * 1000) / 1000
 				end
 				ply.SAData.Credits = ply.SAData.Credits + creds
-				if ply.SAData.TotalCredits > 100000000 then
+				if ply.SAData.Score > 100000000 then
 					if ply.SAData.FactionName  == "legion" then
 						creds = creds * 0.5
 					else
 						creds = creds * 0.4
 					end
 				end
-				ply.SAData.TotalCredits = ply.SAData.TotalCredits + creds
+				ply.SAData.Score = ply.SAData.Score + creds
 				SA.SendBasicInfo(ply)
 			end
 		else

@@ -22,14 +22,17 @@ end
 InitSelfApplication()
 
 local function SA_Applications_Player(ply, data)
-	SA.Application.Me = data
+	SA.Application.Me = SA.API.SnakeToPascal(data)
 	InitSelfApplication()
 	SA.Application.Refresh()
 end
 supernet.Hook("SA_Applications_Player", SA_Applications_Player)
 
 local function SA_Applications_Faction(ply, data)
-	SA.Application.Table = data
+	SA.Application.Table = {}
+	for _, v in pairs(data) do
+		table.insert(SA.Application.Table, SA.API.SnakeToPascal(v))
+	end
 	SA.Application.Refresh()
 end
 supernet.Hook("SA_Applications_Faction", SA_Applications_Faction)
@@ -142,7 +145,7 @@ function SA.Application.CreateGUI(BasePanel)
 			end
 			ApplyText:SetValue(SA.Application.Table[index].Text)
 			PTimeLBL:SetText("Playtime: " .. SA.FormatTime(SA.Application.Table[index].Player.Playtime))
-			ScoreLBL:SetText("Score: " .. SA.Application.Table[index].Player.TotalCredits)
+			ScoreLBL:SetText("Score: " .. SA.Application.Table[index].Player.Score)
 		end
 
 		local fValue = false

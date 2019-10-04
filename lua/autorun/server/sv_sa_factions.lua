@@ -43,7 +43,7 @@ local function LoadFactionResults(body, code)
 	for _, faction in pairs(body) do
 		local tbl = {}
 		tbl.Credits = tonumber(faction.Credits)
-		tbl.Score = tonumber(faction.TotalCredits)
+		tbl.Score = tonumber(faction.Score)
 		tbl.AddScore = 0
 		local fn = faction.FactionName
 		SA_FactionData[fn] = tbl
@@ -134,8 +134,8 @@ local function SA_DoApplyFaction(len, ply)
 	if ffid > SA.Factions.ApplyMax then return end
 
 	SA.API.UpsertPlayerApplication(ply, {
-		Text = text,
-		FactionName = faction,
+		text = text,
+		faction_name = faction,
 	}, function(body, status) DoApplyFactionResRes(ply, ffid, status) end, function() DoApplyFactionResRes(ply, ffid, 500) end)
 end
 net.Receive("SA_DoApplyFaction", SA_DoApplyFaction)
