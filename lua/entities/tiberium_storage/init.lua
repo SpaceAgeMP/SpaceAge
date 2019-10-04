@@ -34,7 +34,7 @@ function ENT:CalcVars(ply)
 end
 
 function ENT:GetCapacity(ply)
-	return (50000 + (ply.SAData.Research.TiberiumStorageCapacity[1] * 5000)) * ply.SAData.AdvancementLevel
+	return (50000 + (ply.SAData.research.tiberium_storage_capacity[1] * 5000)) * ply.SAData.AdvancementLevel
 end
 
 function ENT:Think()

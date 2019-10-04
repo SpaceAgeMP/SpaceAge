@@ -6,7 +6,7 @@ include("shared.lua")
 DEFINE_BASECLASS("sa_mining_laser")
 
 function ENT:GetPlayerLevel(ply)
-	return ply.SAData.Research.OreLaserYield[6]
+	return ply.SAData.research.ore_laser_yield[6]
 end
 
 function ENT:CalcVars(ply)

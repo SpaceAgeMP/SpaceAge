@@ -7,7 +7,7 @@ util.PrecacheSound("tools/ifm/beep.wav")
 local function OpenTerminal(ent, ply, founder)
 	if CurTime() < ent.NextUse then return end
 	ent.NextUse = CurTime() + 1
-	if (ent:GetPos():Distance(SA.Terminal.GetStationPos()) > SA.Terminal.GetStationSize() and (not (founder and founder.SAData.FactionName and founder.SAData.Research.RTA[1] and (founder.SAData.FactionName == "corporation" or founder.SAData.FactionName == "alliance") and founder.SAData.Research.RTA[1] > 1))) then ent:EmitSound("tools/ifm/beep.wav") ply:AddHint("RTA device out of range of station.", NOTIFY_CLEANUP, 5) return end
+	if (ent:GetPos():Distance(SA.Terminal.GetStationPos()) > SA.Terminal.GetStationSize() and (not (founder and founder.SAData.FactionName and founder.SAData.research.rta[1] and (founder.SAData.FactionName == "corporation" or founder.SAData.FactionName == "alliance") and founder.SAData.research.rta[1] > 1))) then ent:EmitSound("tools/ifm/beep.wav") ply:AddHint("RTA device out of range of station.", NOTIFY_CLEANUP, 5) return end
 	if ply:GetPos():Distance(ent:GetPos()) > 1000 then ent:EmitSound("tools/ifm/beep.wav") ply:AddHint("Too far away from RTA device.", NOTIFY_CLEANUP, 5) return end
 	if ply.AtTerminal then return end
 	if not ply.TempStorage then
@@ -31,7 +31,7 @@ function ENT:Initialize()
 end
 
 function ENT:CheckCanSpawn(ply)
-	if (ply.SAData.Research.RTA[1] < 1) then self:Remove() return end
+	if (ply.SAData.research.rta[1] < 1) then self:Remove() return end
 end
 
 function ENT:TriggerInput(iname, value)

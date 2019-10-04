@@ -6,7 +6,7 @@ include("shared.lua")
 DEFINE_BASECLASS("sa_mining_drill")
 
 function ENT:GetPlayerLevel(ply)
-	return ply.SAData.Research.TiberiumDrillYield[2]
+	return ply.SAData.research.tiberium_drill_yield[2]
 end
 
 ENT.EnergyBase = 1200

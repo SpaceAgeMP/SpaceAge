@@ -30,7 +30,7 @@ end
 
 function ENT:CalcVars(ply)
 	local reqLvl = SA.Ice.GetLevelForProductStorageModel(self:GetModel())
-	if ((reqLvl == nil) or (ply.SAData.Research.IceProductStorageLevel[1] < reqLvl)) then self:Remove() return end
+	if ((reqLvl == nil) or (ply.SAData.research.ice_product_storage_level[1] < reqLvl)) then self:Remove() return end
 
 	local Capacity = math.floor(30000 * (2.25 ^ reqLvl)) * ply.SAData.AdvancementLevel
 

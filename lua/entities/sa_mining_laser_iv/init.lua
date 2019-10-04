@@ -4,5 +4,5 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 function ENT:GetPlayerLevel(ply)
-	return ply.SAData.Research.OreLaserYield[4]
+	return ply.SAData.research.ore_laser_yield[4]
 end

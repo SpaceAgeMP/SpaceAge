@@ -123,8 +123,8 @@ local function AddSAData(ply)
 	if data.FactionName == nil then
 		data.FactionName = "freelancer"
 	end
-	if data.Research == nil then
-		data.Research = {}
+	if data.research == nil then
+		data.research = {}
 	end
 	SA.Research.InitPlayer(ply)
 	if data.AdvancementLevel == nil or data.AdvancementLevel <= 0 then
