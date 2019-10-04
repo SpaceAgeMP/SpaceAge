@@ -45,7 +45,7 @@ function SA.Application.Refresh()
 		local fValue = false
 		SelFCombo:Clear()
 		for k, v in pairs(SA.Application.Table) do
-			SelFCombo:AddChoice(v.Player.Name .. " | " .. v.steamid)
+			SelFCombo:AddChoice(v.player.Name .. " | " .. v.steamid)
 			fValue = true
 		end
 		if fValue then
