@@ -6,7 +6,7 @@ include("shared.lua")
 DEFINE_BASECLASS("base_rd3_entity")
 
 function ENT:GetPlayerLevel(ply)
-	return ply.SAData.research.tiberium_drill_yield[1]
+	return ply.sa_data.research.tiberium_drill_yield[1]
 end
 
 ENT.EnergyBase = 600
@@ -41,19 +41,19 @@ function ENT:Initialize()
 end
 
 function ENT:CalcVars(ply)
-	if ply.SAData.research.tiberium_drill_level[1] < self.MinTibDrillMod then
+	if ply.sa_data.research.tiberium_drill_level[1] < self.MinTibDrillMod then
 		self:Remove()
 		return
 	end
 
 	local miningmod = 1
-	if ply.SAData.faction_name == "miners" or ply.SAData.faction_name == "alliance" then
+	if ply.sa_data.faction_name == "miners" or ply.sa_data.faction_name == "alliance" then
 		miningmod = 1.33
-	elseif ply.SAData.faction_name == "starfleet" then
+	elseif ply.sa_data.faction_name == "starfleet" then
 		miningmod = 1.11
 	end
 	local level = self:GetPlayerLevel(ply)
-	local energycost = ply.SAData.research.mining_energy_efficiency[1] * 50
+	local energycost = ply.sa_data.research.mining_energy_efficiency[1] * 50
 	if (energycost > self.EnergyBase * 0.75) then
 		energycost = self.EnergyBase * 0.75
 	end

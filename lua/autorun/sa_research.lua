@@ -33,23 +33,23 @@ end
 function SA.Research.InitPlayer(ply)
 	for _, research in pairs(Researches) do
 		local dname, idx = ParseResearchName(research.name)
-		if ply.SAData.research[dname] == nil then
-			ply.SAData.research[dname] = {}
+		if ply.sa_data.research[dname] == nil then
+			ply.sa_data.research[dname] = {}
 		end
-		if ply.SAData.research[dname][idx] == nil then
-			ply.SAData.research[dname][idx] = 0
+		if ply.sa_data.research[dname][idx] == nil then
+			ply.sa_data.research[dname][idx] = 0
 		end
 	end
 end
 
 function SA.Research.GetFromPlayer(ply, name)
 	local dname, idx = ParseResearchName(name)
-	return ply.SAData.research[dname][idx]
+	return ply.sa_data.research[dname][idx]
 end
 
 function SA.Research.SetToPlayer(ply, name, value)
 	local dname, idx = ParseResearchName(name)
-	ply.SAData.research[dname][idx] = value
+	ply.sa_data.research[dname][idx] = value
 end
 
 local function SA_VerifyResearchXQINT(res)

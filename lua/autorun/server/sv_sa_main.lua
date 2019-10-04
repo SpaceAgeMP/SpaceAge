@@ -33,18 +33,18 @@ local sa_faction_only = GetConVar("sa_faction_only")
 
 local PlayerMeta = FindMetaTable("Player")
 function PlayerMeta:AssignFaction(name)
-	if name then self.SAData.faction_name = name end
-	if not self.SAData.faction_name then self.SAData.faction_name = "freelancer" end
-	if self.SAData.faction_name == "alliance" and self.SAData.alliance_membership_expiry < os.time() then self.SAData.faction_name = "freelancer" end
+	if name then self.sa_data.faction_name = name end
+	if not self.sa_data.faction_name then self.sa_data.faction_name = "freelancer" end
+	if self.sa_data.faction_name == "alliance" and self.sa_data.alliance_membership_expiry < os.time() then self.sa_data.faction_name = "freelancer" end
 	for k, v in pairs(SA.Factions.Table) do
-		if self.SAData.faction_name == v[2] then
+		if self.sa_data.faction_name == v[2] then
 			self:SetTeam(k)
 			return
 		end
 	end
 	if not self:Team() then
 		self:SetTeam(1)
-		self.SAData.faction_name = "freelancer"
+		self.sa_data.faction_name = "freelancer"
 		return
 	end
 end
@@ -89,11 +89,11 @@ hook.Add("Initialize", "SA_MapCleanInitialize", function()
 	timer.Simple(5, SA_MapCleanInitialize)
 end)
 
-local function AddSAData(ply)
-	if not ply.SAData then
-		ply.SAData = {}
+local function Addsa_data(ply)
+	if not ply.sa_data then
+		ply.sa_data = {}
 	end
-	local data = ply.SAData
+	local data = ply.sa_data
 	data.Name = ply:Nick()
 	if data.credits == nil then
 		data.credits = 0
@@ -137,14 +137,14 @@ end
 
 timer.Create("SA_PlayTimeTracker", 1, 0, function()
 	for _, ply in pairs(player.GetHumans()) do
-		if ply.SAData and ply.SAData.loaded then
-			ply.SAData.playtime = ply.SAData.playtime + 1
+		if ply.sa_data and ply.sa_data.loaded then
+			ply.sa_data.playtime = ply.sa_data.playtime + 1
 		end
 	end
 end)
 
 LoadFailed = function(ply, err)
-	AddSAData(ply)
+	Addsa_data(ply)
 	ply:SetTeam(1)
 	SA.Terminal.SetupStorage(ply)
 	print("Error loading player", err)
@@ -155,7 +155,7 @@ LoadFailed = function(ply, err)
 			return
 		end
 		SA_InitSpawn(ply)
-		if ply.SAData.loaded then
+		if ply.sa_data.loaded then
 			ply:Spawn()
 		end
 	end)
@@ -164,17 +164,17 @@ end
 LoadRes = function(ply, body, code)
 	print("Loaded:", ply:Name(), code)
 	if code == 404 then
-		AddSAData(ply)
-		ply.SAData.loaded = true
+		Addsa_data(ply)
+		ply.sa_data.loaded = true
 		ply:ChatPrint("You have not been found in the database, an account has been created for you.")
 		SA.Terminal.SetupStorage(ply)
 		ply:AssignFaction()
 		SA.SaveUser(ply)
 	elseif code == 200 then
-		ply.SAData = body
-		AddSAData(ply)
-		ply.SAData.loaded = true
-		SA.Terminal.SetupStorage(ply, ply.SAData.station_storage.contents)
+		ply.sa_data = body
+		Addsa_data(ply)
+		ply.sa_data.loaded = true
+		SA.Terminal.SetupStorage(ply, ply.sa_data.station_storage.contents)
 		ply:ChatPrint("Your account has been loaded, welcome on duty.")
 		ply:AssignFaction()
 	else
@@ -184,7 +184,7 @@ LoadRes = function(ply, body, code)
 	if sa_faction_only:GetBool() and
 		(ply:Team() < SA.Factions.Min or
 		ply:Team() > SA.Factions.Max or
-		tonumber(ply.SAData.score) < 100000000) then
+		tonumber(ply.sa_data.score) < 100000000) then
 			ply:Kick("You don't meet the requirements for this server!")
 	end
 
@@ -192,8 +192,8 @@ LoadRes = function(ply, body, code)
 	ply.IsAFK = false
 	ply.MayBePoked = false
 
-	ply:SetNWBool("isleader", ply.SAData.is_faction_leader)
-	ply:SetNWInt("Score", ply.SAData.score)
+	ply:SetNWBool("isleader", ply.sa_data.is_faction_leader)
+	ply:SetNWInt("Score", ply.sa_data.score)
 
 	timer.Simple(1, function()
 		if not SA.ValidEntity(ply) then return end
@@ -203,7 +203,7 @@ LoadRes = function(ply, body, code)
 		ply:ChatPrint("Spawn limitations disengaged. Happy travels.")
 	end)
 	ply:SetNWBool("isloaded", true)
-	if ply.SAData.loaded then
+	if ply.sa_data.loaded then
 		ply:Spawn()
 	end
 end
@@ -215,12 +215,12 @@ function SA.SaveUser(ply, isautosave)
 	end
 
 	local sid = ply:SteamID()
-	if not ply.SAData.loaded or not SA_IsValidSteamID(sid) then
+	if not ply.sa_data.loaded or not SA_IsValidSteamID(sid) then
 		return false
 	end
 
-	ply.SAData.Name = ply:Nick()
-	ply.SAData.station_storage.contents = SA.Terminal.GetPermStorage(ply)
+	ply.sa_data.Name = ply:Nick()
+	ply.sa_data.station_storage.contents = SA.Terminal.GetPermStorage(ply)
 	SA.API.UpsertPlayer(ply)
 	return true
 end
@@ -296,7 +296,7 @@ local SA_Don_Toollist = SA.Config.Load("donator_tools", true)
 
 local function SA_DonatorCanTool(ply, tr, mode)
 	for k, v in pairs(SA_Don_Toollist) do
-		if mode == v and not ply.SAData.IsDonator then
+		if mode == v and not ply.sa_data.IsDonator then
 			ply:AddHint("This is a donator-only tool, a reward for contributing to the community.", NOTIFY_CLEANUP, 10)
 			return false
 		end

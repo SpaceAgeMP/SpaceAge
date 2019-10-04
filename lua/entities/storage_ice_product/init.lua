@@ -30,9 +30,9 @@ end
 
 function ENT:CalcVars(ply)
 	local reqLvl = SA.Ice.GetLevelForProductStorageModel(self:GetModel())
-	if ((reqLvl == nil) or (ply.SAData.research.ice_product_storage_level[1] < reqLvl)) then self:Remove() return end
+	if ((reqLvl == nil) or (ply.sa_data.research.ice_product_storage_level[1] < reqLvl)) then self:Remove() return end
 
-	local Capacity = math.floor(30000 * (2.25 ^ reqLvl)) * ply.SAData.advancement_level
+	local Capacity = math.floor(30000 * (2.25 ^ reqLvl)) * ply.sa_data.advancement_level
 
 	RD.AddResource(self, "Oxygen Isotopes", Capacity)
 	RD.AddResource(self, "Hydrogen Isotopes", Capacity)

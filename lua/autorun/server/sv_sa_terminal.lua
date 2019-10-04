@@ -102,13 +102,13 @@ end
 hook.Add("PlayerInitialSpawn", "SA_SendHash", SendHash)
 
 local function UpdateCapacity(ply)
-	local maxcap = ply.SAData.station_storage.capacity
+	local maxcap = ply.sa_data.station_storage.capacity
 	local uid = ply:UniqueID()
 	local count = 0
 	for k, v in pairs(PermStorage[uid]) do
 		count = count + v
 	end
-	ply.SAData.station_storage.remaining = maxcap - count
+	ply.sa_data.station_storage.remaining = maxcap - count
 end
 
 function SA.Terminal.SetupStorage(ply, tbl)
@@ -313,9 +313,9 @@ SA_UpdateInfo = function(ply, CanPass)
 				break
 			end
 		end
-		if ply.SAData.faction_name == "corporation" or ply.SAData.faction_name == "alliance" then
+		if ply.sa_data.faction_name == "corporation" or ply.sa_data.faction_name == "alliance" then
 			price = math.ceil((price * 1.33) * 1000) / 1000
-		elseif ply.SAData.faction_name == "starfleet" then
+		elseif ply.sa_data.faction_name == "starfleet" then
 			price = math.ceil((price * 1.11) * 1000) / 1000
 		end
 		ResTabl[k] = {v, tostring(price)}
@@ -326,7 +326,7 @@ SA_UpdateInfo = function(ply, CanPass)
 	local ResTabl2 = {}
 
 	for k, v in pairs(Researches) do
-		ResTabl2[k] = {k, SA.Research.GetFromPlayer(ply, v.name), ply.SAData.faction_name}
+		ResTabl2[k] = {k, SA.Research.GetFromPlayer(ply, v.name), ply.sa_data.faction_name}
 	end
 
 	local DevVars = {0, 0, 0}
@@ -337,14 +337,14 @@ SA_UpdateInfo = function(ply, CanPass)
 	ply.SendingTermUp = true
 	supernet.Send(ply, "SA_TerminalUpdate", {
 		ResTabl,
-		math.floor(ply.SAData.station_storage.remaining),
-		math.floor(ply.SAData.station_storage.capacity),
+		math.floor(ply.sa_data.station_storage.remaining),
+		math.floor(ply.sa_data.station_storage.capacity),
 		PermStorageU,
 		ShipStorageU,
 		BuyPriceTable,
 		ResTabl2,
 		SA_CanReset(ply),
-		ply.SAData.advancement_level,
+		ply.sa_data.advancement_level,
 		DevVars,
 	}, function() SA_InfoSent(ply) end)
 end
@@ -440,13 +440,13 @@ local function SA_MarketSell(ply, cmd, args)
 		for k, v in pairs(PriceTable) do
 			if string.lower(v[1]) == string.lower(args[1]) then
 				local count = math.ceil(selling * v[2])
-				if ply.SAData.faction_name == "corporation" or ply.SAData.faction_name == "alliance" then
+				if ply.sa_data.faction_name == "corporation" or ply.sa_data.faction_name == "alliance" then
 					count = math.ceil(count * 1.33)
-				elseif ply.SAData.faction_name == "starfleet" then
+				elseif ply.sa_data.faction_name == "starfleet" then
 					count = math.ceil(count * 1.11)
 				end
-				ply.SAData.credits = ply.SAData.credits + count
-				ply.SAData.score = ply.SAData.score + count
+				ply.sa_data.credits = ply.sa_data.credits + count
+				ply.sa_data.score = ply.sa_data.score + count
 				TempStorage[uid][index] = amount - selling
 			end
 		end
@@ -477,9 +477,9 @@ local function SA_MarketBuy(ply, cmd, args)
 	end
 	if (pricepu <= 0) then return end
 	price = math.ceil(num * pricepu)
-	if (price > tonumber(ply.SAData.credits)) then
-		buying = math.floor(tonumber(ply.SAData.credits) / pricepu)
-		price = tonumber(ply.SAData.credits)
+	if (price > tonumber(ply.sa_data.credits)) then
+		buying = math.floor(tonumber(ply.sa_data.credits) / pricepu)
+		price = tonumber(ply.sa_data.credits)
 	else
 		buying = num
 	end
@@ -487,13 +487,13 @@ local function SA_MarketBuy(ply, cmd, args)
 		local bought = false
 		for k, v in pairs(TempStorage[uid]) do
 			if string.lower(k) == index then
-				ply.SAData.credits = ply.SAData.credits - price
+				ply.sa_data.credits = ply.sa_data.credits - price
 				TempStorage[uid][k] = v + buying
 				bought = true
 			end
 		end
 		if (not bought) then
-			ply.SAData.credits = ply.SAData.credits - price
+			ply.sa_data.credits = ply.sa_data.credits - price
 			TempStorage[uid][index] = buying
 		end
 	end
@@ -540,8 +540,8 @@ local function SA_MoveResource(ply, cmd, args, notagain)
 		TempStorage[uid][res] = count + tomove
 	elseif (to == "perm") then
 		local count = PermStorage[uid][res] or 0
-		if tomove > ply.SAData.station_storage.remaining then
-			tomove = ply.SAData.station_storage.remaining
+		if tomove > ply.sa_data.station_storage.remaining then
+			tomove = ply.sa_data.station_storage.remaining
 		end
 		PermStorage[uid][res] = math.floor(count + tomove)
 	elseif (to == "ship") then
@@ -569,14 +569,14 @@ local function SA_BuyPermStorage(ply, cmd, args)
 	if ply.IsAFK then return end
 	local CHECK = args[2]
 	if CHECK ~= HASH then return end
-	local credits = tonumber(ply.SAData.credits)
-	local maxcap = ply.SAData.station_storage.capacity
+	local credits = tonumber(ply.sa_data.credits)
+	local maxcap = ply.sa_data.station_storage.capacity
 	local amt = tonumber(args[1])
 	if amt <= 0 then return end
 	local cost = amt * 10
 	if credits >= cost then
-		ply.SAData.credits = credits - cost
-		ply.SAData.station_storage.capacity = maxcap + amt
+		ply.sa_data.credits = credits - cost
+		ply.sa_data.station_storage.capacity = maxcap + amt
 		UpdateCapacity(ply)
 		SA.SendBasicInfo(ply)
 		SA_UpdateInfo(ply)
@@ -605,7 +605,7 @@ local function SA_Research(ply, cmd, args)
 	if (cap ~= 0) and cap == cur then
 		return
 	end
-	if (Research.faction and #Research.faction > 0) and not table.HasValue(Research.faction, ply.SAData.faction_name) then
+	if (Research.faction and #Research.faction > 0) and not table.HasValue(Research.faction, ply.sa_data.faction_name) then
 		return
 	end
 	if (Research.type ~= "none") then
@@ -614,7 +614,7 @@ local function SA_Research(ply, cmd, args)
 		if reqtype == "unlock" then
 			for k, v in pairs(prereq) do
 				if v[1] == "faction" then
-					if not table.HasValue(v[2], ply.SAData.faction_name) then
+					if not table.HasValue(v[2], ply.sa_data.faction_name) then
 						return
 					end
 				elseif SA.Research.GetFromPlayer(ply, v[1]) < v[2] then
@@ -628,7 +628,7 @@ local function SA_Research(ply, cmd, args)
 				for k, v in pairs(tbl) do
 					if v[1] == "faction" then
 						--glualint:ignore-next-line
-						if not table.HasValue(v[2], ply.SAData.faction_name) then
+						if not table.HasValue(v[2], ply.sa_data.faction_name) then
 							return
 						end
 					elseif SA.Research.GetFromPlayer(ply, v[1]) < v[2] then
@@ -640,20 +640,20 @@ local function SA_Research(ply, cmd, args)
 	end
 	local cost = Research.cost
 	local inc = Research.costinc / 100
-	local devl = ply.SAData.advancement_level
-	local cred = tonumber(ply.SAData.credits)
+	local devl = ply.sa_data.advancement_level
+	local cred = tonumber(ply.sa_data.credits)
 	local total = cost + (cost * inc) * cur
 	total = total * (devl * devl)
 
-	if ply.SAData.faction_name == "legion" or ply.SAData.faction_name == "alliance" then
+	if ply.sa_data.faction_name == "legion" or ply.sa_data.faction_name == "alliance" then
 		total = math.ceil(total * 0.66)
-	elseif ply.SAData.faction_name == "starfleet" then
+	elseif ply.sa_data.faction_name == "starfleet" then
 		total = math.ceil(total * 0.88)
 	end
 
 	if cred >= total then
 		SA.Research.SetToPlayer(ply, Research.name, cur + 1)
-		ply.SAData.credits = ply.SAData.credits - total
+		ply.sa_data.credits = ply.sa_data.credits - total
 		SA_UpdateInfo(ply)
 		local retro = Research.classes
 		for l, b in pairs(retro) do
@@ -674,16 +674,16 @@ local function SA_ResetMe(ply, cmd, args)
 	local CHECK = args[1]
 	if CHECK ~= HASH then return end
 
-	if ply.SAData.advancement_level >= 5 then return end
+	if ply.sa_data.advancement_level >= 5 then return end
 
-	local devlim = ply.SAData.advancement_level
+	local devlim = ply.sa_data.advancement_level
 	local cost = 5000000000 * (devlim * devlim)
-	if ply.SAData.credits < cost then return end
+	if ply.sa_data.credits < cost then return end
 
 	if not SA_CanReset(ply) then return end
 
-	ply.SAData.credits = ply.SAData.credits - cost
-	ply.SAData.advancement_level = ply.SAData.advancement_level + 1
+	ply.sa_data.credits = ply.sa_data.credits - cost
+	ply.sa_data.advancement_level = ply.sa_data.advancement_level + 1
 
 	SA_UpdateInfo(ply)
 	SA.SendBasicInfo(ply)
@@ -716,7 +716,7 @@ concommand.Add("sa_dev_set_var", SA_DevSetVar)
 
 local function CheckCanDevice(ply, tr, mode)
 	if (mode == "mining_laser_sa") then
-		local oreLevel = ply.SAData.research.ore_laser_level[1]
+		local oreLevel = ply.sa_data.research.ore_laser_level[1]
 		local sel = ply:GetActiveWeapon().Tool.mining_laser_sa:GetClientInfo("type")
 		if sel == "sa_mining_laser_ii" then
 			if oreLevel < 1 then
@@ -739,7 +739,7 @@ local function CheckCanDevice(ply, tr, mode)
 				return false
 			end
 		elseif sel == "sa_mining_laser_vi" then
-			if ply.SAData.faction_name ~= "miners" and ply.SAData.faction_name ~= "alliance" then
+			if ply.sa_data.faction_name ~= "miners" and ply.sa_data.faction_name ~= "alliance" then
 				ply:AddHint("You must be in Major Miners or The Alliance to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			elseif oreLevel < 5 then
@@ -747,7 +747,7 @@ local function CheckCanDevice(ply, tr, mode)
 				return false
 			end
 		end
-		local iceLaserLevel = ply.SAData.research.ice_laser_level[1]
+		local iceLaserLevel = ply.sa_data.research.ice_laser_level[1]
 		if sel == "ice_mining_laser_2" then
 			if iceLaserLevel < 1 then
 				ply:AddHint("You must have Rank 1 ICE Lasers to use this!", NOTIFY_CLEANUP, 5)
@@ -759,7 +759,7 @@ local function CheckCanDevice(ply, tr, mode)
 				return false
 			end
 		end
-		local iceRefineryLevel = ply.SAData.research.ice_refinery_level[1]
+		local iceRefineryLevel = ply.sa_data.research.ice_refinery_level[1]
 		if sel == "ice_refinery_imrpoved" then
 			if iceRefineryLevel < 1 then
 				ply:AddHint("You must have Rank 1 ICE Refineries to use this!", NOTIFY_CLEANUP, 5)
@@ -771,9 +771,9 @@ local function CheckCanDevice(ply, tr, mode)
 				return false
 			end
 		end
-		local tiberiumLevel = ply.SAData.research.tiberium_drill_level[1]
+		local tiberiumLevel = ply.sa_data.research.tiberium_drill_level[1]
 		if sel == "sa_mining_drill_ii" then
-			if ply.SAData.faction_name ~= "legion" and ply.SAData.faction_name ~= "alliance" then
+			if ply.sa_data.faction_name ~= "legion" and ply.sa_data.faction_name ~= "alliance" then
 				ply:AddHint("You must be in The Legion or The Alliance to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			elseif tiberiumLevel < 1 then
@@ -782,7 +782,7 @@ local function CheckCanDevice(ply, tr, mode)
 			end
 		end
 	elseif (mode == "mining_storage") then
-		local ore_storage_level = ply.SAData.research.ore_storage_level[1]
+		local ore_storage_level = ply.sa_data.research.ore_storage_level[1]
 		local sel = ply:GetActiveWeapon().Tool.mining_storage:GetClientInfo("type")
 		local sel2 = ply:GetActiveWeapon().Tool.mining_storage:GetClientInfo("model")
 		if sel == "ore_storage_ii" then
@@ -801,7 +801,7 @@ local function CheckCanDevice(ply, tr, mode)
 				return false
 			end
 		elseif sel == "ore_storage_v" then
-			if ply.SAData.faction_name ~= "starfleet" and ply.SAData.faction_name ~= "miners" and ply.SAData.faction_name ~= "alliance" then
+			if ply.sa_data.faction_name ~= "starfleet" and ply.sa_data.faction_name ~= "miners" and ply.sa_data.faction_name ~= "alliance" then
 				ply:AddHint("You must be in Star Fleet or Major Miners or The Alliance to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			elseif ore_storage_level < 4 then
@@ -809,7 +809,7 @@ local function CheckCanDevice(ply, tr, mode)
 				return false
 			end
 		elseif sel == "storage_ice" then
-			local iceStorageLevel = ply.SAData.research.ice_raw_storage_level[1]
+			local iceStorageLevel = ply.sa_data.research.ice_raw_storage_level[1]
 			local reqLvl = SA.Ice.GetLevelForStorageModel(sel2)
 			if not reqLvl then return false end
 			if iceStorageLevel < reqLvl then
@@ -817,7 +817,7 @@ local function CheckCanDevice(ply, tr, mode)
 				return false
 			end
 		elseif sel == "storage_ice_product" then
-			local iceProductStorageLevel = ply.SAData.research.ice_product_storage_level[1]
+			local iceProductStorageLevel = ply.sa_data.research.ice_product_storage_level[1]
 			local reqLvl = SA.Ice.GetLevelForProductStorageModel(sel2)
 			if not reqLvl then return false end
 			if iceProductStorageLevel < reqLvl then
@@ -825,10 +825,10 @@ local function CheckCanDevice(ply, tr, mode)
 				return false
 			end
 		end
-		local tiberium_storage_level = ply.SAData.research.tiberium_storage_level[1]
+		local tiberium_storage_level = ply.sa_data.research.tiberium_storage_level[1]
 		if (sel == "tiberium_storage_ii" or sel == "tiberium_storage") and (SA.ValidEntity(tr.Entity) and tr.Entity:GetClass() == "tiberium_storage_holder") then return false end
 		if sel == "tiberium_storage_ii" then
-			if ply.SAData.faction_name ~= "legion" and ply.SAData.faction_name ~= "alliance" then
+			if ply.sa_data.faction_name ~= "legion" and ply.sa_data.faction_name ~= "alliance" then
 				ply:AddHint("You must be in The Legion or The Alliance to use this!", NOTIFY_CLEANUP, 5)
 				return false
 			elseif tiberium_storage_level < 1 then
@@ -837,15 +837,15 @@ local function CheckCanDevice(ply, tr, mode)
 			end
 		end
 	elseif (mode == "rta_device") then
-		if ply.SAData.research.rta[1] < 1 then
+		if ply.sa_data.research.rta[1] < 1 then
 			ply:AddHint("You must have Remote Terminal Access to use this!", NOTIFY_CLEANUP, 5)
 			return false
 		end
 	elseif (mode == "terraforming") then
-		if sel == "sa_terraformer" and ply.SAData.score < 100000000 then
+		if sel == "sa_terraformer" and ply.sa_data.score < 100000000 then
 			ply:AddHint("You need to have at least 100000000 Score to use this!", NOTIFY_CLEANUP, 5)
 			return false
-		elseif ply.SAData.score < 1000000 then
+		elseif ply.sa_data.score < 1000000 then
 			ply:AddHint("You need to have at least 1000000 Score to use this!", NOTIFY_CLEANUP, 5)
 			return false
 		end

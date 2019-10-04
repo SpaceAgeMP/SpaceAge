@@ -41,7 +41,7 @@ local TLNAMEX = "mining_laser_sa"
 
 if SERVER then
 	CAF_CallbackFuncs[TLNAMEX] = function(ply, Ang, Pos, type, model, Frozen)
-		if ply:GetCount(TLNAMEX) >= ply.SAData.advancement_level then return nil end
+		if ply:GetCount(TLNAMEX) >= ply.sa_data.advancement_level then return nil end
 		local ent = CAF_MakeCAFEnt(ply, Ang, Pos, TLNAMEX, type, model, frozen)
 		if not (ent and ent:IsValid()) then return nil end
 		ply:AddCount(TLNAMEX, ent)

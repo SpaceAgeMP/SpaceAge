@@ -23,7 +23,7 @@ function ENT:Initialize()
 	RD.AddResource(self, "permafrost", 1000000)
 	self.caf.custom.masschangeoverride = true
 	local pl = self:GetTable().Founder
-	if pl and pl:IsValid() and pl:IsPlayer() and pl.SAData.score and pl.SAData.score < 1000000 then
+	if pl and pl:IsValid() and pl:IsPlayer() and pl.sa_data.score and pl.sa_data.score < 1000000 then
 		self:Remove()
 		return
 	end

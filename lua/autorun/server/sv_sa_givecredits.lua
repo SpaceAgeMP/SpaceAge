@@ -15,12 +15,12 @@ function SA.GiveCredits.Do(ply, v, amt)
 
 	amt = tonumber(amt)
 	if not amt then ply:AddHint("Invalid command parameters.", NOTIFY_CLEANUP, 5) return false end
-	local cred = tonumber(ply.SAData.credits)
+	local cred = tonumber(ply.sa_data.credits)
 	if (amt <= 0) or (math.ceil(amt) ~= math.floor(amt)) then ply:AddHint("That is not a valid number.", NOTIFY_CLEANUP, 5) return false end
 	if (amt > cred) then ply:AddHint("You do not have enough credits.", NOTIFY_CLEANUP, 5) return false end
 
-	v.SAData.credits = v.SAData.credits + amt
-	ply.SAData.credits = ply.SAData.credits - amt
+	v.sa_data.credits = v.sa_data.credits + amt
+	ply.sa_data.credits = ply.sa_data.credits - amt
 	local num = SA.AddCommasToInt(amt)
 	ply:AddHint("You have given " .. v:Name() .. " " .. num .. " credits.", NOTIFY_GENERIC, 5)
 	v:AddHint(ply:Name() .. " has given you " .. num .. " credits.", NOTIFY_GENERIC, 5)
