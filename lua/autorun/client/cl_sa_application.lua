@@ -22,17 +22,14 @@ end
 InitSelfApplication()
 
 local function SA_Applications_Player(ply, data)
-	SA.Application.Me = SA.API.SnakeToPascal(data)
+	SA.Application.Me = data
 	InitSelfApplication()
 	SA.Application.Refresh()
 end
 supernet.Hook("SA_Applications_Player", SA_Applications_Player)
 
 local function SA_Applications_Faction(ply, data)
-	SA.Application.Table = {}
-	for _, v in pairs(data) do
-		table.insert(SA.Application.Table, SA.API.SnakeToPascal(v))
-	end
+	SA.Application.Table = data
 	SA.Application.Refresh()
 end
 supernet.Hook("SA_Applications_Faction", SA_Applications_Faction)

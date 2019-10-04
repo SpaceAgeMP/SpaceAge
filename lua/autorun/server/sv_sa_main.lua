@@ -171,7 +171,7 @@ LoadRes = function(ply, body, code)
 		ply:AssignFaction()
 		SA.SaveUser(ply)
 	elseif code == 200 then
-		ply.SAData = SA.API.SnakeToPascal(body)
+		ply.SAData = body
 		AddSAData(ply)
 		ply.SAData.loaded = true
 		SA.Terminal.SetupStorage(ply, ply.SAData.station_storage.contents)

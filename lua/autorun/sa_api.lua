@@ -74,7 +74,7 @@ end
 for _, v in pairs(bodyful) do
 	local method = v:upper()
 	SA.API[v] = function(url, body, onok, onerror)
-		return SA.API.Request(url, method, MapKeys(body, PascalToSnake), onok, onerror)
+		return SA.API.Request(url, method, body, onok, onerror)
 	end
 end
 
