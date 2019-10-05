@@ -94,7 +94,7 @@ local function Addsa_data(ply)
 		ply.sa_data = {}
 	end
 	local data = ply.sa_data
-	data.Name = ply:Nick()
+	data.name = ply:Nick()
 	if data.credits == nil then
 		data.credits = 0
 	end
@@ -219,7 +219,7 @@ function SA.SaveUser(ply, isautosave)
 		return false
 	end
 
-	ply.sa_data.Name = ply:Nick()
+	ply.sa_data.name = ply:Nick()
 	ply.sa_data.station_storage.contents = SA.Terminal.GetPermStorage(ply)
 	SA.API.UpsertPlayer(ply)
 	return true
