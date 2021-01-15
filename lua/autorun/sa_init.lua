@@ -35,8 +35,8 @@ local function TryLoadModule(moduleName, loadChain)
 end
 
 local function LoadModuleTree()
-	for moduleName, module in pairs(SA_ModuleList) do
-		TryLoadModule(module, {})
+	for moduleName, _ in pairs(SA_ModuleList) do
+		TryLoadModule(moduleName, {})
 	end
 end
 
