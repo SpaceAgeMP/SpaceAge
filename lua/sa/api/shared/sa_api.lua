@@ -1,5 +1,7 @@
 SA.API = {}
 
+--DEPENDS config
+
 local JWT_IN_RENEWAL = true
 
 local MakeUserAgent

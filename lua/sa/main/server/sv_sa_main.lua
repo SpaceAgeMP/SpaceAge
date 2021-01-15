@@ -1,5 +1,4 @@
-AddCSLuaFile("autorun/client/cl_sa_hud.lua")
-AddCSLuaFile("autorun/client/cl_sa_stats.lua")
+--DEPENDS config
 
 timer.Simple(1, function() RD = CAF.GetAddon("Resource Distribution") end)
 

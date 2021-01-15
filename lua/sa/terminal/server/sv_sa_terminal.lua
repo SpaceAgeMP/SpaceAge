@@ -1,7 +1,4 @@
-AddCSLuaFile("autorun/client/cl_sa_terminal.lua")
-AddCSLuaFile("sa/terminal/client/research.lua")
-AddCSLuaFile("sa/terminal/client/resource.lua")
-AddCSLuaFile("sa/terminal/client/goodies.lua")
+--DEPENDS config
 
 require("supernet")
 

@@ -1,4 +1,4 @@
-AddCSLuaFile("autorun/client/cl_sa_application.lua")
+--DEPENDS config
 
 local SA_FactionData = {}
 

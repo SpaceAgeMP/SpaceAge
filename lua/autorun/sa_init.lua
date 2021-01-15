@@ -28,9 +28,11 @@ local function TryLoadModule(moduleName, loadChain)
 		TryLoadModule(dependency, loadChain)
 	end
 
-	if module.fileName then
-		print("Loading module file " .. module.fileName)
-		include(module.fileName)
+	if module.fileNames then
+		for _, fileName in module.fileNames do
+			print("Loading module file " .. fileName)
+			include(fileName)
+		end
 	end
 end
 
@@ -62,10 +64,15 @@ local function LoadAllFilesForModule(module, side)
 				dependencies = fileData:sub(dependencyLine, dependencyLineEnd):Split(" ")
 			end
 			table.insert(SA_ModuleList[module].dependencies, moduleName)
-			SA_ModuleList[moduleName] = {
-				dependencies = dependencies,
-				fileName = fileName
-			}
+			if SA_ModuleList[moduleName] then
+				table.insert(SA_ModuleList[moduleName].fileNames, fileName)
+				table.Add(SA_ModuleList[moduleName].dependencies, dependencies)
+			else
+				SA_ModuleList[moduleName] = {
+					dependencies = dependencies,
+					fileNames = {fileName}
+				}
+			end
 		end
 	end
 end

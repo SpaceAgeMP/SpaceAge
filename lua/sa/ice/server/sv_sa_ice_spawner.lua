@@ -1,3 +1,5 @@
+--DEPENDS config
+
 if not SA.Ice then
 	SA.Ice = {}
 end

@@ -1,3 +1,5 @@
+--DEPENDS config
+
 local AllAsteroids = {
 	{ "models/ce_ls3additional/asteroids/asteroid_200.mdl", 400 },
 	{ "models/ce_ls3additional/asteroids/asteroid_250.mdl", 500 },

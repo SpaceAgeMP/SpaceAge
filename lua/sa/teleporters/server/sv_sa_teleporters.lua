@@ -1,4 +1,4 @@
-AddCSLuaFile("autorun/client/cl_sa_teleporters.lua")
+--DEPENDS config
 
 SA.Teleporter = {}
 

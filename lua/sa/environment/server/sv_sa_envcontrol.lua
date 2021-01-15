@@ -1,5 +1,7 @@
 SA.Planets = {}
 
+--DEPENDS config
+
 local SB = CAF.GetAddon("Spacebuild")
 
 local SB_Terraforming_Target = {o2 = 29, co2 = 0.6, h = 0.4, n = 70, empty = 0}
