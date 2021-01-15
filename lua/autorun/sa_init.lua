@@ -67,10 +67,10 @@ local function LoadAllFilesForModule(module, side)
 	for _, f in pairs(files) do
 		local fileName = folder .. f
 		local moduleName = module .. "." .. f:sub(1, -4)
+		if addClient then
+			AddCSLuaFile(fileName)
+		end
 		if loadFile then
-			if addClient then
-				AddCSLuaFile(fileName)
-			end
 			table.insert(SA_ModuleList[module].dependencies, moduleName)
 			if SA_ModuleList[moduleName] then
 				table.insert(SA_ModuleList[moduleName].fileNames, fileName)
