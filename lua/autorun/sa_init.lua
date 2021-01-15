@@ -96,4 +96,7 @@ function SA_LoadAllModules()
 	end
 
 	LoadModuleTree()
+
+	SA_REQUIRE = nil
+	SA_LoadAllModules = nil
 end
