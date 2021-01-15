@@ -12,7 +12,7 @@ local SA_ModuleList = {}
 local SA_FileDepends = {}
 
 if CLIENT then
-	SA_FileDepends = util.JSONToTable(file.Read("sa_modules.json", "DATA"))
+	SA_FileDepends = util.JSONToTable(file.Read("data/sa_modules.json", "DOWNLOAD"))
 end
 
 local function TryLoadModule(moduleName, loadChain)
