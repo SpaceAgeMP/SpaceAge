@@ -110,7 +110,7 @@ function SA_LoadAllModules()
 	end
 
 	file.Write("sa_modules.json", util.TableToJSON(SA_FileDepends))
-	resource.AddFile("data/sa_modules.json")
+	resource.AddSingleFile("data/sa_modules.json")
 
 	LoadModuleTree()
 end
