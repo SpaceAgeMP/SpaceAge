@@ -87,6 +87,13 @@ local function CreateTerminalGUI()
 	SA_Term_GUI = BasePanel
 	SA_Term_GUI.SA_IsTerminalGUI = true
 
+	-- close SA_Term_GUI when 'Q' is pressed --
+	function SA_Term_GUI:OnKeyCodePressed(KeyCode)
+		if KeyCode == KEY_Q then
+			RunConsoleCommand("sa_terminal_close")
+		end
+	end
+
 	local guiSizeX = SA_Term_GUI:GetSize()
 
 	local CloseButton = vgui.Create("DButton", BasePanel)
