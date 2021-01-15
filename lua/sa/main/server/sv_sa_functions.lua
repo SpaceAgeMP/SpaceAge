@@ -1,6 +1,3 @@
-AddCSLuaFile("autorun/client/cl_sa_givequery.lua")
-AddCSLuaFile("autorun/client/cl_sa_functions.lua")
-
 local RD = CAF.GetAddon("Resource Distribution")
 
 SA.Functions = {}

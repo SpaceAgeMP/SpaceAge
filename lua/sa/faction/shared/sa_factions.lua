@@ -1,7 +1,3 @@
-if SERVER then
-	AddCSLuaFile()
-end
-
 SA.Factions = {}
 SA.Factions.Table = {
 	{ "Freelancers", "freelancer", Color(158, 134, 97, 255), "models/player/Group01/male_02.mdl", "models/player/Group01/male_02.mdl", nil, "have"},

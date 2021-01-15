@@ -11,10 +11,6 @@ local OKAY_CALLERS = { "addons/spaceage/", "lua/fpp/", "lua/ulib/" }
 
 SA.RunAntiIceDebug = false
 
-if SERVER then
-	AddCSLuaFile()
-end
-
 local function IsOkay(ent)
 	if SA.ValidEntity(ent) and GetEntityClass(ent) == "iceroid" then
 		return false

@@ -1,7 +1,3 @@
-if SERVER then
-	AddCSLuaFile()
-end
-
 SA.Research = {}
 
 local Researches = {}

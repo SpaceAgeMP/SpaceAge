@@ -1,5 +1,4 @@
 if SERVER then
-	AddCSLuaFile()
 	local hudaf = {}
 	timer.Create("armorfix", 0.4, 0, function()
 		for k, pl in pairs(player.GetAll()) do

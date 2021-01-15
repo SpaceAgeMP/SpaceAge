@@ -19,8 +19,6 @@ local apiConfig = SA.Config.Load("api", true) or {}
 apiConfig.url = apiConfig.url or "https://api.spaceage.mp/v2"
 
 if SERVER then
-	AddCSLuaFile()
-
 	MakeUserAgent = function()
 		return CommonUserAgent("Server", "")
 	end

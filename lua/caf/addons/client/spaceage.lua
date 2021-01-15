@@ -7,6 +7,7 @@ local status = false
 ]]
 function SA_CAF.__Construct()
 	if status then return false , "This Addon is already Active!" end
+	SA_LoadAllModules()
 	status = true --You decide how you want to be able to set the status internaly for the GetStatus functions, but this is a good way to do it.
 	return true -- If Succesfull
 end

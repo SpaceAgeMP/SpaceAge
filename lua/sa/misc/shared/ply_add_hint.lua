@@ -1,7 +1,6 @@
 local PLY = FindMetaTable("Player")
 
 if SERVER then
-	AddCSLuaFile()
 	util.AddNetworkString("Player_AddHint")
 	function PLY:AddHint(txt, typ, len)
 		net.Start("Player_AddHint")

@@ -1,7 +1,3 @@
-if SERVER then
-	AddCSLuaFile()
-end
-
 SA.PP = {}
 
 function SA.PP.GetOwner(ent)

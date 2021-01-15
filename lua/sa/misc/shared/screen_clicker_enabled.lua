@@ -1,7 +1,3 @@
-if SERVER then
-	AddCSLuaFile()
-end
-
 if CLIENT then
 	local sc_enabled = false
 	function gui.ScreenClickerEnabled()

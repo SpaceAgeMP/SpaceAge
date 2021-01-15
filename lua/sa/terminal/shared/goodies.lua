@@ -1,7 +1,3 @@
-if SERVER then
-	AddCSLuaFile()
-end
-
 SA.Goodies = {
 	ally_1m = {
 		name = "Alliance 1 month",

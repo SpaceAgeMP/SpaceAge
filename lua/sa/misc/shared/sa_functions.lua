@@ -1,7 +1,3 @@
-if SERVER then
-	AddCSLuaFile()
-end
-
 function SA.AddCommasToInt(str)
 	str = tostring(str)
 
