@@ -61,8 +61,8 @@ local function LoadAllFilesForModule(module, side)
 				local dependencyLineEnd = fileData:find("\n", dependencyLine, true)
 				dependencies = fileData:sub(dependencyLine, dependencyLineEnd):Split(" ")
 			end
-			table.insert(SA_ModuleTree[module].dependencies, moduleName)
-			SA_ModuleTree[moduleName] = {
+			table.insert(SA_ModuleList[module].dependencies, moduleName)
+			SA_ModuleList[moduleName] = {
 				dependencies = dependencies,
 				fileName = fileName
 			}
@@ -73,7 +73,7 @@ end
 local function LoadAllModules()
 	_, modules = file.Find("sa/*", "LUA")
 	for _, module in pairs(modules) do
-		SA_ModuleTree[module] = {
+		SA_ModuleList[module] = {
 			dependencies = {}
 		}
 		LoadAllFilesForModule(module, "shared")
