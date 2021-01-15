@@ -32,9 +32,6 @@ local function TryLoadModule(moduleName, loadChain)
 		TryLoadModule(dependency, loadChain)
 	end
 
-	if module.loaded then
-		return
-	end
 	module.loaded = true
 
 	if module.fileNames then
