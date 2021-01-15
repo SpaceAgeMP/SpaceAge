@@ -9,6 +9,11 @@ end
 SA = {}
 
 local SA_ModuleList = {}
+local SA_FileDepends = {}
+
+if CLIENT then
+	SA_FileDepends = util.JSONToTable(file.Read("sa_modules.txt", "DATA"))
+end
 
 local function TryLoadModule(moduleName, loadChain)
 	local module = SA_ModuleList[moduleName]
@@ -58,19 +63,27 @@ local function LoadAllFilesForModule(module, side)
 	for _, f in pairs(files) do
 		local fileName = folder .. f
 		local moduleName = module .. "." .. f:sub(1, -4)
-		if addClient then
-			AddCSLuaFile(fileName)
-		end
-		if loadFile then
-			print("Reading module file " .. fileName)
+
+		local dependencies = {}
+
+		if SERVER then
 			local fileData = file.Read(fileName, "LUA")
 			local dependencyLine = fileData:find("--DEPENDS ", 1, true)
-			local dependencies = {}
 			if dependencyLine then
 				local dependencyLineBegin = fileData:find(" " , dependencyLine, true)
 				local dependencyLineEnd = fileData:find("\n", dependencyLineBegin, true)
 				dependencies = fileData:sub(dependencyLineBegin, dependencyLineEnd):Trim():Split(" ")
 			end
+
+			if addClient then
+				AddCSLuaFile(fileName)
+				SA_FileDepends[fileName] = table.Copy(dependencies)
+			end
+		else
+			dependencies = SA_FileDepends[fileName] or {}
+		end
+
+		if loadFile then
 			table.insert(SA_ModuleList[module].dependencies, moduleName)
 			if SA_ModuleList[moduleName] then
 				table.insert(SA_ModuleList[moduleName].fileNames, fileName)
@@ -95,6 +108,9 @@ function SA_LoadAllModules()
 		LoadAllFilesForModule(module, "client")
 		LoadAllFilesForModule(module, "server")
 	end
+
+	file.Write("sa_modules.txt", util.TableToJSON(SA_FileDepends))
+	resource.AddFile("data/sa_modules.txt")
 
 	LoadModuleTree()
 end
