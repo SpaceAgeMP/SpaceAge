@@ -1,5 +1,8 @@
 SA.Tiberium = {}
 
+SA.Tiberium.MaxCrystalCount = 6
+SA.Tiberium.CrystalRadius = 1024
+
 function SA.Tiberium.FindFreeAttachPlace(ent, holder)
 	if table.HasValue(holder.TouchTable, ent) then return end
 	for i = 1, 2 do

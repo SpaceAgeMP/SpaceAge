@@ -4,13 +4,6 @@ DEFINE_BASECLASS("base_gmodentity")
 
 include("shared.lua")
 
-if not SA.Tiberium then
-	SA.Tiberium = {}
-end
-
-SA.Tiberium.MaxCrystalCount = 6
-SA.Tiberium.CrystalRadius = 1024
-
 function ENT:SpawnFunction(ply, tr)
 	if (not tr.Hit) then return end
 	local ent = ents.Create("sa_crystaltower")

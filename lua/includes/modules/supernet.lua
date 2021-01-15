@@ -1,7 +1,7 @@
 supernet = {}
 
 if SERVER then
-	AddCSLuaFile("includes/modules/supernet.lua")
+	AddCSLuaFile()
 end
 
 local table = table

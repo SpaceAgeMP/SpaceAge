@@ -1,6 +1,4 @@
 --glualint:ignore-file
-AddCSLuaFile("autorun/client/cl_sa_tts.lua")
-
 E2Lib.RegisterExtension("sa_tts", false)
 
 __e2setcost(50)
