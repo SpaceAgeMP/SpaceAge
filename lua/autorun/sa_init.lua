@@ -61,7 +61,7 @@ local function LoadAllFilesForModule(module, side)
 			local dependencies = {}
 			if dependencyLine then
 				local dependencyLineEnd = fileData:find("\n", dependencyLine, true)
-				dependencies = fileData:sub(dependencyLine, dependencyLineEnd):Split(" ")
+				dependencies = fileData:sub(dependencyLine, dependencyLineEnd):Trim():Split(" ")
 			end
 			table.insert(SA_ModuleList[module].dependencies, moduleName)
 			if SA_ModuleList[moduleName] then
