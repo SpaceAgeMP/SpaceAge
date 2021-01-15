@@ -62,6 +62,7 @@ local function LoadAllFilesForModule(module, side)
 			AddCSLuaFile(fileName)
 		end
 		if loadFile then
+			print("Reading module file " .. fileName)
 			local fileData = file.Read(fileName, "LUA")
 			local dependencyLine = fileData:find("--DEPENDS ", 1, true)
 			local dependencies = {}
