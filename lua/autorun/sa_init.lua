@@ -12,6 +12,9 @@ local SA_ModuleList = {}
 
 local function TryLoadModule(moduleName, loadChain)
 	local module = SA_ModuleList[moduleName]
+	if not module then
+		error("Cannot find module " .. moduleName)
+	end
 
 	if module.loaded then
 		return
