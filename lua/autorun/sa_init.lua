@@ -29,7 +29,7 @@ local function TryLoadModule(moduleName, loadChain)
 	end
 
 	if module.fileNames then
-		for _, fileName in module.fileNames do
+		for _, fileName in pairs(module.fileNames) do
 			print("Loading module file " .. fileName)
 			include(fileName)
 		end
