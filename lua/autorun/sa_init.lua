@@ -9,11 +9,6 @@ end
 SA = {}
 
 local SA_ModuleList = {}
-local SA_FileDepends = {}
-
-if CLIENT then
-	SA_FileDepends = util.JSONToTable(file.Read("data/sa_modules.json", "DOWNLOAD"))
-end
 
 local SA_CurrentLoadChain = nil
 
@@ -99,9 +94,6 @@ function SA_LoadAllModules()
 		LoadAllFilesForModule(module, "client")
 		LoadAllFilesForModule(module, "server")
 	end
-
-	file.Write("sa_modules.json", util.TableToJSON(SA_FileDepends))
-	resource.AddSingleFile("data/sa_modules.json")
 
 	LoadModuleTree()
 end
