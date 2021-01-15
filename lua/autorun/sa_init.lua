@@ -32,14 +32,17 @@ local function TryLoadModule(moduleName, loadChain)
 		TryLoadModule(dependency, loadChain)
 	end
 
+	if module.loaded then
+		return
+	end
+	module.loaded = true
+
 	if module.fileNames then
 		for _, fileName in pairs(module.fileNames) do
 			print("Loading module file " .. fileName)
 			include(fileName)
 		end
 	end
-
-	module.loaded = true
 end
 
 local function LoadModuleTree()
