@@ -23,10 +23,11 @@ local function TryLoadModule(moduleName, loadChain)
 
 	print("Loading module " .. moduleName)
 
-	if loadChain[module] then
+	if loadChain[moduleName] then
 		PrintTable(loadChain)
 		error("Circular dependency!")
 	end
+
 	for _, dependency in pairs(module.dependencies) do
 		TryLoadModule(dependency, loadChain)
 	end
@@ -37,6 +38,8 @@ local function TryLoadModule(moduleName, loadChain)
 			include(fileName)
 		end
 	end
+
+	module.loaded = true
 end
 
 local function LoadModuleTree()
