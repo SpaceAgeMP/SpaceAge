@@ -66,7 +66,7 @@ local function LoadAllFilesForModule(module, side)
 
 	for _, f in pairs(files) do
 		local fileName = folder .. f
-		local moduleName = module .. "." .. f:sub(1, -4)
+		local moduleName = module .. "." .. f:sub(1, -5)
 		if addClient then
 			AddCSLuaFile(fileName)
 		end
