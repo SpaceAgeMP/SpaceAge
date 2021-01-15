@@ -12,7 +12,7 @@ local SA_ModuleList = {}
 local SA_FileDepends = {}
 
 if CLIENT then
-	SA_FileDepends = util.JSONToTable(file.Read("sa_modules.txt", "DATA"))
+	SA_FileDepends = util.JSONToTable(file.Read("sa_modules.json", "DATA"))
 end
 
 local function TryLoadModule(moduleName, loadChain)
@@ -109,8 +109,8 @@ function SA_LoadAllModules()
 		LoadAllFilesForModule(module, "server")
 	end
 
-	file.Write("sa_modules.txt", util.TableToJSON(SA_FileDepends))
-	resource.AddFile("data/sa_modules.txt")
+	file.Write("sa_modules.json", util.TableToJSON(SA_FileDepends))
+	resource.AddFile("data/sa_modules.json")
 
 	LoadModuleTree()
 end
