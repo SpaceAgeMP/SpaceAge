@@ -1,6 +1,6 @@
 SA.Planets = {}
 
---DEPENDS config
+SA_REQUIRE("config")
 
 local SB = CAF.GetAddon("Spacebuild")
 

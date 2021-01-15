@@ -1,4 +1,4 @@
---DEPENDS config
+SA_REQUIRE("config")
 
 local SA_FactionData = {}
 

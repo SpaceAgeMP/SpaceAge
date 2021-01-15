@@ -15,6 +15,8 @@ if CLIENT then
 	SA_FileDepends = util.JSONToTable(file.Read("data/sa_modules.json", "DOWNLOAD"))
 end
 
+local SA_CurrentLoadChain = nil
+
 local function TryLoadModule(moduleName, loadChain)
 	local module = SA_ModuleList[moduleName]
 	if not module then
@@ -42,9 +44,16 @@ local function TryLoadModule(moduleName, loadChain)
 	if module.fileNames then
 		for _, fileName in pairs(module.fileNames) do
 			print("Loading module file " .. fileName)
+
+			SA_CurrentLoadChain = loadChain
 			include(fileName)
+			SA_CurrentLoadChain = nil
 		end
 	end
+end
+
+function SA_REQUIRE(moduleName)
+	TryLoadModule(moduleName, SA_CurrentLoadChain)
 end
 
 local function LoadModuleTree()
@@ -63,34 +72,16 @@ local function LoadAllFilesForModule(module, side)
 	for _, f in pairs(files) do
 		local fileName = folder .. f
 		local moduleName = module .. "." .. f:sub(1, -4)
-
-		local dependencies = {}
-
-		if SERVER then
-			local fileData = file.Read(fileName, "LUA")
-			local dependencyLine = fileData:find("--DEPENDS ", 1, true)
-			if dependencyLine then
-				local dependencyLineBegin = fileData:find(" " , dependencyLine, true)
-				local dependencyLineEnd = fileData:find("\n", dependencyLineBegin, true)
-				dependencies = fileData:sub(dependencyLineBegin, dependencyLineEnd):Trim():Split(" ")
-			end
-
+		if loadFile then
 			if addClient then
 				AddCSLuaFile(fileName)
-				SA_FileDepends[fileName] = table.Copy(dependencies)
 			end
-		else
-			dependencies = SA_FileDepends[fileName] or {}
-		end
-
-		if loadFile then
 			table.insert(SA_ModuleList[module].dependencies, moduleName)
 			if SA_ModuleList[moduleName] then
 				table.insert(SA_ModuleList[moduleName].fileNames, fileName)
-				table.Add(SA_ModuleList[moduleName].dependencies, dependencies)
 			else
 				SA_ModuleList[moduleName] = {
-					dependencies = dependencies,
+					dependencies = {},
 					fileNames = {fileName}
 				}
 			end

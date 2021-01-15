@@ -1,4 +1,4 @@
---DEPENDS config
+SA_REQUIRE("config")
 
 local AllAsteroids = {
 	{ "models/ce_ls3additional/asteroids/asteroid_200.mdl", 400 },

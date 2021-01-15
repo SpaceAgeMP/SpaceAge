@@ -1,4 +1,4 @@
---DEPENDS config
+SA_REQUIRE("config")
 
 if not SA.Ice then
 	SA.Ice = {}

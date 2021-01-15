@@ -1,4 +1,4 @@
---DEPENDS config
+SA_REQUIRE("config")
 
 timer.Simple(1, function() RD = CAF.GetAddon("Resource Distribution") end)
 

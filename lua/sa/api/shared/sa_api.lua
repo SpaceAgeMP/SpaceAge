@@ -1,6 +1,6 @@
 SA.API = {}
 
---DEPENDS config
+SA_REQUIRE("config")
 
 local JWT_IN_RENEWAL = true
 

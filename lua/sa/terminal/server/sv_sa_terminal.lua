@@ -1,4 +1,4 @@
---DEPENDS config
+SA_REQUIRE("config")
 
 require("supernet")
 
