@@ -102,6 +102,10 @@ function PANEL:UpdatePlayerData()
 	if not IsValid(ply) then return end
 
 	self.lblName:SetText(ply:Nick())
+
+	local score = "LOADING"	-- todo: get score data from server
+	self.lblScore:SetText(score)
+
 	if ulibcheck then
 		local teamName = team.GetName(ply:Team())
 		if ply:GetNWBool("isleader") then
@@ -145,6 +149,7 @@ function PANEL:Init()
 	self.lblDeaths 	= vgui.Create("DLabel", self)
 	self.lblRatio 	= vgui.Create("DLabel", self)
 	self.lblPing 	= vgui.Create("DLabel", self)
+	self.lblScore 	= vgui.Create("DLabel", self)
 	self.lblPing:SetText("9999")
 
 	self.btnAvatar = vgui.Create("DButton", self)
@@ -173,6 +178,7 @@ function PANEL:ApplySchemeSettings()
 	self.lblDeaths:SetFont("suiscoreboardplayername")
 	self.lblRatio:SetFont("suiscoreboardplayername")
 	self.lblPing:SetFont("suiscoreboardplayername")
+	self.lblScore:SetFont("suiscoreboardplayername")
 
 	self.lblName:SetTextColor(color_black)
 	if ulibcheck then self.lblTeam:SetTextColor(color_black) end
@@ -182,6 +188,7 @@ function PANEL:ApplySchemeSettings()
 	self.lblDeaths:SetTextColor(color_black)
 	self.lblRatio:SetTextColor(color_black)
 	self.lblPing:SetTextColor(color_black)
+	self.lblScore:SetTextColor(color_black)
 end
 
 function PANEL:DoClick()
@@ -230,6 +237,7 @@ function PANEL:PerformLayout(w, h)
 	self.lblFrags:SizeToContents()
 	self.lblDeaths:SizeToContents()
 	self.lblRatio:SizeToContents()
+	self.lblScore:SizeToContents()
 	self.lblPing:SizeToContents()
 	self.lblPing:SetWide(100)
 
@@ -243,6 +251,7 @@ function PANEL:PerformLayout(w, h)
 	self.lblFrags:SetPos(parentWidth - 45 * 4.4 - 6, 2)
 	self.lblDeaths:SetPos(parentWidth - 45 * 3.4 - 6, 2)
 	self.lblRatio:SetPos(parentWidth - 45 * 2.4 - 6, 2)
+	self.lblScore:SetPos(parentWidth - 45 * 15.2 - 6, 2)
 	self.lblPing:SetPos(parentWidth - 45 - 6, 2)
 
 	if self.Open or self.Size ~= self.TargetSize then

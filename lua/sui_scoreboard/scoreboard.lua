@@ -79,6 +79,9 @@ function PANEL:Init()
 	self.lblHealth = vgui.Create("DLabel", self)
 	self.lblHealth:SetText("Health")
 
+	self.lblScore = vgui.Create("DLabel", self)
+	self.lblScore:SetText("Score")
+
 	if utimecheck then self.lblHours = vgui.Create("DLabel", self) end
 	if utimecheck then self.lblHours:SetText("Hours") end
 
@@ -194,6 +197,7 @@ function PANEL:PerformLayout(w, h)
 	self.lblRatio:SizeToContents()
 	self.lblDeaths:SizeToContents()
 	self.lblHealth:SizeToContents()
+	self.lblScore:SizeToContents()
 	if utimecheck then self.lblHours:SizeToContents() end
 	if ulibcheck then self.lblTeam:SizeToContents() end
 
@@ -203,6 +207,7 @@ function PANEL:PerformLayout(w, h)
 	self.lblKills:SetPos(w - 45 * 4.4 - self.lblKills:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 )
 	self.lblHealth:SetPos(w - 45 * 5.4 - self.lblKills:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 )
 	if ulibcheck then  self.lblTeam:SetPos(w - 45 * 10.2 - self.lblKills:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 ) end
+	self.lblScore:SetPos(w - 45 * 15.2 - self.lblTeam:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 )
 	if utimecheck then self.lblHours:SetPos(w - 45 * 13.7 - self.lblKills:GetWide() / 2, self.PlayerFrame.y - self.lblPing:GetTall() - 3 ) end
 end
 
@@ -225,6 +230,7 @@ function PANEL:ApplySchemeSettings()
 	self.lblKills:SetFont("DefaultSmall")
 	self.lblDeaths:SetFont("DefaultSmall")
 	if ulibcheck then self.lblTeam:SetFont("DefaultSmall") end
+	self.lblScore:SetFont("DefaultSmall")
 	self.lblHealth:SetFont("DefaultSmall")
 	self.lblRatio:SetFont("DefaultSmall")
 	if utimecheck then self.lblHours:SetFont("DefaultSmall") end
@@ -238,6 +244,7 @@ function PANEL:ApplySchemeSettings()
 	self.lblKills:SetTextColor(Color(0, 0, 0, 255))
 	self.lblDeaths:SetTextColor(Color(0, 0, 0, 255))
 	if ulibcheck then self.lblTeam:SetTextColor(Color(0, 0, 0, 255)) end
+	self.lblScore:SetTextColor(Color(0, 0, 0, 255))
 	self.lblHealth:SetTextColor(Color(0, 0, 0, 255))
 	self.lblRatio:SetTextColor(Color(0, 0, 0, 255))
 	if utimecheck then self.lblHours:SetTextColor(Color(0, 0, 0, 255)) end
