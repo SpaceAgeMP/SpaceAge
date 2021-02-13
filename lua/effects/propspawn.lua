@@ -1,6 +1,5 @@
 local render = render
 local team = team
-local Color = Color
 local LocalPlayer = LocalPlayer
 local math = math
 local RealTime = RealTime
@@ -159,7 +158,7 @@ function EFFECT:RenderBuildEnd()
 	self.FadeColor = self.FadeColor - FrameTime() / 20
 	if (self.FadeColor <= 0) then
 		self.ent.RenderOverride = nil
-		self.ent:SetColor(Color(255, 255, 255, 255))
+		self.ent:SetColor(color_white)
 		self.shouldremove = true
 	end
 end

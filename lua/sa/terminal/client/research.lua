@@ -1,6 +1,6 @@
 local PANEL = {}
 
-local ResearchNameColor = Color(255, 255, 255, 255)
+local ResearchNameColor = color_white
 local ResearchDescColor = Color(200, 200, 200, 255)
 local DescBackColor = Color(50, 50, 50, 255)
 local ResearchRankColor = Color(0, 150, 0, 255)

@@ -132,7 +132,7 @@ local function CreateTerminalGUI()
 		local text = "Stats"
 		local width = GetTextBackgroundWidth(font, text)
 		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
-		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(text, font, guiSizeX / 2, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
 	local StatsList = vgui.Create ("DListView", StatTab)
@@ -163,14 +163,14 @@ local function CreateTerminalGUI()
 		local text = "Market"
 		local width = GetTextBackgroundWidth(font, text)
 		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
-		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(text, font, guiSizeX / 2, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 		draw.RoundedBox(6, 30, 70, 730, 240, Color(90, 90, 90, 255))
 		draw.RoundedBox(6, 30, 330, 730, 240, Color(90, 90, 90, 255))
 		draw.RoundedBox(6, 580, 90, 150, 30, Color(50, 50, 50, 255))
-		draw.SimpleText("Sell Resources", font, 655, 105, Color(255, 255, 255, 255), 1, 1)
+		draw.SimpleText("Sell Resources", font, 655, 105, color_white, 1, 1)
 		draw.RoundedBox(6, 580, 350, 150, 30, Color(50, 50, 50, 255))
-		draw.SimpleText("Buy Resources", font, 655, 365, Color(255, 255, 255, 255), 1, 1)
+		draw.SimpleText("Buy Resources", font, 655, 365, color_white, 1, 1)
 	end
 
 	local MarkSell = vgui.Create ("DListView", MarketTab)
@@ -265,19 +265,19 @@ local function CreateTerminalGUI()
 		local text = "Resources"
 		local width = GetTextBackgroundWidth(font, text)
 		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
-		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(text, font, guiSizeX / 2, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 		draw.RoundedBox(6, 30, 70, 240, 500, Color(90, 90, 90, 255))
 		draw.RoundedBox(6, 275, 70, 240, 500, Color(90, 90, 90, 255))
 		draw.RoundedBox(6, 520, 70, 240, 500, Color(90, 90, 90, 255))
 
 		draw.RoundedBox(4, 35, 75, 230, 40, Color(50, 50, 50, 255))
-		draw.SimpleText("Temporary / Market", font, 150, 90 + 7, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Temporary / Market", font, 150, 90 + 7, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		draw.RoundedBox(4, 280, 75, 230, 40, Color(50, 50, 50, 255))
-		draw.SimpleText("Station", font, 395, 82 + 5, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-		draw.SimpleText("(" .. tostring(SA_Term_StationCap) .. " / " .. tostring(SA_Term_StationMax) .. ")", "Trebuchet18", 395, 97 + 8, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Station", font, 395, 82 + 5, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("(" .. tostring(SA_Term_StationCap) .. " / " .. tostring(SA_Term_StationMax) .. ")", "Trebuchet18", 395, 97 + 8, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		draw.RoundedBox(4, 525, 75, 230, 40, Color(50, 50, 50, 255))
-		draw.SimpleText("Ship / Selected Node", font, 640, 90 + 5, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Ship / Selected Node", font, 640, 90 + 5, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
 	local TempStore = vgui.Create("DPanelList", ResourceTab)
@@ -346,7 +346,7 @@ local function CreateTerminalGUI()
 		local text = "Research"
 		local width = GetTextBackgroundWidth(font, text)
 		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
-		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(text, font, guiSizeX / 2, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
 	local UpgradeLevelButton = vgui.Create("DButton", ResearchTab)
@@ -419,7 +419,7 @@ local function CreateTerminalGUI()
 		local text = "Application"
 		local width = GetTextBackgroundWidth(font, text)
 		draw.RoundedBox(4, guiSizeX / 2 - width / 2, 10, width, 30, Color(50, 50, 50, 255))
-		draw.SimpleText(text, font, guiSizeX / 2, 25, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(text, font, guiSizeX / 2, 25, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
 	SA.Application.CreateGUI(ApplicationTab)

@@ -6,8 +6,6 @@ ENT.allowDraw = false
 
 local SA_PosColors = { Color(255, 255, 0, 255), Color(128, 128, 128, 255), Color(128, 50, 0, 255) }
 
-local WhiteColor = Color(255, 255, 255, 255)
-
 function ENT:Initialize()
 	self.scrollPos = 0
 	self.doScroll = false
@@ -16,8 +14,6 @@ function ENT:Initialize()
 	self.linesSeen = true
 	self.allowDraw = true
 end
-
-local white = Color(255, 255, 255, 255)
 
 function ENT:Draw()
 	self:DrawModel()
@@ -89,7 +85,7 @@ function ENT:Draw()
 					end
 					if SA.StatsTable[i] then
 						local FactionColor = SA.StatsTable[i].FactionColor
-						local PosColor = white
+						local PosColor = color_white
 						if (SA_PosColors[i]) then PosColor = SA_PosColors[i] end
 						draw.DrawText(tostring(i), "textScreenfont10", xColumns[1], linePos, PosColor, 0)
 						draw.DrawText(SA.StatsTable[i].name, "textScreenfont10", xColumns[2], linePos, FactionColor, 0)
@@ -104,11 +100,11 @@ function ENT:Draw()
 
 		local headerY = y + 117 - ySpace
 
-		draw.DrawText("Player Name", "textScreenfont10", xColumns[2], headerY, WhiteColor, 0)
-		draw.DrawText("Score", "textScreenfont10", xColumns[3], headerY, WhiteColor, 0)
+		draw.DrawText("Player Name", "textScreenfont10", xColumns[2], headerY, color_white, 0)
+		draw.DrawText("Score", "textScreenfont10", xColumns[3], headerY, color_white, 0)
 
 
-		draw.DrawText("SpaceAge - Leaderboard", "textScreenfont5", justOffset + 45, y + 7, WhiteColor,  1)
+		draw.DrawText("SpaceAge - Leaderboard", "textScreenfont5", justOffset + 45, y + 7, color_white,  1)
 
 	cam.End3D2D()
 	Wire_Render(self)

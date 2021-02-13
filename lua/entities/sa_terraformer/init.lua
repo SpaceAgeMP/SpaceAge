@@ -92,7 +92,7 @@ end
 
 function ENT:Repair()
 	BaseClass.Repair(self)
-	self:SetColor(Color(255, 255, 255, 255))
+	self:SetColor(color_white)
 end
 
 function ENT:Destruct()

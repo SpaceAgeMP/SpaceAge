@@ -37,7 +37,7 @@ function TOOL:LeftClick(tr)
 				return true
 			else
 				owner.Autospawner2List[ent:EntIndex()] = nil
-				ent:SetColor(Color(255, 255, 255, 255))
+				ent:SetColor(color_white)
 				ent.Autospawn2Selected = false
 				owner:ChatPrint("Deselected")
 				return true
@@ -75,7 +75,7 @@ end
 
 function TOOL:Reload(tr)
 	local owner = self:GetOwner()
-	for k, v in pairs(owner.Autospawner2List) do if (v and v:IsValid()) then v:SetColor(Color(255, 255, 255, 255)) end end
+	for k, v in pairs(owner.Autospawner2List) do if (v and v:IsValid()) then v:SetColor(color_white) end end
 	owner.Autospawner2List = {}
 	owner:ChatPrint("Cleared selection")
 end

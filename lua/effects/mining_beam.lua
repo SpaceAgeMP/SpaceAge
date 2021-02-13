@@ -16,8 +16,6 @@ lGlow2:SetInt("$spriterendermode", 9)
 lGlow2:SetInt("$ignorez", 1)
 lGlow2:SetInt("$illumfactor", 8)
 
-local col = Color(255, 255, 255, 255)
-
 function EFFECT:Init(data)
 	self.StartPos = data:GetStart()
 	self.EndPos = data:GetOrigin()
@@ -32,14 +30,14 @@ end
 function EFFECT:Render()
 	local rt = RealTime() * 2
 	render.SetMaterial(lGlow1)
-	render.DrawBeam(self.StartPos, self.EndPos, 32, rt, rt + 0.001 * self.Multi, col)
+	render.DrawBeam(self.StartPos, self.EndPos, 32, rt, rt + 0.001 * self.Multi, color_white)
 
 	render.SetMaterial(lGlow2)
-	render.DrawBeam(self.StartPos, self.EndPos, 32, rt, rt + 0.002 * self.Multi, col)
+	render.DrawBeam(self.StartPos, self.EndPos, 32, rt, rt + 0.002 * self.Multi, color_white)
 
 	render.SetMaterial(bGlow1)
-	render.DrawSprite(self.EndPos, 64, 64, col)
+	render.DrawSprite(self.EndPos, 64, 64, color_white)
 
 	render.SetMaterial(bGlow2)
-	render.DrawSprite(self.StartPos, 64, 64, col)
+	render.DrawSprite(self.StartPos, 64, 64, color_white)
 end

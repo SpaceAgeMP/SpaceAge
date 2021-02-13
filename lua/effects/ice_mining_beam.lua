@@ -23,8 +23,6 @@ local lGlow1 = CreateMaterial("sc_blue_beam01", "UnLitGeneric", {
 	["$vertexcolor"] = 1
 })
 
-local col = Color(255, 255, 255, 255)
-
 function EFFECT:Init(data)
 	self.StartPos = data:GetStart()
 	self.EndPos = data:GetOrigin()
@@ -38,14 +36,14 @@ end
 function EFFECT:Render()
 	local rt = RealTime() * 2
 	render.SetMaterial(lGlow1)
-	render.DrawBeam(self.StartPos, self.EndPos, 32, rt, rt + self.Multi, col)
+	render.DrawBeam(self.StartPos, self.EndPos, 32, rt, rt + self.Multi, color_white)
 
 	render.SetMaterial(lGlow1)
-	render.DrawBeam(self.StartPos, self.EndPos, 32, rt, rt + self.Multi * 2, col)
+	render.DrawBeam(self.StartPos, self.EndPos, 32, rt, rt + self.Multi * 2, color_white)
 
 	render.SetMaterial(bGlow1)
-	render.DrawSprite(self.EndPos, 64, 64, col)
+	render.DrawSprite(self.EndPos, 64, 64, color_white)
 
 	render.SetMaterial(bGlow2)
-	render.DrawSprite(self.StartPos, 64, 64, col)
+	render.DrawSprite(self.StartPos, 64, 64, color_white)
 end

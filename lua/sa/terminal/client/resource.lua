@@ -29,7 +29,7 @@ RegisterResourceIcon("tiberium", "res_icon_crystal.png")
 
 local PANEL = {}
 
-local ResourceNameColor = Color(255, 255, 255, 255)
+local ResourceNameColor = color_white
 local ResourceAmountColor = Color(200, 200, 200, 255)
 
 local PanelColor = Color(100, 100, 100, 255)
