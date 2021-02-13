@@ -33,10 +33,6 @@ end
 
 local function MakePlanetProtected(planet)
 	planet.IsProtected = true
-	if not planet.OldConvertResource then planet.OldConvertResource = planet.ConvertResource end
-	planet.ConvertResource = function(ent, r1, r2, amount)
-		return amount
-	end
 	if not planet.OldConvert then planet.OldConvert = planet.Convert end
 	planet.Convert = function(ent, a1, a2, amount)
 		return amount
