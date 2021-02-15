@@ -60,7 +60,7 @@ local function CreateAsteroids(cnt)
 		local pos
 		repeat
 			pos = Vector(roids.x + math.random(-roids.radius, roids.radius), roids.y + math.random(-roids.radius, roids.radius), roids.z + (math.random(-roids.radius, roids.radius) / 2))
-		until SA.IsInsideMap(pos)
+		until SA.IsValidRoidPos(pos)
 		SpawnAsteroid(AllAsteroids[picked][1], pos, AllAsteroids[picked][2])
 	end
 end

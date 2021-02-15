@@ -32,7 +32,7 @@ function SA.Ice.SpawnRoidRing(iceType, data)
 	local pos
 	repeat
 		pos = data.Origin + CalcRing(data.InnerRadius, data.OuterRadius, data.Angle)
-	until SA.IsInsideMap(pos)
+	until SA.IsValidRoidPos(pos)
 
 	ent:SetPos(pos)
 	ent:SetAngles(Angle(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180)))

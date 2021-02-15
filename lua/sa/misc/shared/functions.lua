@@ -72,6 +72,6 @@ function SA.ValidEntity(ent)
 	return ent and ent:IsValid()
 end
 
-function SA.IsInsideMap(vector)
+function SA.IsValidRoidPos(vector)
 	return util.IsInWorld(vector)
 end
