@@ -3,7 +3,11 @@ SA.REQUIRE("config")
 SA.REQUIRE("ice.main")
 SA.REQUIRE("ice.types")
 
-local IceModels = {"models/props_wasteland/rockgranite04a.mdl", "models/props_wasteland/rockgranite04b.mdl"}
+local AllAsteroids = {
+	{ model = "models/props_wasteland/rockgranite04a.mdl" },
+	{ model = "models/props_wasteland/rockgranite04b.mdl" },
+}
+local AllAsteroidsCount = #AllAsteroids
 
 local IceMaterial = "models/shiny"
 
@@ -13,12 +17,13 @@ local function CalcRing(inrad, outrad, angle)
 end
 
 function SA.Ice.SpawnRoidRing(iceType, data)
+	local asteroid_type = AllAsteroids[math.random(1, AllAsteroidsCount)]
 	local ent = ents.Create("sa_iceroid")
 
 	local IceData = SA.Ice.Types[iceType]
 
 	ent:SetColor(IceData.col)
-	ent:SetModel(table.Random(IceModels))
+	ent:SetModel(asteroid_type.model)
 	ent:SetMaterial(IceMaterial)
 	ent.MineralName = iceType
 	ent.MineralAmount = IceData.StartIce

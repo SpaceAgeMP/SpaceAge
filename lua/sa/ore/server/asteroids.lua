@@ -3,13 +3,13 @@ SA.REQUIRE("config")
 SA.REQUIRE("ore.main")
 
 local AllAsteroids = {
-	{ "models/ce_ls3additional/asteroids/asteroid_200.mdl", 1200 },
-	{ "models/ce_ls3additional/asteroids/asteroid_250.mdl", 1500 },
-	{ "models/ce_ls3additional/asteroids/asteroid_300.mdl", 1800 },
-	{ "models/ce_ls3additional/asteroids/asteroid_350.mdl", 2100 },
-	{ "models/ce_ls3additional/asteroids/asteroid_400.mdl", 2400 },
-	{ "models/ce_ls3additional/asteroids/asteroid_450.mdl", 2700 },
-	{ "models/ce_ls3additional/asteroids/asteroid_500.mdl", 3000 },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_200.mdl", size = 1200 },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_250.mdl", size = 1500 },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_300.mdl", size = 1800 },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_350.mdl", size = 2100 },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_400.mdl", size = 2400 },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_450.mdl", size = 2700 },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_500.mdl", size = 3000 },
 }
 local AllAsteroidsCount = #AllAsteroids
 
@@ -56,12 +56,12 @@ local function CreateAsteroids(cnt)
 	end
 
 	for k = 1, cnt do
-		local picked = math.random(1, AllAsteroidsCount)
+		local asteroid_type = AllAsteroids[math.random(1, AllAsteroidsCount)]
 		local pos
 		repeat
 			pos = Vector(roids.x + math.random(-roids.radius, roids.radius), roids.y + math.random(-roids.radius, roids.radius), roids.z + (math.random(-roids.radius, roids.radius) / 2))
 		until SA.IsValidRoidPos(pos)
-		SpawnAsteroid(AllAsteroids[picked][1], pos, AllAsteroids[picked][2])
+		SpawnAsteroid(asteroid_type.model, pos, asteroid_type.size)
 	end
 end
 
