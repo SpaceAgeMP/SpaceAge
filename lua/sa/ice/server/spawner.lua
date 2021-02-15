@@ -37,7 +37,7 @@ function SA.Ice.SpawnRoidRing(iceType, data)
 	local pos
 	repeat
 		pos = data.Origin + CalcRing(data.InnerRadius, data.OuterRadius, data.Angle)
-	until SA.IsValidRoidPos(pos)
+	until SA.IsValidRoidPos(pos, asteroid_type.mins, asteroid_type.maxs)
 
 	ent:SetPos(pos)
 	ent:SetAngles(Angle(math.random(-180, 180), math.random(-180, 180), math.random(-180, 180)))

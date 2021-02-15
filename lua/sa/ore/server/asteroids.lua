@@ -3,13 +3,13 @@ SA.REQUIRE("config")
 SA.REQUIRE("ore.main")
 
 local AllAsteroids = {
-	{ model = "models/ce_ls3additional/asteroids/asteroid_200.mdl", size = 1200 },
-	{ model = "models/ce_ls3additional/asteroids/asteroid_250.mdl", size = 1500 },
-	{ model = "models/ce_ls3additional/asteroids/asteroid_300.mdl", size = 1800 },
-	{ model = "models/ce_ls3additional/asteroids/asteroid_350.mdl", size = 2100 },
-	{ model = "models/ce_ls3additional/asteroids/asteroid_400.mdl", size = 2400 },
-	{ model = "models/ce_ls3additional/asteroids/asteroid_450.mdl", size = 2700 },
-	{ model = "models/ce_ls3additional/asteroids/asteroid_500.mdl", size = 3000 },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_200.mdl", size = 1200, mins = Vector(-221.455505, -270.105804, -229.255142), maxs = Vector(278.458405, 234.547714, 239.313370) },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_250.mdl", size = 1500, mins = Vector(-288.556854, -289.388702, -267.263580), maxs = Vector(251.217529, 291.029785, 231.219879) },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_300.mdl", size = 1800, mins = Vector(-295.745819, -356.820404, -281.769806), maxs = Vector(328.969360, 334.036102, 322.683533) },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_350.mdl", size = 2100, mins = Vector(-350.449036, -404.668396, -356.196716), maxs = Vector(420.215881, 391.942169, 374.206818) },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_400.mdl", size = 2400, mins = Vector(-464.005341, -467.412537, -376.379608), maxs = Vector(477.348114, 487.325165, 410.702911) },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_450.mdl", size = 2700, mins = Vector(-563.345581, -733.006165, -450.250031), maxs = Vector(527.834351, 783.589233, 450.250031) },
+	{ model = "models/ce_ls3additional/asteroids/asteroid_500.mdl", size = 3000, mins = Vector(-569.022461, -562.240967, -411.354431), maxs = Vector(574.921814, 560.376221, 466.674377) },
 }
 local AllAsteroidsCount = #AllAsteroids
 
@@ -60,7 +60,7 @@ local function CreateAsteroids(cnt)
 		local pos
 		repeat
 			pos = Vector(roids.x + math.random(-roids.radius, roids.radius), roids.y + math.random(-roids.radius, roids.radius), roids.z + (math.random(-roids.radius, roids.radius) / 2))
-		until SA.IsValidRoidPos(pos)
+		until SA.IsValidRoidPos(pos, asteroid_type.mins, asteroid_type.maxs)
 		SpawnAsteroid(asteroid_type.model, pos, asteroid_type.size)
 	end
 end

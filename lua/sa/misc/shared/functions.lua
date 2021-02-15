@@ -72,6 +72,17 @@ function SA.ValidEntity(ent)
 	return ent and ent:IsValid()
 end
 
-function SA.IsValidRoidPos(vector)
-	return util.IsInWorld(vector)
+function SA.IsValidRoidPos(vector, mins, maxs)
+	if not util.IsInWorld(vector) then return false end
+
+	local tr = {
+		start = vector,
+		endpos = vector,
+		mins = mins,
+		maxs = maxs,
+	}
+
+	local hullTrace = util.TraceHull( tr )
+
+	return hullTrace.Hit or hullTrace.HitSky
 end
