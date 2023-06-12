@@ -13,6 +13,7 @@ jobs:
         node-version: 16
     - name: npm for Lua lint
       run: |
+        set +ex
         export PATH=$PATH:/tmp/bin
         mkdir -p /tmp/bin
         pushd /tmp/bin
