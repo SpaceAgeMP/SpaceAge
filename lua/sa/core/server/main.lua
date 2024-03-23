@@ -204,7 +204,7 @@ end)
 
 function SA.SaveUser(ply, dontsaverd)
 	local sid = ply:SteamID()
-	if not ply.sa_data then or not SA_IsValidSteamID(sid) then
+	if not ply.sa_data or not SA_IsValidSteamID(sid) then
 		return false
 	end
 	if not ply.sa_data.loaded then
