@@ -23,7 +23,7 @@ local function CommonUserAgent(side, id)
 end
 
 local apiConfig = SA.Config.Load("api", true) or {}
-apiConfig.url = apiConfig.url or "https://api.spaceage.doridian.net/v2"
+apiConfig.url = apiConfig.url or "https://api.spaceage.mp/v2"
 
 if SERVER then
 	MakeUserAgent = function()
