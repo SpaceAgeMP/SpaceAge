@@ -261,5 +261,59 @@
     "z": 623.593750,
     "model": "models/Combine_Helicopter/helicopter_bomb01.mdl",
     "class": "sa_doorchecker"
+  },
+  "1000": {
+    "pit": 0,
+    "x": 11142.460938,
+    "y": 8274.993164,
+    "rol": 0,
+    "class": "sa_terminal_pump",
+    "z": 739.377197,
+    "yaw": -90
+  },
+  "1001": {
+    "pit": 0,
+    "x": 7702.959961,
+    "y": 8277.322266,
+    "rol": 0,
+    "class": "sa_terminal_pump",
+    "z": 739.649231,
+    "yaw": -90
+  },
+  "1002": {
+    "pit": 0,
+    "x": 7900.674805,
+    "y": 9016.182617,
+    "rol": 0,
+    "class": "sa_terminal_pump",
+    "z": 69.123421,
+    "yaw": 0
+  },
+  "1003": {
+    "pit": 0,
+    "x": 10935.302734,
+    "y": 9017.032227,
+    "rol": 0,
+    "class": "sa_terminal_pump",
+    "z": 69.468155,
+    "yaw": 180
+  },
+  "1004": {
+    "pit": 90,
+    "x": 10219.505859,
+    "y": 9029.014648,
+    "rol": -25,
+    "class": "sa_terminal_pump",
+    "z": 795.309875,
+    "yaw": -120
+  },
+  "1005": {
+    "pit": 90,
+    "x": 8682.977539,
+    "y": 9028.733398,
+    "rol": 180,
+    "class": "sa_terminal_pump",
+    "z": 795.296631,
+    "yaw": 90
   }
 }
