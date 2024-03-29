@@ -68,7 +68,6 @@ local requestInProgress = nil
 local failureCount = 0
 local backoffTimings = {1, 5, 10, 15, 30}
 local httpTimeout = 30
-local backoffMax = backoffTimings[#backoffTimings]
 
 local processNextRequest
 local setRequestParams
@@ -95,7 +94,14 @@ local function requeueRequest(request)
 
 	failureCount = failureCount + 1
 
-	local timing = backoffTimings[failureCount] or backoffMax
+	local timing = backoffTimings[failureCount] or 0
+	if timing <= 0 then -- this means we no longer want to retry
+		if request.callback then
+			request.callback(nil, 599)
+		end
+		processNextRequest()
+		return
+	end
 
 	local newRequest = {
 		http = request.http,
