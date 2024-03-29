@@ -30,16 +30,20 @@ local function MkPlayerMap()
 	return res
 end
 
-function SA.API.RefreshServerList(cb)
+local function SA_API_RefreshServerList()
 	local name = SA.API.GetServerName()
 	if (not name) or name == "" then
 		timer.Simple(0.1, function()
-			SA.API.RefreshServerList(cb)
+			SA_API_RefreshServerList()
 		end)
 		return
 	end
 
-	SA.API.ListServers(function(data)
+	SA.API.ListServers(function(data, code)
+		if code ~= 200 or not data then
+			return
+		end
+
 		serverList = {}
 
 		for k, srv in pairs(data) do
@@ -67,15 +71,11 @@ function SA.API.RefreshServerList(cb)
 			selfServer.ipport = game.GetIPAddress()
 			selfServer.online = true
 		end
-
-		if cb then
-			cb(data)
-		end
 	end)
 end
 
 local function SA_PeriodicServerListRefresh()
-	SA.API.RefreshServerList(function()
+	SA_API_RefreshServerList(function()
 		timer.Simple(60, SA_PeriodicServerListRefresh)
 	end)
 end

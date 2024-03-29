@@ -330,7 +330,10 @@ if SERVER then
 	end
 
 	local function SA_API_MakePlayerTokenCMD(ply)
-		SA_API_MakePlayerJWT(ply, function (data)
+		SA_API_MakePlayerJWT(ply, function (data, code)
+			if code ~= 200 or not data then
+				return
+			end
 			net.Start("SA_PlayerJWT")
 				net.WriteString(data.token)
 				net.WriteInt(data.expiry, 32)
