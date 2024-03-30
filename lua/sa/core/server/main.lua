@@ -214,6 +214,7 @@ function SA.SaveUser(ply, dontsaverd)
 		return false
 	end
 
+	ply.sa_data.discord_user_id = nil
 	ply.sa_data.name = ply:Nick()
 	ply.sa_data.station_storage.contents = SA.Terminal.GetPermStorage(ply)
 	SA.API.UpsertPlayer(ply)
