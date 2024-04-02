@@ -166,4 +166,9 @@ for (const r of reportErrors) {
     console.log(`${r.type} ${r.file}:${r.lineStart}:${r.columnStart}-${r.lineEnd}:${r.columnEnd} ${r.message}`);
 }
 
-endCheck().then(() => process.exit(gLuaLintRes.status));
+endCheck().then(() => {
+    if (errorCount > 0 || warningCount > 0) {
+        process.exit(1);
+    }
+    process.exit(0);
+});
