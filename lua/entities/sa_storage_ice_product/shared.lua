@@ -34,5 +34,6 @@ ENT.RankedVars = {
 	{
 		ForcedModel = "models/slyfo/doublecarrier.mdl",
 		MinIceProductStorageMod = 6,
+		RequireFaction = "ice",
 	},
 }

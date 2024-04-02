@@ -17,5 +17,6 @@ ENT.RankedVars = {
 		YieldOffset = 100,
 		YieldIncrement = 20,
 		MinTibDrillMod = 1,
+		RequireFaction = "legion",
 	},
 }

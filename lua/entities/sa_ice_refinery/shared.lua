@@ -29,6 +29,7 @@ ENT.RankedVars = {
 		CycleVol = 1,
 		RefineEfficiency = 1,
 		MinIceRefineryMod = 2,
+		RequireFaction = "ice",
 	},
 }
 

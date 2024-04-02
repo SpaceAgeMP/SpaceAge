@@ -26,5 +26,6 @@ ENT.RankedVars = {
 	{
 		ForcedModel = "models/mandrac/resource_cache/colossal_cache.mdl",
 		MinRawIceStorageMod = 4,
+		RequireFaction = "ice",
 	}
 }

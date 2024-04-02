@@ -15,5 +15,6 @@ ENT.RankedVars = {
 		MinTiberiumStorageMod = 1,
 		StorageOffset = 1550000,
 		StorageIncrement = 10000,
+		RequireFaction = "legion",
 	},
 }
