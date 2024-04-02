@@ -4,28 +4,43 @@ local function RegisterResourceIcon(name, icon)
 	ResourceIcons[name] = "spaceage/" .. icon
 end
 
+-- Roids
 RegisterResourceIcon("ore", "res_icon_solid.png")
-RegisterResourceIcon("metals", "res_icon_solid.png")
-RegisterResourceIcon("carbon dioxide", "res_icon_gas.png")
-RegisterResourceIcon("water", "res_icon_liquid.png")
-RegisterResourceIcon("hydrogen", "res_icon_gas.png")
-RegisterResourceIcon("nitrogen", "res_icon_gas.png")
-RegisterResourceIcon("terracrystal", "res_icon_crystal.png")
-RegisterResourceIcon("oxygen", "res_icon_gas.png")
 RegisterResourceIcon("valuable minerals", "res_icon_valuableminerals.png")
+RegisterResourceIcon("metals", "res_icon_solid.png")
+RegisterResourceIcon("terracrystal", "res_icon_crystal.png")
 RegisterResourceIcon("dark matter", "res_icon_solid.png")
 RegisterResourceIcon("permafrost", "res_icon_solid.png")
+
+-- Ice
+RegisterResourceIcon("blue ice", "res_icon_solid.png")
+RegisterResourceIcon("clear ice", "res_icon_solid.png")
+RegisterResourceIcon("glacial mass", "res_icon_solid.png")
+RegisterResourceIcon("white glaze", "res_icon_solid.png")
+RegisterResourceIcon("dark glitter", "res_icon_solid.png")
+RegisterResourceIcon("glare crust", "res_icon_solid.png")
+RegisterResourceIcon("gelidus", "res_icon_solid.png")
+RegisterResourceIcon("krystallos", "res_icon_solid.png")
 RegisterResourceIcon("hydrogen isotopes", "res_icon_isotope.png")
 RegisterResourceIcon("helium isotopes", "res_icon_isotope.png")
 RegisterResourceIcon("strontium clathrates", "res_icon_crystal.png")
 RegisterResourceIcon("nitrogen isotopes", "res_icon_isotope.png")
 RegisterResourceIcon("oxygen isotopes", "res_icon_isotope.png")
 RegisterResourceIcon("carbon isotopes", "res_icon_isotope.png")
+
+-- Tib
+RegisterResourceIcon("tiberium", "res_icon_crystal.png")
+
+RegisterResourceIcon("carbon dioxide", "res_icon_gas.png")
+RegisterResourceIcon("water", "res_icon_liquid.png")
 RegisterResourceIcon("steam", "res_icon_gas.png")
+RegisterResourceIcon("hydrogen", "res_icon_gas.png")
+RegisterResourceIcon("nitrogen", "res_icon_gas.png")
+RegisterResourceIcon("oxygen", "res_icon_gas.png")
+
 RegisterResourceIcon("liquid nitrogen", "res_icon_liquid.png")
 RegisterResourceIcon("energy", "res_icon_energy.png")
 RegisterResourceIcon("heavy water", "res_icon_liquid.png")
-RegisterResourceIcon("tiberium", "res_icon_crystal.png")
 
 local PANEL = {}
 
