@@ -4,12 +4,24 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 util.PrecacheSound("tools/ifm/beep.wav")
 
+local function ClampLevelByFaction(ply)
+	if not IsValid(ply) then
+		return 0
+	end
+	local level = ply.sa_data.research.rta[1]
+	if ply.sa_data.faction_name == "corporation" then
+		return level
+	end
+	if level > 1 then
+		level = 1
+	end
+	return level
+end
+
 local function OpenTerminal(ent, ply, founder)
 	if CurTime() < ent.NextUse then return end
 	ent.NextUse = CurTime() + 1
-	if ent:GetPos():Distance(SA.Terminal.GetStationPos()) > SA.Terminal.GetStationSize() and
-		(not (founder and founder.sa_data.research.rta[1] and founder.sa_data.research.rta[1] > 1)) then
-
+	if ent:GetPos():Distance(SA.Terminal.GetStationPos()) > SA.Terminal.GetStationSize() and ClampLevelByFaction(founder) <= 1 then
 		ent:EmitSound("tools/ifm/beep.wav")
 		ply:AddHint("RTA device out of range of station.", NOTIFY_CLEANUP, 5)
 		return

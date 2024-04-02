@@ -33,5 +33,6 @@ ENT.RankedVars = {
 		LaserConsume = 7245 * 2,
 		LaserCycle = 30,
 		IceLaserModMin = 2,
+		RequireFaction = "ice",
 	}
 }

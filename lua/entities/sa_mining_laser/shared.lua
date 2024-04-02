@@ -59,5 +59,7 @@ ENT.RankedVars = {
 
 		BeamLength = 5000,
 		BeamWidthOffset = 60,
+
+		RequireFaction = "miners",
 	},
 }
