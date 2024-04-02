@@ -94,26 +94,26 @@ function endCheck() {
     }, checkId).catch(e => console.error(e));
 }
 
-const res = spawnSync('glualint', ['.']);
-if (res.status === null) {
+const gLuaLintRes = spawnSync('glualint', ['.']);
+if (gLuaLintRes.status === null) {
     errorCount++;
     console.error('Interrupted');
     endCheck().then(() => process.exit(1));
     return;
 }
-if (res.status === 0) {
+if (gLuaLintRes.status === 0) {
     endCheck().then(() => process.exit(0));
     return;
 }
 
-if (res.status !== 1) {
+if (gLuaLintRes.status !== 1) {
     errorCount++;
-    endCheck().then(() => process.exit(res.status));
+    endCheck().then(() => process.exit(gLuaLintRes.status));
     return;
 }
 
 const errRegExp = /^(.+): \[(Warning|Error)\] line (\d+), column (\d+) - line (\d+), column (\d+): (.+)$/;
-const output = res.stdout.toString().trim().split(/\r?\n/).filter(l => !!l).map(l => l.match(errRegExp)).map(m => ({
+const output = gLuaLintRes.stdout.toString().trim().split(/\r?\n/).filter(l => !!l).map(l => l.match(errRegExp)).map(m => ({
     file: normalize(m[1]),
     type: m[2].toLowerCase(),
     lineStart: parseInt(m[3], 10),
@@ -166,4 +166,4 @@ for (const r of reportErrors) {
     console.log(`${r.type} ${r.file}:${r.lineStart}:${r.columnStart}-${r.lineEnd}:${r.columnEnd} ${r.message}`);
 }
 
-endCheck();
+endCheck().then(() => process.exit(gLuaLintRes.status));
