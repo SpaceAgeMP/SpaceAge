@@ -1,9 +1,13 @@
-name: GLuaLint
+name: Lint
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
