@@ -38,7 +38,7 @@ function ENT:Initialize()
 	self:AddResource("carbon isotopes", 0)
 	self:AddResource("strontium clathrates", 0)
 
-	self.Inputs = Wire_CreateInputs(self, { "Activate" })
+	self.Inputs = Wire_CreateInputs(self, { "On" })
 	self.Outputs = Wire_CreateOutputs(self, { "On", "Active", "Progress" })
 
 	self.Active = 0
@@ -73,7 +73,7 @@ function ENT:Refine()
 	if self.CurrentRef then
 		local EnergyReq = self.CycleEnergy / self.CycleTime
 		if self:ConsumeResource("energy", EnergyReq) < EnergyReq then
-			self:TriggerInput("Activate", 0)
+			self:TurnOff()
 			return
 		end
 
@@ -126,7 +126,7 @@ function ENT:TurnOff()
 end
 
 function ENT:TriggerInput(iname, value)
-	if iname == "Activate" then
+	if iname == "On" then
 		if value == 1 then
 			self:TurnOn()
 		else
