@@ -25,7 +25,7 @@ function ENT:Initialize()
 	self:AddResource("gelidus", 0)
 	self:AddResource("krystallos", 0)
 
-	self.Inputs = Wire_CreateInputs(self, { "Activate" })
+	self.Inputs = Wire_CreateInputs(self, { "On" })
 	self.Outputs = Wire_CreateOutputs(self, { "On", "Active", "Mineral Amount", "Progress" })
 
 	self:SetNWBool("o", false)
@@ -123,7 +123,7 @@ function ENT:Think()
 end
 
 function ENT:TriggerInput(iname, value)
-	if iname == "Activate" then
+	if iname == "On" then
 		if value == 1 then
 			self:TurnOn()
 		else
