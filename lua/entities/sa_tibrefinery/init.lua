@@ -47,8 +47,8 @@ function ENT:StartTouch(ent)
 		if not SA.Tiberium.AttachStorage(ent, self, attachPlace) then return end
 		RD.Unlink(ent)
 		constraint.RemoveAll(ent)
-		ent.TibRefineWeld = constraint.Weld(ent, self, 0, 0, false)
-		ent.TibRefineAmount = ent:ConsumeResource("tiberium", tibAmount)
+		constraint.Weld(ent, self, 0, 0, false)
+		ent.TibRefineAmount = ent:ConsumeResource("tiberium", tibAmount) or 0
 		self.TouchTable[attachPlace] = ent
 	end
 end
@@ -64,13 +64,9 @@ function ENT:Think()
 		local ply = v:CPPIGetOwner()
 		if IsValid(ply) and ply:IsPlayer() then
 			local taken = v.TibRefineAmount
-			if taken > 10000 then
-				taken = 10000
-			end
-			v.TibRefineAmount = v.TibRefineAmount - taken
-			if taken <= 0 then
+			if taken == nil or taken <= 0 then
 				v.TibRefineAmount = nil
-				v.TibRefineWeld:Remove()
+				constraint.RemoveAll(v)
 				v.FPPRestrictConstraint = {}
 				v.FPPConstraintReasons = {}
 
@@ -80,6 +76,11 @@ function ENT:Think()
 				end
 				self.TouchTable[k] = nil
 			else
+				if taken > 10000 then
+					taken = 10000
+				end
+				v.TibRefineAmount = v.TibRefineAmount - taken
+
 				local creds = math.Round(taken * 25)
 				if ply.sa_data.faction_name == "corporation" then
 					creds = math.ceil((creds * 1.33) * 1000) / 1000
