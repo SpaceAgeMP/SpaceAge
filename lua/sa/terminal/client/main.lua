@@ -85,7 +85,7 @@ local function CreateTerminalGUI()
 
 	local CloseButton = vgui.Create("DButton", BasePanel)
 	CloseButton:SetText("Close Terminal")
-	CloseButton:SetPos(315, 660)
+	CloseButton:SetPos(370, 660)
 	CloseButton:SetSize(90, 30)
 	CloseButton.DoClick = function()
 		RunConsoleCommand("sa_terminal_close")
@@ -96,7 +96,7 @@ local function CreateTerminalGUI()
 	PrestigeLevelButton:SetPos(425, 660)
 	PrestigeLevelButton:SetSize(90, 30)
 	PrestigeLevelButton:SetText("Prestige")
-	PrestigeLevelButton:SetDisabled(true)
+	PrestigeLevelButton:SetVisible(false)
 	PrestigeLevelButton.DoClick = function() Derma_Query("Do you really want to prestige? You will lose all your score, credits, researches, storage and props ...oh and your life.", "Confirm", "Yes", function() RunConsoleCommand("sa_prestige_level", HASH) end, "No", function() end) end
 	SA_PrestigeLevelButton = PrestigeLevelButton
 
@@ -503,7 +503,13 @@ local function sa_term_update(_, tbl)
 	local BuyPriceTable = tbl[6]
 
 	if SA_UpgradeLevelButton then
-		SA_PrestigeLevelButton:SetDisabled(lv < 5 or not canReset)
+		if lv < 5 or not canReset then
+			SA_CloseButton:SetPos(315, 660)
+			SA_PrestigeLevelButton:SetVisible(true)
+		else
+			SA_CloseButton:SetPos(370, 660)
+			SA_PrestigeLevelButton:SetVisible(false)
+		end
 		SA_UpgradeLevelButton:SetDisabled(lv >= 5 or not canReset)
 		SA_UpgradeLevelButton:SetText("Advance Level (current: " .. tostring(lv) .. " / 5) [Price: " .. SA.AddCommasToInt(5000000000 * (lv * lv)) .. "]")
 	end
