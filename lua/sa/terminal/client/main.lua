@@ -23,6 +23,7 @@ local SA_Term_TempStorage
 local SA_Term_PermStorage
 local SA_Term_ShipStorage
 local SA_UpgradeLevelButton
+local SA_PrestigeLevelButton
 
 local textBackgroundExtraWidth = 15
 local function GetTextBackgroundWidth(font, text)
@@ -83,11 +84,19 @@ local function CreateTerminalGUI()
 
 	local CloseButton = vgui.Create("DButton", BasePanel)
 	CloseButton:SetText("Close Terminal")
-	CloseButton:SetPos(370, 660)
+	CloseButton:SetPos(315, 660)
 	CloseButton:SetSize(90, 30)
 	CloseButton.DoClick = function()
 		RunConsoleCommand("sa_terminal_close")
 	end
+
+	local PrestigeLevelButton = vgui.Create("DButton", ResearchTab)
+	PrestigeLevelButton:SetPos(425, 660)
+	PrestigeLevelButton:SetSize(90, 30)
+	PrestigeLevelButton:SetText("Prestige")
+	PrestigeLevelButton:SetDisabled(true)
+	PrestigeLevelButton.DoClick = function() Derma_Query("Do you really want to prestige? You will lose all your score, credits, researches, storage and props ...oh and your life.", "Confirm", "Yes", function() RunConsoleCommand("sa_prestige_level", HASH) end, "No", function() end) end
+	SA_PrestigeLevelButton = PrestigeLevelButton
 
 	local NodeSelect = vgui.Create("DComboBox", BasePanel)
 	NodeSelect:SetPos(25, 665)
@@ -491,10 +500,9 @@ local function sa_term_update(_, tbl)
 	local ShipStorage = tbl[5]
 	local BuyPriceTable = tbl[6]
 
-	if lv >= 5 then canReset = false end
-
 	if SA_UpgradeLevelButton then
-		SA_UpgradeLevelButton:SetDisabled(not canReset)
+		SA_PrestigeLevelButton:SetDisabled(lv < 5 or not canReset)
+		SA_UpgradeLevelButton:SetDisabled(lv >= 5 or not canReset)
 		SA_UpgradeLevelButton:SetText("Advance Level (current: " .. tostring(lv) .. " / 5) [Price: " .. SA.AddCommasToInt(5000000000 * (lv * lv)) .. "]")
 	end
 

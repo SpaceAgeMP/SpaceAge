@@ -24,6 +24,7 @@ local function MkPlayerMap()
 			name = ply:Nick(),
 			playtime = 0,
 			score = tonumber(ply:GetNWString("score")),
+			prestige_level = ply:GetNWInt("prestige_level"),
 			steamid = ply:SteamID(),
 		})
 	end

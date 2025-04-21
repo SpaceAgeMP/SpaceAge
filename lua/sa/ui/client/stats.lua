@@ -34,6 +34,7 @@ timer.Create("SA_IncPlayTime", 1, 0, function()
 		ply.sa_data.score = scn
 		ply.sa_data.formatted_score = SA.AddCommasToInt(sc)
 	end
+	ply.sa_data.prestige_level = ply:GetNWInt("prestige_level")
 end)
 
 local function SA_ReceiveStatsUpdate(body, code)
