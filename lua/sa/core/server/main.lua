@@ -79,8 +79,11 @@ local function SA_AddSAData(ply)
 		data.is_banned = nil
 	end
 	SA.Research.InitPlayer(ply)
-	if data.advancement_level == nil or data.advancement_level <= 0 then
+	if data.advancement_level == nil or data.advancement_level < 1 then
 		data.advancement_level = 1
+	end
+	if data.prestige_level == nil or data.prestige_level < 0 then
+		data.prestige_level = 0
 	end
 end
 

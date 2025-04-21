@@ -543,13 +543,13 @@ local function SA_Buy_Research_Cmd(ply, cmd, args)
 	if CHECK ~= HASH then return end
 	if limit < 1 then return end
 
-	local Research = SA.Research.GetByName(res)
-	if not Research then
+	local research = SA.Research.GetByName(res)
+	if not research then
 		return
 	end
 
 	local ok = false
-	while SA_Research_Int(ply, Research) do
+	while SA_Research_Int(ply, research) do
 		ok = true
 		limit = limit - 1
 		if limit < 1 then
@@ -559,15 +559,13 @@ local function SA_Buy_Research_Cmd(ply, cmd, args)
 	if not ok then return end
 
 	SA_UpdateInfo(ply)
-	local retro = Research.classes
-	for l, b in pairs(retro) do
+	for l, b in pairs(research.classes) do
 		for k, v in pairs(ents.FindByClass(b)) do
 			if v:CPPIGetOwner() == ply then
 				v:CalcVars(ply)
 			end
 		end
 	end
-
 	SA.SendBasicInfo(ply)
 end
 
@@ -589,13 +587,54 @@ local function SA_ResetMe(ply, cmd, args)
 
 	ply.sa_data.credits = ply.sa_data.credits - cost
 	ply.sa_data.advancement_level = ply.sa_data.advancement_level + 1
-
-	local researches = SA.Research.Get()
-	for _, v in pairs(researches) do
-		SA.Research.SetToPlayer(ply, v.name, 0)
-	end
+	ply.sa_data.research = {}
+	SA.Research.InitPlayer(ply)
 
 	SA_UpdateInfo(ply)
 	SA.SendBasicInfo(ply)
 end
 concommand.Add("sa_advance_level", SA_ResetMe)
+
+local function SA_ResetMeHarder(ply, cmd, args)
+	if (not ply:IsSuperAdmin()) or args[1] ~= "supersecrethacker" then
+		if not ply.AtTerminal then return end
+		if ply.IsAFK then return end
+		local CHECK = args[1]
+		if CHECK ~= HASH then return end
+
+		if ply.sa_data.advancement_level < 5 then return end
+
+		if not SA_CanReset(ply) then return end
+	else
+		ply.sa_data.loaded = false -- prevent saving for hacked prestige
+	end
+
+	local data = ply.sa_data
+	data.credits = 0
+	data.score = 0
+	data.advancement_level = 1
+	data.prestige_level = ply.sa_data.prestige_level + 1
+	data.research = {}
+	data.station_storage = {
+		capacity = 0,
+		remaining = 0,
+		contents = {},
+	}
+	SA.Research.InitPlayer(ply)
+
+	local uid = ply:SteamID()
+	TempStorage[uid] = {}
+
+	SA_UpdateInfo(ply)
+	SA.SendBasicInfo(ply)
+
+	for k, v in pairs(ents.GetAll()) do
+		if v:CPPIGetOwner() == ply then
+			v:Remove()
+		end
+	end
+	ply:Kill()
+
+	SA_CloseTerminal(ply)
+end
+concommand.Add("sa_prestige_level", SA_ResetMeHarder)
