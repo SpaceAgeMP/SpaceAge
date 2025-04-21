@@ -85,9 +85,7 @@ function ENT:Think()
 				if ply.sa_data.faction_name == "corporation" then
 					creds = math.ceil((creds * 1.33) * 1000) / 1000
 				end
-				ply.sa_data.credits = ply.sa_data.credits + creds
-				ply.sa_data.score = ply.sa_data.score + creds
-				SA.SendBasicInfo(ply)
+				ply:RewardCredits(creds)
 			end
 		else
 			v:Remove()

@@ -35,6 +35,12 @@ function PlayerMeta:AssignFaction(name, cb)
 	end
 end
 
+function PlayerMeta:RewardCredits(credits)
+	ply.sa_data.credits = ply.sa_data.credits + creds
+	ply.sa_data.score = ply.sa_data.score + creds
+	SA.SendBasicInfo(ply)
+end
+
 local function SA_AddSAData(ply)
 	if not ply.sa_data then
 		ply.sa_data = {}

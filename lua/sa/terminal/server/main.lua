@@ -380,13 +380,12 @@ local function SA_MarketSell(ply, cmd, args)
 				if ply.sa_data.faction_name == "corporation" then
 					count = math.ceil(count * 1.33)
 				end
-				ply.sa_data.credits = ply.sa_data.credits + count
-				ply.sa_data.score = ply.sa_data.score + count
 				TempStorage[uid][index] = amount - selling
+				ply:RewardCredits(count)
+				break
 			end
 		end
 	end
-	SA.SendBasicInfo(ply)
 	SA_UpdateInfo(ply)
 end
 concommand.Add("sa_market_sell", SA_MarketSell)
