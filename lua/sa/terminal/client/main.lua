@@ -22,6 +22,7 @@ local SA_Term_MarketSellTbl
 local SA_Term_TempStorage
 local SA_Term_PermStorage
 local SA_Term_ShipStorage
+local SA_CloseButton
 local SA_UpgradeLevelButton
 local SA_PrestigeLevelButton
 
@@ -89,8 +90,9 @@ local function CreateTerminalGUI()
 	CloseButton.DoClick = function()
 		RunConsoleCommand("sa_terminal_close")
 	end
+	SA_CloseButton = CloseButton
 
-	local PrestigeLevelButton = vgui.Create("DButton", ResearchTab)
+	local PrestigeLevelButton = vgui.Create("DButton", BasePanel)
 	PrestigeLevelButton:SetPos(425, 660)
 	PrestigeLevelButton:SetSize(90, 30)
 	PrestigeLevelButton:SetText("Prestige")
