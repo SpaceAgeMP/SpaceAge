@@ -329,7 +329,7 @@ local function CreateTerminalGUI()
 	local UpgradeLevelButton = vgui.Create("DButton", ResearchTab)
 	UpgradeLevelButton:SetPos(155, 555)
 	UpgradeLevelButton:SetSize(500, 30)
-	UpgradeLevelButton:SetText("Upgrade Level")
+	UpgradeLevelButton:SetText("Advance Level")
 	UpgradeLevelButton:SetDisabled(true)
 	UpgradeLevelButton.DoClickUpgrade = function() Derma_Query("Do you really want to upgrade? You will lose all your current researches!", "Confirm", "Yes", function() RunConsoleCommand("sa_advance_level", HASH) end, "No", function() end) end
 	UpgradeLevelButton.DoClickPrestige = function() Derma_Query("Do you really want to prestige? You will lose all your score, credits, researches, storage and props ...oh and your life.", "Confirm", "Yes", function() RunConsoleCommand("sa_prestige_level", HASH) end, "No", function() end) end
