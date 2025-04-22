@@ -503,6 +503,11 @@ local function sa_term_update(_, tbl)
 	local BuyPriceTable = tbl[6]
 
 	if SA_UpgradeLevelButton then
+		SA_UpgradeLevelButton:SetDisabled(lv >= 5 or not canReset)
+		SA_UpgradeLevelButton:SetText("Advance Level (current: " .. tostring(lv) .. " / 5) [Price: " .. SA.AddCommasToInt(5000000000 * (lv * lv)) .. "]")
+	end
+
+	if SA_CloseButton and SA_PrestigeLevelButton then
 		if lv < 5 or not canReset then
 			SA_CloseButton:SetPos(315, 660)
 			SA_PrestigeLevelButton:SetVisible(true)
@@ -510,8 +515,6 @@ local function sa_term_update(_, tbl)
 			SA_CloseButton:SetPos(370, 660)
 			SA_PrestigeLevelButton:SetVisible(false)
 		end
-		SA_UpgradeLevelButton:SetDisabled(lv >= 5 or not canReset)
-		SA_UpgradeLevelButton:SetText("Advance Level (current: " .. tostring(lv) .. " / 5) [Price: " .. SA.AddCommasToInt(5000000000 * (lv * lv)) .. "]")
 	end
 
 	SA_Term_TempStorage:Clear()
