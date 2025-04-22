@@ -22,9 +22,7 @@ local SA_Term_MarketSellTbl
 local SA_Term_TempStorage
 local SA_Term_PermStorage
 local SA_Term_ShipStorage
-local SA_CloseButton
 local SA_UpgradeLevelButton
-local SA_PrestigeLevelButton
 
 local textBackgroundExtraWidth = 15
 local function GetTextBackgroundWidth(font, text)
@@ -90,15 +88,6 @@ local function CreateTerminalGUI()
 	CloseButton.DoClick = function()
 		RunConsoleCommand("sa_terminal_close")
 	end
-	SA_CloseButton = CloseButton
-
-	local PrestigeLevelButton = vgui.Create("DButton", BasePanel)
-	PrestigeLevelButton:SetPos(425, 660)
-	PrestigeLevelButton:SetSize(90, 30)
-	PrestigeLevelButton:SetText("Prestige")
-	PrestigeLevelButton:SetVisible(false)
-	PrestigeLevelButton.DoClick = function() Derma_Query("Do you really want to prestige? You will lose all your score, credits, researches, storage and props ...oh and your life.", "Confirm", "Yes", function() RunConsoleCommand("sa_prestige_level", HASH) end, "No", function() end) end
-	SA_PrestigeLevelButton = PrestigeLevelButton
 
 	local NodeSelect = vgui.Create("DComboBox", BasePanel)
 	NodeSelect:SetPos(25, 665)
@@ -237,32 +226,8 @@ local function CreateTerminalGUI()
 	MarkBuy:SetPos(50, 350)
 	MarkBuy:SetSize(500, 200)
 	MarkBuy:SetMultiSelect(false)
-	MarkBuy:AddColumn("Resource")
-	MarkBuy:AddColumn("Price")
-
-
-	SA_Term_MarketBuy = MarkBuy
-	SA_Term_MarketBuyTbl = {}
-
-	local BuyAmount = vgui.Create("DTextEntry", MarketTab)
-	BuyAmount:SetPos(610, 455)
-	BuyAmount:SetSize(90, 30)
-	BuyAmount:AllowInput(false)
-	BuyAmount:SetValue("0")
-	BuyAmount:SetNumeric(true)
-
-	local BuyButton = vgui.Create("DButton", MarketTab)
-	BuyButton:SetPos(600, 510)
-	BuyButton:SetSize(110, 30)
-	BuyButton:SetText("Buy")
-	BuyButton.DoClick = function()
-		local Amount = tonumber(BuyAmount:GetValue())
-		if ((not Amount) or (Amount <= 0)) then
-			SA_TermError("Please input a number to buy!")
-			return
-		end
-		local tmpX = SA_Term_MarketBuy:GetLine(SA_Term_MarketBuy:GetSelectedLine())
-		if not tmpX then
+	SA_CloseButton:SetPos(315, 660)
+	SA_PrestigeLevelButton:SetVisible(true)
 			SA_TermError("Please pick a resource to buy!")
 			return
 		end
@@ -366,7 +331,9 @@ local function CreateTerminalGUI()
 	UpgradeLevelButton:SetSize(500, 30)
 	UpgradeLevelButton:SetText("Upgrade Level")
 	UpgradeLevelButton:SetDisabled(true)
-	UpgradeLevelButton.DoClick = function() Derma_Query("Do you really want to upgrade? You will lose all your current researches!", "Confirm", "Yes", function() RunConsoleCommand("sa_advance_level", HASH) end, "No", function() end) end
+	UpgradeLevelButton.DoClickUpgrade = function() Derma_Query("Do you really want to upgrade? You will lose all your current researches!", "Confirm", "Yes", function() RunConsoleCommand("sa_advance_level", HASH) end, "No", function() end) end
+	UpgradeLevelButton.DoClickPrestige = function() Derma_Query("Do you really want to prestige? You will lose all your score, credits, researches, storage and props ...oh and your life.", "Confirm", "Yes", function() RunConsoleCommand("sa_prestige_level", HASH) end, "No", function() end) end
+	UpgradeLevelButton.DoClick = UpgradeLevelButton.DoClickUpgrade
 	SA_UpgradeLevelButton = UpgradeLevelButton
 
 	local SubResearchTab = vgui.Create("DPropertySheet", ResearchTab)
@@ -503,17 +470,13 @@ local function sa_term_update(_, tbl)
 	local BuyPriceTable = tbl[6]
 
 	if SA_UpgradeLevelButton then
-		SA_UpgradeLevelButton:SetDisabled(lv >= 5 or not canReset)
-		SA_UpgradeLevelButton:SetText("Advance Level (current: " .. tostring(lv) .. " / 5) [Price: " .. SA.AddCommasToInt(5000000000 * (lv * lv)) .. "]")
-	end
-
-	if SA_CloseButton and SA_PrestigeLevelButton then
-		if lv >= 5 and canReset then
-			SA_CloseButton:SetPos(315, 660)
-			SA_PrestigeLevelButton:SetVisible(true)
+		SA_UpgradeLevelButton:SetDisabled(not canReset)
+		if lv >= 5 then
+			SA_UpgradeLevelButton:SetText("Prestige")
+			SA_UpgradeLevelButton.DoClick = SA_UpgradeLevelButton.DoClickPrestige
 		else
-			SA_CloseButton:SetPos(370, 660)
-			SA_PrestigeLevelButton:SetVisible(false)
+			SA_UpgradeLevelButton:SetText("Advance Level (current: " .. tostring(lv) .. " / 5) [Price: " .. SA.AddCommasToInt(5000000000 * (lv * lv)) .. "]")
+			SA_UpgradeLevelButton.DoClick = SA_UpgradeLevelButton.DoClickUpgrade
 		end
 	end
 
