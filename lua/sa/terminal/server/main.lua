@@ -30,7 +30,7 @@ AddRefineRes("dark matter", 4)
 AddRefineRes("permafrost", 4)
 
 local function AddResourcePrice(res, price)
-	table.insert(PriceTable, {res, price})
+	PriceTable[res] = price
 end
 AddResourcePrice("valuable minerals", 3.127)
 AddResourcePrice("metals", 0.738)
@@ -47,7 +47,7 @@ AddResourcePrice("carbon isotopes", 5400)
 
 
 local function AddResourceBuyPrice(res, price)
-	table.insert(BuyPriceTable, {res, price})
+	BuyPriceTable[res] = price
 end
 AddResourceBuyPrice("oxygen", 2.5)
 AddResourceBuyPrice("nitrogen", 0.5)
@@ -292,13 +292,7 @@ SA_UpdateInfo = function(ply, CanPass)
 
 	local ResTabl = {}
 	for k, v in pairs(TempStorageU) do
-		local price = 0
-		for l, n in pairs(PriceTable) do
-			if k == n[1] then
-				price = n[2]
-				break
-			end
-		end
+		local price = PriceTable[k] or 0
 		if ply.sa_data.faction_name == "corporation" then
 			price = math.ceil((price * 1.33) * 1000) / 1000
 		end
@@ -330,6 +324,7 @@ local function SA_RefineOre(ply, cmd, args)
 	local TempOre = TempStorage[uid].ore or 0
 	local orecount = ShipOre + TempOre
 	if orecount > 0 then
+		-- TODO: Is this good?
 		for k, v in pairs(RefinedResources) do
 			local num = table.Count(v)
 			for l, n in pairs(v) do
@@ -357,35 +352,31 @@ local function SA_MarketSell(ply, cmd, args)
 	local num = tonumber(args[2])
 	if num <= 0 then return end
 
-	local amount = 0
-	local index = 0
-	local selling
+	local index = args[1]
+	local amount = TempStorage[uid][index] or 0
 
-	for k, v in pairs(TempStorage[uid]) do
-		if k == args[1] then
-			amount = v
-			index = k
-		end
-	end
-	if (num > amount) then
+	local selling
+	if num > amount then
 		selling = amount
 	else
 		selling = num
 	end
 
-	if selling > 0 then
-		for k, v in pairs(PriceTable) do
-			if v[1] == args[1] then
-				local count = math.ceil(selling * v[2])
-				if ply.sa_data.faction_name == "corporation" then
-					count = math.ceil(count * 1.33)
-				end
-				TempStorage[uid][index] = amount - selling
-				ply:RewardCredits(count)
-				break
-			end
-		end
+	if selling < 1 then
+		return
 	end
+
+	local price = PriceTable[index] or 0
+	if price <= 0 then
+		return
+	end
+
+	local credits = math.ceil(selling * price)
+	if ply.sa_data.faction_name == "corporation" then
+		credits = math.ceil(credits * 1.33)
+	end
+	TempStorage[uid][index] = amount - selling
+	ply:RewardCredits(credits)
 	SA_UpdateInfo(ply)
 end
 concommand.Add("sa_market_sell", SA_MarketSell)
@@ -400,17 +391,10 @@ local function SA_MarketBuy(ply, cmd, args)
 	local num = tonumber(args[2])
 	if num <= 0 then return end
 
-	local index = 0
+	local index = args[1]
 	local buying
 	local price
-	local pricepu = 0
-
-	for k, v in pairs(BuyPriceTable) do
-		if v[1] == args[1] then
-			pricepu = v[2]
-			index = v[1]
-		end
-	end
+	local pricepu = BuyPriceTable[index] or 0
 	if (pricepu <= 0) then return end
 	price = math.ceil(num * pricepu)
 	if (price > tonumber(ply.sa_data.credits)) then
@@ -419,19 +403,14 @@ local function SA_MarketBuy(ply, cmd, args)
 	else
 		buying = num
 	end
-	if (buying > 0) then
-		local bought = false
-		for k, v in pairs(TempStorage[uid]) do
-			if k == index then
-				ply.sa_data.credits = ply.sa_data.credits - price
-				TempStorage[uid][k] = v + buying
-				bought = true
-			end
-		end
-		if (not bought) then
-			ply.sa_data.credits = ply.sa_data.credits - price
+	if buying > 0 then
+		local v = TempStorage[uid][index]
+		if v then
+			TempStorage[uid][index] = v + buying
+		else
 			TempStorage[uid][index] = buying
 		end
+		ply.sa_data.credits = ply.sa_data.credits - price
 	end
 	SA.SendBasicInfo(ply)
 	SA_UpdateInfo(ply)

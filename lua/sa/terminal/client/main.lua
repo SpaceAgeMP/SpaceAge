@@ -226,8 +226,31 @@ local function CreateTerminalGUI()
 	MarkBuy:SetPos(50, 350)
 	MarkBuy:SetSize(500, 200)
 	MarkBuy:SetMultiSelect(false)
-	SA_CloseButton:SetPos(315, 660)
-	SA_PrestigeLevelButton:SetVisible(true)
+	MarkBuy:AddColumn("Resource")
+	MarkBuy:AddColumn("Price")
+
+	SA_Term_MarketBuy = MarkBuy
+	SA_Term_MarketBuyTbl = {}
+
+	local BuyAmount = vgui.Create("DTextEntry", MarketTab)
+	BuyAmount:SetPos(610, 455)
+	BuyAmount:SetSize(90, 30)
+	BuyAmount:AllowInput(false)
+	BuyAmount:SetValue("0")
+	BuyAmount:SetNumeric(true)
+
+	local BuyButton = vgui.Create("DButton", MarketTab)
+	BuyButton:SetPos(600, 510)
+	BuyButton:SetSize(110, 30)
+	BuyButton:SetText("Buy")
+	BuyButton.DoClick = function()
+		local Amount = tonumber(BuyAmount:GetValue())
+		if ((not Amount) or (Amount <= 0)) then
+			SA_TermError("Please input a number to buy!")
+			return
+		end
+		local tmpX = SA_Term_MarketBuy:GetLine(SA_Term_MarketBuy:GetSelectedLine())
+		if not tmpX then
 			SA_TermError("Please pick a resource to buy!")
 			return
 		end
@@ -521,11 +544,10 @@ local function sa_term_update(_, tbl)
 	SA_Term_MarketBuy:Clear()
 	SA_Term_MarketBuyTbl = {}
 
-	for k, v in pairs(BuyPriceTable) do
-		local name = SA.RD.GetProperResourceName(v[1])
-		local price = v[2]
+	for id, price in pairs(BuyPriceTable) do
+		local name = SA.RD.GetProperResourceName(id)
 		local line = SA_Term_MarketBuy:AddLine(name, price)
-		SA_Term_MarketBuyTbl[line] = v[1]
+		SA_Term_MarketBuyTbl[line] = id
 	end
 
 	for _, v in pairs(ResearchPanels) do
