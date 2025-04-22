@@ -6,8 +6,12 @@ function SA.FlyMode.Set(ply, enabled)
 	ply:SetNWBool("flymode", enabled)
 end
 
+function SA.FlyMode.Get(ply, enabled)
+	return ply:GetNWBool("flymode")
+end
+
 function SA.FlyMode.Toggle(ply)
-	SA.FlyMode.Set(ply, not ply:GetNWBool("flymode"))
+	SA.FlyMode.Set(ply, not SA.FlyMode.Get(ply))
 end
 
 hook.Add("PlayerNoClip", "SA_NoclipFlyMode", function(ply, state)
