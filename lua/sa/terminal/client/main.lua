@@ -509,11 +509,11 @@ local function sa_term_update(_, tbl)
 
 	if SA_CloseButton and SA_PrestigeLevelButton then
 		if lv < 5 or not canReset then
-			SA_CloseButton:SetPos(315, 660)
-			SA_PrestigeLevelButton:SetVisible(true)
-		else
 			SA_CloseButton:SetPos(370, 660)
 			SA_PrestigeLevelButton:SetVisible(false)
+		else
+			SA_CloseButton:SetPos(315, 660)
+			SA_PrestigeLevelButton:SetVisible(true)
 		end
 	end
 
