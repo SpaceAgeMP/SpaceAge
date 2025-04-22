@@ -36,9 +36,9 @@ function PlayerMeta:AssignFaction(name, cb)
 end
 
 function PlayerMeta:RewardCredits(creds)
-	ply.sa_data.credits = ply.sa_data.credits + creds
-	ply.sa_data.score = ply.sa_data.score + creds
-	SA.SendBasicInfo(ply)
+	self.sa_data.credits = self.sa_data.credits + creds
+	self.sa_data.score = self.sa_data.score + creds
+	SA.SendBasicInfo(self)
 end
 
 local function SA_AddSAData(ply)
