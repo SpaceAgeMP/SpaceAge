@@ -608,7 +608,7 @@ local function SA_ResetMeHarder(ply, cmd, args)
 	data.credits = 0
 	data.score = 0
 	data.advancement_level = 1
-	data.prestige_level = ply.sa_data.prestige_level + 1
+	data.prestige_level = data.prestige_level + 1
 	data.research = {}
 	data.station_storage = {
 		capacity = 0,
