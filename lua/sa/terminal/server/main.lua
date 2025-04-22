@@ -622,6 +622,7 @@ local function SA_ResetMeHarder(ply, cmd, args)
 
 	SA_UpdateInfo(ply)
 	SA.SendBasicInfo(ply)
+	SA_CloseTerminal(ply)
 
 	for k, v in pairs(ents.GetAll()) do
 		if v:CPPIGetOwner() == ply then
@@ -629,7 +630,5 @@ local function SA_ResetMeHarder(ply, cmd, args)
 		end
 	end
 	ply:Kill()
-
-	SA_CloseTerminal(ply)
 end
 concommand.Add("sa_prestige_level", SA_ResetMeHarder)
