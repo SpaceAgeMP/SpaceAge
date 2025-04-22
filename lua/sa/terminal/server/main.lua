@@ -595,18 +595,14 @@ end
 concommand.Add("sa_advance_level", SA_ResetMe)
 
 local function SA_ResetMeHarder(ply, cmd, args)
-	if (not ply:IsSuperAdmin()) or args[1] ~= "supersecrethacker" then
-		if not ply.AtTerminal then return end
-		if ply.IsAFK then return end
-		local CHECK = args[1]
-		if CHECK ~= HASH then return end
+	if not ply.AtTerminal then return end
+	if ply.IsAFK then return end
+	local CHECK = args[1]
+	if CHECK ~= HASH then return end
 
-		if ply.sa_data.advancement_level < 5 then return end
+	if ply.sa_data.advancement_level < 5 then return end
 
-		if not SA_CanReset(ply) then return end
-	else
-		ply.sa_data.loaded = false -- prevent saving for hacked prestige
-	end
+	if not SA_CanReset(ply) then return end
 
 	local data = ply.sa_data
 	data.credits = 0
