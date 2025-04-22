@@ -6,7 +6,7 @@ function SA.FlyMode.Set(ply, enabled)
 	ply:SetNWBool("flymode", enabled)
 end
 
-function SA.FlyMode.Get(ply, enabled)
+function SA.FlyMode.Get(ply)
 	return ply:GetNWBool("flymode")
 end
 
@@ -25,7 +25,7 @@ hook.Add("PlayerNoClip", "SA_NoclipFlyMode", function(ply, state)
 end)
 
 hook.Add("Move", "SA_FlyMode_Move", function(ply, mv)
-	if not ply:GetNWBool("flymode") then
+	if not SA.FlyMode.Get(ply) then
 		return
 	end
 
