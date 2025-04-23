@@ -36,8 +36,12 @@ function PlayerMeta:AssignFaction(name, cb)
 end
 
 function PlayerMeta:RewardCredits(creds)
+	local score_mult = 1.00 + (self.sa_data.prestige_level * 0.05)
+	local score = math.floor(creds * score_mult)
+
 	self.sa_data.credits = self.sa_data.credits + creds
-	self.sa_data.score = self.sa_data.score + creds
+	self.sa_data.score = self.sa_data.score + score
+
 	SA.SendBasicInfo(self)
 end
 
