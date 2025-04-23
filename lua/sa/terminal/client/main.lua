@@ -355,7 +355,7 @@ local function CreateTerminalGUI()
 	UpgradeLevelButton:SetText("Advance Level")
 	UpgradeLevelButton:SetDisabled(true)
 	UpgradeLevelButton.DoClickUpgrade = function() Derma_Query("Do you really want to advance? You will lose all your current researches!", "Confirm", "Yes", function() RunConsoleCommand("sa_advance_level", HASH) end, "No", function() end) end
-	UpgradeLevelButton.DoClickPrestige = function() Derma_Query("Do you really want to prestige? You will lose all your score, credits, researches, storage and props ...oh and your life.", "Confirm", "Yes", function() RunConsoleCommand("sa_prestige_level", HASH) end, "No", function() end) end
+	UpgradeLevelButton.DoClickPrestige = function() Derma_Query("Do you really want to prestige? You will lose all your credits, researches, storage and props ...oh and your life (score and playtime stay).", "Confirm", "Yes", function() RunConsoleCommand("sa_prestige_level", HASH) end, "No", function() end) end
 	UpgradeLevelButton.DoClick = UpgradeLevelButton.DoClickUpgrade
 	SA_UpgradeLevelButton = UpgradeLevelButton
 
