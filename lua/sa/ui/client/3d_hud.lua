@@ -120,8 +120,8 @@ UpdateHUDRT()
 hook.Add("OnScreenSizeChanged", "SA_3DHUD_ScreenSizeChanged", UpdateHUDRT)
 
 local use_3d_hud = CreateClientConVar("cl_sa_use_3dhud", 1, true, false)
-local use_3d_bobbing = CreateClientConVar("cl_sa_use_3dhud_bobbing", 1, true, false)
-local hud_at_angle = nil
+--local use_3d_bobbing = CreateClientConVar("cl_sa_use_3dhud_bobbing", 1, true, false)
+--local hud_at_angle = nil
 local old_clipping = nil
 
 function SA.UI.In3DRender()
@@ -158,7 +158,7 @@ function SA.UI.PaintEnd()
 	aim_angle.roll = 0
 	local clamped_angle = Angle(0, 0, 0)
 
-	if use_3d_bobbing:GetInt() ~= 0 then
+	--[[if use_3d_bobbing:GetInt() ~= 0 then
 		if hud_at_angle == nil then
 			hud_at_angle = aim_angle
 		end
@@ -177,9 +177,11 @@ function SA.UI.PaintEnd()
 		clamped_angle:Normalize()
 		clamped_angle.pitch = math.Clamp(clamped_angle.pitch, -fov_allowed_rot, fov_allowed_rot)
 		clamped_angle.yaw = math.Clamp(clamped_angle.yaw, -fov_allowed_rot, fov_allowed_rot)
-	end
 
-	hud_at_angle = aim_angle - clamped_angle
+		hud_at_angle = aim_angle - clamped_angle
+	else
+		hud_at_angle = nil
+	end]]
 
 	cam.Start3D(Vector(-screen_dist,0,0), clamped_angle, screen_fov)
 		render.SetMaterial(SA_HUD_RT_MAT)
