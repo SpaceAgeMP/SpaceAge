@@ -7,7 +7,7 @@ local fov_allowed_rot = 2
 local screen_dist = 200
 local tri_cols = 50
 local tri_rows = 1
-local hud_max_angle_vel = 20
+--local hud_max_angle_vel = 20
 local supersample_multiplier = 1
 
 local SA_HUD_RT, SA_HUD_RT_MAT, SA_HUD_MESH
