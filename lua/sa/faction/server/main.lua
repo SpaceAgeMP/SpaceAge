@@ -88,12 +88,13 @@ local function SA_SetSpawnPos(ply)
 end
 hook.Add("PlayerSelectSpawn", "SA_ChooseSpawn", SA_SetSpawnPos)
 
+local friendlyFireCVar = CreateConVar("sa_friendlyfire", "0", { FCVAR_NOTIFY, FCVAR_REPLICATED })
 local function SA_FriendlyFire(vic, atk)
 	if not vic:IsPlayer() or not atk:IsPlayer() then
 		return true
 	end
 
-	if ((vic:Team() == atk:Team()) and not GetConVar("sa_friendlyfire"):GetBool()) then
+	if ((vic:Team() == atk:Team()) and not friendlyFireCVar:GetBool()) then
 		return false
 	else
 		return true
