@@ -16,8 +16,6 @@ jobs:
       with:
         node-version: lts/*
         check-latest: true
-        cache: npm
-        cache-dependency-path: package-lock.json
         token: ${{ secrets.EXT_GITHUB_TOKEN }}
     - name: npm for Lua lint
       run: |
