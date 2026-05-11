@@ -8,13 +8,14 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v6
-    - name: Use Node.js 20
+    - name: Set up NodeJS LTS
       uses: actions/setup-node@v6
       with:
-        node-version: 24
+        node-version: lts/*
+        check-latest: true
     - name: npm for Lua lint
       run: |
         set +ex
@@ -29,4 +30,3 @@ jobs:
         node gluaLintEx.js
       env:
         CI: true
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

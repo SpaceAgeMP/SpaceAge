@@ -5,8 +5,6 @@ SA.REQUIRE("central.main")
 local apiConfig = SA.Config.Load("api", true) or {}
 apiConfig.centralUrl = apiConfig.centralUrl or "NONE"
 
-require("stomp")
-
 if SA.Central.Socket then
 	SA.Central.Socket:close()
 	SA.Central.Socket = nil
@@ -58,6 +56,10 @@ end
 ConnectCentral = function()
 	if apiConfig.centralUrl == "NONE" then
 		return
+	end
+
+	if not NewSTOMPSocket then
+		require("stomp")
 	end
 
 	ourIdent = SA.API.GetServerName()

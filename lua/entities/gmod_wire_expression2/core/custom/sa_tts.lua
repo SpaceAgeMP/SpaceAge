@@ -9,7 +9,7 @@ local function doTTS(target, filter, text)
 		return
 	end
 
-	http.Post("https://tts.spaceage.mp/mp3", { q = text }, function (body, length, headers, code)
+	http.Post("https://spaceage-tts.doridian.net/mp3", { q = text }, function (body, length, headers, code)
 		if code ~= 200 then
 			return
 		end
